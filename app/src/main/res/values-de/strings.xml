@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tasks_today">Heutige Tasks</string>
+    <string name="caretaker_login">Login für Betreeunde</string>
+    <string name="steps">Schritte</string>
+</resources>
