@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tasks_today">Heutige Tasks</string>
+    <string name="edit_tasks">Bearbeite Tasks</string>
     <string name="caretaker_login">Login für Betreeunde</string>
+    <string name="logout">Ausloggen</string>
     <string name="total_steps">%1$d Schritte</string>
     <string name="have_problem">Ich habe ein Problem</string>
     <string name="back">Zurück</string>
