@@ -9,4 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="accent_blue">#3F51B5</color>
     <color name="bordeaux">#934054</color>
+    <color name="red">#B6401F</color>
+    <color name="light_red">#E3BAB9</color>
+    <color name="green">#3A845B</color>
 </resources>

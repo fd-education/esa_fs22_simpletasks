@@ -76,7 +76,7 @@ public class TaskListAdapter implements ListAdapter {
                     context.startActivity(intent);
                 }
             });
-            TextView title = convertView.findViewById(R.id.title_task_list);
+            TextView title = convertView.findViewById(R.id.titleTask);
             TextView stepCounter = convertView.findViewById(R.id.countStepsIndicator);
             title.setText(task.getTitle());
             stepCounter.setText(task.getCountersteps() + " " + context.getString(R.string.steps));

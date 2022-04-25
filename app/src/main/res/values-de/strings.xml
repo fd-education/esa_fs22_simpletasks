@@ -3,4 +3,7 @@
     <string name="tasks_today">Heutige Tasks</string>
     <string name="caretaker_login">Login für Betreeunde</string>
     <string name="steps">Schritte</string>
+    <string name="have_problem">Ich habe ein Problem</string>
+    <string name="back">Zurück</string>
+    <string name="next">Nächster Schritt</string>
 </resources>

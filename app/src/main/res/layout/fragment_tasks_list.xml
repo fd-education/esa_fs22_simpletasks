@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TasksListFragment">
+    tools:context=".fragments.TasksListFragment">
 
 
     <ListView
@@ -11,7 +11,7 @@
         style="@style/Widget.AppCompat.ListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:dividerHeight="5dp" />
+        android:dividerHeight="@dimen/dividerHeight" />
 
 
 </FrameLayout>

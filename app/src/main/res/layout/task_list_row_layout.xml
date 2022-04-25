@@ -2,10 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/imageTask"
     android:layout_width="fill_parent"
     android:layout_height="96dp"
     android:background="@color/accent_blue"
-    android:padding="8dp">
+    android:padding="@dimen/elementPadding">
 
     <ImageView
         android:id="@+id/task_image"
@@ -17,15 +18,16 @@
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <TextView
-        android:id="@+id/title_task_list"
+        android:id="@+id/titleTask"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="@dimen/elementPadding"
         android:layout_weight="1"
         android:gravity="center"
+        android:text="Task Title"
         android:textAlignment="viewStart"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="@dimen/h2"
         android:textStyle="bold"
         android:typeface="sans"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,12 +42,14 @@
         android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:gravity="center"
+        android:text="X Steps"
         android:textColor="@color/white"
+        android:textSize="@dimen/p"
         android:typeface="sans"
-        app:layout_constraintEnd_toEndOf="@+id/title_task_list"
+        app:layout_constraintEnd_toEndOf="@+id/titleTask"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/task_image"
-        app:layout_constraintTop_toBottomOf="@+id/title_task_list" />
+        app:layout_constraintTop_toBottomOf="@+id/titleTask" />
 
     <ImageButton
         android:id="@+id/skipTaskButton"
@@ -54,7 +58,7 @@
         android:backgroundTint="@color/bordeaux"
         android:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/task_image"
-        app:layout_constraintEnd_toEndOf="@+id/title_task_list"
+        app:layout_constraintEnd_toEndOf="@+id/titleTask"
         app:layout_constraintTop_toTopOf="@+id/countStepsIndicator"
         app:srcCompat="@drawable/skip_next_black_24dp" />
 

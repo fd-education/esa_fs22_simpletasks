@@ -1,4 +1,4 @@
-package com.example.simpletasks;
+package com.example.simpletasks.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.simpletasks.R;
+import com.example.simpletasks.TaskStepTestToDelete;
+import com.example.simpletasks.TaskTestToDelete;
 import com.example.simpletasks.adapters.TaskListAdapter;
 
 import java.util.ArrayList;
@@ -26,12 +29,13 @@ public class TasksListFragment extends Fragment {
     }
 
     private void fillList() {
+        //TODO change to get the task step from the database
         final ListView list = view.findViewById(R.id.tasks_list);
         ArrayList<TaskTestToDelete> arrayList = new ArrayList<>();
-        ArrayList<TaskStepTestToDelete> steps1 = new ArrayList<TaskStepTestToDelete>();
+        ArrayList<TaskStepTestToDelete> steps1 = new ArrayList<>();
         steps1.add(new TaskStepTestToDelete(0, "title", "description"));
         steps1.add(new TaskStepTestToDelete(1, "title2", "description2"));
-        ArrayList<TaskStepTestToDelete> steps2 = new ArrayList<TaskStepTestToDelete>();
+        ArrayList<TaskStepTestToDelete> steps2 = new ArrayList<>();
         arrayList.add(new TaskTestToDelete("Task 1", steps1));
         arrayList.add(new TaskTestToDelete("Task 2", steps2));
         steps2.add(new TaskStepTestToDelete(0, "title", "description"));
