@@ -68,18 +68,15 @@ public class TaskListAdapter implements ListAdapter {
         if (convertView == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
             convertView = layoutInflater.inflate(R.layout.task_list_row_layout, null);
-            convertView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //when clicked on a list item, execute following code
-                    Intent intent = new Intent(context, TaskGuideActivity.class);
-                    context.startActivity(intent);
-                }
+            convertView.setOnClickListener(v -> {
+                //when clicked on a list item, execute following code
+                Intent intent = new Intent(context, TaskGuideActivity.class);
+                context.startActivity(intent);
             });
             TextView title = convertView.findViewById(R.id.titleTask);
             TextView stepCounter = convertView.findViewById(R.id.countStepsIndicator);
             title.setText(task.getTitle());
-            stepCounter.setText(task.getCountersteps() + " " + context.getString(R.string.steps));
+            stepCounter.setText(context.getString(R.string.total_steps, task.getCountersteps()));
         }
         return convertView;
     }

@@ -2,7 +2,7 @@
     <string name="app_name" translatable="false">SimpleTasks</string>
     <string name="tasks_today">Tasks Today</string>
     <string name="caretaker_login">Caretaker Login</string>
-    <string name="steps">Steps</string>
+    <string name="total_steps">%1$d Steps</string>
     <string name="have_problem">I have a problem</string>
     <string name="back">Back</string>
     <string name="next">Next step</string>

@@ -1,6 +1,7 @@
 package com.example.simpletasks;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,5 +14,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Objects.requireNonNull(getSupportActionBar()).hide();
+    }
+
+    public void onSkipClicked(View view) {
+        //TODO
+    }
+
+    public void onLoginClicked(View view) {
+        //TODO
+    }
+
+    public void onSettingsClicked(View view) {
+        //TODO
     }
 }
