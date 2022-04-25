@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
+public class EditTaskActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,15 +16,7 @@ public class MainActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
     }
 
-    public void onSkipClicked(View view) {
-        //TODO
-    }
-
-    public void onLoginClicked(View view) {
-        //TODO
-    }
-
-    public void onSettingsClicked(View view) {
+    public void onLogoutClicked(View view) {
         //TODO
     }
 }
