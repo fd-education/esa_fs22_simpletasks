@@ -2,97 +2,82 @@ package com.example.simpletasks.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.DataSetObserver;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.simpletasks.R;
 import com.example.simpletasks.TaskGuideActivity;
-import com.example.simpletasks.TaskTestToDelete;
+import com.example.simpletasks.data.entity.Task;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class TaskListAdapter implements ListAdapter {
-    ArrayList<TaskTestToDelete> arrayList;
-    Context context;
+public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskListViewHolder> {
+    class TaskListViewHolder extends RecyclerView.ViewHolder {
+        private final TextView titleTask;
+        private final TextView countStepsIndicator;
+        private final ImageView taskImage;
 
-    public TaskListAdapter(Context context, ArrayList<TaskTestToDelete> arrayList) {
-        this.arrayList = arrayList;
-        this.context = context;
+
+        private TaskListViewHolder(View itemView) {
+            super(itemView);
+            titleTask = itemView.findViewById(R.id.titleTask);
+            countStepsIndicator = itemView.findViewById(R.id.countStepsIndicator);
+            taskImage = itemView.findViewById(R.id.taskImage);
+        }
+    }
+
+    private final LayoutInflater mInflater;
+    private Context context;
+    private List<Task> tasks;
+
+    public TaskListAdapter(Context context) {
+        mInflater = LayoutInflater.from(context);
     }
 
     @Override
-    public boolean areAllItemsEnabled() {
-        return false;
+    public TaskListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = mInflater.inflate(R.layout.task_list_row_layout, parent, false);
+        context = mInflater.getContext();
+        return new TaskListViewHolder(itemView);
     }
 
     @Override
-    public boolean isEnabled(int position) {
-        return true;
-    }
-
-    @Override
-    public void registerDataSetObserver(DataSetObserver observer) {
-    }
-
-    @Override
-    public void unregisterDataSetObserver(DataSetObserver observer) {
-    }
-
-    @Override
-    public int getCount() {
-        return arrayList.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return position;
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public boolean hasStableIds() {
-        return false;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        TaskTestToDelete task = arrayList.get(position);
-        if (convertView == null) {
-            LayoutInflater layoutInflater = LayoutInflater.from(context);
-            convertView = layoutInflater.inflate(R.layout.task_list_row_layout, null);
-            convertView.setOnClickListener(v -> {
+    public void onBindViewHolder(@NonNull TaskListViewHolder holder, int position) {
+        if (tasks != null) {
+            Task current = tasks.get(position);
+            holder.titleTask.setText(current.getTitle());
+            holder.countStepsIndicator.setText(context.getString(R.string.total_steps, current.getSteps().size()));
+            holder.taskImage.setImageResource(R.drawable.ic_launcher_background/*TODO change */);
+            holder.itemView.setOnClickListener(v -> {
                 //when clicked on a list item, execute following code
                 Intent intent = new Intent(context, TaskGuideActivity.class);
                 context.startActivity(intent);
             });
-            TextView title = convertView.findViewById(R.id.titleTask);
-            TextView stepCounter = convertView.findViewById(R.id.countStepsIndicator);
-            title.setText(task.getTitle());
-            stepCounter.setText(context.getString(R.string.total_steps, task.getCountersteps()));
+        } else {
+            // Covers the case of data not being ready yet.
+            holder.titleTask.setText(R.string.placeholder);
+            holder.countStepsIndicator.setText(R.string.placeholder);
+            holder.taskImage.setImageResource(R.drawable.image_placeholder);
         }
-        return convertView;
+
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        return position;
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+        notifyDataSetChanged();
     }
 
-    @Override
-    public int getViewTypeCount() {
-        return arrayList.size();
-    }
 
     @Override
-    public boolean isEmpty() {
-        return false;
+    public int getItemCount() {
+        if (tasks != null)
+            return tasks.size();
+        else return 0;
     }
 }

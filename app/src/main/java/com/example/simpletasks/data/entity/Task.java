@@ -6,6 +6,7 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -121,6 +122,9 @@ public class Task {
 
     @Ignore
     public List<TaskStep> getSteps() {
+        if(steps == null) {
+            return new ArrayList<>();
+        }
         return steps;
     }
 

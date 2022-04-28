@@ -2,12 +2,13 @@ package com.example.simpletasks.data;
 
 import android.content.Context;
 
-
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.simpletasks.data.converter.DateConverter;
 import com.example.simpletasks.data.dao.PinDao;
@@ -17,6 +18,9 @@ import com.example.simpletasks.data.entity.Pin;
 import com.example.simpletasks.data.entity.Task;
 import com.example.simpletasks.data.entity.TaskStep;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -48,11 +52,33 @@ public abstract class AppDatabase extends RoomDatabase {
             synchronized (AppDatabase.class){
                 result = APP_DB;
                 if(result == null){
-                    APP_DB = result = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, DB_NAME).build();
+                    APP_DB = result = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, DB_NAME)/*.addCallback(sRoomDatabaseCallback)*/.build();
                 }
             }
         }
 
         return result;
     }
+
+    private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
+        @Override
+        public void onOpen(@NonNull SupportSQLiteDatabase db) {
+            super.onOpen(db);
+
+            databaseWriteExecutor.execute(() -> {
+                TaskDao dao = APP_DB.taskDao();
+
+                List<TaskStep> taskSteps = new ArrayList<>();
+                taskSteps.add(new TaskStep("0", "Type", 0, "Titel Step1", "", "beschreibung step", "", ""));
+                taskSteps.add(new TaskStep("0", "Type", 1, "Titel Step2", "", "beschreibung step", "", ""));
+                Task task = new Task("Titel1", "Beschreibung1", new Date(2022,5,1), null, Long.MAX_VALUE, new Date(2022,6,30), taskSteps);
+                dao.insertTasks(task);
+                taskSteps = new ArrayList<>();
+                taskSteps.add(new TaskStep("0", "Type", 0, "Titel Step1", "", "beschreibung step", "", ""));
+                taskSteps.add(new TaskStep("0", "Type", 1, "Titel Step2", "", "beschreibung step", "", ""));
+                task = new Task("Titel2", "Beschreibung2", new Date(2022,5,1), null, Long.MAX_VALUE, new Date(2022,6,30), taskSteps);
+                dao.insertTasks(task);
+            });
+        }
+    };
 }
