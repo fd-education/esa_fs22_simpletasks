@@ -33,7 +33,7 @@ public class TaskGuideFragment extends Fragment {
     }
 
     private void setTaskStepFromArguments() {
-        if(getArguments() != null) {
+        if (getArguments() != null) {
             taskStep = (TaskStep) getArguments().getSerializable(TaskGuideActivity.CURRENT_TASK_STEP_INTENT_EXTRA);
             Log.d(TAG, "successfully loaded task step from fragment start");
             setTaskStepDetailsOnUi();

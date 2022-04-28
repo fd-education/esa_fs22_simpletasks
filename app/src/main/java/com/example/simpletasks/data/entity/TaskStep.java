@@ -10,12 +10,12 @@ import java.io.Serializable;
 
 @Entity(tableName = "taskSteps",
         foreignKeys = {
-            @ForeignKey(entity = Task.class,
-                parentColumns = "id",
-                childColumns = "fk_task_id",
-                onDelete = ForeignKey.CASCADE)},
-                indices = {@Index(value="fk_task_id")}
-        )
+                @ForeignKey(entity = Task.class,
+                        parentColumns = "id",
+                        childColumns = "fk_task_id",
+                        onDelete = ForeignKey.CASCADE)},
+        indices = {@Index(value = "fk_task_id")}
+)
 
 public class TaskStep implements Serializable {
 
@@ -28,21 +28,21 @@ public class TaskStep implements Serializable {
 
     private String title;
 
-    @ColumnInfo(name="image_uri")
+    @ColumnInfo(name = "image_uri")
     private String imageUri;
 
     private String description;
 
-    @ColumnInfo(name="video_uri")
+    @ColumnInfo(name = "video_uri")
     private String videoUri;
 
-    @ColumnInfo(name="audio_uri")
+    @ColumnInfo(name = "audio_uri")
     private String audioUri;
 
-    @ColumnInfo(name="fk_task_id")
+    @ColumnInfo(name = "fk_task_id")
     private String taskId;
 
-    public TaskStep(String taskId, String type, int index, String title, String imageUri, String description, String videoUri, String audioUri){
+    public TaskStep(String taskId, String type, int index, String title, String imageUri, String description, String videoUri, String audioUri) {
         this.taskId = taskId;
         this.type = type;
         this.index = index;

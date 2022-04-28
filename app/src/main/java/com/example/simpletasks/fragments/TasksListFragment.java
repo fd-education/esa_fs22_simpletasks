@@ -48,7 +48,7 @@ public class TasksListFragment extends Fragment {
             Log.d(TAG, "Tasks successfully fetched from db");
 
             //TODO change this after steps was implemented
-            for(Task task:tasks) {
+            for (Task task : tasks) {
                 List<TaskStep> list = new ArrayList<>();
                 list.add(new TaskStep("15", "Type", 0, "Titel Step1", "", "beschreibung step1", "", ""));
                 list.add(new TaskStep("15", "Type", 1, "Titel Step2", "", "beschreibung step2", "", ""));

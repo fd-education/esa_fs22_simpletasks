@@ -37,26 +37,52 @@ public class TaskGuideActivity extends AppCompatActivity {
         setFragment();
     }
 
-    //gets called when the back button is clicked
+    /**
+     * gets called when the back button is clicked
+     *
+     * @param view the view from where the button is clicked
+     */
     public void onBackClicked(View view) {
-        if(currentStep > 0) {
+        /*TODO entscheiden, ob man aus dem task gehen darf oder ihn an einem stück machen soll??
+        falls nicht: so lassen
+        falls schon: code in onbackpressed wieder hier rein kopieren
+         */
+        onBackPressed();
+    }
+
+    /**
+     * overrides the default back pressed method. goes to the previous step or to the main screen
+     */
+    @Override
+    public void onBackPressed() {
+        if (currentStep > 0) {
             currentStep--;
             replaceFragment();
-        } else if(currentStep == 0) {
-            onBackPressed();
+        } else if (currentStep == 0) {
+            super.onBackPressed();
         }
     }
 
+    /**
+     * gets called when the next button is clicked
+     *
+     * @param view the view from where the button is clicked
+     */
     public void onNextClicked(View view) {
-        if(currentStep < taskSteps.size() - 1) {
+        if (currentStep < taskSteps.size() - 1) {
             currentStep++;
             replaceFragment();
-        } else if(currentStep == taskSteps.size() - 1) {
+        } else if (currentStep == taskSteps.size() - 1) {
             //TODO finish task
-            onBackPressed();
+            super.onBackPressed();
         }
     }
 
+    /**
+     * gets called when the problem button is clicked
+     *
+     * @param view the view from where the button is clicked
+     */
     public void onProblemClicked(View view) {
         //TODO to implement a dialog
     }
@@ -96,6 +122,7 @@ public class TaskGuideActivity extends AppCompatActivity {
 
     /**
      * get the fragment with arguments
+     *
      * @return fragment to add/replace the old one with
      */
     @NonNull

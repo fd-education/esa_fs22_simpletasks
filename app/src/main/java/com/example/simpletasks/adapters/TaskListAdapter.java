@@ -18,6 +18,10 @@ import com.example.simpletasks.data.entity.Task;
 import java.util.List;
 
 public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskListViewHolder> {
+    /**
+     * this handler is a layer between the code and the xml layout. it fetches the View elements for
+     * setting them in the adapter
+     */
     class TaskListViewHolder extends RecyclerView.ViewHolder {
         private final TextView titleTask;
         private final TextView countStepsIndicator;

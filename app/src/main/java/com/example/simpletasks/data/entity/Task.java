@@ -24,17 +24,17 @@ public class Task implements Serializable {
     private String description;
 
     @NonNull
-    @ColumnInfo(name="next_start_date")
+    @ColumnInfo(name = "next_start_date")
     private Date nextStartDate;
 
     private Long interval;
 
     @NonNull
-    @ColumnInfo(name="notification_delta")
+    @ColumnInfo(name = "notification_delta")
     private Long notificationDelta;
 
     @NonNull
-    @ColumnInfo(name="end_date")
+    @ColumnInfo(name = "end_date")
     private Date endDate;
 
     @Ignore
@@ -123,7 +123,7 @@ public class Task implements Serializable {
 
     @Ignore
     public List<TaskStep> getSteps() {
-        if(steps == null) {
+        if (steps == null) {
             return new ArrayList<>();
         }
         return steps;
