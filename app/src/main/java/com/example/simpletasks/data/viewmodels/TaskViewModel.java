@@ -21,41 +21,45 @@ public class TaskViewModel extends AndroidViewModel {
     private LiveData<List<Task>> allTasks;
     private LiveData<List<Task>> tasksToday;
 
-    public TaskViewModel(Application application){
+    public TaskViewModel(Application application) {
         super(application);
         taskRepo = new TaskRepository(application);
         taskStepRepo = new TaskStepRepository(application);
     }
 
-    public LiveData<List<Task>> getTodaysTasks(){
-        if(tasksToday == null){
+    public LiveData<List<Task>> getTodaysTasks() {
+        if (tasksToday == null) {
             tasksToday = taskRepo.getTasksByDate(Calendar.getInstance().getTime());
         }
 
         return tasksToday;
     }
 
-    public LiveData<List<Task>> getAllTasks(){
-        if(allTasks == null){
+    public LiveData<List<Task>> getAllTasks() {
+        if (allTasks == null) {
             allTasks = taskRepo.getAllTasks();
         }
 
         return allTasks;
     }
 
-    public LiveData<List<TaskStep>>  getStepsOfTask(final Task task){
+    public LiveData<Task> getTaskById(int id) {
+        return taskRepo.getTaskById(id);
+    }
+
+    public LiveData<List<TaskStep>> getStepsOfTask(final Task task) {
         return taskStepRepo.getByTaskId(task.getId());
     }
 
-    public void insertTasks(final Task... tasks){
+    public void insertTasks(final Task... tasks) {
         taskRepo.insertTasks(tasks);
     }
 
-    public void updateTasks(final Task... tasks){
+    public void updateTasks(final Task... tasks) {
         taskRepo.updateTasks(tasks);
     }
 
-    public void deleteTasks(final Task... tasks){
+    public void deleteTasks(final Task... tasks) {
         taskRepo.deleteTasks(tasks);
     }
 }

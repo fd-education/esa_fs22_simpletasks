@@ -6,6 +6,8 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "taskSteps",
         foreignKeys = {
             @ForeignKey(entity = Task.class,
@@ -15,7 +17,7 @@ import androidx.room.PrimaryKey;
                 indices = {@Index(value="fk_task_id")}
         )
 
-public class TaskStep {
+public class TaskStep implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;

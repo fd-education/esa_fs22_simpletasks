@@ -30,6 +30,10 @@ public class TaskRepository {
         return taskDao.getByDate(startDate, endDate);
     }
 
+    public LiveData<Task> getTaskById(int id) {
+        return taskDao.getById(id);
+    }
+
     public void insertTasks(final Task... tasks){
         AppDatabase.databaseWriteExecutor.execute(() -> taskDao.insertTasks(tasks));
     }

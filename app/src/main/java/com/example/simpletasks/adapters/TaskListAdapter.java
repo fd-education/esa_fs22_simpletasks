@@ -57,6 +57,8 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
             holder.itemView.setOnClickListener(v -> {
                 //when clicked on a list item, execute following code
                 Intent intent = new Intent(context, TaskGuideActivity.class);
+                //intent.putExtra(TaskGuideActivity.TASK_INTENT_EXTRA, current.getId());
+                intent.putExtra(TaskGuideActivity.TASK_INTENT_EXTRA, current);
                 context.startActivity(intent);
             });
         } else {

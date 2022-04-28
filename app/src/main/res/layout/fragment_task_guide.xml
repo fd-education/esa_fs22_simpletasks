@@ -7,23 +7,11 @@
     tools:context=".fragments.TaskGuideFragment">
 
     <TextView
-        android:id="@+id/titleTask_TaskGuide"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Task Title"
-        android:textColor="@color/black"
-        android:textSize="@dimen/h1"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/titleTaskStep_TaskGuide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/elementPadding"
-        android:text="Step Title"
+        android:text="@string/placeholder"
         android:textColor="@color/black"
         android:textSize="@dimen/h2"
         android:textStyle="bold"
@@ -36,12 +24,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/elementPadding"
-        android:text="Step Description"
+        android:text="@string/placeholder"
         android:textColor="@color/black"
         android:textSize="@dimen/h2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/taskStepImage_TaskGuide" />
 
     <LinearLayout
         android:id="@+id/linearLayoutStatusBar"
@@ -57,15 +45,15 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/taskStepImage_TaskGuide"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/sidesPadding"
         android:layout_marginTop="@dimen/elementPadding"
         android:layout_marginEnd="@dimen/sidesPadding"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleTaskStep_TaskGuide"
-        tools:src="@tools:sample/avatars" />
+        tools:src="@drawable/image_placeholder" />
 </androidx.constraintlayout.widget.ConstraintLayout>

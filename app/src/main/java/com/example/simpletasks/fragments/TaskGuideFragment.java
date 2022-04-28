@@ -1,52 +1,56 @@
 package com.example.simpletasks.fragments;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.simpletasks.R;
-import com.example.simpletasks.TaskStepTestToDelete;
-import com.example.simpletasks.TaskTestToDelete;
+import com.example.simpletasks.TaskGuideActivity;
+import com.example.simpletasks.data.entity.Task;
+import com.example.simpletasks.data.entity.TaskStep;
 
 public class TaskGuideFragment extends Fragment {
-
-    View view;
-    TaskTestToDelete task;
-    TaskStepTestToDelete taskStep;
+    private static final String TAG = "TaskGuideFragment";
+    private View view;
+    private Task task;
+    private TaskStep taskStep;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_task_guide, container, false);
-        taskStep = getTaskStep();
-        setTaskStepDetails();
+
+        setTaskStepFromArguments();
         return view;
     }
 
-    /**
-     * get the current task step from the database
-     *
-     * @return the task step which was found
-     */
-    private TaskStepTestToDelete getTaskStep() {
-        //TODO change to get the task step from the database
-        return new TaskStepTestToDelete(0, "title", "description");
+    private void setTaskStepFromArguments() {
+        if(getArguments() != null) {
+            taskStep = (TaskStep) getArguments().getSerializable(TaskGuideActivity.CURRENT_TASK_STEP_INTENT_EXTRA);
+            Log.d(TAG, "successfully loaded task step from fragment start");
+            setTaskStepDetailsOnUi();
+        }
     }
 
     /**
      * sets the text views on the fragment
      */
-    private void setTaskStepDetails() {
-        TextView taskTitle = view.findViewById(R.id.titleTask_TaskGuide);
-        taskTitle.setText(taskStep.getTitle());
+    private void setTaskStepDetailsOnUi() {
+        TextView taskStepTitle = view.findViewById(R.id.titleTaskStep_TaskGuide);
+        taskStepTitle.setText(taskStep.getTitle());
         //TODO status bar
-        /*TextView taskStepTitle = view.findViewById(R.id.titleTaskStep_TaskGuide);
-        taskStepTitle.setText(task.getTitle());*/
+        ImageView taskImage = view.findViewById(R.id.taskStepImage_TaskGuide);
+        taskImage.setImageURI(Uri.parse(taskStep.getImageUri()));
+        TextView taskDecription = view.findViewById(R.id.titleTaskStepDescription_TaskGuide);
+        taskDecription.setText(taskStep.getDescription());
 
     }
 }

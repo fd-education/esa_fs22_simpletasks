@@ -25,7 +25,7 @@ public interface TaskDao {
     LiveData<List<Task>> getByDate(Date dayStart, Date dayEnd);
 
     @Query("SELECT * FROM Tasks WHERE id = :id")
-    Task getById(int id);
+    LiveData<Task> getById(int id);
 
     @Update
     void updateTasks(Task... tasks);
