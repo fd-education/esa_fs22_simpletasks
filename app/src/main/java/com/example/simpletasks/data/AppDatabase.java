@@ -27,7 +27,7 @@ import java.util.concurrent.Executors;
 /**
  * The Room database for Simple Tasks
  */
-@Database(entities={Task.class, TaskStep.class, Pin.class}, version = 1, exportSchema = false)
+@Database(entities = {Task.class, TaskStep.class, Pin.class}, version = 1, exportSchema = false)
 @TypeConverters(DateConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -42,16 +42,18 @@ public abstract class AppDatabase extends RoomDatabase {
     public static final String DB_NAME = "simple-tasks-db";
 
     public abstract PinDao pinDao();
+
     public abstract TaskDao taskDao();
+
     public abstract TaskStepDao taskStepDao();
 
-    public static AppDatabase getAppDb(final Context context){
+    public static AppDatabase getAppDb(final Context context) {
         AppDatabase result = APP_DB;
 
-        if(result == null){
-            synchronized (AppDatabase.class){
+        if (result == null) {
+            synchronized (AppDatabase.class) {
                 result = APP_DB;
-                if(result == null){
+                if (result == null) {
                     APP_DB = result = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, DB_NAME)/*.addCallback(sRoomDatabaseCallback)*/.build();
                 }
             }
@@ -69,14 +71,14 @@ public abstract class AppDatabase extends RoomDatabase {
                 TaskDao dao = APP_DB.taskDao();
 
                 List<TaskStep> taskSteps = new ArrayList<>();
-                taskSteps.add(new TaskStep("0", "Type", 0, "Titel Step1", "", "beschreibung step", "", ""));
+                taskSteps.add(new TaskStep("0", "Type", 0, "Titel Step1", "https://onlyhdwallpapers.com/wallpaper/testimage-hdtv-3sf1.jpg?preview", "beschreibung step", "", ""));
                 taskSteps.add(new TaskStep("0", "Type", 1, "Titel Step2", "", "beschreibung step", "", ""));
-                Task task = new Task("Titel1", "Beschreibung1", new Date(2022,5,1), null, Long.MAX_VALUE, new Date(2022,6,30), taskSteps);
+                Task task = new Task("Titel1", "Beschreibung1", new Date(2022, 5, 1), null, Long.MAX_VALUE, new Date(2022, 6, 30), taskSteps);
                 dao.insertTasks(task);
                 taskSteps = new ArrayList<>();
-                taskSteps.add(new TaskStep("0", "Type", 0, "Titel Step1", "", "beschreibung step", "", ""));
+                taskSteps.add(new TaskStep("0", "Type", 0, "Titel Step1", "https://www.researchgate.net/profile/Shagufta-Yasmin/publication/313121867/figure/fig4/AS:629900906078221@1527191487716/Original-Colour-Test-Image.png", "beschreibung step", "", ""));
                 taskSteps.add(new TaskStep("0", "Type", 1, "Titel Step2", "", "beschreibung step", "", ""));
-                task = new Task("Titel2", "Beschreibung2", new Date(2022,5,1), null, Long.MAX_VALUE, new Date(2022,6,30), taskSteps);
+                task = new Task("Titel2", "Beschreibung2", new Date(2022, 5, 1), null, Long.MAX_VALUE, new Date(2022, 6, 30), taskSteps);
                 dao.insertTasks(task);
             });
         }
