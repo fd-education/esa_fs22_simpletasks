@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/titleSettings"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/sidesPadding"
+        android:layout_marginTop="@dimen/sidesPadding"
+        android:layout_marginEnd="@dimen/sidesPadding"
+        android:text="@string/title_activity_settings"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/h1"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/titleCaretakerSettings"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/elementPadding"
+        android:text="@string/caretaker_settings"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/h2"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleSettings" />
+
+
+    <Button
+        android:id="@+id/setPinButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/accent_blue"
+        android:layout_marginTop="@dimen/elementPadding"
+        android:onClick="onLoginClicked"
+        android:text="@string/add_pin"
+        android:textSize="@dimen/p"
+        app:layout_constraintEnd_toStartOf="@id/removePinButton"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleCaretakerSettings" />
+
+    <Button
+        android:id="@+id/removePinButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/accent_blue"
+        android:layout_marginTop="@dimen/elementPadding"
+        android:onClick="onLoginClicked"
+        android:text="@string/remove_pin"
+        android:textSize="@dimen/p"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/setPinButton"
+        app:layout_constraintTop_toBottomOf="@id/titleCaretakerSettings" />
+
+    <TextView
+        android:id="@+id/titleInterfaceSettings"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/elementPadding"
+        android:text="@string/display_settings"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/h2"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/setPinButton" />
+
+    <Button
+        android:id="@+id/displayFontSizeSettingsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/accent_blue"
+        android:layout_marginTop="@dimen/elementPadding"
+        android:onClick="onLoginClicked"
+        android:text="@string/display_font_size_settings"
+        android:textSize="@dimen/p"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleInterfaceSettings" />
+
+    <Button
+        android:id="@+id/caretakerLoginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/sidesPadding"
+        android:backgroundTint="@color/red"
+        android:onClick="onLogoutClicked"
+        android:text="@string/logout"
+        android:textSize="@dimen/p"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
