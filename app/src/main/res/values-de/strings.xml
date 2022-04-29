@@ -8,4 +8,10 @@
     <string name="have_problem">Ich habe ein Problem</string>
     <string name="back">Zurück</string>
     <string name="next">Nächster Schritt</string>
+    <string name="title_activity_settings">Einstellungen</string>
+    <string name="caretaker_settings">Einstellungen für Betreuende</string>
+    <string name="add_pin">PIN erstellen</string>
+    <string name="remove_pin">PIN entfernen</string>
+    <string name="display_settings">Anzeige-Einstellungen</string>
+    <string name="display_font_size_settings">Anzeige- und Textgrösse ändern</string>
 </resources>
