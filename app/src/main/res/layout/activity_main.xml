@@ -59,4 +59,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ImageButton
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/sidesPadding"
+        android:background="@drawable/button_shape"
+        android:backgroundTint="@color/accent_blue"
+        android:contentDescription="@string/title_activity_settings"
+        android:onClick="onSettingsClicked"
+        android:padding="@dimen/elementPadding"
+        android:src="@drawable/settings_white_24dp"
+        android:translationY="-4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/caretakerLoginButton" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
