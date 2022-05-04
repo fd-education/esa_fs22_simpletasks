@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.simpletasks.data.entities.Task;
 import com.example.simpletasks.data.entities.TaskStep;
+import com.example.simpletasks.data.entities.TaskWithSteps;
 import com.example.simpletasks.data.repositories.TaskRepository;
 import com.example.simpletasks.data.repositories.TaskStepRepository;
 
@@ -18,11 +19,11 @@ public class TaskViewModel extends AndroidViewModel {
     private final TaskRepository taskRepo;
     private final TaskStepRepository taskStepRepo;
 
-    //private LiveData<List<Task>> allTasks;
-
     private LiveData<List<Task>> allTasks;
+    private LiveData<List<TaskWithSteps>> allTasksWithSteps;
 
     private LiveData<List<Task>> tasksToday;
+    private LiveData<List<TaskWithSteps>> tasksTodayWithSteps;
 
     public TaskViewModel(Application application){
         super(application);
@@ -38,13 +39,13 @@ public class TaskViewModel extends AndroidViewModel {
         return tasksToday;
     }
 
-//    public LiveData<List<Task>> getAllTasks(){
-//        if(allTasks == null){
-//            allTasks = taskRepo.getAllTasks();
-//        }
-//
-//        return allTasks;
-//    }
+    public LiveData<List<TaskWithSteps>> getTodaysTasksWithSteps(){
+        if(tasksTodayWithSteps == null){
+            tasksTodayWithSteps = taskRepo.getTasksByDateWithSteps(Calendar.getInstance().getTime());
+        }
+
+        return tasksTodayWithSteps;
+    }
 
     public LiveData<List<Task>> getAllTasks(){
         if(allTasks == null){
@@ -52,6 +53,14 @@ public class TaskViewModel extends AndroidViewModel {
         }
 
         return allTasks;
+    }
+
+    public LiveData<List<TaskWithSteps>> getAllTasksWithSteps(){
+        if(allTasksWithSteps == null){
+            allTasksWithSteps = taskRepo.getAllTasksWithSteps();
+        }
+
+        return allTasksWithSteps;
     }
 
     public LiveData<List<TaskStep>>  getStepsOfTask(final Task task){

@@ -18,22 +18,34 @@ import java.util.List;
 public class TaskRepository {
     private final TaskDao taskDao;
     private final TaskStepDao taskStepDao;
-    private LiveData<List<Task>> allTasks;
+    private final LiveData<List<Task>> allTasks;
+    private final LiveData<List<TaskWithSteps>> allTasksWithSteps;
 
     public TaskRepository(Application application){
         AppDatabase db = AppDatabase.getAppDb(application);
         taskDao = db.taskDao();
         taskStepDao = db.taskStepDao();
+
         allTasks = taskDao.getAll();
+        allTasksWithSteps = taskDao.getAllWithSteps();
     }
 
     public LiveData<List<Task>> getAllTasks(){return allTasks;}
+
+    public LiveData<List<TaskWithSteps>> getAllTasksWithSteps(){return allTasksWithSteps;}
 
     public LiveData<List<Task>> getTasksByDate(final Date date){
         Date startDate = new Date(date.getYear(), date.getMonth(), date.getDay(), 0, 0, 0);
         Date endDate = new Date(date.getYear(), date.getMonth(), date.getDay() + 1, 0, 0, 0);
 
         return taskDao.getByDate(startDate, endDate);
+    }
+
+    public LiveData<List<TaskWithSteps>> getTasksByDateWithSteps(final Date date){
+        Date startDate = new Date(date.getYear(), date.getMonth(), date.getDay(), 0, 0, 0);
+        Date endDate = new Date(date.getYear(), date.getMonth(), date.getDay() + 1, 0, 0, 0);
+
+        return taskDao.getByDateWithSteps(startDate, endDate);
     }
 
     public void insertTasks(final List<Task> tasks){
