@@ -1,11 +1,11 @@
-package com.example.simpletasks.data.dao;
+package com.example.simpletasks.data.daos;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.example.simpletasks.data.entity.Pin;
+import com.example.simpletasks.data.entities.Pin;
 
 
 @Dao
