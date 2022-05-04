@@ -1,4 +1,6 @@
-package com.example.simpletasks.data.entity;
+package com.example.simpletasks.data.entities;
+
+import static java.util.UUID.randomUUID;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
@@ -8,12 +10,16 @@ import androidx.room.PrimaryKey;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 @Entity(tableName = "tasks")
 public class Task {
 
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+
+    @PrimaryKey
+    @NonNull
+    String id;
 
     @NonNull
     private String title;
@@ -25,6 +31,7 @@ public class Task {
     @ColumnInfo(name="next_start_date")
     private Date nextStartDate;
 
+    @NonNull
     private Long interval;
 
     @NonNull
@@ -39,6 +46,7 @@ public class Task {
     private List<TaskStep> steps;
 
     public Task(@NonNull String title, @NonNull String description, @NonNull Date nextStartDate, Long interval, @NonNull Long notificationDelta, @NonNull Date endDate) {
+        this.id = UUID.randomUUID().toString();
         this.title = title;
         this.description = description;
         this.nextStartDate = nextStartDate;
@@ -58,11 +66,11 @@ public class Task {
         this.steps = steps;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -127,5 +135,18 @@ public class Task {
     @Ignore
     public void setSteps(List<TaskStep> steps) {
         this.steps = steps;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return id == task.id && title.equals(task.title) && description.equals(task.description) && nextStartDate.equals(task.nextStartDate) && Objects.equals(interval, task.interval) && notificationDelta.equals(task.notificationDelta) && endDate.equals(task.endDate) && Objects.equals(steps, task.steps);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, description, nextStartDate, interval, notificationDelta, endDate, steps);
     }
 }

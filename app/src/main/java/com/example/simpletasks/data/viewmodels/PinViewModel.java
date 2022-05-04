@@ -4,7 +4,7 @@ import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 
-import com.example.simpletasks.data.entity.*;
+import com.example.simpletasks.data.entities.*;
 import com.example.simpletasks.data.repositories.PinRepository;
 
 
