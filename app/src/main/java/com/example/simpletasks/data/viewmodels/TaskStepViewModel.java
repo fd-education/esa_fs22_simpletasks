@@ -5,8 +5,8 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.simpletasks.data.entities.Task;
-import com.example.simpletasks.data.entities.TaskStep;
+import com.example.simpletasks.data.entity.Task;
+import com.example.simpletasks.data.entity.TaskStep;
 import com.example.simpletasks.data.repositories.TaskStepRepository;
 
 import java.util.List;
@@ -27,15 +27,15 @@ public class TaskStepViewModel extends AndroidViewModel {
         return taskStepRepo.getByTaskId(task.getId());
     }
 
-    public void insertTaskSteps(final List<TaskStep> taskSteps){
+    public void insertTaskSteps(final TaskStep... taskSteps){
         taskStepRepo.insertTaskSteps(taskSteps);
     }
 
-    public void updateTaskSteps(final List<TaskStep> taskSteps){
+    public void updateTaskSteps(final TaskStep... taskSteps){
         taskStepRepo.updateTaskSteps(taskSteps);
     }
 
-    public void deleteTaskSteps(final List<TaskStep> taskSteps){
+    public void deleteTaskSteps(final TaskStep... taskSteps){
         taskStepRepo.deleteTaskSteps(taskSteps);
     }
 }

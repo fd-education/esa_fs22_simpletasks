@@ -1,4 +1,4 @@
-package com.example.simpletasks.data.daos;
+package com.example.simpletasks.data.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -8,7 +8,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.simpletasks.data.entities.TaskStep;
+import com.example.simpletasks.data.entity.TaskStep;
 
 import java.util.List;
 
@@ -18,14 +18,14 @@ public interface TaskStepDao {
     @Query("SELECT * FROM TaskSteps " +
             "WHERE fk_task_id = :taskId " +
             "ORDER BY `index` ASC")
-    LiveData<List<TaskStep>> getByTaskId(String taskId);
+    LiveData<List<TaskStep>> getByTaskId(int taskId);
 
     @Update
-    void updateTaskSteps(List<TaskStep> taskSteps);
+    void updateTaskSteps(TaskStep... taskSteps);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertTaskSteps(List<TaskStep> taskSteps);
+    void insertTaskSteps(TaskStep... taskSteps);
 
     @Delete
-    void deleteTaskSteps(List<TaskStep> taskSteps);
+    void deleteTaskSteps(TaskStep... taskSteps);
 }

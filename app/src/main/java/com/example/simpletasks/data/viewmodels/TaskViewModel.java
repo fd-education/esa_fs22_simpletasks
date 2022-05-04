@@ -5,8 +5,8 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.simpletasks.data.entities.Task;
-import com.example.simpletasks.data.entities.TaskStep;
+import com.example.simpletasks.data.entity.Task;
+import com.example.simpletasks.data.entity.TaskStep;
 import com.example.simpletasks.data.repositories.TaskRepository;
 import com.example.simpletasks.data.repositories.TaskStepRepository;
 
@@ -18,10 +18,7 @@ public class TaskViewModel extends AndroidViewModel {
     private final TaskRepository taskRepo;
     private final TaskStepRepository taskStepRepo;
 
-    //private LiveData<List<Task>> allTasks;
-
     private LiveData<List<Task>> allTasks;
-
     private LiveData<List<Task>> tasksToday;
 
     public TaskViewModel(Application application){
@@ -38,14 +35,6 @@ public class TaskViewModel extends AndroidViewModel {
         return tasksToday;
     }
 
-//    public LiveData<List<Task>> getAllTasks(){
-//        if(allTasks == null){
-//            allTasks = taskRepo.getAllTasks();
-//        }
-//
-//        return allTasks;
-//    }
-
     public LiveData<List<Task>> getAllTasks(){
         if(allTasks == null){
             allTasks = taskRepo.getAllTasks();
@@ -58,27 +47,15 @@ public class TaskViewModel extends AndroidViewModel {
         return taskStepRepo.getByTaskId(task.getId());
     }
 
-    public void insertTasks(final List<Task> tasks){
+    public void insertTasks(final Task... tasks){
         taskRepo.insertTasks(tasks);
-
-        for(Task task: tasks){
-            List<TaskStep> taskSteps = task.getSteps();
-
-            taskStepRepo.insertTaskSteps(taskSteps);
-        }
     }
 
-    public void updateTasks(final List<Task> tasks){
+    public void updateTasks(final Task... tasks){
         taskRepo.updateTasks(tasks);
-
-        for(Task task: tasks){
-            List<TaskStep> taskSteps = task.getSteps();
-
-            taskStepRepo.insertTaskSteps(taskSteps);
-        }
     }
 
-    public void deleteTasks(final List<Task> tasks){
+    public void deleteTasks(final Task... tasks){
         taskRepo.deleteTasks(tasks);
     }
 }

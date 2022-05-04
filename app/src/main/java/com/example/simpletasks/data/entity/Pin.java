@@ -1,4 +1,4 @@
-package com.example.simpletasks.data.entities;
+package com.example.simpletasks.data.entity;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

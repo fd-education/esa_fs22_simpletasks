@@ -1,17 +1,10 @@
-package com.example.simpletasks.data.entities;
+package com.example.simpletasks.data.entity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
-
-import com.example.simpletasks.data.domains.TaskStepTypes;
-
-import java.util.Objects;
-import java.util.UUID;
 
 @Entity(tableName = "taskSteps",
         foreignKeys = {
@@ -24,16 +17,13 @@ import java.util.UUID;
 
 public class TaskStep {
 
-    @PrimaryKey
-    @NonNull
-    private String id;
+    @PrimaryKey(autoGenerate = true)
+    private int id;
 
     private int index;
 
-    @NonNull
     private String type;
 
-    @NonNull
     private String title;
 
     @ColumnInfo(name="image_uri")
@@ -50,12 +40,9 @@ public class TaskStep {
     @ColumnInfo(name="fk_task_id")
     private String taskId;
 
-    public TaskStep(){};
-
-    public TaskStep(String taskId, TaskStepTypes type, int index, @NonNull String title, String imageUri, String description, String videoUri, String audioUri){
-        this.id = UUID.randomUUID().toString();
+    public TaskStep(String taskId, String type, int index, String title, String imageUri, String description, String videoUri, String audioUri){
         this.taskId = taskId;
-        this.type = type.toString();
+        this.type = type;
         this.index = index;
         this.title = title;
         this.imageUri = imageUri;
@@ -64,11 +51,11 @@ public class TaskStep {
         this.audioUri = audioUri;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -134,18 +121,5 @@ public class TaskStep {
 
     public void setTaskId(String taskId) {
         this.taskId = taskId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TaskStep taskStep = (TaskStep) o;
-        return id == taskStep.id && index == taskStep.index && taskId == taskStep.taskId && type.equals(taskStep.type) && title.equals(taskStep.title) && Objects.equals(imageUri, taskStep.imageUri) && description.equals(taskStep.description) && Objects.equals(videoUri, taskStep.videoUri) && Objects.equals(audioUri, taskStep.audioUri);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, index, type, title, imageUri, description, videoUri, audioUri, taskId);
     }
 }

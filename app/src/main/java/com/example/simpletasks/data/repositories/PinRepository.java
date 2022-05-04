@@ -3,8 +3,8 @@ package com.example.simpletasks.data.repositories;
 import android.app.Application;
 
 import com.example.simpletasks.data.AppDatabase;
-import com.example.simpletasks.data.daos.PinDao;
-import com.example.simpletasks.data.entities.Pin;
+import com.example.simpletasks.data.dao.PinDao;
+import com.example.simpletasks.data.entity.Pin;
 
 public class PinRepository {
     private final PinDao pinDao;

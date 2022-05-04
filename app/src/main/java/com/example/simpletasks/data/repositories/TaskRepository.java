@@ -5,25 +5,19 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 
 import com.example.simpletasks.data.AppDatabase;
-import com.example.simpletasks.data.daos.TaskDao;
-import com.example.simpletasks.data.daos.TaskStepDao;
-import com.example.simpletasks.data.entities.Task;
-import com.example.simpletasks.data.entities.TaskStep;
-import com.example.simpletasks.data.entities.TaskWithSteps;
+import com.example.simpletasks.data.dao.TaskDao;
+import com.example.simpletasks.data.entity.Task;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class TaskRepository {
     private final TaskDao taskDao;
-    private final TaskStepDao taskStepDao;
     private LiveData<List<Task>> allTasks;
 
     public TaskRepository(Application application){
         AppDatabase db = AppDatabase.getAppDb(application);
         taskDao = db.taskDao();
-        taskStepDao = db.taskStepDao();
         allTasks = taskDao.getAll();
     }
 
@@ -36,33 +30,15 @@ public class TaskRepository {
         return taskDao.getByDate(startDate, endDate);
     }
 
-    public void insertTasks(final List<Task> tasks){
+    public void insertTasks(final Task... tasks){
         AppDatabase.databaseWriteExecutor.execute(() -> taskDao.insertTasks(tasks));
     }
 
-    public void insertTaskWithSteps(final List<TaskWithSteps> tasks){
-        List<Task> taskList = new ArrayList<>();
-        List<TaskStep> stepList = new ArrayList<>();
-
-        for(TaskWithSteps task: tasks){
-            taskList.add(task.getTask());
-
-            for(TaskStep step: task.getSteps()){
-                stepList.add(step);
-            }
-        }
-
-        AppDatabase.databaseWriteExecutor.execute(() -> {
-            taskDao.insertTasks(taskList);
-            taskStepDao.insertTaskSteps(stepList);
-        });
-    }
-
-    public void updateTasks(final List<Task> tasks){
+    public void updateTasks(final Task... tasks){
         AppDatabase.databaseWriteExecutor.execute(() -> taskDao.updateTasks(tasks));
     }
 
-    public void deleteTasks(final List<Task> tasks){
+    public void deleteTasks(final Task... tasks){
         AppDatabase.databaseWriteExecutor.execute(() -> taskDao.deleteTasks(tasks));
     }
 }
