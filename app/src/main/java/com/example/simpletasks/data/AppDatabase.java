@@ -10,13 +10,13 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.example.simpletasks.data.converter.DateConverter;
-import com.example.simpletasks.data.dao.PinDao;
-import com.example.simpletasks.data.dao.TaskDao;
-import com.example.simpletasks.data.dao.TaskStepDao;
-import com.example.simpletasks.data.entity.Pin;
-import com.example.simpletasks.data.entity.Task;
-import com.example.simpletasks.data.entity.TaskStep;
+import com.example.simpletasks.data.converters.DateConverter;
+import com.example.simpletasks.data.daos.PinDao;
+import com.example.simpletasks.data.daos.TaskDao;
+import com.example.simpletasks.data.daos.TaskStepDao;
+import com.example.simpletasks.data.entities.Pin;
+import com.example.simpletasks.data.entities.Task;
+import com.example.simpletasks.data.entities.TaskStep;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,7 +27,7 @@ import java.util.concurrent.Executors;
 /**
  * The Room database for Simple Tasks
  */
-@Database(entities = {Task.class, TaskStep.class, Pin.class}, version = 1, exportSchema = false)
+@Database(entities={Task.class, TaskStep.class, Pin.class}, version = 2, exportSchema = false)
 @TypeConverters(DateConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -62,25 +62,15 @@ public abstract class AppDatabase extends RoomDatabase {
         return result;
     }
 
-    private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
-        @Override
-        public void onOpen(@NonNull SupportSQLiteDatabase db) {
-            super.onOpen(db);
+    public void seedDatabase(int nbrOfTasks){
+        databaseWriteExecutor.execute(() -> {
+            List<Task> tasks = Seeder.createSeed(nbrOfTasks);
 
-            databaseWriteExecutor.execute(() -> {
-                TaskDao dao = APP_DB.taskDao();
+            this.taskDao().insertTasks(tasks);
 
-                List<TaskStep> taskSteps = new ArrayList<>();
-                taskSteps.add(new TaskStep("0", "Type", 0, "Titel Step1", "https://onlyhdwallpapers.com/wallpaper/testimage-hdtv-3sf1.jpg?preview", "beschreibung step", "", ""));
-                taskSteps.add(new TaskStep("0", "Type", 1, "Titel Step2", "", "beschreibung step", "", ""));
-                Task task = new Task("Titel1", "Beschreibung1", new Date(2022, 5, 1), null, Long.MAX_VALUE, new Date(2022, 6, 30), taskSteps);
-                dao.insertTasks(task);
-                taskSteps = new ArrayList<>();
-                taskSteps.add(new TaskStep("0", "Type", 0, "Titel Step1", "https://www.researchgate.net/profile/Shagufta-Yasmin/publication/313121867/figure/fig4/AS:629900906078221@1527191487716/Original-Colour-Test-Image.png", "beschreibung step", "", ""));
-                taskSteps.add(new TaskStep("0", "Type", 1, "Titel Step2", "", "beschreibung step", "", ""));
-                task = new Task("Titel2", "Beschreibung2", new Date(2022, 5, 1), null, Long.MAX_VALUE, new Date(2022, 6, 30), taskSteps);
-                dao.insertTasks(task);
-            });
-        }
-    };
+            for(Task task: tasks){
+                this.taskStepDao().insertTaskSteps(task.getSteps());
+            }
+        });
+    }
 }

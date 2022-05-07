@@ -8,43 +8,54 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
+import com.example.simpletasks.data.domains.TaskStepTypes;
+
+import java.util.Objects;
+import java.util.UUID;
+
 @Entity(tableName = "taskSteps",
         foreignKeys = {
-                @ForeignKey(entity = Task.class,
-                        parentColumns = "id",
-                        childColumns = "fk_task_id",
-                        onDelete = ForeignKey.CASCADE)},
-        indices = {@Index(value = "fk_task_id")}
-)
+            @ForeignKey(entity = Task.class,
+                parentColumns = "id",
+                childColumns = "fk_task_id",
+                onDelete = ForeignKey.CASCADE)},
+                indices = {@Index(value="fk_task_id")}
+        )
 
 public class TaskStep implements Serializable {
 
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+    @PrimaryKey
+    @NonNull
+    private String id;
 
     private int index;
 
+    @NonNull
     private String type;
 
+    @NonNull
     private String title;
 
-    @ColumnInfo(name = "image_uri")
+    @ColumnInfo(name="image_uri")
     private String imageUri;
 
     private String description;
 
-    @ColumnInfo(name = "video_uri")
+    @ColumnInfo(name="video_uri")
     private String videoUri;
 
-    @ColumnInfo(name = "audio_uri")
+    @ColumnInfo(name="audio_uri")
     private String audioUri;
 
-    @ColumnInfo(name = "fk_task_id")
+    @ColumnInfo(name="fk_task_id")
     private String taskId;
 
-    public TaskStep(String taskId, String type, int index, String title, String imageUri, String description, String videoUri, String audioUri) {
+    public TaskStep(){};
+
+    public TaskStep(String taskId, TaskStepTypes type, int index, @NonNull String title, String imageUri, String description, String videoUri, String audioUri){
+        this.id = UUID.randomUUID().toString();
         this.taskId = taskId;
-        this.type = type;
+        this.type = type.toString();
         this.index = index;
         this.title = title;
         this.imageUri = imageUri;
@@ -53,11 +64,11 @@ public class TaskStep implements Serializable {
         this.audioUri = audioUri;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -123,5 +134,18 @@ public class TaskStep implements Serializable {
 
     public void setTaskId(String taskId) {
         this.taskId = taskId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TaskStep taskStep = (TaskStep) o;
+        return id == taskStep.id && index == taskStep.index && taskId == taskStep.taskId && type.equals(taskStep.type) && title.equals(taskStep.title) && Objects.equals(imageUri, taskStep.imageUri) && description.equals(taskStep.description) && Objects.equals(videoUri, taskStep.videoUri) && Objects.equals(audioUri, taskStep.audioUri);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, index, type, title, imageUri, description, videoUri, audioUri, taskId);
     }
 }
