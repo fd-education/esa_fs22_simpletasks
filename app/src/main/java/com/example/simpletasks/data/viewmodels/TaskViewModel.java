@@ -67,27 +67,15 @@ public class TaskViewModel extends AndroidViewModel {
         return taskStepRepo.getByTaskId(task.getId());
     }
 
-    public void insertTasks(final List<Task> tasks){
-        taskRepo.insertTasks(tasks);
-
-        for(Task task: tasks){
-            List<TaskStep> taskSteps = task.getSteps();
-
-            taskStepRepo.insertTaskSteps(taskSteps);
-        }
+    public void insertTasks(final List<TaskWithSteps> tasksWithSteps){
+        taskRepo.insertTaskWithSteps(tasksWithSteps);
     }
 
-    public void updateTasks(final List<Task> tasks){
-        taskRepo.updateTasks(tasks);
-
-        for(Task task: tasks){
-            List<TaskStep> taskSteps = task.getSteps();
-
-            taskStepRepo.insertTaskSteps(taskSteps);
-        }
+    public void updateTasks(final List<TaskWithSteps> tasksWithSteps){
+        taskRepo.updateTasks(tasksWithSteps);
     }
 
-    public void deleteTasks(final List<Task> tasks){
+    public void deleteTasks(final List<TaskWithSteps> tasks){
         taskRepo.deleteTasks(tasks);
     }
 }

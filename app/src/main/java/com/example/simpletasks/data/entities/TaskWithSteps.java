@@ -3,9 +3,10 @@ package com.example.simpletasks.data.entities;
 import androidx.room.Embedded;
 import androidx.room.Relation;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class TaskWithSteps {
+public class TaskWithSteps implements Serializable {
     @Embedded
     private Task task;
 
@@ -14,6 +15,11 @@ public class TaskWithSteps {
             entityColumn = "fk_task_id"
     )
     private List<TaskStep> taskSteps;
+    
+    public TaskWithSteps(Task task, List<TaskStep> taskSteps) {
+        this.task = task;
+        this.taskSteps = taskSteps;
+    }
 
     public Task getTask() {
         return task;

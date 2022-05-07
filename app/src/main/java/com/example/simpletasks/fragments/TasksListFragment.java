@@ -14,8 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.simpletasks.MainActivity;
 import com.example.simpletasks.R;
 import com.example.simpletasks.adapters.TaskListAdapter;
-import com.example.simpletasks.data.entity.Task;
-import com.example.simpletasks.data.entity.TaskStep;
+import com.example.simpletasks.data.domains.TaskStepTypes;
+import com.example.simpletasks.data.entities.Task;
+import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.viewmodels.TaskViewModel;
 
 import java.util.ArrayList;
@@ -44,16 +45,8 @@ public class TasksListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
-        taskViewModel.getAllTasks().observe(getViewLifecycleOwner(), tasks -> {
+        taskViewModel.getAllTasksWithSteps().observe(getViewLifecycleOwner(), tasks -> {
             Log.d(TAG, "Tasks successfully fetched from db");
-
-            //TODO change this after steps was implemented
-            for (Task task : tasks) {
-                List<TaskStep> list = new ArrayList<>();
-                list.add(new TaskStep("15", "Type", 0, "Titel Step1", "", "beschreibung step1", "", ""));
-                list.add(new TaskStep("15", "Type", 1, "Titel Step2", "", "beschreibung step2", "", ""));
-                task.setSteps(list);
-            }
 
             adapter.setTasks(tasks);
             MainActivity.setTasks(tasks);

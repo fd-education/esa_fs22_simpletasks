@@ -13,8 +13,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.simpletasks.R;
 import com.example.simpletasks.TaskGuideActivity;
-import com.example.simpletasks.data.entity.Task;
-import com.example.simpletasks.data.entity.TaskStep;
+import com.example.simpletasks.data.entities.Task;
+import com.example.simpletasks.data.entities.TaskStep;
 
 public class TaskGuideFragment extends Fragment {
     private static final String TAG = "TaskGuideFragment";

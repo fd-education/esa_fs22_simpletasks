@@ -5,10 +5,7 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 
 import com.example.simpletasks.data.AppDatabase;
-import com.example.simpletasks.data.dao.TaskStepDao;
-import com.example.simpletasks.data.entity.TaskStep;
 import com.example.simpletasks.data.daos.TaskStepDao;
-import com.example.simpletasks.data.entities.Task;
 import com.example.simpletasks.data.entities.TaskStep;
 
 import java.util.List;

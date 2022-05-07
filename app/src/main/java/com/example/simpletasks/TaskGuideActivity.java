@@ -7,8 +7,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.simpletasks.data.entity.Task;
-import com.example.simpletasks.data.entity.TaskStep;
+import com.example.simpletasks.data.entities.TaskWithSteps;
+import com.example.simpletasks.data.entities.Task;
+import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.fragments.TaskGuideFragment;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.Objects;
 
 public class TaskGuideActivity extends AppCompatActivity {
     private static final String TAG = "TaskGuideActivity";
+    private TaskWithSteps taskWithSteps;
     private Task task;
     private List<TaskStep> taskSteps;
     private int currentStep;
@@ -29,11 +31,14 @@ public class TaskGuideActivity extends AppCompatActivity {
         setContentView(R.layout.activity_task_guide);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        task = getTask();
-        taskSteps = task.getSteps();
+        taskWithSteps = getTask();
+        task = taskWithSteps.getTask();
+        taskSteps = taskWithSteps.getSteps();
         setTaskTitleOnUi();
 
+
         currentStep = 0;
+
         setFragment();
     }
 
@@ -43,10 +48,6 @@ public class TaskGuideActivity extends AppCompatActivity {
      * @param view the view from where the button is clicked
      */
     public void onBackClicked(View view) {
-        /*TODO entscheiden, ob man aus dem task gehen darf oder ihn an einem stück machen soll??
-        falls nicht: so lassen
-        falls schon: code in onbackpressed wieder hier rein kopieren
-         */
         onBackPressed();
     }
 
@@ -92,8 +93,8 @@ public class TaskGuideActivity extends AppCompatActivity {
      *
      * @return the fetched task from the intent
      */
-    private Task getTask() {
-        return (Task) getIntent().getExtras().getSerializable(TASK_INTENT_EXTRA);
+    private TaskWithSteps getTask() {
+        return (TaskWithSteps) getIntent().getExtras().getSerializable(TASK_INTENT_EXTRA);
     }
 
     /**

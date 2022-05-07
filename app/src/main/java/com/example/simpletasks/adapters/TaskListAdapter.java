@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.simpletasks.R;
 import com.example.simpletasks.TaskGuideActivity;
-import com.example.simpletasks.data.entity.Task;
+import com.example.simpletasks.data.entities.Task;
+import com.example.simpletasks.data.entities.TaskStep;
+import com.example.simpletasks.data.entities.TaskWithSteps;
 
 import java.util.List;
 
@@ -38,7 +40,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
 
     private final LayoutInflater mInflater;
     private Context context;
-    private List<Task> tasks;
+    private List<TaskWithSteps> tasks;
 
     public TaskListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
@@ -54,15 +56,17 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
     @Override
     public void onBindViewHolder(@NonNull TaskListViewHolder holder, int position) {
         if (tasks != null) {
-            Task current = tasks.get(position);
-            holder.titleTask.setText(current.getTitle());
-            holder.countStepsIndicator.setText(context.getString(R.string.total_steps, current.getSteps().size()));
+            TaskWithSteps taskWithSteps = tasks.get(position);
+            Task currentTask = taskWithSteps.getTask();
+            List<TaskStep> currentSteps = taskWithSteps.getSteps();
+            holder.titleTask.setText(currentTask.getTitle());
+            holder.countStepsIndicator.setText(context.getString(R.string.total_steps, currentSteps.size()));
             holder.taskImage.setImageResource(R.drawable.ic_launcher_background/*TODO change */);
             holder.itemView.setOnClickListener(v -> {
                 //when clicked on a list item, execute following code
                 Intent intent = new Intent(context, TaskGuideActivity.class);
                 //intent.putExtra(TaskGuideActivity.TASK_INTENT_EXTRA, current.getId());
-                intent.putExtra(TaskGuideActivity.TASK_INTENT_EXTRA, current);
+                intent.putExtra(TaskGuideActivity.TASK_INTENT_EXTRA, taskWithSteps);
                 context.startActivity(intent);
             });
         } else {
@@ -74,7 +78,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
 
     }
 
-    public void setTasks(List<Task> tasks) {
+    public void setTasks(List<TaskWithSteps> tasks) {
         this.tasks = tasks;
         notifyDataSetChanged();
     }

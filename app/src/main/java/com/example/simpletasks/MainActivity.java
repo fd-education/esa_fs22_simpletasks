@@ -7,7 +7,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.simpletasks.data.entity.Task;
+import com.example.simpletasks.data.entities.TaskWithSteps;
 import com.example.simpletasks.data.viewmodels.TaskViewModel;
 
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    private static List<Task> tasks;
+    private static List<TaskWithSteps> tasks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         //TODO
     }
 
-    public static void setTasks(List<Task> tasks) {
+    public static void setTasks(List<TaskWithSteps> tasks) {
         MainActivity.tasks = tasks;
     }
 
@@ -47,9 +47,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void deleteAllTasks(View view) {
         TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
-        for (Task task : tasks) {
-            taskViewModel.deleteTasks(task);
-        }
+        taskViewModel.deleteTasks(tasks);
         Log.d(TAG, "'deleted all tasks' finished");
     }
 }

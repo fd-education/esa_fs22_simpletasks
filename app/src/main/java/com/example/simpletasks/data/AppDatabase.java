@@ -17,9 +17,9 @@ import com.example.simpletasks.data.daos.TaskStepDao;
 import com.example.simpletasks.data.entities.Pin;
 import com.example.simpletasks.data.entities.Task;
 import com.example.simpletasks.data.entities.TaskStep;
+import com.example.simpletasks.data.entities.TaskWithSteps;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -27,7 +27,7 @@ import java.util.concurrent.Executors;
 /**
  * The Room database for Simple Tasks
  */
-@Database(entities={Task.class, TaskStep.class, Pin.class}, version = 2, exportSchema = false)
+@Database(entities = {Task.class, TaskStep.class, Pin.class}, version = 2, exportSchema = false)
 @TypeConverters(DateConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -54,7 +54,10 @@ public abstract class AppDatabase extends RoomDatabase {
             synchronized (AppDatabase.class) {
                 result = APP_DB;
                 if (result == null) {
-                    APP_DB = result = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, DB_NAME)/*.addCallback(sRoomDatabaseCallback)*/.build();
+                    APP_DB = result = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, DB_NAME)
+                            //.addCallback(seedDatabase)
+                            .fallbackToDestructiveMigration()
+                            .build();
                 }
             }
         }
@@ -62,15 +65,29 @@ public abstract class AppDatabase extends RoomDatabase {
         return result;
     }
 
-    public void seedDatabase(int nbrOfTasks){
-        databaseWriteExecutor.execute(() -> {
-            List<Task> tasks = Seeder.createSeed(nbrOfTasks);
+    private static final RoomDatabase.Callback seedDatabase = new RoomDatabase.Callback() {
+        @Override
+        public void onOpen(@NonNull SupportSQLiteDatabase db) {
+            super.onOpen(db);
 
-            this.taskDao().insertTasks(tasks);
+            databaseWriteExecutor.execute(() -> {
+                TaskDao taskDao = APP_DB.taskDao();
+                TaskStepDao taskStepDao = APP_DB.taskStepDao();
 
-            for(Task task: tasks){
-                this.taskStepDao().insertTaskSteps(task.getSteps());
-            }
-        });
-    }
+
+                List<TaskWithSteps> tasksWithSteps = Seeder.createSeed(5);
+                List<Task> tasks = new ArrayList<>();
+
+                for (TaskWithSteps task : tasksWithSteps) {
+                    tasks.add(task.getTask());
+                }
+
+                taskDao.insertTasks(tasks);
+
+                for (TaskWithSteps task : tasksWithSteps) {
+                    taskStepDao.insertTaskSteps(task.getSteps());
+                }
+            });
+        }
+    };
 }

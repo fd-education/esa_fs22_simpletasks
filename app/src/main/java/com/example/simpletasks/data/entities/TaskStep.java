@@ -1,15 +1,15 @@
-package com.example.simpletasks.data.entity;
+package com.example.simpletasks.data.entities;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import java.io.Serializable;
-
 import com.example.simpletasks.data.domains.TaskStepTypes;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 

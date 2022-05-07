@@ -34,34 +34,36 @@ public class TaskRepository {
         return allTasks;
     }
 
-    public LiveData<List<TaskWithSteps>> getAllTasksWithSteps(){return allTasksWithSteps;}
+    public LiveData<List<TaskWithSteps>> getAllTasksWithSteps() {
+        return allTasksWithSteps;
+    }
 
-    public LiveData<List<Task>> getTasksByDate(final Date date){
+    public LiveData<List<Task>> getTasksByDate(final Date date) {
         Date startDate = new Date(date.getYear(), date.getMonth(), date.getDay(), 0, 0, 0);
         Date endDate = new Date(date.getYear(), date.getMonth(), date.getDay() + 1, 0, 0, 0);
 
         return taskDao.getByDate(startDate, endDate);
     }
 
-    public LiveData<List<TaskWithSteps>> getTasksByDateWithSteps(final Date date){
+    public LiveData<List<TaskWithSteps>> getTasksByDateWithSteps(final Date date) {
         Date startDate = new Date(date.getYear(), date.getMonth(), date.getDay(), 0, 0, 0);
         Date endDate = new Date(date.getYear(), date.getMonth(), date.getDay() + 1, 0, 0, 0);
 
         return taskDao.getByDateWithSteps(startDate, endDate);
     }
 
-    public void insertTasks(final List<Task> tasks){
+    public void insertTasks(final List<Task> tasks) {
         AppDatabase.databaseWriteExecutor.execute(() -> taskDao.insertTasks(tasks));
     }
 
-    public void insertTaskWithSteps(final List<TaskWithSteps> tasks){
+    public void insertTaskWithSteps(final List<TaskWithSteps> tasksWithSteps) {
         List<Task> taskList = new ArrayList<>();
         List<TaskStep> stepList = new ArrayList<>();
 
-        for(TaskWithSteps task: tasks){
+        for (TaskWithSteps task : tasksWithSteps) {
             taskList.add(task.getTask());
 
-            for(TaskStep step: task.getSteps()){
+            for (TaskStep step : task.getSteps()) {
                 stepList.add(step);
             }
         }
@@ -72,11 +74,29 @@ public class TaskRepository {
         });
     }
 
-    public void updateTasks(final List<Task> tasks){
+    public void updateTasks(final List<TaskWithSteps> tasksWithSteps) {
+        List<Task> tasks = new ArrayList<>();
+        for(TaskWithSteps task : tasksWithSteps) {
+            tasks.add(task.getTask());
+        }
+
         AppDatabase.databaseWriteExecutor.execute(() -> taskDao.updateTasks(tasks));
+
+        for(TaskWithSteps task : tasksWithSteps) {
+            AppDatabase.databaseWriteExecutor.execute(() -> taskStepDao.updateTaskSteps(task.getSteps()));
+        }
     }
 
-    public void deleteTasks(final List<Task> tasks){
+    public void deleteTasks(final List<TaskWithSteps> tasksWithSteps) {
+        List<Task> tasks = new ArrayList<>();
+        for(TaskWithSteps task : tasksWithSteps) {
+            tasks.add(task.getTask());
+        }
+
         AppDatabase.databaseWriteExecutor.execute(() -> taskDao.deleteTasks(tasks));
+
+        for(TaskWithSteps task : tasksWithSteps) {
+            AppDatabase.databaseWriteExecutor.execute(() -> taskStepDao.deleteTaskSteps(task.getSteps()));
+        }
     }
 }
