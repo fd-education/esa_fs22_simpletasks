@@ -14,7 +14,7 @@
         android:layout_marginTop="@dimen/sidesPadding"
         android:layout_marginEnd="@dimen/sidesPadding"
         android:text="@string/app_name"
-        android:textColor="@color/black"
+        android:textColor="?colorOnBackground"
         android:textSize="@dimen/h1"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/elementPadding"
         android:text="@string/tasks_today"
-        android:textColor="@color/black"
+        android:textColor="?colorOnBackground"
         android:textSize="@dimen/h2"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/titleHome"
@@ -41,7 +41,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/elementPadding"
         android:layout_marginBottom="@dimen/elementPadding"
-        app:layout_constraintBottom_toTopOf="@+id/caretakerLoginButton"
+        app:layout_constraintBottom_toTopOf="@+id/loginHint"
         app:layout_constraintEnd_toEndOf="@+id/editTasksTitle"
         app:layout_constraintStart_toStartOf="@+id/editTasksTitle"
         app:layout_constraintTop_toBottomOf="@+id/editTasksTitle" />
@@ -51,11 +51,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/sidesPadding"
-        android:backgroundTint="@color/accent_blue"
+        android:backgroundTint="?colorPrimary"
         android:onClick="onLoginClicked"
         android:text="@string/caretaker_login"
         android:textSize="@dimen/p"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/loginHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/halfElementPadding"
+        android:text="@string/caretaker_login_hint"
+        android:textColor="?attr/hintTextColor"
+        app:layout_constraintBottom_toTopOf="@+id/caretakerLoginButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

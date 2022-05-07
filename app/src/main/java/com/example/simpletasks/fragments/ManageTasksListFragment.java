@@ -11,13 +11,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.simpletasks.MainActivity;
+import com.example.simpletasks.ManageTaskActivity;
 import com.example.simpletasks.R;
-import com.example.simpletasks.adapters.TaskListAdapter;
+import com.example.simpletasks.adapters.ManageTaskListAdapter;
 import com.example.simpletasks.data.viewmodels.TaskViewModel;
 
-public class TasksListFragment extends Fragment {
-    private static final String TAG = "TaskListFragment";
+public class ManageTasksListFragment extends Fragment {
+    private static final String TAG = "EditTaskListFragment";
     private View view;
 
     @Override
@@ -34,16 +34,16 @@ public class TasksListFragment extends Fragment {
      */
     private void setAdapterWithTasks() {
         final RecyclerView recyclerView = view.findViewById(R.id.tasks_list);
-        TaskListAdapter adapter = new TaskListAdapter(getContext());
+        ManageTaskListAdapter adapter = new ManageTaskListAdapter(getContext(), this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
-        taskViewModel.getTodaysTasksWithSteps().observe(getViewLifecycleOwner(), tasks -> {
-            Log.d(TAG, "today Tasks successfully fetched from db");
+        taskViewModel.getAllTasksWithSteps().observe(getViewLifecycleOwner(), tasks -> {
+            Log.d(TAG, "all Tasks successfully fetched from db");
 
             adapter.setTasks(tasks);
-            MainActivity.setTasks(tasks);
+            ManageTaskActivity.setTasks(tasks);
         });
     }
 }

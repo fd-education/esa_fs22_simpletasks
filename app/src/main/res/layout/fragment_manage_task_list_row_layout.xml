@@ -5,11 +5,12 @@
     android:id="@+id/imageTask"
     android:layout_width="fill_parent"
     android:layout_height="100dp"
-    android:background="@color/accent_blue"
+    android:layout_marginVertical="@dimen/halfElementPadding"
+    android:background="?colorPrimary"
     android:padding="@dimen/elementPadding">
 
     <ImageView
-        android:id="@+id/task_image"
+        android:id="@+id/taskImage_editTasks"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:contentDescription="@string/task_image"
@@ -19,59 +20,61 @@
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <TextView
-        android:id="@+id/titleTask"
+        android:id="@+id/titleTask_editTasks"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/elementPadding"
         android:text="@string/placeholder"
         android:textAlignment="viewStart"
-        android:textColor="@color/white"
+        android:textColor="?colorOnPrimary"
         android:textSize="@dimen/h2"
         android:textStyle="bold"
         android:typeface="sans"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/task_image"
-        app:layout_constraintTop_toTopOf="@+id/task_image" />
+        app:layout_constraintStart_toEndOf="@+id/taskImage_editTasks"
+        app:layout_constraintTop_toTopOf="@+id/taskImage_editTasks" />
 
     <TextView
-        android:id="@+id/countStepsIndicator"
+        android:id="@+id/countStepsIndicator_editTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/elementPadding"
         android:layout_marginTop="@dimen/elementPadding"
         android:text="@string/placeholder"
-        android:textColor="@color/white"
+        android:textColor="?colorOnPrimary"
         android:textSize="@dimen/p"
         android:typeface="sans"
-        app:layout_constraintStart_toEndOf="@+id/task_image"
-        app:layout_constraintTop_toBottomOf="@+id/titleTask" />
+        app:layout_constraintStart_toEndOf="@+id/taskImage_editTasks"
+        app:layout_constraintTop_toBottomOf="@+id/titleTask_editTasks" />
 
     <ImageButton
-        android:id="@+id/editTaskButton"
+        android:id="@+id/editTaskButton_editTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#00000000"
         android:contentDescription="@string/edit_task"
-        app:layout_constraintBottom_toBottomOf="@+id/task_image"
-        app:layout_constraintEnd_toEndOf="@+id/titleTask"
-        app:layout_constraintTop_toTopOf="@+id/countStepsIndicator"
+        app:layout_constraintBottom_toBottomOf="@+id/taskImage_editTasks"
+        app:layout_constraintEnd_toEndOf="@+id/titleTask_editTasks"
+        app:layout_constraintTop_toTopOf="@+id/countStepsIndicator_editTask"
         app:srcCompat="@drawable/edit_fill0_wght400_grad0_opsz48"
-        app:tint="@color/white" />
+        app:tint="?colorOnPrimary"
+        android:onClick="onEditTaskClicked"/>
 
     <ImageButton
-        android:id="@+id/deleteTaskButton"
+        android:id="@+id/deleteTaskButton_editTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/elementPadding"
         android:background="#00000000"
         android:contentDescription="@string/delete_task"
         android:scaleType="center"
-        app:layout_constraintBottom_toBottomOf="@+id/task_image"
-        app:layout_constraintEnd_toStartOf="@+id/editTaskButton"
-        app:layout_constraintTop_toTopOf="@+id/countStepsIndicator"
+        app:layout_constraintBottom_toBottomOf="@+id/taskImage_editTasks"
+        app:layout_constraintEnd_toStartOf="@+id/editTaskButton_editTask"
+        app:layout_constraintTop_toTopOf="@+id/countStepsIndicator_editTask"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/delete_fill0_wght400_grad0_opsz48_2"
-        app:tint="@color/white" />
+        app:tint="?colorOnPrimary"
+        android:onClick="onDeleteTaskClicked"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

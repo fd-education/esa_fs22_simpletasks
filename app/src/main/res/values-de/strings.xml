@@ -12,6 +12,7 @@
     <string name="edit_task">Task bearbeiten</string>
     <string name="run_task">Task durchführen</string>
     <string name="task_image">Taskbild</string>
+    <string name="caretaker_login_hint">Logge dich ein, um Tasks bearbeiten zu können</string>
 
 
     <string name="placeholder">Placeholder</string>

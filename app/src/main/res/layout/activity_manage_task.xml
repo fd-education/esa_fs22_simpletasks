@@ -4,7 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ManageTaskActivity">
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete all"
+        app:layout_constraintStart_toStartOf="@+id/fragmentContainerTaskList"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentContainerTaskList" />
 
     <ImageButton
         android:id="@+id/backButton_EditTasks"
@@ -15,20 +23,21 @@
         android:backgroundTint="#00000000"
         android:contentDescription="@string/back"
         android:onClick="onLogoutClicked"
+        app:tint="?colorOnBackground"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/arrow_back_black_24dp" />
 
     <TextView
         android:id="@+id/editTasksTitle"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/sidesPadding"
         android:layout_marginEnd="@dimen/sidesPadding"
         android:layout_marginBottom="@dimen/elementPadding"
         android:text="@string/edit_tasks"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="?colorOnBackground"
         android:textSize="@dimen/h2"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/fragmentContainerTaskList"
@@ -38,22 +47,26 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerTaskList"
-        android:name="com.example.simpletasks.fragments.TasksListFragment"
+        android:name="com.example.simpletasks.fragments.ManageTasksListFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="@dimen/sidesPadding"
         android:layout_marginTop="@dimen/elementPadding"
+        android:layout_marginEnd="@dimen/sidesPadding"
         android:layout_marginBottom="@dimen/elementPadding"
         app:layout_constraintBottom_toTopOf="@+id/caretakerLoginButton"
-        app:layout_constraintEnd_toEndOf="@+id/editTasksTitle"
-        app:layout_constraintStart_toStartOf="@+id/editTasksTitle"
-        app:layout_constraintTop_toBottomOf="@+id/backButton_EditTasks" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backButton_EditTasks"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/caretakerLoginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/sidesPadding"
-        android:backgroundTint="@color/red"
+        android:backgroundTint="?buttonBarNegativeButtonStyle"
         android:onClick="onLogoutClicked"
         android:text="@string/logout"
         android:textSize="@dimen/p"

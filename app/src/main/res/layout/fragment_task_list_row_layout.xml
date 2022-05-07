@@ -5,12 +5,12 @@
     android:id="@+id/taskListItem"
     android:layout_width="fill_parent"
     android:layout_height="100dp"
-    android:background="@color/accent_blue"
-    android:padding="@dimen/elementPadding"
-    android:layout_marginVertical="@dimen/halfElementPadding">
+    android:layout_marginVertical="@dimen/halfElementPadding"
+    android:background="?colorPrimary"
+    android:padding="@dimen/elementPadding">
 
     <ImageView
-        android:id="@+id/taskImage"
+        android:id="@+id/taskImage_taskList"
         android:layout_width="80dp"
         android:layout_height="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,46 +19,46 @@
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <TextView
-        android:id="@+id/titleTask"
+        android:id="@+id/titleTask_taskList"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/elementPadding"
         android:text="Task Title"
         android:textAlignment="viewStart"
-        android:textColor="@color/white"
+        android:textColor="?colorOnPrimary"
         android:textSize="@dimen/h2"
         android:textStyle="bold"
         android:typeface="sans"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/taskImage"
-        app:layout_constraintTop_toTopOf="@+id/task_image" />
+        app:layout_constraintStart_toEndOf="@+id/taskImage_taskList"
+        app:layout_constraintTop_toTopOf="@+id/taskImage_editTasks" />
 
     <TextView
-        android:id="@+id/countStepsIndicator"
+        android:id="@+id/countStepsIndicator_taskList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/elementPadding"
         android:text="X Steps"
-        android:textColor="@color/white"
+        android:textColor="?colorOnPrimary"
         android:textSize="@dimen/p"
         android:typeface="sans"
-        app:layout_constraintEnd_toEndOf="@+id/titleTask"
+        app:layout_constraintEnd_toEndOf="@+id/titleTask_taskList"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/titleTask"
-        app:layout_constraintTop_toBottomOf="@+id/titleTask" />
+        app:layout_constraintStart_toStartOf="@+id/titleTask_taskList"
+        app:layout_constraintTop_toBottomOf="@+id/titleTask_taskList" />
 
     <ImageButton
-        android:id="@+id/editTaskButton"
+        android:id="@+id/editTaskButton_editTask"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:backgroundTint="@color/bordeaux"
+        android:backgroundTint="?colorSecondary"
         android:contentDescription="skip task"
         android:scaleType="center"
-        app:layout_constraintBottom_toBottomOf="@+id/task_image"
-        app:layout_constraintEnd_toEndOf="@+id/titleTask"
-        app:layout_constraintTop_toTopOf="@+id/countStepsIndicator"
+        app:layout_constraintBottom_toBottomOf="@+id/taskImage_taskList"
+        app:layout_constraintEnd_toEndOf="@+id/titleTask_taskList"
+        app:layout_constraintTop_toTopOf="@+id/countStepsIndicator_taskList"
         app:srcCompat="@drawable/skip_next_black_24dp"
-        app:tint="@color/white" />
+        app:tint="?colorOnSecondary" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -74,8 +74,8 @@ public abstract class AppDatabase extends RoomDatabase {
                 TaskDao taskDao = APP_DB.taskDao();
                 TaskStepDao taskStepDao = APP_DB.taskStepDao();
 
-
                 List<TaskWithSteps> tasksWithSteps = Seeder.createSeed(5);
+
                 List<Task> tasks = new ArrayList<>();
 
                 for (TaskWithSteps task : tasksWithSteps) {

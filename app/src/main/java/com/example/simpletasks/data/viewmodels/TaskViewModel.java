@@ -11,6 +11,7 @@ import com.example.simpletasks.data.entities.TaskWithSteps;
 import com.example.simpletasks.data.repositories.TaskRepository;
 import com.example.simpletasks.data.repositories.TaskStepRepository;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -73,6 +74,12 @@ public class TaskViewModel extends AndroidViewModel {
 
     public void updateTasks(final List<TaskWithSteps> tasksWithSteps){
         taskRepo.updateTasks(tasksWithSteps);
+    }
+
+    public void deleteTask(final TaskWithSteps task) {
+        List<TaskWithSteps> list = new ArrayList<>();
+        list.add(task);
+        deleteTasks(list);
     }
 
     public void deleteTasks(final List<TaskWithSteps> tasks){

@@ -22,9 +22,6 @@ public class TaskGuideActivity extends AppCompatActivity {
     private List<TaskStep> taskSteps;
     private int currentStep;
 
-    public static final String TASK_INTENT_EXTRA = "task_intent_extra";
-    public static final String CURRENT_TASK_STEP_INTENT_EXTRA = "current_task_step_intent_extra";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +91,7 @@ public class TaskGuideActivity extends AppCompatActivity {
      * @return the fetched task from the intent
      */
     private TaskWithSteps getTask() {
-        return (TaskWithSteps) getIntent().getExtras().getSerializable(TASK_INTENT_EXTRA);
+        return (TaskWithSteps) getIntent().getExtras().getSerializable(MainActivity.TASK_INTENT_EXTRA);
     }
 
     /**
@@ -129,7 +126,7 @@ public class TaskGuideActivity extends AppCompatActivity {
     @NonNull
     private TaskGuideFragment getTaskGuideFragmentWithArguments() {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(CURRENT_TASK_STEP_INTENT_EXTRA, taskSteps.get(currentStep));
+        bundle.putSerializable(MainActivity.CURRENT_TASK_STEP_INTENT_EXTRA, taskSteps.get(currentStep));
         TaskGuideFragment fragment = new TaskGuideFragment();
         fragment.setArguments(bundle);
         return fragment;

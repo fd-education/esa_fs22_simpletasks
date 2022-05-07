@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.simpletasks.MainActivity;
 import com.example.simpletasks.R;
-import com.example.simpletasks.TaskGuideActivity;
 import com.example.simpletasks.data.entities.Task;
 import com.example.simpletasks.data.entities.TaskStep;
 
@@ -34,7 +34,7 @@ public class TaskGuideFragment extends Fragment {
 
     private void setTaskStepFromArguments() {
         if (getArguments() != null) {
-            taskStep = (TaskStep) getArguments().getSerializable(TaskGuideActivity.CURRENT_TASK_STEP_INTENT_EXTRA);
+            taskStep = (TaskStep) getArguments().getSerializable(MainActivity.CURRENT_TASK_STEP_INTENT_EXTRA);
             Log.d(TAG, "successfully loaded task step from fragment start");
             setTaskStepDetailsOnUi();
         }
