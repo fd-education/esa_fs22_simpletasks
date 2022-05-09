@@ -60,6 +60,11 @@ public class ManageTaskActivity extends AppCompatActivity {
 
     }
 
+    public void onSettingsClicked(View view) {
+        //TODO
+        Toast.makeText(this, "on settings button clicked", Toast.LENGTH_SHORT).show();
+    }
+
     /**
      * deletes all tasks which are currently in the activity (fetched from db or created)
      *

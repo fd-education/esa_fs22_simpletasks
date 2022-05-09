@@ -3,6 +3,7 @@ package com.example.simpletasks;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onSettingsClicked(View view) {
         //TODO
+        Toast.makeText(this, "on settings button clicked", Toast.LENGTH_SHORT).show();
     }
 
     /**

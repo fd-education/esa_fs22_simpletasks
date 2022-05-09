@@ -6,7 +6,7 @@
     android:layout_width="fill_parent"
     android:layout_height="100dp"
     android:layout_marginVertical="@dimen/halfElementPadding"
-    android:background="?colorPrimary"
+    android:background="@drawable/rounded_corner_background"
     android:padding="@dimen/elementPadding">
 
     <ImageView
@@ -23,7 +23,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/elementPadding"
-        android:text="Task Title"
+        android:text="@string/placeholder"
         android:textAlignment="viewStart"
         android:textColor="?colorOnPrimary"
         android:textSize="@dimen/h2"
@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/elementPadding"
-        android:text="X Steps"
+        android:text="@string/placeholder"
         android:textColor="?colorOnPrimary"
         android:textSize="@dimen/p"
         android:typeface="sans"
@@ -49,11 +49,12 @@
 
     <ImageButton
         android:id="@+id/skipTaskButton_taskList"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
+        android:layout_width="@dimen/buttonHeight"
+        android:layout_height="@dimen/buttonHeight"
         android:backgroundTint="?colorSecondary"
-        android:contentDescription="skip task"
+        android:contentDescription="@string/skip_task"
         android:scaleType="center"
+        android:background="@drawable/rounded_corner_background"
         app:layout_constraintBottom_toBottomOf="@+id/taskImage_taskList"
         app:layout_constraintEnd_toEndOf="@+id/titleTask_taskList"
         app:layout_constraintTop_toTopOf="@+id/countStepsIndicator_taskList"

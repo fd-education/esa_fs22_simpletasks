@@ -6,7 +6,7 @@
     android:layout_width="fill_parent"
     android:layout_height="100dp"
     android:layout_marginVertical="@dimen/halfElementPadding"
-    android:background="?colorPrimary"
+    android:background="@drawable/rounded_corner_background"
     android:padding="@dimen/elementPadding">
 
     <ImageView
