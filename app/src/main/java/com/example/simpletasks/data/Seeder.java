@@ -33,8 +33,8 @@ public class Seeder {
             String title = "Task Title " + i;
             String description = "Task Description " + i;
             Date nextStart = new Date(today.getYear(), today.getMonth(), today.getDate() + i, today.getHours() + 1, today.getMinutes());
-            Long interval = 3 * 24 * 60 * 60L;
-            Long notificationDelta = 3 * 60 * 60L;
+            Long interval = 3 * 24 * 60 * 60 * 1000L;
+            Long notificationDelta = 3 * 60 * 60 * 1000L;
             Date endDate = new Date(today.getYear(), today.getMonth(), today.getDate() + i + 7, today.getHours(), today.getMinutes());
 
             Task task = new Task(title, description, nextStart, interval, notificationDelta, endDate);
