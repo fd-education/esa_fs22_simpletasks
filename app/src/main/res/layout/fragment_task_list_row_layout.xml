@@ -58,7 +58,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/taskImage_taskList"
         app:layout_constraintEnd_toEndOf="@+id/titleTask_taskList"
         app:layout_constraintTop_toTopOf="@+id/countStepsIndicator_taskList"
-        app:srcCompat="@drawable/skip_next_black_24dp"
+        app:srcCompat="@drawable/ic_baseline_skip_next_24"
         app:tint="?colorOnSecondary" />
 
 

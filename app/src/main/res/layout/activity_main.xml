@@ -17,7 +17,7 @@
         android:contentDescription="@string/open_settings"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/fragmentContainerTaskList"
-        app:srcCompat="@drawable/settings_black_24dp"
+        app:srcCompat="@drawable/ic_baseline_settings_24"
         app:tint="?attr/colorOnPrimary" />
 
     <TextView
