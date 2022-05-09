@@ -39,15 +39,15 @@ public class TaskRepository {
     }
 
     public LiveData<List<Task>> getTasksByDate(final Date date) {
-        Date startDate = new Date(date.getYear(), date.getMonth(), date.getDay(), 0, 0, 0);
-        Date endDate = new Date(date.getYear(), date.getMonth(), date.getDay() + 1, 0, 0, 0);
+        Date startDate = new Date(date.getYear(), date.getMonth(), date.getDate(), 0, 0, 0);
+        Date endDate = new Date(date.getYear(), date.getMonth(), date.getDate() + 1, 0, 0, 0);
 
         return taskDao.getByDate(startDate, endDate);
     }
 
     public LiveData<List<TaskWithSteps>> getTasksByDateWithSteps(final Date date) {
-        Date startDate = new Date(date.getYear(), date.getMonth(), date.getDay(), 0, 0, 0);
-        Date endDate = new Date(date.getYear(), date.getMonth(), date.getDay() + 1, 0, 0, 0);
+        Date startDate = new Date(date.getYear(), date.getMonth(), date.getDate(), 0, 0, 0);
+        Date endDate = new Date(date.getYear(), date.getMonth(), date.getDate() + 1, 0, 0, 0);
 
         return taskDao.getByDateWithSteps(startDate, endDate);
     }

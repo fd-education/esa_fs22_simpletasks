@@ -32,10 +32,10 @@ public class Seeder {
         for (int i = 0; i < quantity; i++) {
             String title = "Task Title " + i;
             String description = "Task Description " + i;
-            Date nextStart = new Date(today.getYear(), today.getMonth(), today.getDay() + i, today.getHours(), today.getMinutes());
+            Date nextStart = new Date(today.getYear(), today.getMonth(), today.getDate() + i, today.getHours() + 1, today.getMinutes());
             Long interval = 3 * 24 * 60 * 60L;
             Long notificationDelta = 3 * 60 * 60L;
-            Date endDate = new Date(today.getYear(), today.getMonth(), today.getDay() + i + 7, today.getHours(), today.getMinutes());
+            Date endDate = new Date(today.getYear(), today.getMonth(), today.getDate() + i + 7, today.getHours(), today.getMinutes());
 
             Task task = new Task(title, description, nextStart, interval, notificationDelta, endDate);
             addSteps(task);

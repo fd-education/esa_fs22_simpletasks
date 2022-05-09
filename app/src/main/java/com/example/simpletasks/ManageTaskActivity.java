@@ -39,11 +39,6 @@ public class ManageTaskActivity extends AppCompatActivity {
         Toast.makeText(this, "clicked on edit", Toast.LENGTH_SHORT).show();
     }
 
-    public void onDeleteTaskClicked(View view) {
-        //TODO
-        Toast.makeText(this, "clicked on delete", Toast.LENGTH_SHORT).show();
-    }
-
     /**
      * logs the user out and go back to the normal view
      *
