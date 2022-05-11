@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
             errorText.setText("");
             Intent intent = new Intent(this, ManageTaskActivity.class);
             startActivity(intent);
+            finish();
         } else {
             Log.d(TAG, "Pin is not valid.");
             errorText.setText(getString(R.string.login_error));

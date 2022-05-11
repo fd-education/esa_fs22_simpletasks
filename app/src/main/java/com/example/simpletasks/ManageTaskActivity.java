@@ -10,19 +10,25 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.simpletasks.data.entities.TaskWithSteps;
 import com.example.simpletasks.data.viewmodels.TaskViewModel;
+import com.example.simpletasks.domain.user.User;
 
 import java.util.List;
 import java.util.Objects;
 
 public class ManageTaskActivity extends AppCompatActivity {
-    private static final String TAG = "EditTaskActivity";
+    private static final String TAG = "ManageTaskActivity";
     private static List<TaskWithSteps> tasks;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_task);
         Objects.requireNonNull(getSupportActionBar()).hide();
+
+        user = User.getUser();
+
+        Log.d(TAG, "ManageTasks created. User Login State: " + user.isLoggedIn());
     }
 
     /**
@@ -45,6 +51,8 @@ public class ManageTaskActivity extends AppCompatActivity {
      * @param view the view where the button was clicked from
      */
     public void onLogoutClicked(View view) {
+        user.logOut();
+        Log.d(TAG, "Logout clicked. User Login State: " + user.isLoggedIn());
         onBackPressed();
     }
 
