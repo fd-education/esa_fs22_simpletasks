@@ -32,7 +32,8 @@ render.experimental.xml
 *.keystore
 
 # Google Services (e.g. APIs or Firebase)
-google-services.json
+# not checked in because not secret anyway (see https://stackoverflow.com/questions/37358340/should-i-add-the-google-services-json-from-firebase-to-my-repository)
+# google-services.json
 
 # Android Profiling
 *.hprof
