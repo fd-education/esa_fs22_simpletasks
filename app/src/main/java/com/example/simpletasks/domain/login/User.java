@@ -1,4 +1,4 @@
-package com.example.simpletasks.domain.user;
+package com.example.simpletasks.domain.login;
 
 /**
  * User class is used to model the logged in or out states of a user.

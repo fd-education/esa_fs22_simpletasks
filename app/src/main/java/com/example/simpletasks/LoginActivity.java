@@ -8,9 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.simpletasks.domain.login.Login;
-import com.example.simpletasks.domain.login.LoginController;
-import com.example.simpletasks.domain.user.User;
+import com.example.simpletasks.domain.login.*;
 
 import java.util.Objects;
 

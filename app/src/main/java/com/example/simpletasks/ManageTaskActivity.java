@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.simpletasks.data.entities.TaskWithSteps;
 import com.example.simpletasks.data.viewmodels.TaskViewModel;
-import com.example.simpletasks.domain.user.User;
+import com.example.simpletasks.domain.login.User;
 
 import java.util.List;
 import java.util.Objects;
