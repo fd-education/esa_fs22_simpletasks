@@ -1,10 +1,11 @@
 package com.example.simpletasks.data.daos;
 
+import static androidx.room.OnConflictStrategy.REPLACE;
+
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Update;
@@ -48,7 +49,7 @@ public interface TaskDao {
     @Update
     void updateTasks(List<Task> tasks);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = REPLACE)
     void insertTasks(List<Task> tasks);
 
     @Delete

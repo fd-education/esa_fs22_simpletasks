@@ -14,16 +14,20 @@ import com.example.simpletasks.domain.login.Login;
 import com.example.simpletasks.domain.login.LoginController;
 import com.example.simpletasks.domain.user.User;
 
+import java.util.Objects;
+
 public class LoginActivity extends AppCompatActivity {
     String TAG = "LoginActivity";
 
     User user;
     Login login;
+    int attemptsLeft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         user = User.getUser();
         login = new LoginController(this.getApplication());
@@ -31,17 +35,19 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginClicked(View v){
         String pin = ((TextView) findViewById(R.id.pinPasswordInput)).getText().toString();
+        TextView errorText = ((TextView) findViewById(R.id.loginError));
 
         boolean validLogin = login.isValidPin(pin);
 
         if(validLogin){
             Log.d(TAG, "Pin is valid.");
-            User.getUser().logIn();
+            user.logIn();
+            errorText.setText("");
             Intent intent = new Intent(this, ManageTaskActivity.class);
             startActivity(intent);
         } else {
             Log.d(TAG, "Pin is not valid.");
-            ((TextView) findViewById(R.id.loginError)).setText(getString(R.string.login_error, 2));
+            errorText.setText(getString(R.string.login_error));
         }
     }
 }

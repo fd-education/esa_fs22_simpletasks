@@ -1,6 +1,7 @@
 package com.example.simpletasks.data.daos;
 
-import androidx.lifecycle.LiveData;
+import static androidx.room.OnConflictStrategy.REPLACE;
+
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -8,10 +9,9 @@ import androidx.room.Query;
 
 import com.example.simpletasks.data.entities.Pin;
 
-
 @Dao
 public interface PinDao {
-    @Insert
+    @Insert(onConflict = REPLACE)
     void insertPin(Pin pin);
 
     @Delete
@@ -19,4 +19,7 @@ public interface PinDao {
 
     @Query("SELECT EXISTS(SELECT * FROM Pins WHERE pin = :pinHash)")
     boolean isExists(int pinHash);
+
+    @Query("DELETE FROM pins")
+    void deleteAll();
 }

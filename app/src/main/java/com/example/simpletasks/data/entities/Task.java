@@ -1,7 +1,5 @@
 package com.example.simpletasks.data.entities;
 
-import static java.util.UUID.randomUUID;
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -17,11 +15,9 @@ import java.util.UUID;
 
 @Entity(tableName = "tasks")
 public class Task implements Serializable {
-
-
     @PrimaryKey
     @NonNull
-    String id;
+    private String id;
 
     @NonNull
     private String title;
@@ -47,7 +43,7 @@ public class Task implements Serializable {
     @Ignore
     private List<TaskStep> steps;
 
-    public Task(@NonNull String title, @NonNull String description, @NonNull Date nextStartDate, Long interval, @NonNull Long notificationDelta, @NonNull Date endDate) {
+    public Task(@NonNull String title, @NonNull String description, @NonNull Date nextStartDate, @NonNull Long interval, @NonNull Long notificationDelta, @NonNull Date endDate) {
         this.id = UUID.randomUUID().toString();
         this.title = title;
         this.description = description;
@@ -57,22 +53,23 @@ public class Task implements Serializable {
         this.endDate = endDate;
     }
 
-    @Ignore
-    public Task(@NonNull String title, @NonNull String description, @NonNull Date nextStartDate, Long interval, @NonNull Long notificationDelta, @NonNull Date endDate, List<TaskStep> steps) {
-        this.title = title;
-        this.description = description;
-        this.nextStartDate = nextStartDate;
-        this.interval = interval;
-        this.notificationDelta = notificationDelta;
-        this.endDate = endDate;
-        this.steps = steps;
-    }
+//    @Ignore
+//    public Task(@NonNull String title, @NonNull String description, @NonNull Date nextStartDate, @NonNull Long interval, @NonNull Long notificationDelta, @NonNull Date endDate, List<TaskStep> steps) {
+//        this.title = title;
+//        this.description = description;
+//        this.nextStartDate = nextStartDate;
+//        this.interval = interval;
+//        this.notificationDelta = notificationDelta;
+//        this.endDate = endDate;
+//        this.steps = steps;
+//    }
 
+    @NonNull
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 
@@ -103,11 +100,12 @@ public class Task implements Serializable {
         this.nextStartDate = nextStartDate;
     }
 
+    @NonNull
     public Long getInterval() {
         return interval;
     }
 
-    public void setInterval(Long interval) {
+    public void setInterval(@NonNull Long interval) {
         this.interval = interval;
     }
 
@@ -147,7 +145,7 @@ public class Task implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return id == task.id && title.equals(task.title) && description.equals(task.description) && nextStartDate.equals(task.nextStartDate) && Objects.equals(interval, task.interval) && notificationDelta.equals(task.notificationDelta) && endDate.equals(task.endDate) && Objects.equals(steps, task.steps);
+        return id.equals(task.id) && title.equals(task.title) && description.equals(task.description) && nextStartDate.equals(task.nextStartDate) && Objects.equals(interval, task.interval) && notificationDelta.equals(task.notificationDelta) && endDate.equals(task.endDate) && Objects.equals(steps, task.steps);
     }
 
     @Override

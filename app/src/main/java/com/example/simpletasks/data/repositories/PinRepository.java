@@ -29,6 +29,10 @@ public class PinRepository {
         AppDatabase.databaseWriteExecutor.execute(() -> pinDao.deletePin(pin));
     }
 
+    public void deleteAll(){
+        pinDao.deleteAll();
+    }
+
     public Boolean isValidPin(int pin) {
         try {
             Future<Boolean> future = AppDatabase.databaseWriteExecutor.submit(new ValidateTask(pin));

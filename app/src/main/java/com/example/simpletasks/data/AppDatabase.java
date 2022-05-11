@@ -100,10 +100,13 @@ public abstract class AppDatabase extends RoomDatabase {
             databaseWriteExecutor.execute(() -> {
                 PinDao pinDao = APP_DB.pinDao();
 
-                int pin1 = "12345".hashCode();
-                int pin2 = "00000".hashCode();
-                pinDao.insertPin(new Pin(pin1));
-                pinDao.insertPin(new Pin(pin2));
+                Pin pin1 = new Pin("12345".hashCode());
+                Pin pin2 = new Pin("00000".hashCode());
+
+                pinDao.deleteAll();
+
+                pinDao.insertPin(pin1);
+                pinDao.insertPin(pin2);
             });
         }
     };
