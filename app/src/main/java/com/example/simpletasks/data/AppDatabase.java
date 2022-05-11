@@ -10,14 +10,9 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.example.simpletasks.data.converters.DateConverter;
-import com.example.simpletasks.data.daos.PinDao;
-import com.example.simpletasks.data.daos.TaskDao;
-import com.example.simpletasks.data.daos.TaskStepDao;
-import com.example.simpletasks.data.entities.Pin;
-import com.example.simpletasks.data.entities.Task;
-import com.example.simpletasks.data.entities.TaskStep;
-import com.example.simpletasks.data.entities.TaskWithSteps;
+import com.example.simpletasks.data.converters.*;
+import com.example.simpletasks.data.daos.*;
+import com.example.simpletasks.data.entities.*;
 
 import java.util.ArrayList;
 import java.util.List;
