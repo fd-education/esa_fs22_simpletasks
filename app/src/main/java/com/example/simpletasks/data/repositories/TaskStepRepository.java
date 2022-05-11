@@ -14,7 +14,9 @@ public class TaskStepRepository {
     private final TaskStepDao taskStepDao;
 
     public TaskStepRepository(Application application){
-        AppDatabase db = AppDatabase.getAppDb(application);
+        // TODO Uncomment for final submission and delete seed version
+        // AppDatabase db = AppDatabase.getAppDb(application);
+        AppDatabase db = AppDatabase.getSeededAppDb(application, true, true);
         taskStepDao = db.taskStepDao();
     }
 

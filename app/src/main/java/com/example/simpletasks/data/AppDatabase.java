@@ -55,8 +55,6 @@ public abstract class AppDatabase extends RoomDatabase {
                 result = APP_DB;
                 if (result == null) {
                     APP_DB = result = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, DB_NAME)
-                            .addCallback(seedDatabase)
-                            .addCallback(addPins)
                             .fallbackToDestructiveMigration()
                             .build();
                 }
@@ -66,7 +64,29 @@ public abstract class AppDatabase extends RoomDatabase {
         return result;
     }
 
-    private static final RoomDatabase.Callback seedDatabase = new RoomDatabase.Callback() {
+    public static AppDatabase getSeededAppDb(final Context context, boolean doSeedTasks, boolean doSeedPins){
+        AppDatabase result = APP_DB;
+
+        if (result == null) {
+            synchronized (AppDatabase.class) {
+                result = APP_DB;
+                if (result == null) {
+                    Builder<AppDatabase> bld = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, DB_NAME).fallbackToDestructiveMigration();
+
+                    if(doSeedTasks) bld.addCallback(seedTasks);
+
+                    if(doSeedPins) bld.addCallback(seedPins);
+
+                    APP_DB = result = bld.build();
+                }
+            }
+        }
+
+        return result;
+    }
+
+    // TODO Remove before final submission
+    private static final RoomDatabase.Callback seedTasks = new RoomDatabase.Callback() {
         @Override
         public void onOpen(@NonNull SupportSQLiteDatabase db) {
             super.onOpen(db);
@@ -92,7 +112,8 @@ public abstract class AppDatabase extends RoomDatabase {
         }
     };
 
-    private static final RoomDatabase.Callback addPins = new RoomDatabase.Callback() {
+    // TODO Remove before final submission
+    private static final RoomDatabase.Callback seedPins = new RoomDatabase.Callback() {
         @Override
         public void onOpen(@NonNull SupportSQLiteDatabase db) {
             super.onOpen(db);

@@ -22,7 +22,9 @@ public class TaskRepository {
     private final LiveData<List<TaskWithSteps>> allTasksWithSteps;
 
     public TaskRepository(Application application) {
-        AppDatabase db = AppDatabase.getAppDb(application);
+        // TODO Uncomment for final submission and delete seed version
+        // AppDatabase db = AppDatabase.getAppDb(application);
+        AppDatabase db = AppDatabase.getSeededAppDb(application, true, true);
         taskDao = db.taskDao();
         taskStepDao = db.taskStepDao();
 

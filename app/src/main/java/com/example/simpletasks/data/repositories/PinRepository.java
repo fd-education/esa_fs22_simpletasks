@@ -17,7 +17,9 @@ public class PinRepository {
     private final PinDao pinDao;
 
     public PinRepository(Application application) {
-        AppDatabase db = AppDatabase.getAppDb(application);
+        // TODO Uncomment for final submission and delete seed version
+        // AppDatabase db = AppDatabase.getAppDb(application);
+        AppDatabase db = AppDatabase.getSeededAppDb(application, true, true);
         pinDao = db.pinDao();
     }
 
