@@ -4,7 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".SettingsActivity">
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/sidesPadding"
+        android:layout_marginTop="@dimen/sidesPadding"
+        android:backgroundTint="#00000000"
+        android:contentDescription="@string/back"
+        android:onClick="onBackClicked"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/arrow_back_black_24dp" />
 
     <TextView
         android:id="@+id/titleSettings"
@@ -20,7 +33,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/backButton" />
 
     <TextView
         android:id="@+id/titleCaretakerSettings"
@@ -41,9 +54,9 @@
         android:id="@+id/setPinButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/accent_blue"
         android:layout_marginTop="@dimen/elementPadding"
-        android:onClick="onLoginClicked"
+        android:backgroundTint="@color/accent_blue"
+        android:onClick="onAddPinClicked"
         android:text="@string/add_pin"
         android:textSize="@dimen/p"
         app:layout_constraintEnd_toStartOf="@id/removePinButton"
@@ -57,7 +70,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/accent_blue"
         android:layout_marginTop="@dimen/elementPadding"
-        android:onClick="onLoginClicked"
+        android:onClick="onRemovePinClicked"
         android:text="@string/remove_pin"
         android:textSize="@dimen/p"
         app:layout_constraintEnd_toEndOf="parent"
@@ -84,7 +97,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/accent_blue"
         android:layout_marginTop="@dimen/elementPadding"
-        android:onClick="onLoginClicked"
+        android:onClick="onOpenDisplaySettingsClicked"
         android:text="@string/display_font_size_settings"
         android:textSize="@dimen/p"
         app:layout_constraintEnd_toEndOf="parent"
@@ -92,7 +105,7 @@
         app:layout_constraintTop_toBottomOf="@id/titleInterfaceSettings" />
 
     <Button
-        android:id="@+id/caretakerLoginButton"
+        android:id="@+id/logoutButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/sidesPadding"
