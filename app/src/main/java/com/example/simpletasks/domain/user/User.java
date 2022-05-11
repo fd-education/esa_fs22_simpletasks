@@ -1,0 +1,32 @@
+package com.example.simpletasks.domain.user;
+
+public class User {
+    private boolean loggedIn = false;
+    private static volatile User USER;
+
+    private User(){}
+
+    public static User getUser(){
+        User result = USER;
+
+        if (result == null) {
+            synchronized (User.class) {
+                result = USER;
+                if (result == null) {
+                    USER = result = new User();
+                }
+            }
+        }
+
+        return result;
+    }
+
+
+    public void logIn(){
+        this.loggedIn = true;
+    }
+
+    public void logOut(){
+        this.loggedIn = false;
+    }
+}

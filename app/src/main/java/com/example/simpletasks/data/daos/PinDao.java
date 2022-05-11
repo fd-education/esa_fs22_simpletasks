@@ -1,5 +1,6 @@
 package com.example.simpletasks.data.daos;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -16,6 +17,6 @@ public interface PinDao {
     @Delete
     void deletePin(Pin pin);
 
-    @Query("SELECT COUNT() FROM Pins WHERE pin = :pinHash")
-    int findByValue(int pinHash);
+    @Query("SELECT EXISTS(SELECT * FROM Pins WHERE pin = :pinHash)")
+    boolean isExists(int pinHash);
 }

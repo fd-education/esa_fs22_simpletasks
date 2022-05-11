@@ -3,6 +3,7 @@ package com.example.simpletasks.data.viewmodels;
 import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 
 import com.example.simpletasks.data.entities.*;
 import com.example.simpletasks.data.repositories.PinRepository;
@@ -25,7 +26,7 @@ public class PinViewModel extends AndroidViewModel {
         pinRepo.insertPin(pin);
     }
 
-    public boolean isValidPin(int pin) {
+    public Boolean isValidPin(int pin) {
         return pinRepo.isValidPin(pin);
     }
 }

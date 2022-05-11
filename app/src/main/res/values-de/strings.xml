@@ -15,5 +15,8 @@
     <string name="caretaker_login_hint">Logge dich ein, um Tasks bearbeiten zu können</string>
 
 
-    <string name="placeholder">Placeholder</string>
+    <string name="placeholder">Platzhalter</string>
+    <string name="pin">Pin</string>
+    <string name="login">Login</string>
+    <string name="login_error">Falsche Pin! %1$d Versuche verbleibend.</string>
 </resources>

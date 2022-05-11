@@ -55,7 +55,8 @@ public abstract class AppDatabase extends RoomDatabase {
                 result = APP_DB;
                 if (result == null) {
                     APP_DB = result = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, DB_NAME)
-                            //.addCallback(seedDatabase)
+                            .addCallback(seedDatabase)
+                            .addCallback(addPins)
                             .fallbackToDestructiveMigration()
                             .build();
                 }
@@ -87,6 +88,22 @@ public abstract class AppDatabase extends RoomDatabase {
                 for (TaskWithSteps task : tasksWithSteps) {
                     taskStepDao.insertTaskSteps(task.getSteps());
                 }
+            });
+        }
+    };
+
+    private static final RoomDatabase.Callback addPins = new RoomDatabase.Callback() {
+        @Override
+        public void onOpen(@NonNull SupportSQLiteDatabase db) {
+            super.onOpen(db);
+
+            databaseWriteExecutor.execute(() -> {
+                PinDao pinDao = APP_DB.pinDao();
+
+                int pin1 = "12345".hashCode();
+                int pin2 = "00000".hashCode();
+                pinDao.insertPin(new Pin(pin1));
+                pinDao.insertPin(new Pin(pin2));
             });
         }
     };

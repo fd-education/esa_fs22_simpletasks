@@ -2,9 +2,16 @@ package com.example.simpletasks.data.repositories;
 
 import android.app.Application;
 
+import androidx.lifecycle.LiveData;
+
 import com.example.simpletasks.data.AppDatabase;
 import com.example.simpletasks.data.daos.PinDao;
 import com.example.simpletasks.data.entities.Pin;
+
+import java.security.InvalidParameterException;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 public class PinRepository {
     private final PinDao pinDao;
@@ -22,9 +29,28 @@ public class PinRepository {
         AppDatabase.databaseWriteExecutor.execute(() -> pinDao.deletePin(pin));
     }
 
-    public boolean isValidPin(int pin) {
-        int pinHash = ((Integer) pin).hashCode();
+    public Boolean isValidPin(int pin) {
+        try {
+            Future<Boolean> future = AppDatabase.databaseWriteExecutor.submit(new ValidateTask(pin));
 
-        return (pinDao.findByValue(pinHash) == 1);
+            return future.get();
+        } catch(ExecutionException e){
+            return false;
+        } catch(InterruptedException e){
+            return false;
+        }
+    }
+
+    class ValidateTask implements Callable<Boolean>{
+        boolean isValid;
+        int pin;
+
+        ValidateTask(int pin){
+            this.pin = pin;
+        }
+
+        public Boolean call() throws InvalidParameterException{
+           return pinDao.isExists(pin);
+        }
     }
 }
