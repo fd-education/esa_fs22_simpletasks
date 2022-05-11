@@ -10,6 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SimpleTasks">
         <activity
+            android:name=".EditAudioStepActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditVideoStepActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditTextStepActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditTaskActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
