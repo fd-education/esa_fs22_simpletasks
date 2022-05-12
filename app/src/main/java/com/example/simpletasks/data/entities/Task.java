@@ -23,6 +23,9 @@ public class Task implements Serializable {
     private String title;
 
     @NonNull
+    private String titleImagePath;
+
+    @NonNull
     private String description;
 
     @NonNull
@@ -43,26 +46,16 @@ public class Task implements Serializable {
     @Ignore
     private List<TaskStep> steps;
 
-    public Task(@NonNull String title, @NonNull String description, @NonNull Date nextStartDate, @NonNull Long interval, @NonNull Long notificationDelta, @NonNull Date endDate) {
+    public Task(@NonNull String title, @NonNull String titleImagePath, @NonNull String description, @NonNull Date nextStartDate, @NonNull Long interval, @NonNull Long notificationDelta, @NonNull Date endDate) {
         this.id = UUID.randomUUID().toString();
         this.title = title;
+        this.titleImagePath = titleImagePath;
         this.description = description;
         this.nextStartDate = nextStartDate;
         this.interval = interval;
         this.notificationDelta = notificationDelta;
         this.endDate = endDate;
     }
-
-//    @Ignore
-//    public Task(@NonNull String title, @NonNull String description, @NonNull Date nextStartDate, @NonNull Long interval, @NonNull Long notificationDelta, @NonNull Date endDate, List<TaskStep> steps) {
-//        this.title = title;
-//        this.description = description;
-//        this.nextStartDate = nextStartDate;
-//        this.interval = interval;
-//        this.notificationDelta = notificationDelta;
-//        this.endDate = endDate;
-//        this.steps = steps;
-//    }
 
     @NonNull
     public String getId() {
@@ -80,6 +73,15 @@ public class Task implements Serializable {
 
     public void setTitle(@NonNull String title) {
         this.title = title;
+    }
+
+    @NonNull
+    public String getTitleImagePath() {
+        return titleImagePath;
+    }
+
+    public void setTitleImagePath(@NonNull String titleImagePath) {
+        this.titleImagePath = titleImagePath;
     }
 
     @NonNull

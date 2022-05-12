@@ -29,13 +29,14 @@ public class Seeder {
 
         for (int i = 0; i < quantity; i++) {
             String title = "Task Title " + i;
+            String titleImagePath = "Path/Path/Path";
             String description = "Task Description " + i;
             Date nextStart = new Date(today.getYear(), today.getMonth(), today.getDate() + i, today.getHours() + 1, today.getMinutes());
             Long interval = 3 * 24 * 60 * 60L;
             Long notificationDelta = 3 * 60 * 60L;
             Date endDate = new Date(today.getYear(), today.getMonth(), today.getDate() + i + 7, today.getHours(), today.getMinutes());
 
-            Task task = new Task(title, description, nextStart, interval, notificationDelta, endDate);
+            Task task = new Task(title, titleImagePath, description, nextStart, interval, notificationDelta, endDate);
             addSteps(task);
             tasks.add(new TaskWithSteps(task, task.getSteps()));
         }
@@ -56,14 +57,13 @@ public class Seeder {
         int nbrOfSteps = (int) (Math.random() * 5 + 5);
         Log.d(TAG, taskId + ": " + nbrOfSteps + " steps.");
 
-        String i = taskId;
         for (int j = 0; j < nbrOfSteps; j++) {
             TaskStepTypes type = TaskStepTypes.values()[(int) (Math.random() * 3)];
-            String title = String.format("Step Title %s.%s", i, j);
-            String imageUri = String.format("Step Image URI %s.%s", i, j);
-            String description = String.format("Step Description %s.%s", i, j);
-            String videoUri = String.format("Step Video URI %s.%s", i, j);
-            String audioUri = String.format("Step Audio URI %s.%s", i, j);
+            String title = String.format("Step Title %s.%s", taskId, j);
+            String imageUri = String.format("Step Image URI %s.%s", taskId, j);
+            String description = String.format("Step Description %s.%s", taskId, j);
+            String videoUri = String.format("Step Video URI %s.%s", taskId, j);
+            String audioUri = String.format("Step Audio URI %s.%s", taskId, j);
 
             steps.add(j, new TaskStep(taskId, type, j, title, imageUri, description, videoUri, audioUri));
         }
