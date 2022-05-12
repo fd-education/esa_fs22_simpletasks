@@ -9,13 +9,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@SuppressWarnings("deprecation")
 public class Seeder {
     String TAG = "Seeder";
 
     private Seeder() {
     }
-
-    ;
 
     public static List<TaskWithSteps> createSeed(int nbrOfTasks) {
         return new Seeder().getSeed(nbrOfTasks);
