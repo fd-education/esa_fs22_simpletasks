@@ -35,43 +35,43 @@ public class TaskStep implements Serializable {
     @NonNull
     private String title;
 
-    @ColumnInfo(name="image_uri")
-    private String imageUri;
+    @ColumnInfo(name="image_path")
+    private String imagePath;
 
     private String description;
 
-    @ColumnInfo(name="video_uri")
-    private String videoUri;
+    @ColumnInfo(name="video_path")
+    private String videoPath;
 
-    @ColumnInfo(name="audio_uri")
-    private String audioUri;
+    @ColumnInfo(name="audio_path")
+    private String audioPath;
 
     @ColumnInfo(name="fk_task_id")
     private String taskId;
 
-    public TaskStep(String taskId, @NonNull String type, int index, @NonNull String title, String imageUri, String description, String videoUri, String audioUri){
+    public TaskStep(String taskId, @NonNull String type, int index, @NonNull String title, String imagePath, String description, String videoPath, String audioPath){
         this.id = UUID.randomUUID().toString();
         this.taskId = taskId;
         this.type = type;
         this.index = index;
         this.title = title;
-        this.imageUri = imageUri;
+        this.imagePath = imagePath;
         this.description = description;
-        this.videoUri = videoUri;
-        this.audioUri = audioUri;
+        this.videoPath = videoPath;
+        this.audioPath = audioPath;
     }
 
     @Ignore
-    public TaskStep(String taskId, TaskStepTypes type, int index, @NonNull String title, String imageUri, String description, String videoUri, String audioUri){
+    public TaskStep(String taskId, TaskStepTypes type, int index, @NonNull String title, String imagePath, String description, String videoPath, String audioPath){
         this.id = UUID.randomUUID().toString();
         this.taskId = taskId;
         this.type = type.toString();
         this.index = index;
         this.title = title;
-        this.imageUri = imageUri;
+        this.imagePath = imagePath;
         this.description = description;
-        this.videoUri = videoUri;
-        this.audioUri = audioUri;
+        this.videoPath = videoPath;
+        this.audioPath = audioPath;
     }
 
     @NonNull
@@ -109,12 +109,12 @@ public class TaskStep implements Serializable {
         this.title = title;
     }
 
-    public String getImageUri() {
-        return imageUri;
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public void setImageUri(String imageUri) {
-        this.imageUri = imageUri;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public String getDescription() {
@@ -125,20 +125,20 @@ public class TaskStep implements Serializable {
         this.description = description;
     }
 
-    public String getVideoUri() {
-        return videoUri;
+    public String getVideoPath() {
+        return videoPath;
     }
 
-    public void setVideoUri(String videoUri) {
-        this.videoUri = videoUri;
+    public void setVideoPath(String videoPath) {
+        this.videoPath = videoPath;
     }
 
-    public String getAudioUri() {
-        return audioUri;
+    public String getAudioPath() {
+        return audioPath;
     }
 
-    public void setAudioUri(String audioUri) {
-        this.audioUri = audioUri;
+    public void setAudioPath(String audioPath) {
+        this.audioPath = audioPath;
     }
 
     public String getTaskId() {
@@ -154,11 +154,11 @@ public class TaskStep implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TaskStep taskStep = (TaskStep) o;
-        return id.equals(taskStep.id) && index == taskStep.index && Objects.equals(taskId, taskStep.taskId) && type.equals(taskStep.type) && title.equals(taskStep.title) && Objects.equals(imageUri, taskStep.imageUri) && description.equals(taskStep.description) && Objects.equals(videoUri, taskStep.videoUri) && Objects.equals(audioUri, taskStep.audioUri);
+        return id.equals(taskStep.id) && index == taskStep.index && Objects.equals(taskId, taskStep.taskId) && type.equals(taskStep.type) && title.equals(taskStep.title) && Objects.equals(imagePath, taskStep.imagePath) && description.equals(taskStep.description) && Objects.equals(videoPath, taskStep.videoPath) && Objects.equals(audioPath, taskStep.audioPath);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, index, type, title, imageUri, description, videoUri, audioUri, taskId);
+        return Objects.hash(id, index, type, title, imagePath, description, videoPath, audioPath, taskId);
     }
 }
