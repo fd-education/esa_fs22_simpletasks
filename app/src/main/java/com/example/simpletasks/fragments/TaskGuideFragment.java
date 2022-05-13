@@ -32,6 +32,9 @@ public class TaskGuideFragment extends Fragment {
         return view;
     }
 
+    /**
+     * sets the task step from the arguments in the given bundle
+     */
     private void setTaskStepFromArguments() {
         if (getArguments() != null) {
             taskStep = (TaskStep) getArguments().getSerializable(MainActivity.CURRENT_TASK_STEP_INTENT_EXTRA);

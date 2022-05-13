@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import com.example.simpletasks.data.entities.Task;
 import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.entities.TaskWithSteps;
 
+import java.util.Date;
 import java.util.List;
 
 public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskListViewHolder> {
@@ -29,6 +31,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
         private final TextView titleTask;
         private final TextView countStepsIndicator;
         private final ImageView taskImage;
+        private final ImageButton skipTaskButton;
 
 
         private TaskListViewHolder(View itemView) {
@@ -36,6 +39,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
             titleTask = itemView.findViewById(R.id.titleTask_taskList);
             countStepsIndicator = itemView.findViewById(R.id.countStepsIndicator_taskList);
             taskImage = itemView.findViewById(R.id.taskImage_taskList);
+            skipTaskButton = itemView.findViewById(R.id.skipTaskButton_taskList);
         }
     }
 
@@ -68,6 +72,12 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
                 Intent intent = new Intent(context, TaskGuideActivity.class);
                 intent.putExtra(MainActivity.TASK_INTENT_EXTRA, taskWithSteps);
                 context.startActivity(intent);
+            });
+            holder.skipTaskButton.setOnClickListener(v -> {
+                long newStartLong = currentTask.getNextStartDate().getTime() + currentTask.getInterval();
+                Date newStartDate = new Date(newStartLong);
+                currentTask.setNextStartDate(newStartDate);
+                MainActivity.updateTasksInDatabase(tasks);
             });
         } else {
             // Covers the case of data not being ready yet.

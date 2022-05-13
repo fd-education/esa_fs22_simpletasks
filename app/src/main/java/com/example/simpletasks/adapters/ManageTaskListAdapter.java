@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.simpletasks.EditTaskActivity;
 import com.example.simpletasks.MainActivity;
 import com.example.simpletasks.R;
 import com.example.simpletasks.TaskGuideActivity;
@@ -42,10 +43,10 @@ public class ManageTaskListAdapter extends RecyclerView.Adapter<ManageTaskListAd
         private TaskListViewHolder(View itemView) {
             super(itemView);
             titleTask = itemView.findViewById(R.id.titleTask_editTasks);
-            countStepsIndicator = itemView.findViewById(R.id.countStepsIndicator_editTask);
+            countStepsIndicator = itemView.findViewById(R.id.countStepsIndicator_editTasks);
             taskImage = itemView.findViewById(R.id.taskImage_editTasks);
-            editButton = itemView.findViewById(R.id.editTaskButton_editTask);
-            deleteButton = itemView.findViewById(R.id.deleteTaskButton_editTask);
+            editButton = itemView.findViewById(R.id.editTaskButton_editTasks);
+            deleteButton = itemView.findViewById(R.id.deleteTaskButton_editTasks);
         }
     }
 
@@ -84,7 +85,9 @@ public class ManageTaskListAdapter extends RecyclerView.Adapter<ManageTaskListAd
                 context.startActivity(intent);
             });
             holder.editButton.setOnClickListener(v -> {
-                //TODO open edit task with this task
+                Intent intent = new Intent(context, EditTaskActivity.class);
+                intent.putExtra(MainActivity.TASK_INTENT_EXTRA, currentTaskWithSteps);
+                context.startActivity(intent);
             });
             holder.deleteButton.setOnClickListener(v -> {
                 TaskViewModel taskViewModel = new ViewModelProvider(fragment).get(TaskViewModel.class);

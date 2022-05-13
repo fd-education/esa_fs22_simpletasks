@@ -28,6 +28,12 @@ public class TaskGuideActivity extends AppCompatActivity {
         setContentView(R.layout.activity_task_guide);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
+        setInstanceVariables();
+
+        setFragment();
+    }
+
+    private void setInstanceVariables() {
         taskWithSteps = getTask();
         task = taskWithSteps.getTask();
         taskSteps = taskWithSteps.getSteps();
@@ -35,8 +41,6 @@ public class TaskGuideActivity extends AppCompatActivity {
 
 
         currentStep = 0;
-
-        setFragment();
     }
 
     /**
@@ -107,7 +111,7 @@ public class TaskGuideActivity extends AppCompatActivity {
      */
     private void setFragment() {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragmentContainerTaskStep, getTaskGuideFragmentWithArguments()).commit();
+                .add(R.id.fragmentContainerTaskStep_taskGuide, getTaskGuideFragmentWithArguments()).commit();
     }
 
     /**
@@ -115,7 +119,7 @@ public class TaskGuideActivity extends AppCompatActivity {
      */
     private void replaceFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainerTaskStep, getTaskGuideFragmentWithArguments()).commit();
+                .replace(R.id.fragmentContainerTaskStep_taskGuide, getTaskGuideFragmentWithArguments()).commit();
     }
 
     /**

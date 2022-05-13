@@ -4,16 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ManageTaskActivity">
+    tools:context=".ManageTasksActivity">
 
-    <Button
-        android:id="@+id/button"
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addTask_manageTasks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="deleteAllTasks"
-        android:text="Delete all"
-        app:layout_constraintStart_toStartOf="@+id/fragmentContainerTaskList"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentContainerTaskList" />
+        android:backgroundTint="?colorPrimary"
+        android:clickable="true"
+        android:contentDescription="@string/add_task"
+        app:layout_constraintBottom_toBottomOf="@+id/caretakerLogoutButton"
+        app:layout_constraintEnd_toEndOf="@+id/fragmentContainerTaskList"
+        app:layout_constraintTop_toTopOf="@+id/caretakerLogoutButton"
+        app:srcCompat="@android:drawable/ic_input_add"
+        android:focusable="true" />
 
     <ImageButton
         android:id="@+id/backButton_EditTasks"
@@ -24,10 +29,11 @@
         android:backgroundTint="#00000000"
         android:contentDescription="@string/back"
         android:onClick="onLogoutClicked"
-        app:tint="?colorOnBackground"
+        android:padding="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/arrow_back_black_24dp" />
+        app:srcCompat="@drawable/ic_baseline_arrow_back_48"
+        app:tint="?colorOnBackground" />
 
     <TextView
         android:id="@+id/editTasksTitle"
@@ -35,13 +41,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/sidesPadding"
         android:layout_marginEnd="@dimen/sidesPadding"
-        android:layout_marginBottom="@dimen/elementPadding"
         android:text="@string/edit_tasks"
         android:textAlignment="center"
         android:textColor="?colorOnBackground"
         android:textSize="@dimen/h2"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/fragmentContainerTaskList"
+        app:layout_constraintBottom_toBottomOf="@+id/backButton_EditTasks"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/backButton_EditTasks" />
@@ -55,24 +60,51 @@
         android:layout_marginTop="@dimen/elementPadding"
         android:layout_marginEnd="@dimen/sidesPadding"
         android:layout_marginBottom="@dimen/elementPadding"
-        app:layout_constraintBottom_toTopOf="@+id/caretakerLoginButton"
+        app:layout_constraintBottom_toTopOf="@+id/caretakerLogoutButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/backButton_EditTasks"
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/caretakerLoginButton"
+        android:id="@+id/caretakerLogoutButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/sidesPadding"
-        android:backgroundTint="?buttonBarNegativeButtonStyle"
+        android:layout_height="@dimen/buttonHeight"
+        android:background="@drawable/rounded_corner_background"
         android:onClick="onLogoutClicked"
         android:text="@string/logout"
         android:textSize="@dimen/p"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:backgroundTint="?colorError"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageButton" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="@dimen/buttonHeight"
+        android:layout_height="@dimen/buttonHeight"
+        android:layout_marginBottom="@dimen/sidesPadding"
+        android:background="@drawable/rounded_corner_background"
+        android:onClick="onSettingsClicked"
+        android:contentDescription="@string/open_settings"
+        android:padding="@dimen/elementPadding"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/fragmentContainerTaskList"
+        app:srcCompat="@drawable/ic_baseline_settings_24"
+        app:tint="?attr/colorOnPrimary" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/buttonHeight"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/rounded_corner_background"
+        android:onClick="deleteAllTasks"
+        android:text="Delete all"
+        app:layout_constraintStart_toStartOf="@+id/fragmentContainerTaskList"
+        app:layout_constraintTop_toTopOf="@+id/caretakerLogoutButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

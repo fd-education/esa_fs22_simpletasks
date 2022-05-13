@@ -11,6 +11,8 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/accent_blue</item>
         <item name="colorOnPrimary">@color/white</item>
+        <!-- error color -->
+        <item name="colorError">@color/red</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/bordeaux</item>
         <item name="colorOnSecondary">@color/white</item>

@@ -10,9 +10,18 @@
     <string name="next">Nächster Schritt</string>
     <string name="delete_task">Task löschen</string>
     <string name="edit_task">Task bearbeiten</string>
+    <string name="add_task">Task hinzufügen</string>
     <string name="run_task">Task durchführen</string>
+    <string name="skip_task">Task überspringen</string>
     <string name="task_image">Taskbild</string>
     <string name="caretaker_login_hint">Logge dich ein, um Tasks bearbeiten zu können</string>
+    <string name="open_settings">Einstellungen öffnen</string>
+    <string name="plan_task">Task planen</string>
+    <string name="save">SPEICHERN</string>
+    <string name="task_title_hint">Titel des Tasks</string>
+    <string name="type">Typ: %1$s</string>
+    <string name="drag_task">Bewege Task</string>
+
 
 
     <string name="placeholder">Platzhalter</string>

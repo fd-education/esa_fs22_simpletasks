@@ -15,7 +15,7 @@ import com.example.simpletasks.domain.login.User;
 import java.util.List;
 import java.util.Objects;
 
-public class ManageTaskActivity extends AppCompatActivity {
+public class ManageTasksActivity extends AppCompatActivity {
     private static final String TAG = "ManageTaskActivity";
     private static List<TaskWithSteps> tasks;
     private User user;
@@ -23,7 +23,7 @@ public class ManageTaskActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manage_task);
+        setContentView(R.layout.activity_manage_tasks);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
         user = User.getUser();
@@ -37,12 +37,7 @@ public class ManageTaskActivity extends AppCompatActivity {
      * @param tasks all tasks to be listed in the fragment
      */
     public static void setTasks(List<TaskWithSteps> tasks) {
-        ManageTaskActivity.tasks = tasks;
-    }
-
-    public void onEditTaskClicked(View view) {
-        //TODO
-        Toast.makeText(this, "clicked on edit", Toast.LENGTH_SHORT).show();
+        ManageTasksActivity.tasks = tasks;
     }
 
     /**
@@ -66,6 +61,11 @@ public class ManageTaskActivity extends AppCompatActivity {
         //TODO
         Toast.makeText(this, "clicked on add task", Toast.LENGTH_SHORT).show();
 
+    }
+
+    public void onSettingsClicked(View view) {
+        //TODO
+        Toast.makeText(this, "on settings button clicked", Toast.LENGTH_SHORT).show();
     }
 
     /**

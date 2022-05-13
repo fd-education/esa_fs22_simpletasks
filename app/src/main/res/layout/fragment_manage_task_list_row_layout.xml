@@ -6,7 +6,7 @@
     android:layout_width="fill_parent"
     android:layout_height="100dp"
     android:layout_marginVertical="@dimen/halfElementPadding"
-    android:background="?colorPrimary"
+    android:background="@drawable/rounded_corner_background"
     android:padding="@dimen/elementPadding">
 
     <ImageView
@@ -35,7 +35,7 @@
         app:layout_constraintTop_toTopOf="@+id/taskImage_editTasks" />
 
     <TextView
-        android:id="@+id/countStepsIndicator_editTask"
+        android:id="@+id/countStepsIndicator_editTasks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/elementPadding"
@@ -48,33 +48,33 @@
         app:layout_constraintTop_toBottomOf="@+id/titleTask_editTasks" />
 
     <ImageButton
-        android:id="@+id/editTaskButton_editTask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#00000000"
+        android:id="@+id/editTaskButton_editTasks"
+        android:layout_width="@dimen/buttonHeight"
+        android:layout_height="0dp"
+        android:background="@drawable/rounded_corner_background"
+        android:backgroundTint="?colorSecondary"
         android:contentDescription="@string/edit_task"
-        app:layout_constraintBottom_toBottomOf="@+id/taskImage_editTasks"
+        app:layout_constraintBottom_toBottomOf="@+id/deleteTaskButton_editTasks"
         app:layout_constraintEnd_toEndOf="@+id/titleTask_editTasks"
-        app:layout_constraintTop_toTopOf="@+id/countStepsIndicator_editTask"
-        app:srcCompat="@drawable/edit_fill0_wght400_grad0_opsz48"
-        app:tint="?colorOnPrimary"
-        android:onClick="onEditTaskClicked"/>
+        app:layout_constraintTop_toTopOf="@+id/deleteTaskButton_editTasks"
+        app:srcCompat="@drawable/ic_outline_edit_24"
+        app:tint="?colorOnPrimary" />
 
     <ImageButton
-        android:id="@+id/deleteTaskButton_editTask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/deleteTaskButton_editTasks"
+        android:layout_width="@dimen/buttonHeight"
+        android:layout_height="@dimen/buttonHeight"
         android:layout_marginEnd="@dimen/elementPadding"
-        android:background="#00000000"
+        android:background="@drawable/rounded_corner_background"
+        android:backgroundTint="?colorSecondary"
         android:contentDescription="@string/delete_task"
         android:scaleType="center"
         app:layout_constraintBottom_toBottomOf="@+id/taskImage_editTasks"
-        app:layout_constraintEnd_toStartOf="@+id/editTaskButton_editTask"
-        app:layout_constraintTop_toTopOf="@+id/countStepsIndicator_editTask"
+        app:layout_constraintEnd_toStartOf="@+id/editTaskButton_editTasks"
+        app:layout_constraintTop_toTopOf="@+id/countStepsIndicator_editTasks"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/delete_fill0_wght400_grad0_opsz48_2"
-        app:tint="?colorOnPrimary"
-        android:onClick="onDeleteTaskClicked"/>
+        app:srcCompat="@drawable/ic_outline_delete_outline_24"
+        app:tint="?colorOnPrimary" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
