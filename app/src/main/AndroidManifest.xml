@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.simpletasks">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,6 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SimpleTasks">
+        <activity
+            android:name=".RemovePinActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddPinActivity"
+            android:exported="false" />
         <activity
             android:name=".EditTaskActivity"
             android:exported="false" />
@@ -19,11 +28,12 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".ManageTaskActivity"
-            android:exported="false" />
-        <activity
             android:name=".TaskGuideActivity"
             android:exported="false" />
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_settings" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

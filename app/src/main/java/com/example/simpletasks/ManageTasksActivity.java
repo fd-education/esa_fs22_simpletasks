@@ -32,7 +32,7 @@ public class ManageTasksActivity extends AppCompatActivity {
     }
 
     /**
-     * set the tasks of the manage task list view
+     * Set the tasks of the manage task list view.
      *
      * @param tasks all tasks to be listed in the fragment
      */

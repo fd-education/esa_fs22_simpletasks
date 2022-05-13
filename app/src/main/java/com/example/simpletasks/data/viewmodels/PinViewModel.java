@@ -26,7 +26,7 @@ public class PinViewModel extends AndroidViewModel {
         pinRepo.insertPin(pin);
     }
 
-    public Boolean isValidPin(int pin) {
-        return pinRepo.isValidPin(pin);
+    public boolean isValidPin(final String pin){
+        return pinRepo.isValidPin(pin.hashCode());
     }
 }

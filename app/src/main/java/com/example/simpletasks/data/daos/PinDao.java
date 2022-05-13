@@ -17,7 +17,7 @@ public interface PinDao {
     @Delete
     void deletePin(Pin pin);
 
-    @Query("SELECT EXISTS(SELECT * FROM Pins WHERE pin = :pinHash)")
+    @Query("SELECT EXISTS(SELECT * FROM Pins WHERE hash = :pinHash)")
     boolean isExists(int pinHash);
 
     @Query("DELETE FROM pins")

@@ -16,7 +16,8 @@
         android:padding="@dimen/elementPadding"
         android:contentDescription="@string/open_settings"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/fragmentContainerTaskList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/caretakerLoginButton"
         app:srcCompat="@drawable/ic_baseline_settings_24"
         app:tint="?attr/colorOnPrimary" />
 
@@ -85,6 +86,5 @@
         app:layout_constraintBottom_toTopOf="@+id/caretakerLoginButton"
         app:layout_constraintEnd_toEndOf="@+id/fragmentContainerTaskList"
         app:layout_constraintStart_toStartOf="@+id/fragmentContainerTaskList" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

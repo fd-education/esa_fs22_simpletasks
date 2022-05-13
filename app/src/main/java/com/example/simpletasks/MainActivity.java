@@ -40,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onSettingsClicked(View view) {
-        //TODO
-        Toast.makeText(this, "on settings button clicked", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 
     /**
