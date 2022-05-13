@@ -20,6 +20,7 @@
     <string name="save">SAVE</string>
     <string name="task_title_hint">Task title</string>
     <string name="type">Type: %1$s</string>
+    <string name="drag_task">Drag Task</string>
 
 
     <string name="placeholder" translatable="false">Placeholder</string>

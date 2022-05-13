@@ -20,6 +20,7 @@
     <string name="save">SPEICHERN</string>
     <string name="task_title_hint">Titel des Tasks</string>
     <string name="type">Typ: %1$s</string>
+    <string name="drag_task">Bewege Task</string>
 
 
 
