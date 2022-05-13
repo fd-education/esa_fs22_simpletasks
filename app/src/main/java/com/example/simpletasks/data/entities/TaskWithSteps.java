@@ -6,10 +6,15 @@ import androidx.room.Relation;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Entity that models a task with its steps.
+ */
 public class TaskWithSteps implements Serializable {
+    // Embed the task entity to get its fields
     @Embedded
     private Task task;
 
+    // define the relation between the tasks and their steps
     @Relation(
             parentColumn = "id",
             entityColumn = "fk_task_id"
@@ -21,19 +26,39 @@ public class TaskWithSteps implements Serializable {
         this.taskSteps = taskSteps;
     }
 
+    /**
+     * Get the task to whom the steps belong.
+     *
+     * @return the task Object
+     */
     public Task getTask() {
         return task;
     }
 
-    public void setTask(Task task) {
+    /**
+     * Set the task to whom the steps belong.
+     *
+     * @return the task to set
+     */
+    public void setTask(final Task task) {
         this.task = task;
     }
 
+    /**
+     * Get a list of the steps of this task.
+     *
+     * @return a list of the task steps
+     */
     public List<TaskStep> getSteps(){
         return taskSteps;
     }
 
-    public void setTaskSteps(List<TaskStep> taskSteps) {
+    /**
+     * Set the list of the steps of this task.
+     *
+     * @return the list of the task steps to set
+     */
+    public void setTaskSteps(final List<TaskStep> taskSteps) {
         this.taskSteps = taskSteps;
     }
 }

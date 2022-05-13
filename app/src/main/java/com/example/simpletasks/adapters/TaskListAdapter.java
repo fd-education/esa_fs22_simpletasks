@@ -22,10 +22,14 @@ import com.example.simpletasks.data.entities.TaskWithSteps;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Adapter to handle the display a list of tasks.
+ */
 public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskListViewHolder> {
+
     /**
-     * this handler is a layer between the code and the xml layout. it fetches the View elements for
-     * setting them in the adapter
+     * TaskListViewHolder acts as a layer between code and xml layout.
+     * Fetches View elements to set them in the adapter.
      */
     class TaskListViewHolder extends RecyclerView.ViewHolder {
         private final TextView titleTask;
@@ -33,7 +37,12 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
         private final ImageView taskImage;
         private final ImageButton skipTaskButton;
 
-
+        /**
+         * Constructor for TaskListAdapter
+         * Sets all View elements for the adapter.
+         *
+         * @param itemView the View from which to get the elements
+         */
         private TaskListViewHolder(View itemView) {
             super(itemView);
             titleTask = itemView.findViewById(R.id.titleTask_taskList);
@@ -51,6 +60,14 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
         mInflater = LayoutInflater.from(context);
     }
 
+    /**
+     * Triggered when the RecyclerView needs a new ViewHolder to display a task.
+     *
+     * @param parent ViewGroup to add the new View to
+     * @param viewType type of the view that is created
+     *
+     * @return the new ViewHolder
+     */
     @Override
     public TaskListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.fragment_task_list_row_layout, parent, false);
@@ -58,6 +75,13 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
         return new TaskListViewHolder(itemView);
     }
 
+    /**
+     * Replace tasks on the screen by recycling views.
+     * Update the tasks whilst the user is scrolling through them.
+     *
+     * @param holder the element the data gets bound on
+     * @param position the global position of the view
+     */
     @Override
     public void onBindViewHolder(@NonNull TaskListViewHolder holder, int position) {
         if (tasks != null) {
@@ -88,12 +112,21 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
 
     }
 
-    public void setTasks(List<TaskWithSteps> tasks) {
+    /**
+     * Set the tasks and notify registered observers.
+     *
+     * @param tasks the task steps to set
+     */
+    public void setTasks(final List<TaskWithSteps> tasks) {
         this.tasks = tasks;
         notifyDataSetChanged();
     }
 
-
+    /**
+     * Get the number of tasks.
+     *
+     * @return int for number of tasks
+     */
     @Override
     public int getItemCount() {
         if (tasks != null)

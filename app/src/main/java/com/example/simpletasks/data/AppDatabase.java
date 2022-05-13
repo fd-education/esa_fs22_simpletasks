@@ -31,6 +31,7 @@ import java.util.concurrent.Executors;
 @TypeConverters(DateConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 
+    // Single instance of the app database
     private static volatile AppDatabase APP_DB;
 
     private static final int NUMBER_OF_THREADS = 4;
@@ -41,12 +42,17 @@ public abstract class AppDatabase extends RoomDatabase {
     @VisibleForTesting
     public static final String DB_NAME = "simple-tasks-db";
 
+    // The daos of each table
     public abstract PinDao pinDao();
-
     public abstract TaskDao taskDao();
-
     public abstract TaskStepDao taskStepDao();
 
+    /**
+     * Get a singleton instance of the app database.
+     *
+     * @param context the app context
+     * @return singleton instance of the app database.
+     */
     public static AppDatabase getAppDb(final Context context) {
         AppDatabase result = APP_DB;
 
@@ -64,6 +70,14 @@ public abstract class AppDatabase extends RoomDatabase {
         return result;
     }
 
+    /**
+     * Get a singleton instance of the app database with mockdata.
+     *
+     * @param context the app context
+     * @param doSeedTasks true if the tasks and steps must be seeded, false otherwise
+     * @param doSeedPins true if the pins must be seeded, false otherwise
+     * @return singleton instance of the app database.
+     */
     public static AppDatabase getSeededAppDb(final Context context, boolean doSeedTasks, boolean doSeedPins){
         AppDatabase result = APP_DB;
 

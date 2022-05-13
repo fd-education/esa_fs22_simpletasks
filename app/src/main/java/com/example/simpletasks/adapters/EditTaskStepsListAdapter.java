@@ -16,13 +16,16 @@ import com.example.simpletasks.data.entities.TaskStep;
 
 import java.util.List;
 
-public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskStepsListAdapter.TaskListViewHolder> {
+/**
+ * Adapter to handle the display of task steps for the editing screen.
+ */
+public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskStepsListAdapter.TaskStepListViewHolder> {
 
     /**
-     * this handler is a layer between the code and the xml layout. it fetches the View elements for
-     * setting them in the adapter
+     * TaskListViewHolder acts as a layer between code and xml layout.
+     * Fetches View elements to set them in the adapter.
      */
-    class TaskListViewHolder extends RecyclerView.ViewHolder {
+    static class TaskStepListViewHolder extends RecyclerView.ViewHolder {
         private final ImageButton dragTaskStepButton;
         private final TextView titleTaskStep;
         private final TextView taskStepType;
@@ -30,8 +33,13 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
         private final ImageButton editButton;
         private final ImageButton deleteButton;
 
-
-        private TaskListViewHolder(View itemView) {
+        /**
+         * Constructor for TaskListViewHolder
+         * Sets all View elements for the adapter.
+         *
+         * @param itemView the View from which to get the elements
+         */
+        private TaskStepListViewHolder(View itemView) {
             super(itemView);
             dragTaskStepButton = itemView.findViewById(R.id.dragTaskStepButton_editTask);
             titleTaskStep = itemView.findViewById(R.id.taskStepTitle_editTask);
@@ -52,19 +60,35 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
         this.context = context;
     }
 
+    /**
+     * Triggered when the RecyclerView needs a new ViewHolder to display a task step.
+     *
+     * @param parent ViewGroup to add the new View to
+     * @param viewType type of the view that is created
+     *
+     * @return the new ViewHolder
+     */
+    @NonNull
     @Override
-    public TaskListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TaskStepListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.fragment_edit_task_step_list_row_layout, parent, false);
         context = mInflater.getContext();
-        return new TaskListViewHolder(itemView);
+        return new TaskStepListViewHolder(itemView);
     }
 
+    /**
+     * Replace task steps on the screen by recycling views.
+     * Update the tasks steps whilst the user is scrolling through them.
+     *
+     * @param holder the element the data gets bound on
+     * @param position the global position of the view
+     */
     @Override
-    public void onBindViewHolder(@NonNull TaskListViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TaskStepListViewHolder holder, int position) {
         if (taskSteps != null) {
             TaskStep currentTaskStep = taskSteps.get(position);
             holder.dragTaskStepButton.setOnClickListener(v -> {
-                //TODO
+                // TODO Implement drag to position
             });
             holder.titleTaskStep.setText(currentTaskStep.getTitle());
             holder.taskStepType.setText(context.getString(R.string.type, currentTaskStep.getType()));
@@ -79,7 +103,7 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
                 //todo implement deletion of step
             });
         } else {
-            // Covers the case of data not being ready yet.
+            // Handle the case of data not being ready yet
             holder.titleTaskStep.setText(R.string.placeholder);
             holder.taskStepType.setText(R.string.placeholder);
             holder.taskImage.setImageResource(R.drawable.image_placeholder);
@@ -87,16 +111,23 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
 
     }
 
-    public void setTaskSteps(List<TaskStep> taskSteps) {
+    /**
+     * Set the task steps and notify registered observers.
+     *
+     * @param taskSteps the task steps to set
+     */
+    public void setTaskSteps(final List<TaskStep> taskSteps) {
         this.taskSteps = taskSteps;
         notifyDataSetChanged();
     }
 
-
+    /**
+     * Get the number of task steps.
+     *
+     * @return int for number of task steps
+     */
     @Override
     public int getItemCount() {
-        if (taskSteps != null)
-            return taskSteps.size();
-        else return 0;
+        return taskSteps != null? taskSteps.size() : 0;
     }
 }

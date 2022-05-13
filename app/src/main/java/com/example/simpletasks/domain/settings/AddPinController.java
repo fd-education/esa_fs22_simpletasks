@@ -10,6 +10,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AddPinController {
+    /**
+     * Send the pin to the specified phoneNumber using the specified firebaseFunctions
+     *
+     * @param pin the pin to send
+     * @param phoneNumber the phonenumber of the recipient
+     * @param firebaseFunctions the firebase function used to send the pin
+     * @return the result of the http transmission
+     */
     public static Task<String> sendPin(Pin pin, PhoneNumber phoneNumber, FirebaseFunctions firebaseFunctions) {
         Map<String, Object> data = new HashMap<>();
         PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();

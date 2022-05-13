@@ -11,18 +11,24 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Helper class that seeds the app database.
+ */
 public class Seeder {
     String TAG = "Seeder";
 
-    private Seeder() {
-    }
+    private Seeder(){};
 
-    ;
-
+    /**
+     * Creates seed data of tasks with their steps
+     * @param nbrOfTasks number of tasks that must be created
+     * @return list of tasks with their steps
+     */
     public static List<TaskWithSteps> createSeed(int nbrOfTasks) {
         return new Seeder().getSeed(nbrOfTasks);
     }
 
+    // get a list of tasks with steps consisting of simple mock data
     private List<TaskWithSteps> getSeed(int quantity) {
         Log.d(TAG, "Creating seed of size " + quantity);
 
@@ -32,9 +38,13 @@ public class Seeder {
         for (int i = 0; i < quantity; i++) {
             String title = "Task Title " + i;
             String description = "Task Description " + i;
+            // date always incremented by the current number of iterations
             Date nextStart = new Date(today.getYear(), today.getMonth(), today.getDate() + i, today.getHours() + 1, today.getMinutes());
+            // three days
             Long interval = 3 * 24 * 60 * 60 * 1000L;
+            // three hours
             Long notificationDelta = 3 * 60 * 60 * 1000L;
+            // ends after 7 days
             Date endDate = new Date(today.getYear(), today.getMonth(), today.getDate() + i + 7, today.getHours(), today.getMinutes());
 
             Task task = new Task(title, description, nextStart, interval, notificationDelta, endDate);
@@ -42,12 +52,12 @@ public class Seeder {
             tasks.add(new TaskWithSteps(task, task.getSteps()));
         }
 
-
         Log.d(TAG, "" + tasks.get(0).getSteps().size());
 
         return tasks;
     }
 
+    //Add a random amount of steps to the task passed as an argument
     private void addSteps(Task task) {
         Log.d(TAG, "Add steps to " + task.getTitle() + ".");
 
