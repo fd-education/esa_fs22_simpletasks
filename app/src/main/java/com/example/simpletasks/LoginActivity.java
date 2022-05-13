@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 import com.example.simpletasks.domain.login.*;
 
-import java.util.Objects;
-
 /**
  * LoginActivity handles lifecycle and business calls for the caretaker login screen.
  */
@@ -25,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
@@ -59,5 +58,14 @@ public class LoginActivity extends AppCompatActivity {
             errorText.setText(getString(R.string.login_error));
             Log.d(TAG, "Pin is not valid.");
         }
+    }
+
+    public void onBackClicked(View view) {
+        onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
