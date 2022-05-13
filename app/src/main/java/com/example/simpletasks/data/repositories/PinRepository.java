@@ -40,9 +40,7 @@ public class PinRepository {
             Future<Boolean> future = AppDatabase.databaseWriteExecutor.submit(new ValidateTask(pin));
 
             return future.get();
-        } catch(ExecutionException e){
-            return false;
-        } catch(InterruptedException e){
+        } catch(ExecutionException | InterruptedException e){
             return false;
         }
     }

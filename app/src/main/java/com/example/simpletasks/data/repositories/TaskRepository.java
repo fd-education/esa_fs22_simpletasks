@@ -89,6 +89,8 @@ public class TaskRepository {
         }
     }
 
+    public void deleteAll(){taskDao.deleteAll();}
+
     public void deleteTasks(final List<TaskWithSteps> tasksWithSteps) {
         List<Task> tasks = new ArrayList<>();
         for(TaskWithSteps task : tasksWithSteps) {

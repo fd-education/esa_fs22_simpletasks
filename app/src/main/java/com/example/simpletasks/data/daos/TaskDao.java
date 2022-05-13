@@ -52,6 +52,9 @@ public interface TaskDao {
     @Insert(onConflict = REPLACE)
     void insertTasks(List<Task> tasks);
 
-    @Delete
+    @Delete()
     void deleteTasks(List<Task> tasks);
+
+    @Query("DELETE FROM tasks")
+    void deleteAll();
 }

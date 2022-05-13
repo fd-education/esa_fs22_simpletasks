@@ -99,6 +99,9 @@ public abstract class AppDatabase extends RoomDatabase {
 
                 List<Task> tasks = new ArrayList<>();
 
+                taskDao.deleteAll();
+                taskStepDao.deleteAll();
+
                 for (TaskWithSteps task : tasksWithSteps) {
                     tasks.add(task.getTask());
                 }

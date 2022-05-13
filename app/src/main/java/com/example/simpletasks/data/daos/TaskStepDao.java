@@ -29,4 +29,8 @@ public interface TaskStepDao {
 
     @Delete
     void deleteTaskSteps(List<TaskStep> taskSteps);
+
+
+    @Query("DELETE FROM taskSteps")
+    void deleteAll();
 }

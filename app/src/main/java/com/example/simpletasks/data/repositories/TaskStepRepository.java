@@ -35,4 +35,6 @@ public class TaskStepRepository {
     public void deleteTaskSteps(final List<TaskStep> taskSteps){
         AppDatabase.databaseWriteExecutor.execute(() -> taskStepDao.deleteTaskSteps(taskSteps));
     }
+
+    public void deleteAll(){taskStepDao.deleteAll();}
 }
