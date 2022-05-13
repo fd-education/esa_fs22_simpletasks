@@ -5,6 +5,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.util.Locale;
+import java.util.Random;
 
 @Entity(tableName = "pins")
 public class Pin {
@@ -16,6 +17,12 @@ public class Pin {
 
     public Pin(int pin){
         this.pin = pin;
+    }
+
+    static public Pin random() {
+        Random random = new Random();
+        int randomInt = random.nextInt(10_000);
+        return new Pin(randomInt);
     }
 
     public int getId() {

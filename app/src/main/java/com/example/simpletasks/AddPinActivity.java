@@ -13,29 +13,20 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.simpletasks.data.entity.Pin;
+import com.example.simpletasks.domain.settings.AddPinController;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.FirebaseFunctionsException;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
-
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Random;
+import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
 public class AddPinActivity extends AppCompatActivity {
     private static final PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
     private static final String TAG = "AddPinActivity";
     private static final String regionCode = "CH";
     private static TextWatcher watcher = null;
-
-    static public Pin createRandomPIN() {
-        Random random = new Random();
-        int randomInt = random.nextInt(10_000);
-        return new Pin(randomInt);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +39,8 @@ public class AddPinActivity extends AppCompatActivity {
 
         EditText phoneInputView = findViewById(R.id.phoneNumberInput);
         phoneInputView.setOnFocusChangeListener((v, isFocused) -> {
-            if (isFocused) {
-                showPhoneNumberError(false);
-            } else {
+            if (!isFocused)  {
+                phoneInputView.addTextChangedListener(getInstantValidationTextWatcher());
                 String phoneNumber = ((EditText) v).getText().toString();
                 boolean isValid = isValidPhoneNumber(phoneNumber);
                 showPhoneNumberError(!isValid);
@@ -66,7 +56,7 @@ public class AddPinActivity extends AppCompatActivity {
     }
 
     public void onGeneratePinClicked(View view) {
-        Pin pin = createRandomPIN();
+        Pin pin = Pin.random();
         Log.d(TAG, "pin generated");
         if (shouldSendPin()) {
             sendPin(pin);
@@ -85,8 +75,11 @@ public class AddPinActivity extends AppCompatActivity {
         Log.d(TAG, "validating pin");
         showPhoneNumberError(false);
         EditText phoneInputView = findViewById(R.id.phoneNumberInput);
-        String phoneNumber = phoneInputView.getText().toString();
-        if (!isValidPhoneNumber(phoneNumber)) {
+        String phoneNumberInput = phoneInputView.getText().toString();
+        PhoneNumber phoneNumber;
+        try {
+            phoneNumber = phoneNumberUtil.parseAndKeepRawInput(phoneNumberInput, regionCode);
+        } catch (NumberParseException e) {
             showPhoneNumberError(true);
             phoneInputView.addTextChangedListener(getInstantValidationTextWatcher());
             Log.d(TAG, "phone number was invalid");
@@ -95,8 +88,8 @@ public class AddPinActivity extends AppCompatActivity {
 
         View sendErrorView = findViewById(R.id.sendPinError);
         sendErrorView.setVisibility(View.GONE);
-
-        Task<String> responseTask = firebaseSendPin(pin, phoneNumber);
+        FirebaseFunctions firebaseFunctions = FirebaseFunctions.getInstance();
+        Task<String> responseTask = AddPinController.sendPin(pin, phoneNumber, firebaseFunctions);
         Log.d(TAG, "sent pin, waiting for response");
         View progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
@@ -167,23 +160,6 @@ public class AddPinActivity extends AppCompatActivity {
             visibility = View.GONE;
         }
         phoneNumberErrorView.setVisibility(visibility);
-    }
-
-    private Task<String> firebaseSendPin(Pin pin, String phoneNumber) {
-        FirebaseFunctions mFunctions = FirebaseFunctions.getInstance(FirebaseApp.getInstance());
-        Map<String, Object> data = new HashMap<>();
-        data.put("phoneNumber", phoneNumber);
-        data.put("pin", String.format(Locale.getDefault(), "%06d", pin.getPin()));
-
-        return mFunctions
-                .getHttpsCallable("sendPin")
-                .call(data)
-                .continueWith(task -> {
-                    // This continuation runs on either success or failure, but if the task
-                    // has failed then getResult() will throw an Exception which will be
-                    // propagated down.
-                    return (String) task.getResult().getData();
-                });
     }
 
     public void onBackClicked(View view) {
