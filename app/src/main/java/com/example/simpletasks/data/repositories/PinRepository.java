@@ -22,8 +22,8 @@ public class PinRepository {
         AppDatabase.databaseWriteExecutor.execute(() -> pinDao.deletePin(pin));
     }
 
-    public boolean isValidPin(int pin){
-        int pinHash = ((Integer) pin).hashCode();
+    public boolean isValidPin(final String pin){
+        int pinHash = pin.hashCode();
 
         return (pinDao.findByValue(pinHash) == 1);
     }

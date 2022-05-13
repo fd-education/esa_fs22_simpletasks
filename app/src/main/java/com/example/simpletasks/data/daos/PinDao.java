@@ -16,6 +16,6 @@ public interface PinDao {
     @Delete
     void deletePin(Pin pin);
 
-    @Query("SELECT COUNT() FROM Pins WHERE pin = :pinHash")
+    @Query("SELECT COUNT() FROM Pins WHERE hash = :pinHash")
     int findByValue(int pinHash);
 }

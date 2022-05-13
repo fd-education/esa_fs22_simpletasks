@@ -11,8 +11,10 @@ import android.widget.RadioButton;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.example.simpletasks.data.entity.Pin;
+import com.example.simpletasks.data.entities.Pin;
+import com.example.simpletasks.data.viewmodels.PinViewModel;
 import com.example.simpletasks.domain.settings.AddPinController;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -39,7 +41,7 @@ public class AddPinActivity extends AppCompatActivity {
 
         EditText phoneInputView = findViewById(R.id.phoneNumberInput);
         phoneInputView.setOnFocusChangeListener((v, isFocused) -> {
-            if (!isFocused)  {
+            if (!isFocused) {
                 phoneInputView.addTextChangedListener(getInstantValidationTextWatcher());
                 String phoneNumber = ((EditText) v).getText().toString();
                 boolean isValid = isValidPhoneNumber(phoneNumber);
@@ -61,14 +63,20 @@ public class AddPinActivity extends AppCompatActivity {
         if (shouldSendPin()) {
             sendPin(pin);
         } else {
-            showPin();
+            showPin(pin);
         }
 
     }
 
-    private void showPin() {
+    private void showPin(Pin pin) {
         // TODO: When popup are ready
+        savePin(pin);
         Log.d(TAG, "showed pin locally");
+    }
+
+    private void savePin(Pin pin) {
+        PinViewModel pinViewModel = new ViewModelProvider(this).get(PinViewModel.class);
+        pinViewModel.insertPin(pin);
     }
 
     private void sendPin(Pin pin) {
@@ -100,6 +108,7 @@ public class AddPinActivity extends AppCompatActivity {
         });
         responseTask.addOnSuccessListener((s) -> {
             // TODO: Show when popup is ready
+            savePin(pin);
             Log.d(TAG, "response successful");
             finish();
         });
