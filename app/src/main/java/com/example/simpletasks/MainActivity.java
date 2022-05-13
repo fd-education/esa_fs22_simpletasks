@@ -33,13 +33,9 @@ public class MainActivity extends AppCompatActivity {
         owner = this;
      }
 
-    public void onSkipClicked(View view) {
-        //TODO
-    }
-
     public void onLoginClicked(View view) {
         //TODO change intent to login/pin form
-        Intent intent = new Intent(this, ManageTaskActivity.class);
+        Intent intent = new Intent(this, ManageTasksActivity.class);
         startActivity(intent);
     }
 

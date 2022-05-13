@@ -13,7 +13,7 @@
             android:name=".EditTaskActivity"
             android:exported="false" />
         <activity
-            android:name=".ManageTaskActivity"
+            android:name=".ManageTasksActivity"
             android:exported="false" />
         <activity
             android:name=".TaskGuideActivity"

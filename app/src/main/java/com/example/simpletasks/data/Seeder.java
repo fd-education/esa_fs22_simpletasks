@@ -58,7 +58,7 @@ public class Seeder {
         int nbrOfSteps = (int) (Math.random() * 5 + 5);
         Log.d(TAG, taskId + ": " + nbrOfSteps + " steps.");
 
-        String i = taskId;
+        String i = task.getTitle();
         for (int j = 0; j < nbrOfSteps; j++) {
             TaskStepTypes type = TaskStepTypes.values()[(int) (Math.random() * 3)];
             String title = String.format("Step Title %s.%s", i, j);

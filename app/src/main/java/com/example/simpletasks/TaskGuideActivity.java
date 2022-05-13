@@ -111,7 +111,7 @@ public class TaskGuideActivity extends AppCompatActivity {
      */
     private void setFragment() {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragmentContainerTaskStep, getTaskGuideFragmentWithArguments()).commit();
+                .add(R.id.fragmentContainerTaskStep_taskGuide, getTaskGuideFragmentWithArguments()).commit();
     }
 
     /**
@@ -119,7 +119,7 @@ public class TaskGuideActivity extends AppCompatActivity {
      */
     private void replaceFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainerTaskStep, getTaskGuideFragmentWithArguments()).commit();
+                .replace(R.id.fragmentContainerTaskStep_taskGuide, getTaskGuideFragmentWithArguments()).commit();
     }
 
     /**

@@ -70,8 +70,8 @@
         android:text="@string/caretaker_login"
         android:textSize="@dimen/p"
         app:layout_constraintBottom_toBottomOf="@+id/imageButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/fragmentContainerTaskList"
+        app:layout_constraintStart_toStartOf="@+id/fragmentContainerTaskList"
         app:layout_constraintTop_toTopOf="@+id/imageButton"
         app:layout_constraintVertical_bias="1.0" />
 
@@ -83,8 +83,8 @@
         android:text="@string/caretaker_login_hint"
         android:textColor="?attr/hintTextColor"
         app:layout_constraintBottom_toTopOf="@+id/caretakerLoginButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/fragmentContainerTaskList"
+        app:layout_constraintStart_toStartOf="@+id/fragmentContainerTaskList" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

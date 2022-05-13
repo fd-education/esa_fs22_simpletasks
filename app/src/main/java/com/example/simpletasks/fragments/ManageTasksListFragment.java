@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.simpletasks.ManageTaskActivity;
+import com.example.simpletasks.ManageTasksActivity;
 import com.example.simpletasks.R;
 import com.example.simpletasks.adapters.ManageTaskListAdapter;
 import com.example.simpletasks.data.viewmodels.TaskViewModel;
@@ -24,7 +24,7 @@ public class ManageTasksListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_tasks_list, container, false);
+        view = inflater.inflate(R.layout.fragment_list, container, false);
         setAdapterWithTasks();
         return view;
     }
@@ -43,7 +43,7 @@ public class ManageTasksListFragment extends Fragment {
             Log.d(TAG, "all Tasks successfully fetched from db");
 
             adapter.setTasks(tasks);
-            ManageTaskActivity.setTasks(tasks);
+            ManageTasksActivity.setTasks(tasks);
         });
     }
 }

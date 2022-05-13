@@ -43,10 +43,10 @@ public class ManageTaskListAdapter extends RecyclerView.Adapter<ManageTaskListAd
         private TaskListViewHolder(View itemView) {
             super(itemView);
             titleTask = itemView.findViewById(R.id.titleTask_editTasks);
-            countStepsIndicator = itemView.findViewById(R.id.countStepsIndicator_editTask);
+            countStepsIndicator = itemView.findViewById(R.id.countStepsIndicator_editTasks);
             taskImage = itemView.findViewById(R.id.taskImage_editTasks);
-            editButton = itemView.findViewById(R.id.editTaskButton_editTask);
-            deleteButton = itemView.findViewById(R.id.deleteTaskButton_editTask);
+            editButton = itemView.findViewById(R.id.editTaskButton_editTasks);
+            deleteButton = itemView.findViewById(R.id.deleteTaskButton_editTasks);
         }
     }
 

@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.simpletasks.data.entities.TaskWithSteps;
 import com.example.simpletasks.data.viewmodels.TaskViewModel;
+import com.example.simpletasks.fragments.EditTaskStepsListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,28 @@ public class EditTaskActivity extends AppCompatActivity {
         currentEditTask = getTask();
 
         fillValuesOnUi();
+        setFragment();
+    }
+
+    /**
+     * makes a bundle with the Task with steps object so the fragment has the necessary data
+     *
+     * @return the new built fragment
+     */
+    private EditTaskStepsListFragment getFragmentWithTaskStepList() {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(MainActivity.TASK_INTENT_EXTRA, currentEditTask);
+        EditTaskStepsListFragment fragment = new EditTaskStepsListFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    /**
+     * adds the fragment which displays the step details
+     */
+    private void setFragment() {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragmentContainerTaskStepList_editTask, getFragmentWithTaskStepList()).commit();
     }
 
     private void fillValuesOnUi() {

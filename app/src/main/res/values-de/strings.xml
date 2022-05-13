@@ -19,6 +19,7 @@
     <string name="plan_task">Task planen</string>
     <string name="save">SPEICHERN</string>
     <string name="task_title_hint">Titel des Tasks</string>
+    <string name="type">Typ: %1$s</string>
 
 
 

@@ -14,14 +14,14 @@ import com.example.simpletasks.data.viewmodels.TaskViewModel;
 import java.util.List;
 import java.util.Objects;
 
-public class ManageTaskActivity extends AppCompatActivity {
+public class ManageTasksActivity extends AppCompatActivity {
     private static final String TAG = "ManageTaskActivity";
     private static List<TaskWithSteps> tasks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manage_task);
+        setContentView(R.layout.activity_manage_tasks);
         Objects.requireNonNull(getSupportActionBar()).hide();
     }
 
@@ -31,7 +31,7 @@ public class ManageTaskActivity extends AppCompatActivity {
      * @param tasks all tasks to be listed in the fragment
      */
     public static void setTasks(List<TaskWithSteps> tasks) {
-        ManageTaskActivity.tasks = tasks;
+        ManageTasksActivity.tasks = tasks;
     }
 
     /**
