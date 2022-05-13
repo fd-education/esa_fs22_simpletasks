@@ -67,15 +67,4 @@ public class ManageTasksActivity extends AppCompatActivity {
         //TODO
         Toast.makeText(this, "on settings button clicked", Toast.LENGTH_SHORT).show();
     }
-
-    /**
-     * deletes all tasks which are currently in the activity (fetched from db or created)
-     *
-     * @param view the view this method gets called from
-     */
-    public void deleteAllTasks(View view) {
-        TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
-        taskViewModel.deleteTasks(tasks);
-        Log.d(TAG, "'deleted all tasks' finished");
-    }
 }

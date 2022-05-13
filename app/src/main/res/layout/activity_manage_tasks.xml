@@ -95,16 +95,4 @@
         app:srcCompat="@drawable/ic_baseline_settings_24"
         app:tint="?attr/colorOnPrimary" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/buttonHeight"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="48dp"
-        android:background="@drawable/rounded_corner_background"
-        android:onClick="deleteAllTasks"
-        android:text="Delete all"
-        app:layout_constraintStart_toStartOf="@+id/fragmentContainerTaskList"
-        app:layout_constraintTop_toTopOf="@+id/caretakerLogoutButton" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

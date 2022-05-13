@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         if(validLogin){
             errorText.setText("");
             User.getUser().logIn();
-            startActivity(new Intent(this, ManageTaskActivity.class));
+            startActivity(new Intent(this, ManageTasksActivity.class));
 
             // Finish to remove the LoginActivity from the back stack
             finish();
