@@ -8,7 +8,7 @@ import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import com.example.simpletasks.data.domains.TaskStepTypes;
+import com.example.simpletasks.data.types.TaskStepTypes;
 
 import java.io.Serializable;
 import java.util.Objects;

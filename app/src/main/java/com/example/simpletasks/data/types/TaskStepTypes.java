@@ -1,4 +1,4 @@
-package com.example.simpletasks.data.domains;
+package com.example.simpletasks.data.types;
 
 public enum TaskStepTypes {
     TEXT,
