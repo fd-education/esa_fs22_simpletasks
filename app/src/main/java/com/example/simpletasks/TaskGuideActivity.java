@@ -1,6 +1,7 @@
 package com.example.simpletasks;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -35,6 +36,7 @@ public class TaskGuideActivity extends AppCompatActivity {
         setInstanceVariables();
 
         setFragment();
+        Log.d(TAG, "finished initialisation");
     }
 
     private void setInstanceVariables() {
@@ -64,7 +66,10 @@ public class TaskGuideActivity extends AppCompatActivity {
         if (currentStep > 0) {
             currentStep--;
             replaceFragment();
+            Log.d(TAG, "moved back a step");
         } else if (currentStep == 0) {
+            //TODO: user should confirm exit
+            Log.d(TAG, "going back to previous screen");
             super.onBackPressed();
         }
     }
@@ -78,8 +83,10 @@ public class TaskGuideActivity extends AppCompatActivity {
         if (currentStep < taskSteps.size() - 1) {
             currentStep++;
             replaceFragment();
+            Log.d(TAG, "moved a step forward");
         } else if (currentStep == taskSteps.size() - 1) {
             //TODO finish task
+            Log.d(TAG, "finished steps");
             super.onBackPressed();
         }
     }

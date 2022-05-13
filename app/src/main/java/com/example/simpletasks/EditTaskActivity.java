@@ -36,6 +36,7 @@ public class EditTaskActivity extends AppCompatActivity {
 
         fillValuesOnUi();
         setFragment();
+        Log.d(TAG, "finished initialisation");
     }
 
     /**
@@ -74,6 +75,7 @@ public class EditTaskActivity extends AppCompatActivity {
         //fetch data from ui
         currentEditTask.getTask().setTitle(taskTitle.getText().toString());
 
+        Log.d(TAG, "updating task in database");
         //save data into database
         TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
         //todo add in data layer another method for singular task update so i dont have to create a list

@@ -26,6 +26,7 @@ public class ManageTasksListFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_list, container, false);
         setAdapterWithTasks();
+        Log.d(TAG, "finished initialisation");
         return view;
     }
 
@@ -39,6 +40,7 @@ public class ManageTasksListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
+        Log.d(TAG, "start fetching all tasks from db");
         taskViewModel.getAllTasksWithSteps().observe(getViewLifecycleOwner(), tasks -> {
             Log.d(TAG, "all Tasks successfully fetched from db");
 

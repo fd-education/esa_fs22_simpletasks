@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         login = new LoginController(this.getApplication());
+        Log.d(TAG, "finished initialisation");
     }
 
     /**

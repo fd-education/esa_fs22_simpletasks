@@ -4,9 +4,12 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 public class RemovePinActivity extends AppCompatActivity {
+
+    private static final String TAG = "RemovePinActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,6 +19,7 @@ public class RemovePinActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
+        Log.d(TAG, "finished initialisation");
     }
 
     public void onBackClicked(View view) {
@@ -23,6 +27,6 @@ public class RemovePinActivity extends AppCompatActivity {
     }
 
     public void onRemovePinClicked(View view) {
-
+        Log.d(TAG, "removing pin...");
     }
 }

@@ -32,6 +32,7 @@ public class EditTaskStepsListFragment extends Fragment {
 
         setAdapterWithTaskSteps();
 
+        Log.d(TAG, "finished initialisation");
         return view;
     }
 
@@ -58,5 +59,6 @@ public class EditTaskStepsListFragment extends Fragment {
 
         List<TaskStep> taskSteps = getTaskStepsFromArguments();
         adapter.setTaskSteps(taskSteps);
+        Log.d(TAG, "set task steps");
     }
 }

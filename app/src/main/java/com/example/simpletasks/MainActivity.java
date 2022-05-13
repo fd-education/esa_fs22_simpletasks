@@ -2,6 +2,7 @@ package com.example.simpletasks;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -35,10 +36,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         owner = this;
-     }
+        Log.d(TAG, "finished initialisation");
+    }
 
     public void onLoginClicked(View view) {
-        //TODO change intent to login/pin form
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
@@ -62,8 +63,10 @@ public class MainActivity extends AppCompatActivity {
      * @param tasks the list with the tasks
      */
     public static void updateTasksInDatabase(List<TaskWithSteps> tasks) {
+        Log.d(TAG, "updating tasks");
         TaskViewModel taskViewModel = new ViewModelProvider(owner).get(TaskViewModel.class);
         taskViewModel.updateTasks(tasks);
+        Log.d(TAG, "updating tasks finished");
     }
 
 }

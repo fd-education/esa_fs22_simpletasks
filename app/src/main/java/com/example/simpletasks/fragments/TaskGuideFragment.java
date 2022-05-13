@@ -29,6 +29,7 @@ public class TaskGuideFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_task_guide, container, false);
 
         setTaskStepFromArguments();
+        Log.d(TAG, "finished initialisation");
         return view;
     }
 
