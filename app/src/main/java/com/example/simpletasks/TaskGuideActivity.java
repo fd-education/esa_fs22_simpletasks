@@ -28,6 +28,12 @@ public class TaskGuideActivity extends AppCompatActivity {
         setContentView(R.layout.activity_task_guide);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
+        setInstanceVariables();
+
+        setFragment();
+    }
+
+    private void setInstanceVariables() {
         taskWithSteps = getTask();
         task = taskWithSteps.getTask();
         taskSteps = taskWithSteps.getSteps();
@@ -35,8 +41,6 @@ public class TaskGuideActivity extends AppCompatActivity {
 
 
         currentStep = 0;
-
-        setFragment();
     }
 
     /**

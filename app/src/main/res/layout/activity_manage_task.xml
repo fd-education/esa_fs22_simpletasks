@@ -17,7 +17,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/caretakerLogoutButton"
         app:layout_constraintEnd_toEndOf="@+id/fragmentContainerTaskList"
         app:layout_constraintTop_toTopOf="@+id/caretakerLogoutButton"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@android:drawable/ic_input_add"
+        android:focusable="true" />
 
     <ImageButton
         android:id="@+id/backButton_EditTasks"
@@ -40,13 +41,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/sidesPadding"
         android:layout_marginEnd="@dimen/sidesPadding"
-        android:layout_marginBottom="@dimen/elementPadding"
         android:text="@string/edit_tasks"
         android:textAlignment="center"
         android:textColor="?colorOnBackground"
         android:textSize="@dimen/h2"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/fragmentContainerTaskList"
+        app:layout_constraintBottom_toBottomOf="@+id/backButton_EditTasks"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/backButton_EditTasks" />

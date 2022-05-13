@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class ManageTaskActivity extends AppCompatActivity {
-    private static final String TAG = "EditTaskActivity";
+    private static final String TAG = "ManageTaskActivity";
     private static List<TaskWithSteps> tasks;
 
     @Override
@@ -32,11 +32,6 @@ public class ManageTaskActivity extends AppCompatActivity {
      */
     public static void setTasks(List<TaskWithSteps> tasks) {
         ManageTaskActivity.tasks = tasks;
-    }
-
-    public void onEditTaskClicked(View view) {
-        //TODO
-        Toast.makeText(this, "clicked on edit", Toast.LENGTH_SHORT).show();
     }
 
     /**
