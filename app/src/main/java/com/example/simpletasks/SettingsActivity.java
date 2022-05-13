@@ -3,12 +3,15 @@ package com.example.simpletasks;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SettingsActivity extends AppCompatActivity {
+
+    private static final String TAG = "SettingsActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +21,7 @@ public class SettingsActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
+        Log.d(TAG, "finished initialisation");
     }
 
     public void onAddPinClicked(View view) {

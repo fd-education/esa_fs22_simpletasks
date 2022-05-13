@@ -26,6 +26,7 @@ public class TasksListFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_list, container, false);
         setAdapterWithTasks();
+        Log.d(TAG, "finished initialisation");
         return view;
     }
 
@@ -40,7 +41,7 @@ public class TasksListFragment extends Fragment {
 
         TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
         taskViewModel.getTodaysTasksWithSteps().observe(getViewLifecycleOwner(), tasks -> {
-            Log.d(TAG, "today Tasks successfully fetched from db");
+            Log.d(TAG, "today's Tasks successfully fetched from db");
 
             adapter.setTasks(tasks);
             MainActivity.setTasks(tasks);

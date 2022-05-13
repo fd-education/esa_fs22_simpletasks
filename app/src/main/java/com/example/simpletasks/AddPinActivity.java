@@ -50,6 +50,7 @@ public class AddPinActivity extends AppCompatActivity {
         });
 
         FirebaseApp.initializeApp(this);
+        Log.d(TAG, "finished initialisation");
     }
 
     private boolean shouldSendPin() {
@@ -108,8 +109,9 @@ public class AddPinActivity extends AppCompatActivity {
         });
         responseTask.addOnSuccessListener((s) -> {
             // TODO: Show when popup is ready
-            savePin(pin);
             Log.d(TAG, "response successful");
+            savePin(pin);
+            Log.d(TAG, "pin saved");
             finish();
         });
         responseTask.addOnFailureListener(e -> {
