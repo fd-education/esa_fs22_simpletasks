@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import com.example.simpletasks.data.AppDatabase;
 import com.example.simpletasks.data.daos.PinDao;
 import com.example.simpletasks.data.entities.Pin;
+import com.google.common.util.concurrent.ListenableFuture;
 
 import java.security.InvalidParameterException;
 import java.util.concurrent.Callable;
@@ -36,25 +37,10 @@ public class PinRepository {
     }
 
     public Boolean isValidPin(int pin) {
-        try {
-            Future<Boolean> future = AppDatabase.databaseWriteExecutor.submit(new ValidateTask(pin));
-
-            return future.get();
+        try{
+            return pinDao.isExists(pin).get();
         } catch(ExecutionException | InterruptedException e){
             return false;
-        }
-    }
-
-    class ValidateTask implements Callable<Boolean>{
-        boolean isValid;
-        int pin;
-
-        ValidateTask(int pin){
-            this.pin = pin;
-        }
-
-        public Boolean call() throws InvalidParameterException{
-           return pinDao.isExists(pin);
         }
     }
 }

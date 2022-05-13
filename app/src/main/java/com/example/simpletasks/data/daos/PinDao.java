@@ -8,6 +8,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 
 import com.example.simpletasks.data.entities.Pin;
+import com.google.common.util.concurrent.ListenableFuture;
 
 @Dao
 public interface PinDao {
@@ -18,7 +19,7 @@ public interface PinDao {
     void deletePin(Pin pin);
 
     @Query("SELECT EXISTS(SELECT * FROM Pins WHERE hash = :pinHash)")
-    boolean isExists(int pinHash);
+    ListenableFuture<Boolean> isExists(int pinHash);
 
     @Query("DELETE FROM pins")
     void deleteAll();
