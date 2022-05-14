@@ -2,17 +2,10 @@ package com.example.simpletasks.data.repositories;
 
 import android.app.Application;
 
-import androidx.lifecycle.LiveData;
-
 import com.example.simpletasks.data.AppDatabase;
 import com.example.simpletasks.data.daos.PinDao;
 import com.example.simpletasks.data.entities.Pin;
-import com.google.common.util.concurrent.ListenableFuture;
-
-import java.security.InvalidParameterException;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 /**
  * Handles all the interactions with the pin table through its DAO.

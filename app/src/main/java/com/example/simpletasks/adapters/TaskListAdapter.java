@@ -31,7 +31,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
      * TaskListViewHolder acts as a layer between code and xml layout.
      * Fetches View elements to set them in the adapter.
      */
-    class TaskListViewHolder extends RecyclerView.ViewHolder {
+    static class TaskListViewHolder extends RecyclerView.ViewHolder {
         private final TextView titleTask;
         private final TextView countStepsIndicator;
         private final ImageView taskImage;
@@ -68,6 +68,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
      *
      * @return the new ViewHolder
      */
+    @NonNull
     @Override
     public TaskListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.fragment_task_list_row_layout, parent, false);

@@ -168,7 +168,7 @@ public class Task implements Serializable {
     /**
      * Set the interval between the notification and the start of the task.
      *
-     * @param notificationDelta the inverval to set
+     * @param notificationDelta the interval to set
      */
     public void setNotificationDelta(@NonNull Long notificationDelta) {
         this.notificationDelta = notificationDelta;

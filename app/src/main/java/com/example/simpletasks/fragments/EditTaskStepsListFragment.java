@@ -19,11 +19,22 @@ import com.example.simpletasks.data.entities.TaskWithSteps;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Fragment for the task steps list on the edit tasks screen.
+ */
 public class EditTaskStepsListFragment extends Fragment {
     private static final String TAG = "EditTaskListFragment";
     private View view;
     private List<TaskStep> taskSteps;
 
+    /**
+     * Inflate the fragments layout and set the adapter for the task steps list.
+     *
+     * @param inflater layout inflater to inflate the views in the fragment
+     * @param container parent view of the fragments ui
+     * @param savedInstanceState reconstruction of a previous state
+     * @return View for the fragments ui
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,9 +46,7 @@ public class EditTaskStepsListFragment extends Fragment {
         return view;
     }
 
-    /**
-     * sets the task step from the arguments in the given bundle
-     */
+    // Set the task steps from the arguments in the bundle
     private List<TaskStep> getTaskStepsFromArguments() {
         if (getArguments() != null) {
             Log.d(TAG, "successfully loaded task steps from fragment start");
@@ -47,9 +56,7 @@ public class EditTaskStepsListFragment extends Fragment {
         return new ArrayList<>();
     }
 
-    /**
-     * gets the tasks from the db and sets the adapter for the view
-     */
+    // Get the task steps from the database and set the adapter for the view
     private void setAdapterWithTaskSteps() {
         final RecyclerView recyclerView = view.findViewById(R.id.tasks_list);
         EditTaskStepsListAdapter adapter = new EditTaskStepsListAdapter(getContext());

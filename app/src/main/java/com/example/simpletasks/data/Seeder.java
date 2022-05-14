@@ -14,10 +14,11 @@ import java.util.List;
 /**
  * Helper class that seeds the app database.
  */
+@SuppressWarnings("deprecation")
 public class Seeder {
     String TAG = "Seeder";
 
-    private Seeder(){};
+    private Seeder(){}
 
     /**
      * Creates seed data of tasks with their steps

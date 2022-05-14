@@ -38,7 +38,7 @@ public class TaskWithSteps implements Serializable {
     /**
      * Set the task to whom the steps belong.
      *
-     * @return the task to set
+     * @param task the task to set
      */
     public void setTask(final Task task) {
         this.task = task;
@@ -56,7 +56,7 @@ public class TaskWithSteps implements Serializable {
     /**
      * Set the list of the steps of this task.
      *
-     * @return the list of the task steps to set
+     * @param taskSteps the list of the task steps to set
      */
     public void setTaskSteps(final List<TaskStep> taskSteps) {
         this.taskSteps = taskSteps;

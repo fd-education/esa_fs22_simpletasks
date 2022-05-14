@@ -35,7 +35,7 @@ public class ManageTaskListAdapter extends RecyclerView.Adapter<ManageTaskListAd
      * TaskListViewHolder acts as a layer between code and xml layout.
      * Fetches View elements to set them in the adapter.
      */
-    class TaskListViewHolder extends RecyclerView.ViewHolder {
+    static class TaskListViewHolder extends RecyclerView.ViewHolder {
         private final TextView titleTask;
         private final TextView countStepsIndicator;
         private final ImageView taskImage;
@@ -61,7 +61,7 @@ public class ManageTaskListAdapter extends RecyclerView.Adapter<ManageTaskListAd
     private static final String TAG = "ManageTaskListAdapter";
     private final LayoutInflater mInflater;
     private Context context;
-    private Fragment fragment;
+    private final Fragment fragment;
     private List<TaskWithSteps> tasks;
 
     public ManageTaskListAdapter(Context context, Fragment fragment) {
@@ -78,6 +78,7 @@ public class ManageTaskListAdapter extends RecyclerView.Adapter<ManageTaskListAd
      *
      * @return the new ViewHolder
      */
+    @NonNull
     @Override
     public TaskListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.fragment_manage_task_list_row_layout, parent, false);

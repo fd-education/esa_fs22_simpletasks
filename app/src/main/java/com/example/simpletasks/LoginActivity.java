@@ -19,16 +19,23 @@ public class LoginActivity extends AppCompatActivity {
 
     Login login;
 
+    /**
+     * Set and adjust the view and the controllers
+     *
+     * @param savedInstanceState reconstruction of a previous state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Remove the action bar at the top of the screen
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
 
+        // Initialize the login controller
         login = new LoginController(this.getApplication());
     }
 
@@ -60,12 +67,12 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Handle click events on the back button
+     *
+     * @param view the view that triggered the event
+     */
     public void onBackClicked(View view) {
-        onBackPressed();
-    }
-
-    @Override
-    public void onBackPressed() {
         super.onBackPressed();
     }
 }
