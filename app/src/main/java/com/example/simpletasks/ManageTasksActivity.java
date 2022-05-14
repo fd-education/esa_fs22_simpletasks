@@ -7,29 +7,34 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.simpletasks.data.entities.TaskWithSteps;
-import com.example.simpletasks.data.viewmodels.TaskViewModel;
 import com.example.simpletasks.domain.login.User;
 
 import java.util.List;
-import java.util.Objects;
 
 public class ManageTasksActivity extends AppCompatActivity {
     private static final String TAG = "ManageTaskActivity";
     private static List<TaskWithSteps> tasks;
     private User user;
 
+    /**
+     * Set and adjust the view and the user instance
+     *
+     * @param savedInstanceState reconstruction of a previous state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_tasks);
+
+        // Remove the action bar at the top of the screen
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
 
+        // Initialize the user
         user = User.getUser();
 
         Log.d(TAG, "ManageTasks created. User Login State: " + user.isLoggedIn());
@@ -45,28 +50,31 @@ public class ManageTasksActivity extends AppCompatActivity {
     }
 
     /**
-     * logs the user out and go back to the normal view
+     * Log the user out and go back to the main view.
      *
-     * @param view the view where the button was clicked from
+     * @param view the view whose click event was triggered
      */
     public void onLogoutClicked(View view) {
         user.logOut();
         Log.d(TAG, "Logout clicked. User Login State: " + user.isLoggedIn());
-        onBackPressed();
-    }
-
-    @Override
-    public void onBackPressed() {
-        //TODO implement dialog to ask if user really wants to log out
         super.onBackPressed();
     }
 
+    /**
+     * Handle click events on the add task button
+     *
+     * @param view the view that triggered the event
+     */
     public void onAddTaskClicked(View view) {
         //TODO
         Toast.makeText(this, "clicked on add task", Toast.LENGTH_SHORT).show();
-
     }
 
+    /**
+     * Handle click events on the settings button
+     *
+     * @param view the view that triggered the event
+     */
     public void onSettingsClicked(View view) {
         //TODO
         Toast.makeText(this, "on settings button clicked", Toast.LENGTH_SHORT).show();

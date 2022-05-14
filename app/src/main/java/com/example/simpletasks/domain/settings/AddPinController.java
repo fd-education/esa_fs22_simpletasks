@@ -14,7 +14,7 @@ public class AddPinController {
      * Send the pin to the specified phoneNumber using the specified firebaseFunctions
      *
      * @param pin the pin to send
-     * @param phoneNumber the phonenumber of the recipient
+     * @param phoneNumber the phone number of the recipient
      * @param firebaseFunctions the firebase function used to send the pin
      * @return the result of the http transmission
      */

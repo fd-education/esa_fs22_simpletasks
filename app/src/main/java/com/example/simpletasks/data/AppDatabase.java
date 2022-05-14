@@ -75,7 +75,7 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     /**
-     * Get a singleton instance of the app database with mockdata.
+     * Get a singleton instance of the app database with mock data.
      *
      * @param context the app context
      * @param doSeedTasks true if the tasks and steps must be seeded, false otherwise

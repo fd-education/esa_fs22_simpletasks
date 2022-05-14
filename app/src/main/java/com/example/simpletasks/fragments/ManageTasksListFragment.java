@@ -16,10 +16,21 @@ import com.example.simpletasks.R;
 import com.example.simpletasks.adapters.ManageTaskListAdapter;
 import com.example.simpletasks.data.viewmodels.TaskViewModel;
 
+/**
+ * Fragment for the task list on the manage tasks screen.
+ */
 public class ManageTasksListFragment extends Fragment {
     private static final String TAG = "EditTaskListFragment";
     private View view;
 
+    /**
+     * Inflate the fragments layout and set the adapter for the task list.
+     *
+     * @param inflater layout inflater to inflate the views in the fragment
+     * @param container parent view of the fragments ui
+     * @param savedInstanceState reconstruction of a previous state
+     * @return View for the fragments ui
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -30,9 +41,7 @@ public class ManageTasksListFragment extends Fragment {
         return view;
     }
 
-    /**
-     * gets the tasks from the db and sets the adapter for the view
-     */
+    // Get the tasks from the database and set the adapter for the view
     private void setAdapterWithTasks() {
         final RecyclerView recyclerView = view.findViewById(R.id.tasks_list);
         ManageTaskListAdapter adapter = new ManageTaskListAdapter(getContext(), this);

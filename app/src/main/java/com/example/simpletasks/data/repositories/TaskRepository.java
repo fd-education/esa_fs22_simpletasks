@@ -18,6 +18,7 @@ import java.util.List;
 /**
  * Handles all the interactions with the tasks table through its DAO.
  */
+@SuppressWarnings("deprecation")
 public class TaskRepository {
     private final TaskDao taskDao;
     private final TaskStepDao taskStepDao;

@@ -24,21 +24,32 @@ import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
+/**
+ * Activity to add a new pin to the database and handle its sending process.
+ */
 public class AddPinActivity extends AppCompatActivity {
     private static final PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
     private static final String TAG = "AddPinActivity";
     private static final String regionCode = "CH";
     private static TextWatcher watcher = null;
 
+    /**
+     * Set and adjust the view and initialize firebase.
+     *
+     * @param savedInstanceState reconstruction of a previous state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_pin);
+
+        // Remove the action bar at the top of the screen
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
 
+        // Set listener to handle when the focus changes
         EditText phoneInputView = findViewById(R.id.phoneNumberInput);
         phoneInputView.setOnFocusChangeListener((v, isFocused) -> {
             if (!isFocused) {
@@ -49,15 +60,16 @@ public class AddPinActivity extends AppCompatActivity {
             }
         });
 
+        // Initialize Firebase
         FirebaseApp.initializeApp(this);
         Log.d(TAG, "finished initialisation");
     }
 
-    private boolean shouldSendPin() {
-        RadioButton sendPinRadio = findViewById(R.id.sendPinRadio);
-        return sendPinRadio.isChecked();
-    }
-
+    /**
+     * Handle click events the generate pin button.
+     *
+     * @param view the view whose click event was triggered
+     */
     public void onGeneratePinClicked(View view) {
         Pin pin = Pin.random();
         Log.d(TAG, "pin generated");
@@ -66,20 +78,51 @@ public class AddPinActivity extends AppCompatActivity {
         } else {
             showPin(pin);
         }
-
     }
 
+    /**
+     * Handle click events on the back button.
+     *
+     * @param view the view whose click event was triggered
+     */
+    public void onBackClicked(View view) {
+        super.onBackPressed();
+    }
+
+    /**
+     * Handle change of the radio button choice for sending pins.
+     *
+     * @param view the view whose click event was triggered
+     */
+    public void onSendChoiceChanged(View view) {
+        View phoneNumberGroup = findViewById(R.id.phoneNumberGroup);
+        if (shouldSendPin()) {
+            phoneNumberGroup.setVisibility(View.VISIBLE);
+        } else {
+            phoneNumberGroup.setVisibility(View.GONE);
+        }
+    }
+
+    // Check if the send pin radio button is checked
+    private boolean shouldSendPin() {
+        RadioButton sendPinRadio = findViewById(R.id.sendPinRadio);
+        return sendPinRadio.isChecked();
+    }
+
+    // Show the pin on the screen
+    // TODO: Finish when pop-ups are ready
     private void showPin(Pin pin) {
-        // TODO: When popup are ready
         savePin(pin);
         Log.d(TAG, "showed pin locally");
     }
 
+    // Save the pin to the database through the view model
     private void savePin(Pin pin) {
         PinViewModel pinViewModel = new ViewModelProvider(this).get(PinViewModel.class);
         pinViewModel.insertPin(pin);
     }
 
+    // Use firebase to send the pin to the user
     private void sendPin(Pin pin) {
         Log.d(TAG, "validating pin");
         showPhoneNumberError(false);
@@ -103,10 +146,13 @@ public class AddPinActivity extends AppCompatActivity {
         View progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
 
+        // Handle completion of the sending process
         responseTask.addOnCompleteListener((s) -> {
             progressBar.setVisibility(View.INVISIBLE);
             Log.d(TAG, "response completed");
         });
+
+        // Handle success when sending pins in firebase
         responseTask.addOnSuccessListener((s) -> {
             // TODO: Show when popup is ready
             Log.d(TAG, "response successful");
@@ -114,6 +160,8 @@ public class AddPinActivity extends AppCompatActivity {
             Log.d(TAG, "pin saved");
             finish();
         });
+
+        // Handle errors when sending pins in firebase
         responseTask.addOnFailureListener(e -> {
             sendErrorView.setVisibility(View.VISIBLE);
             if (e instanceof FirebaseFunctionsException) {
@@ -129,6 +177,7 @@ public class AddPinActivity extends AppCompatActivity {
         });
     }
 
+    // Create TextWatcher to validate the users entered phone number
     @NonNull
     private TextWatcher getInstantValidationTextWatcher() {
         if (watcher == null) {
@@ -153,6 +202,7 @@ public class AddPinActivity extends AppCompatActivity {
         return watcher;
     }
 
+    // Validate a phone number string
     private boolean isValidPhoneNumber(String phoneNumber) {
         try {
             phoneNumberUtil.parse(phoneNumber, regionCode);
@@ -162,6 +212,7 @@ public class AddPinActivity extends AppCompatActivity {
         return true;
     }
 
+    // Show the error if the phone number is invalid
     private void showPhoneNumberError(boolean showError) {
         View phoneNumberErrorView = findViewById(R.id.phoneNumberError);
         int visibility;
@@ -171,18 +222,5 @@ public class AddPinActivity extends AppCompatActivity {
             visibility = View.GONE;
         }
         phoneNumberErrorView.setVisibility(visibility);
-    }
-
-    public void onBackClicked(View view) {
-        super.onBackPressed();
-    }
-
-    public void onSendChoiceChanged(View view) {
-        View phoneNumberGroup = findViewById(R.id.phoneNumberGroup);
-        if (shouldSendPin()) {
-            phoneNumberGroup.setVisibility(View.VISIBLE);
-        } else {
-            phoneNumberGroup.setVisibility(View.GONE);
-        }
     }
 }

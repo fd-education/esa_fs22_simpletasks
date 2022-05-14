@@ -15,35 +15,75 @@ import com.example.simpletasks.fragments.EditTaskStepsListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
+/**
+ * Activity for the edit tasks screen.
+ */
 public class EditTaskActivity extends AppCompatActivity {
     private static final String TAG = "EditTaskActivity";
     private TaskWithSteps currentEditTask;
 
-    //ui elements to write to/read from
+    // UI element to read from/ write to
     private EditText taskTitle;
 
+    /**
+     * Set and adjust the view and set fragments.
+     *
+     * @param savedInstanceState reconstruction of a previous state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_task);
+
+        // Remove the action bar at the top of the screen
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
+
+        // Get the task from the intent
         currentEditTask = getTask();
 
+        // Set the fragments in the activity
         fillValuesOnUi();
         setFragment();
         Log.d(TAG, "finished initialisation");
     }
 
     /**
-     * makes a bundle with the Task with steps object so the fragment has the necessary data
+     * Handle click events on the save button.
+     * Save the current task to the database.
      *
-     * @return the new built fragment
+     * @param view the view that triggered the event
      */
+    public void onSaveTaskClicked(View view) {
+        // Fetch data from the ui
+        currentEditTask.getTask().setTitle(taskTitle.getText().toString());
+
+        // Save the data into the database
+        TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
+        //todo add in data layer another method for singular task update so i don't have to create a list
+        List<TaskWithSteps> list = new ArrayList<>();
+        list.add(currentEditTask);
+        taskViewModel.updateTasks(list);
+        Log.d(TAG, "updating task finished");
+
+        // Go back to the last screen
+        onBackPressed();
+    }
+
+    /**
+     * Handle click events on the back button
+     *
+     * @param view the view that triggered the event
+     */
+    public void onBackClicked(View view) {
+        //todo ask the user if he really wants to discard his changes
+        super.onBackPressed();
+    }
+
+    // Make a bundle of the task with its steps so that the fragment has the required data
     private EditTaskStepsListFragment getFragmentWithTaskStepList() {
         Bundle bundle = new Bundle();
         bundle.putSerializable(MainActivity.TASK_INTENT_EXTRA, currentEditTask);
@@ -52,62 +92,19 @@ public class EditTaskActivity extends AppCompatActivity {
         return fragment;
     }
 
-    /**
-     * adds the fragment which displays the step details
-     */
+    // Set the fragment that displays the step details
     private void setFragment() {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragmentContainerTaskStepList_editTask, getFragmentWithTaskStepList()).commit();
     }
 
+    // Set the task title in the UI
     private void fillValuesOnUi() {
         taskTitle = findViewById(R.id.taskTitle_editTask);
         taskTitle.setText(currentEditTask.getTask().getTitle());
     }
 
-    /**
-     * gets called when the user clicks on the save button. saves the current edit task into the
-     * database
-     *
-     * @param view the view from where the button was clicked
-     */
-    public void onSaveTaskClicked(View view) {
-        //fetch data from ui
-        currentEditTask.getTask().setTitle(taskTitle.getText().toString());
-
-        Log.d(TAG, "updating task in database");
-        //save data into database
-        TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
-        //todo add in data layer another method for singular task update so i dont have to create a list
-        List<TaskWithSteps> list = new ArrayList<>();
-        list.add(currentEditTask);
-        taskViewModel.updateTasks(list);
-        Log.d(TAG, "updating task finished");
-
-        //go back to the last screen
-        onBackPressed();
-    }
-
-    /**
-     * gets called when the user clicks on the back icon
-     *
-     * @param view the view from where the button was clicked
-     */
-    public void onBackClicked(View view) {
-        onBackPressed();
-    }
-
-    @Override
-    public void onBackPressed() {
-        //todo ask the user if he really wants to discard his changes
-        super.onBackPressed();
-    }
-
-    /**
-     * gets the task from the intent
-     *
-     * @return the fetched task from the intent
-     */
+    // Get the task from the intent
     private TaskWithSteps getTask() {
         return (TaskWithSteps) getIntent().getExtras().getSerializable(MainActivity.TASK_INTENT_EXTRA);
     }

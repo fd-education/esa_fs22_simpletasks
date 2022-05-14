@@ -16,12 +16,23 @@ import com.example.simpletasks.R;
 import com.example.simpletasks.data.entities.Task;
 import com.example.simpletasks.data.entities.TaskStep;
 
+/**
+ * Fragment for the task guide screens.
+ */
 public class TaskGuideFragment extends Fragment {
     private static final String TAG = "TaskGuideFragment";
     private View view;
     private Task task;
     private TaskStep taskStep;
 
+    /**
+     * Inflate the fragments layout and set the adapter for the task steps list.
+     *
+     * @param inflater layout inflater to inflate the views in the fragment
+     * @param container parent view of the fragments ui
+     * @param savedInstanceState reconstruction of a previous state
+     * @return View for the fragments ui
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -33,9 +44,7 @@ public class TaskGuideFragment extends Fragment {
         return view;
     }
 
-    /**
-     * sets the task step from the arguments in the given bundle
-     */
+    // Set the task steps from the arguments in the bundle
     private void setTaskStepFromArguments() {
         if (getArguments() != null) {
             taskStep = (TaskStep) getArguments().getSerializable(MainActivity.CURRENT_TASK_STEP_INTENT_EXTRA);
@@ -44,17 +53,15 @@ public class TaskGuideFragment extends Fragment {
         }
     }
 
-    /**
-     * sets the text views on the fragment
-     */
+    // Set the text views on the fragment using the data of a step.
     private void setTaskStepDetailsOnUi() {
         TextView taskStepTitle = view.findViewById(R.id.titleTaskStep_TaskGuide);
         taskStepTitle.setText(taskStep.getTitle());
         //TODO status bar
         ImageView taskImage = view.findViewById(R.id.taskStepImage_TaskGuide);
         taskImage.setImageURI(Uri.parse(taskStep.getImagePath()));
-        TextView taskDecription = view.findViewById(R.id.titleTaskStepDescription_TaskGuide);
-        taskDecription.setText(taskStep.getDescription());
+        TextView taskDescription = view.findViewById(R.id.titleTaskStepDescription_TaskGuide);
+        taskDescription.setText(taskStep.getDescription());
 
     }
 }
