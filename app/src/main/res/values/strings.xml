@@ -15,10 +15,11 @@
     <string name="run_task">Run Task</string>
     <string name="skip_task">Skip Task</string>
     <string name="task_image">Task Image</string>
+    <string name="add_task_step">Add Task Step</string>
     <string name="caretaker_login_hint">Log in to gain access to edit tasks</string>
     <string name="open_settings">Open settings</string>
     <string name="plan_task">Plan Task</string>
-    <string name="save">SAVE</string>
+    <string name="save">Save</string>
     <string name="task_title_hint">Task title</string>
     <string name="type">Type: %1$s</string>
     <string name="drag_task">Drag Task</string>

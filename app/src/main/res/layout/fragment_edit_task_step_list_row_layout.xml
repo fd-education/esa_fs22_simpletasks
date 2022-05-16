@@ -25,6 +25,7 @@
         android:layout_marginVertical="@dimen/halfElementPadding"
         android:layout_marginStart="@dimen/elementPadding"
         android:background="@drawable/rounded_corner_background"
+        android:backgroundTint="?colorPrimary"
         android:padding="@dimen/elementPadding"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

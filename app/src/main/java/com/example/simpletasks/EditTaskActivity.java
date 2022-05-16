@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,8 +53,7 @@ public class EditTaskActivity extends AppCompatActivity {
     }
 
     /**
-     * Handle click events on the save button.
-     * Save the current task to the database.
+     * Handle click events on the save button. Save the current task to the database.
      *
      * @param view the view that triggered the event
      */
@@ -71,6 +71,17 @@ public class EditTaskActivity extends AppCompatActivity {
 
         // Go back to the last screen
         onBackPressed();
+    }
+
+    /**
+     * handle the click event of the add task step button. adds a new task step at the end of the
+     * list
+     *
+     * @param view the view that triggered the event
+     */
+    public void onAddTaskStepClicked(View view) {
+        //TODO implement adding new Task step
+        Toast.makeText(this, "on add task step clicked", Toast.LENGTH_SHORT).show();
     }
 
     /**

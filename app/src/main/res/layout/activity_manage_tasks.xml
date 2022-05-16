@@ -57,13 +57,9 @@
 
     <Button
         android:id="@+id/caretakerLogoutButton"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/buttonHeight"
-        android:background="@drawable/rounded_corner_background"
+        style="@style/Theme.SimpleTasks.ErrorButton"
         android:onClick="onLogoutClicked"
         android:text="@string/logout"
-        android:textSize="@dimen/p"
-        app:backgroundTint="?colorError"
         app:layout_constraintBottom_toBottomOf="@+id/imageButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,30 +67,23 @@
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="@dimen/buttonHeight"
-        android:layout_height="@dimen/buttonHeight"
+        style="@style/Theme.SimpleTasks.IconButton"
         android:layout_marginBottom="@dimen/sidesPadding"
-        android:background="@drawable/rounded_corner_background"
         android:contentDescription="@string/open_settings"
         android:onClick="onSettingsClicked"
-        android:padding="@dimen/elementPadding"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/fragmentContainerTaskList"
-        app:srcCompat="@drawable/ic_baseline_settings_24"
-        app:tint="?attr/colorOnPrimary" />
+        app:srcCompat="@drawable/ic_baseline_settings_24" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <ImageButton
         android:id="@+id/addTask_manageTasks"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="?colorPrimary"
-        android:clickable="true"
+        style="@style/Theme.SimpleTasks.IconButton"
         android:contentDescription="@string/add_task"
-        android:focusable="true"
         android:onClick="onAddTaskClicked"
         app:layout_constraintBottom_toBottomOf="@+id/caretakerLogoutButton"
         app:layout_constraintEnd_toEndOf="@+id/fragmentContainerTaskList"
         app:layout_constraintTop_toTopOf="@+id/caretakerLogoutButton"
         app:srcCompat="@android:drawable/ic_input_add" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
