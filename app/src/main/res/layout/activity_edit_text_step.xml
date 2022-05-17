@@ -50,7 +50,7 @@
         tools:ignore="ImageContrastCheck" />
 
     <EditText
-        android:id="@+id/editText_videoStepTitle"
+        android:id="@+id/editText_textStepTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -66,7 +66,7 @@
         android:autofillHints="" />
 
     <ImageButton
-        android:id="@+id/imageButton_takeImageVideoStep"
+        android:id="@+id/imageButton_takeImageTextStep"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -81,7 +81,7 @@
         tools:ignore="ImageContrastCheck" />
 
     <Button
-        android:id="@+id/button_saveVideoStep"
+        android:id="@+id/button_saveTextStep"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
@@ -94,7 +94,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine"
+        android:id="@+id/editText_textStepDescription"
         android:layout_width="278dp"
         android:layout_height="282dp"
         android:layout_marginTop="32dp"
@@ -103,11 +103,11 @@
         android:inputType="textMultiLine"
         android:text="@string/step_description"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/button_saveVideoStep"
+        app:layout_constraintBottom_toTopOf="@+id/button_saveTextStep"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_videoStepTitle"
+        app:layout_constraintTop_toBottomOf="@+id/editText_textStepTitle"
         app:layout_constraintVertical_bias="0.0"
         tools:text="@string/step_description" />
 
