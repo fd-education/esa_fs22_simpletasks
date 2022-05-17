@@ -6,4 +6,91 @@
     android:layout_height="match_parent"
     tools:context=".EditTextStepActivity">
 
+    <ImageButton
+        android:id="@+id/backButton_textStep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/sidesPadding"
+        android:layout_marginTop="@dimen/sidesPadding"
+        android:backgroundTint="#00000000"
+        android:contentDescription="@string/back"
+        android:onClick="onBackClicked"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/arrow_back_black_24dp"
+        app:tint="?colorOnBackground" />
+
+    <TextView
+        android:id="@+id/textView_textStepTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="27dp"
+        android:layout_marginStart="@dimen/sidesPadding"
+        android:layout_marginEnd="@dimen/sidesPadding"
+        android:text="@string/edit_step"
+        android:textAlignment="center"
+        android:textColor="?colorOnBackground"
+        android:textSize="@dimen/h2"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/backButton_textStep"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/backButton_textStep" />
+
+    <ImageView
+        android:id="@+id/imageView_textStepImage"
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:layout_marginTop="48dp"
+        android:contentDescription="@string/step_title_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.379"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_textStepTitle"
+        app:srcCompat="@drawable/image_placeholder"
+        tools:ignore="ImageContrastCheck" />
+
+    <EditText
+        android:id="@+id/editText_videoStepTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:text="@string/step_title"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_textStepImage"
+        android:autofillHints="" />
+
+    <ImageButton
+        android:id="@+id/imageButton_takeImageVideoStep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/rounded_corner_background"
+        android:contentDescription="@string/change_image"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_textStepImage"
+        app:layout_constraintStart_toEndOf="@+id/imageView_textStepImage"
+        app:layout_constraintTop_toTopOf="@+id/imageView_textStepImage"
+        app:srcCompat="@android:drawable/ic_menu_camera"
+        tools:ignore="ImageContrastCheck" />
+
+    <Button
+        android:id="@+id/button_saveVideoStep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/rounded_corner_background"
+        app:backgroundTint="?buttonBarPositiveButtonStyle"
+        android:text="@string/save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
