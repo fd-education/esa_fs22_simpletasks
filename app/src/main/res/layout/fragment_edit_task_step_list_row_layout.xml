@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <ImageButton
+        android:id="@+id/dragTaskStepButton_editTask"
+        android:layout_width="@dimen/buttonHeight"
+        android:layout_height="@dimen/buttonHeight"
+        android:layout_marginStart="@dimen/elementPadding"
+        android:background="?colorOnPrimary"
+        android:contentDescription="@string/drag_task"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_drag_handle_48"
+        app:tint="?colorPrimary" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/imageTask"
+        android:layout_width="0dp"
+        android:layout_height="130dp"
+        android:layout_marginVertical="@dimen/halfElementPadding"
+        android:layout_marginStart="@dimen/elementPadding"
+        android:background="@drawable/rounded_corner_background"
+        android:padding="@dimen/elementPadding"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/dragTaskStepButton_editTask"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <ImageView
+            android:id="@+id/taskStepImage_editTask"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="@dimen/halfElementPadding"
+            android:layout_marginBottom="@dimen/halfElementPadding"
+            android:contentDescription="@string/task_image"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/taskStepTitle_editTask"
+            app:srcCompat="@drawable/ic_launcher_background" />
+
+        <TextView
+            android:id="@+id/taskStepTitle_editTask"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/placeholder"
+            android:textAlignment="viewStart"
+            android:textColor="?colorOnPrimary"
+            android:textSize="@dimen/h2"
+            android:textStyle="bold"
+            android:typeface="sans"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/taskStepType_editTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/elementPadding"
+            android:text="@string/placeholder"
+            android:textColor="?colorOnPrimary"
+            android:textSize="@dimen/p"
+            android:typeface="sans"
+            app:layout_constraintStart_toEndOf="@+id/taskStepImage_editTask"
+            app:layout_constraintTop_toTopOf="@+id/taskStepImage_editTask" />
+
+        <ImageButton
+            android:id="@+id/editTaskStepButton_editTask"
+            android:layout_width="@dimen/buttonHeight"
+            android:layout_height="0dp"
+            android:background="@drawable/rounded_corner_background"
+            android:backgroundTint="?colorSecondary"
+            android:contentDescription="@string/edit_task"
+            app:layout_constraintBottom_toBottomOf="@+id/deleteTaskStepButton_editTask"
+            app:layout_constraintEnd_toEndOf="@+id/taskStepTitle_editTask"
+            app:layout_constraintTop_toTopOf="@+id/deleteTaskStepButton_editTask"
+            app:srcCompat="@drawable/ic_outline_edit_24"
+            app:tint="?colorOnPrimary" />
+
+        <ImageButton
+            android:id="@+id/deleteTaskStepButton_editTask"
+            android:layout_width="@dimen/buttonHeight"
+            android:layout_height="@dimen/buttonHeight"
+            android:layout_marginEnd="@dimen/elementPadding"
+            android:background="@drawable/rounded_corner_background"
+            android:backgroundTint="?colorSecondary"
+            android:contentDescription="@string/delete_task"
+            app:layout_constraintBottom_toBottomOf="@+id/taskStepImage_editTask"
+            app:layout_constraintEnd_toStartOf="@+id/editTaskStepButton_editTask"
+            app:srcCompat="@drawable/ic_outline_delete_outline_24"
+            app:tint="?colorOnPrimary" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

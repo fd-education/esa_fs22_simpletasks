@@ -15,12 +15,22 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Handles all the interactions with the tasks table through its DAO.
+ */
+@SuppressWarnings("deprecation")
 public class TaskRepository {
     private final TaskDao taskDao;
     private final TaskStepDao taskStepDao;
     private final LiveData<List<Task>> allTasks;
     private final LiveData<List<TaskWithSteps>> allTasksWithSteps;
 
+    /**
+     * Initialize the repository using the application context.
+     * Initialize the observable lists for all tasks and all tasks with their steps.
+     *
+     * @param application the context
+     */
     public TaskRepository(Application application) {
         // TODO Uncomment for final submission and delete seed version
         // AppDatabase db = AppDatabase.getAppDb(application);
@@ -32,14 +42,30 @@ public class TaskRepository {
         allTasksWithSteps = taskDao.getAllWithSteps();
     }
 
+    /**
+     * Fetch all task entities from the tasks table
+     *
+     * @return LiveData<List<Task>> observable with all task entities
+     */
     public LiveData<List<Task>> getAllTasks() {
         return allTasks;
     }
 
+    /**
+     * Fetch all task entities with their steps from the tasks table
+     *
+     * @return LiveData<List<TaskWithSteps>> observable with all task entities and their steps
+     */
     public LiveData<List<TaskWithSteps>> getAllTasksWithSteps() {
         return allTasksWithSteps;
     }
 
+    /**
+     * Fetch all task entities from a given date.
+     *
+     * @param date the date to look up
+     * @return LiveData<List<Task>> observable with all task entities of the specified date
+     */
     public LiveData<List<Task>> getTasksByDate(final Date date) {
         Date startDate = new Date(date.getYear(), date.getMonth(), date.getDate(), 0, 0, 0);
         Date endDate = new Date(date.getYear(), date.getMonth(), date.getDate() + 1, 0, 0, 0);
@@ -47,6 +73,12 @@ public class TaskRepository {
         return taskDao.getByDate(startDate, endDate);
     }
 
+    /**
+     * Fetch all task entities with their task steps from a given date.
+     *
+     * @param date the date to look up
+     * @return LiveData<List<TaskWithSteps>> observable with all TaskWithSteps entities of the specified date
+     */
     public LiveData<List<TaskWithSteps>> getTasksByDateWithSteps(final Date date) {
         Date startDate = new Date(date.getYear(), date.getMonth(), date.getDate(), 0, 0, 0);
         Date endDate = new Date(date.getYear(), date.getMonth(), date.getDate() + 1, 0, 0, 0);
@@ -54,10 +86,20 @@ public class TaskRepository {
         return taskDao.getByDateWithSteps(startDate, endDate);
     }
 
+    /**
+     * Insert a list of tasks into the tasks table.
+     *
+     * @param tasks the tasks to insert
+     */
     public void insertTasks(final List<Task> tasks) {
         AppDatabase.databaseWriteExecutor.execute(() -> taskDao.insertTasks(tasks));
     }
 
+    /**
+     * Insert a list of tasks with their steps into the tasks and the taskSteps tables.
+     *
+     * @param tasksWithSteps the tasks with steps to insert
+     */
     public void insertTaskWithSteps(final List<TaskWithSteps> tasksWithSteps) {
         List<Task> taskList = new ArrayList<>();
         List<TaskStep> stepList = new ArrayList<>();
@@ -65,9 +107,7 @@ public class TaskRepository {
         for (TaskWithSteps task : tasksWithSteps) {
             taskList.add(task.getTask());
 
-            for (TaskStep step : task.getSteps()) {
-                stepList.add(step);
-            }
+            stepList.addAll(task.getSteps());
         }
 
         AppDatabase.databaseWriteExecutor.execute(() -> {
@@ -76,7 +116,12 @@ public class TaskRepository {
         });
     }
 
-    public void updateTasks(final List<TaskWithSteps> tasksWithSteps) {
+    /**
+     * Update a list of tasks with their steps in the tasks and the taskSteps tables.
+     *
+     * @param tasksWithSteps the tasks with steps to update
+     */
+    public void updateTasksWithSteps(final List<TaskWithSteps> tasksWithSteps) {
         List<Task> tasks = new ArrayList<>();
         for(TaskWithSteps task : tasksWithSteps) {
             tasks.add(task.getTask());
@@ -89,6 +134,11 @@ public class TaskRepository {
         }
     }
 
+    /**
+     * Delete a list of tasks with their steps from the tasks and the taskSteps tables.
+     *
+     * @param tasksWithSteps the tasks with steps to delete
+     */
     public void deleteTasks(final List<TaskWithSteps> tasksWithSteps) {
         List<Task> tasks = new ArrayList<>();
         for(TaskWithSteps task : tasksWithSteps) {

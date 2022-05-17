@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,24 +19,36 @@ import com.example.simpletasks.data.entities.Task;
 import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.entities.TaskWithSteps;
 
+import java.util.Date;
 import java.util.List;
 
+/**
+ * Adapter to handle the display a list of tasks.
+ */
 public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskListViewHolder> {
+
     /**
-     * this handler is a layer between the code and the xml layout. it fetches the View elements for
-     * setting them in the adapter
+     * TaskListViewHolder acts as a layer between code and xml layout.
+     * Fetches View elements to set them in the adapter.
      */
-    class TaskListViewHolder extends RecyclerView.ViewHolder {
+    static class TaskListViewHolder extends RecyclerView.ViewHolder {
         private final TextView titleTask;
         private final TextView countStepsIndicator;
         private final ImageView taskImage;
+        private final ImageButton skipTaskButton;
 
-
+        /**
+         * Constructor for TaskListAdapter
+         * Sets all View elements for the adapter.
+         *
+         * @param itemView the View from which to get the elements
+         */
         private TaskListViewHolder(View itemView) {
             super(itemView);
             titleTask = itemView.findViewById(R.id.titleTask_taskList);
             countStepsIndicator = itemView.findViewById(R.id.countStepsIndicator_taskList);
             taskImage = itemView.findViewById(R.id.taskImage_taskList);
+            skipTaskButton = itemView.findViewById(R.id.skipTaskButton_taskList);
         }
     }
 
@@ -47,6 +60,15 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
         mInflater = LayoutInflater.from(context);
     }
 
+    /**
+     * Triggered when the RecyclerView needs a new ViewHolder to display a task.
+     *
+     * @param parent ViewGroup to add the new View to
+     * @param viewType type of the view that is created
+     *
+     * @return the new ViewHolder
+     */
+    @NonNull
     @Override
     public TaskListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.fragment_task_list_row_layout, parent, false);
@@ -54,6 +76,13 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
         return new TaskListViewHolder(itemView);
     }
 
+    /**
+     * Replace tasks on the screen by recycling views.
+     * Update the tasks whilst the user is scrolling through them.
+     *
+     * @param holder the element the data gets bound on
+     * @param position the global position of the view
+     */
     @Override
     public void onBindViewHolder(@NonNull TaskListViewHolder holder, int position) {
         if (tasks != null) {
@@ -69,6 +98,12 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
                 intent.putExtra(MainActivity.TASK_INTENT_EXTRA, taskWithSteps);
                 context.startActivity(intent);
             });
+            holder.skipTaskButton.setOnClickListener(v -> {
+                long newStartLong = currentTask.getNextStartDate().getTime() + currentTask.getInterval();
+                Date newStartDate = new Date(newStartLong);
+                currentTask.setNextStartDate(newStartDate);
+                MainActivity.updateTasksInDatabase(tasks);
+            });
         } else {
             // Covers the case of data not being ready yet.
             holder.titleTask.setText(R.string.placeholder);
@@ -78,12 +113,21 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
 
     }
 
-    public void setTasks(List<TaskWithSteps> tasks) {
+    /**
+     * Set the tasks and notify registered observers.
+     *
+     * @param tasks the task steps to set
+     */
+    public void setTasks(final List<TaskWithSteps> tasks) {
         this.tasks = tasks;
         notifyDataSetChanged();
     }
 
-
+    /**
+     * Get the number of tasks.
+     *
+     * @return int for number of tasks
+     */
     @Override
     public int getItemCount() {
         if (tasks != null)

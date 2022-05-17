@@ -11,27 +11,37 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.simpletasks.ManageTaskActivity;
+import com.example.simpletasks.ManageTasksActivity;
 import com.example.simpletasks.R;
 import com.example.simpletasks.adapters.ManageTaskListAdapter;
 import com.example.simpletasks.data.viewmodels.TaskViewModel;
 
+/**
+ * Fragment for the task list on the manage tasks screen.
+ */
 public class ManageTasksListFragment extends Fragment {
     private static final String TAG = "EditTaskListFragment";
     private View view;
 
+    /**
+     * Inflate the fragments layout and set the adapter for the task list.
+     *
+     * @param inflater layout inflater to inflate the views in the fragment
+     * @param container parent view of the fragments ui
+     * @param savedInstanceState reconstruction of a previous state
+     * @return View for the fragments ui
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_tasks_list, container, false);
+        view = inflater.inflate(R.layout.fragment_list, container, false);
         setAdapterWithTasks();
+        Log.d(TAG, "finished initialisation");
         return view;
     }
 
-    /**
-     * gets the tasks from the db and sets the adapter for the view
-     */
+    // Get the tasks from the database and set the adapter for the view
     private void setAdapterWithTasks() {
         final RecyclerView recyclerView = view.findViewById(R.id.tasks_list);
         ManageTaskListAdapter adapter = new ManageTaskListAdapter(getContext(), this);
@@ -39,11 +49,12 @@ public class ManageTasksListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
+        Log.d(TAG, "start fetching all tasks from db");
         taskViewModel.getAllTasksWithSteps().observe(getViewLifecycleOwner(), tasks -> {
             Log.d(TAG, "all Tasks successfully fetched from db");
 
             adapter.setTasks(tasks);
-            ManageTaskActivity.setTasks(tasks);
+            ManageTasksActivity.setTasks(tasks);
         });
     }
 }

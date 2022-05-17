@@ -16,22 +16,32 @@ import com.example.simpletasks.R;
 import com.example.simpletasks.adapters.TaskListAdapter;
 import com.example.simpletasks.data.viewmodels.TaskViewModel;
 
+/**
+ * Fragment for the task list..
+ */
 public class TasksListFragment extends Fragment {
     private static final String TAG = "TaskListFragment";
     private View view;
 
+    /**
+     * Inflate the fragments layout and set the adapter for the task steps list.
+     *
+     * @param inflater layout inflater to inflate the views in the fragment
+     * @param container parent view of the fragments ui
+     * @param savedInstanceState reconstruction of a previous state
+     * @return View for the fragments ui
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_tasks_list, container, false);
+        view = inflater.inflate(R.layout.fragment_list, container, false);
         setAdapterWithTasks();
+        Log.d(TAG, "finished initialisation");
         return view;
     }
 
-    /**
-     * gets the tasks from the db and sets the adapter for the view
-     */
+    // Get the tasks from the database and set the adapter for the view
     private void setAdapterWithTasks() {
         final RecyclerView recyclerView = view.findViewById(R.id.tasks_list);
         TaskListAdapter adapter = new TaskListAdapter(getContext());
@@ -40,7 +50,7 @@ public class TasksListFragment extends Fragment {
 
         TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
         taskViewModel.getTodaysTasksWithSteps().observe(getViewLifecycleOwner(), tasks -> {
-            Log.d(TAG, "today Tasks successfully fetched from db");
+            Log.d(TAG, "today's Tasks successfully fetched from db");
 
             adapter.setTasks(tasks);
             MainActivity.setTasks(tasks);

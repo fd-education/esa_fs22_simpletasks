@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.simpletasks.EditTaskActivity;
 import com.example.simpletasks.MainActivity;
 import com.example.simpletasks.R;
 import com.example.simpletasks.TaskGuideActivity;
@@ -25,34 +26,42 @@ import com.example.simpletasks.data.viewmodels.TaskViewModel;
 
 import java.util.List;
 
+/**
+ * Adapter to handle the display of tasks for the manage tasks screen.
+ */
 public class ManageTaskListAdapter extends RecyclerView.Adapter<ManageTaskListAdapter.TaskListViewHolder> {
 
     /**
-     * this handler is a layer between the code and the xml layout. it fetches the View elements for
-     * setting them in the adapter
+     * TaskListViewHolder acts as a layer between code and xml layout.
+     * Fetches View elements to set them in the adapter.
      */
-    class TaskListViewHolder extends RecyclerView.ViewHolder {
+    static class TaskListViewHolder extends RecyclerView.ViewHolder {
         private final TextView titleTask;
         private final TextView countStepsIndicator;
         private final ImageView taskImage;
         private final ImageButton editButton;
         private final ImageButton deleteButton;
 
-
+        /**
+         * Constructor for TaskListViewHolder
+         * Sets all View elements for the adapter.
+         *
+         * @param itemView the View from which to get the elements
+         */
         private TaskListViewHolder(View itemView) {
             super(itemView);
             titleTask = itemView.findViewById(R.id.titleTask_editTasks);
-            countStepsIndicator = itemView.findViewById(R.id.countStepsIndicator_editTask);
+            countStepsIndicator = itemView.findViewById(R.id.countStepsIndicator_editTasks);
             taskImage = itemView.findViewById(R.id.taskImage_editTasks);
-            editButton = itemView.findViewById(R.id.editTaskButton_editTask);
-            deleteButton = itemView.findViewById(R.id.deleteTaskButton_editTask);
+            editButton = itemView.findViewById(R.id.editTaskButton_editTasks);
+            deleteButton = itemView.findViewById(R.id.deleteTaskButton_editTasks);
         }
     }
 
     private static final String TAG = "ManageTaskListAdapter";
     private final LayoutInflater mInflater;
     private Context context;
-    private Fragment fragment;
+    private final Fragment fragment;
     private List<TaskWithSteps> tasks;
 
     public ManageTaskListAdapter(Context context, Fragment fragment) {
@@ -61,6 +70,15 @@ public class ManageTaskListAdapter extends RecyclerView.Adapter<ManageTaskListAd
         this.fragment = fragment;
     }
 
+    /**
+     * Triggered when the RecyclerView needs a new ViewHolder to display a task.
+     *
+     * @param parent ViewGroup to add the new View to
+     * @param viewType type of the view that is created
+     *
+     * @return the new ViewHolder
+     */
+    @NonNull
     @Override
     public TaskListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.fragment_manage_task_list_row_layout, parent, false);
@@ -68,6 +86,13 @@ public class ManageTaskListAdapter extends RecyclerView.Adapter<ManageTaskListAd
         return new TaskListViewHolder(itemView);
     }
 
+    /**
+     * Replace tasks on the screen by recycling views.
+     * Update the tasks whilst the user is scrolling through them.
+     *
+     * @param holder the element the data gets bound on
+     * @param position the global position of the view
+     */
     @Override
     public void onBindViewHolder(@NonNull TaskListViewHolder holder, int position) {
         if (tasks != null) {
@@ -84,7 +109,9 @@ public class ManageTaskListAdapter extends RecyclerView.Adapter<ManageTaskListAd
                 context.startActivity(intent);
             });
             holder.editButton.setOnClickListener(v -> {
-                //TODO open edit task with this task
+                Intent intent = new Intent(context, EditTaskActivity.class);
+                intent.putExtra(MainActivity.TASK_INTENT_EXTRA, currentTaskWithSteps);
+                context.startActivity(intent);
             });
             holder.deleteButton.setOnClickListener(v -> {
                 TaskViewModel taskViewModel = new ViewModelProvider(fragment).get(TaskViewModel.class);
@@ -100,12 +127,21 @@ public class ManageTaskListAdapter extends RecyclerView.Adapter<ManageTaskListAd
 
     }
 
-    public void setTasks(List<TaskWithSteps> tasks) {
+    /**
+     * Set the tasks and notify registered observers.
+     *
+     * @param tasks the task steps to set
+     */
+    public void setTasks(final List<TaskWithSteps> tasks) {
         this.tasks = tasks;
         notifyDataSetChanged();
     }
 
-
+    /**
+     * Get the number of tasks.
+     *
+     * @return int for number of tasks
+     */
     @Override
     public int getItemCount() {
         if (tasks != null)

@@ -1,11 +1,13 @@
 package com.example.simpletasks.domain.login;
 
+import android.util.Log;
 /**
  * User class is used to model the logged in or out states of a user.
  * Implemented as a thread safe singleton as only one user needs to be logged in
  * at a time.
  */
 public class User {
+    private static final String TAG = "User";
     // Track the loggedIn state of the user
     private boolean loggedIn;
 
@@ -40,6 +42,7 @@ public class User {
      * Set the users loggedIn state to true (= logged in)
      */
     public void logIn(){
+        Log.d(TAG, "user logged in");
         this.loggedIn = true;
     }
 
@@ -47,6 +50,7 @@ public class User {
      * Set the users loggedIn state to false (= logged out)
      */
     public void logOut(){
+        Log.d(TAG, "user logged out");
         this.loggedIn = false;
     }
 

@@ -1,5 +1,6 @@
 package com.example.simpletasks;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,8 +11,6 @@ import android.widget.TextView;
 
 import com.example.simpletasks.domain.login.*;
 
-import java.util.Objects;
-
 /**
  * LoginActivity handles lifecycle and business calls for the caretaker login screen.
  */
@@ -20,13 +19,25 @@ public class LoginActivity extends AppCompatActivity {
 
     Login login;
 
+    /**
+     * Set and adjust the view and the controllers
+     *
+     * @param savedInstanceState reconstruction of a previous state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Objects.requireNonNull(getSupportActionBar()).hide();
 
+        // Remove the action bar at the top of the screen
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
+
+        // Initialize the login controller
         login = new LoginController(this.getApplication());
+        Log.d(TAG, "finished initialisation");
     }
 
     /**
@@ -46,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         if(validLogin){
             errorText.setText("");
             User.getUser().logIn();
-            startActivity(new Intent(this, ManageTaskActivity.class));
+            startActivity(new Intent(this, ManageTasksActivity.class));
 
             // Finish to remove the LoginActivity from the back stack
             finish();
@@ -55,5 +66,14 @@ public class LoginActivity extends AppCompatActivity {
             errorText.setText(getString(R.string.login_error));
             Log.d(TAG, "Pin is not valid.");
         }
+    }
+
+    /**
+     * Handle click events on the back button
+     *
+     * @param view the view that triggered the event
+     */
+    public void onBackClicked(View view) {
+        super.onBackPressed();
     }
 }

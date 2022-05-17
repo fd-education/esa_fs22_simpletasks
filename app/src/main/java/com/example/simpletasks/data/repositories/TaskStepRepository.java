@@ -10,9 +10,17 @@ import com.example.simpletasks.data.entities.TaskStep;
 
 import java.util.List;
 
+/**
+ * Handles all the interactions with the taskStep table through its DAO.
+ */
 public class TaskStepRepository {
     private final TaskStepDao taskStepDao;
 
+    /**
+     * Initialize the repository using the application context.
+     *
+     * @param application the context
+     */
     public TaskStepRepository(Application application){
         // TODO Uncomment for final submission and delete seed version
         // AppDatabase db = AppDatabase.getAppDb(application);
@@ -20,18 +28,39 @@ public class TaskStepRepository {
         taskStepDao = db.taskStepDao();
     }
 
+    /**
+     * Fetch all task step entities of a tasks specified by its id ordered by their index
+     *
+     * @param taskId the taskId to lookup
+     * @return LiveData<List<TaskStep>> observable with all task step entities of a task
+     */
     public LiveData<List<TaskStep>> getByTaskId(String taskId){
         return taskStepDao.getByTaskId(taskId);
     }
 
+    /**
+     * Insert a list of taskSteps into the tasks table.
+     *
+     * @param taskSteps the taskSteps to insert
+     */
     public void insertTaskSteps(final List<TaskStep> taskSteps){
         AppDatabase.databaseWriteExecutor.execute(() -> taskStepDao.insertTaskSteps(taskSteps));
     }
 
+    /**
+     * Update a list of taskSteps in the tasks table.
+     *
+     * @param taskSteps the taskSteps to update
+     */
     public void updateTaskSteps(final List<TaskStep> taskSteps){
         AppDatabase.databaseWriteExecutor.execute(() -> taskStepDao.updateTaskSteps(taskSteps));
     }
 
+    /**
+     * Delete a list of task steps from the taskSteps table.
+     *
+     * @param taskSteps the tasks to delete
+     */
     public void deleteTaskSteps(final List<TaskStep> taskSteps){
         AppDatabase.databaseWriteExecutor.execute(() -> taskStepDao.deleteTaskSteps(taskSteps));
     }
