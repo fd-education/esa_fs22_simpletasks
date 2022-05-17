@@ -36,7 +36,7 @@
     <string name="send_pin_explanation">Send the PIN to someone else</string>
     <string name="local_pin_explanation">The PIN is for me</string>
     <string name="phone_number_hint">Phone number</string>
-    <string name="phone_number_error" >Not a valid phone number.</string>
+    <string name="phone_number_error">Not a valid phone number.</string>
     <string name="generate_pin">Generate PIN</string>
     <string name="title_add_pin">Add PIN</string>
     <string name="add_pin_explanation">Generates a new PIN that will be added to the existing ones.</string>

@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SimpleTasks">
         <activity
+            android:name=".ChoseFormatActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditAudioStepActivity"
             android:exported="false" />
         <activity
