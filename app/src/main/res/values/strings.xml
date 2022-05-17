@@ -15,6 +15,7 @@
     <string name="run_task">Run Task</string>
     <string name="skip_task">Skip Task</string>
     <string name="task_image">Task Image</string>
+    <string name="task_step_image">Task Step Image</string>
     <string name="add_task_step">Add Task Step</string>
     <string name="caretaker_login_hint">Log in to gain access to edit tasks</string>
     <string name="open_settings">Open settings</string>

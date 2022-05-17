@@ -13,7 +13,8 @@
     <string name="add_task">Task hinzufügen</string>
     <string name="run_task">Task durchführen</string>
     <string name="skip_task">Task überspringen</string>
-    <string name="task_image">Taskbild</string>
+    <string name="task_image">Bild von Task</string>
+    <string name="task_step_image">Bild von Taskschritt</string>
     <string name="add_task_step">Taskschritt hinzufügen</string>
     <string name="caretaker_login_hint">Logge dich ein, um Tasks bearbeiten zu können</string>
     <string name="open_settings">Einstellungen öffnen</string>

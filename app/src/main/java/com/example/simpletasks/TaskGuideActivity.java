@@ -9,9 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.simpletasks.data.entities.TaskWithSteps;
 import com.example.simpletasks.data.entities.Task;
 import com.example.simpletasks.data.entities.TaskStep;
+import com.example.simpletasks.data.entities.TaskWithSteps;
 import com.example.simpletasks.fragments.TaskGuideFragment;
 
 import java.util.List;
@@ -21,7 +21,6 @@ import java.util.List;
  */
 public class TaskGuideActivity extends AppCompatActivity {
     private static final String TAG = "TaskGuideActivity";
-    private TaskWithSteps taskWithSteps;
     private Task task;
     private List<TaskStep> taskSteps;
     private int currentStep;
@@ -93,12 +92,18 @@ public class TaskGuideActivity extends AppCompatActivity {
 
     // Sets the instance variables
     private void setInstanceVariables() {
-        taskWithSteps = getTask();
+        TaskWithSteps taskWithSteps = getTask();
         task = taskWithSteps.getTask();
         taskSteps = taskWithSteps.getSteps();
         setTaskTitleOnUi();
 
         currentStep = 0;
+
+        // if task has no steps, go back to the last activity and throw an error
+        if(taskSteps.size() == 0) {
+            super.onBackPressed();
+            //todo implement error message
+        }
     }
 
     // Get the task from the intent

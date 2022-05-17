@@ -4,11 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.simpletasks.data.entities.TaskWithSteps;
 import com.example.simpletasks.domain.login.User;
 
 public class ManageTasksActivity extends AppCompatActivity {
@@ -55,10 +55,8 @@ public class ManageTasksActivity extends AppCompatActivity {
      */
     public void onAddTaskClicked(View view) {
         Intent intent = new Intent(this, EditTaskActivity.class);
-        //TODO put extra empty taskwithsteps but need data layer to be changed for that
-        //intent.putExtra(MainActivity.TASK_INTENT_EXTRA, empty taskwithsteps);
-        //startActivity(intent);
-        Toast.makeText(this, "clicked on add task", Toast.LENGTH_SHORT).show();
+        intent.putExtra(MainActivity.TASK_INTENT_EXTRA, new TaskWithSteps());
+        startActivity(intent);
     }
 
     /**

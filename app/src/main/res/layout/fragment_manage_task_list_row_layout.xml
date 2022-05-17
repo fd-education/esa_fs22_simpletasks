@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/imageTask"
     android:layout_width="fill_parent"
     android:layout_height="100dp"
@@ -31,6 +30,7 @@
         android:textSize="@dimen/h2"
         android:textStyle="bold"
         android:typeface="sans"
+        android:singleLine="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/taskImage_editTasks"
         app:layout_constraintTop_toTopOf="@+id/taskImage_editTasks" />
@@ -50,32 +50,23 @@
 
     <ImageButton
         android:id="@+id/editTaskButton_editTasks"
-        android:layout_width="@dimen/buttonHeight"
-        android:layout_height="0dp"
-        android:background="@drawable/rounded_corner_background"
-        android:backgroundTint="?colorSecondary"
+        style="@style/Theme.SimpleTasks.IconButtonSecondary"
         android:contentDescription="@string/edit_task"
         app:layout_constraintBottom_toBottomOf="@+id/deleteTaskButton_editTasks"
         app:layout_constraintEnd_toEndOf="@+id/titleTask_editTasks"
         app:layout_constraintTop_toTopOf="@+id/deleteTaskButton_editTasks"
-        app:srcCompat="@drawable/ic_outline_edit_24"
-        app:tint="?colorOnPrimary" />
+        app:srcCompat="@drawable/ic_outline_edit_24" />
 
     <ImageButton
         android:id="@+id/deleteTaskButton_editTasks"
-        android:layout_width="@dimen/buttonHeight"
-        android:layout_height="@dimen/buttonHeight"
+        style="@style/Theme.SimpleTasks.IconButtonSecondary"
         android:layout_marginEnd="@dimen/elementPadding"
-        android:background="@drawable/rounded_corner_background"
-        android:backgroundTint="?colorSecondary"
         android:contentDescription="@string/delete_task"
-        android:scaleType="center"
         app:layout_constraintBottom_toBottomOf="@+id/taskImage_editTasks"
         app:layout_constraintEnd_toStartOf="@+id/editTaskButton_editTasks"
         app:layout_constraintTop_toTopOf="@+id/countStepsIndicator_editTasks"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/ic_outline_delete_outline_24"
-        app:tint="?colorOnPrimary" />
+        app:srcCompat="@drawable/ic_outline_delete_outline_24" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

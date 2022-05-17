@@ -35,12 +35,10 @@
         android:id="@+id/linearLayoutStatusBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/elementPadding"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleTask_TaskGuide">
-
+        app:layout_constraintTop_toTopOf="parent">
 
     </LinearLayout>
 
@@ -51,6 +49,7 @@
         android:layout_marginStart="@dimen/sidesPadding"
         android:layout_marginTop="@dimen/elementPadding"
         android:layout_marginEnd="@dimen/sidesPadding"
+        android:contentDescription="task_step_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
