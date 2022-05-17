@@ -2,7 +2,7 @@ package com.example.simpletasks.data;
 
 import android.util.Log;
 
-import com.example.simpletasks.data.domains.TaskStepTypes;
+import com.example.simpletasks.data.types.TaskStepTypes;
 import com.example.simpletasks.data.entities.*;
 
 import java.util.ArrayList;

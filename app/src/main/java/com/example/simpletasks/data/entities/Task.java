@@ -103,6 +103,25 @@ public class Task implements Serializable {
     }
 
     /**
+     * Get the title image path of the task
+     *
+     * @return the title image path of the task
+     */
+    @NonNull
+    public String getTitleImagePath() {
+        return titleImagePath;
+    }
+
+    /**
+     * Set the title image path for the task.
+     *
+     * @param titleImagePath the title to set
+     */
+    public void setTitleImagePath(@NonNull String titleImagePath) {
+        this.titleImagePath = titleImagePath;
+    }
+
+    /**
      * Get the description of the task.
      *
      * @return the description of the task.
