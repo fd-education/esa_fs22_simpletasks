@@ -1,6 +1,7 @@
 package com.example.simpletasks.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +12,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.simpletasks.EditTaskActivity;
+import com.example.simpletasks.MainActivity;
 import com.example.simpletasks.R;
 import com.example.simpletasks.data.entities.TaskStep;
+import com.example.simpletasks.domain.editSteps.EditStepsUtility;
+import com.example.simpletasks.domain.editSteps.EditStepsUtilityController;
 
 import java.util.List;
 
@@ -54,10 +59,13 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
     private final LayoutInflater mInflater;
     private Context context;
     private List<TaskStep> taskSteps;
+    private final EditStepsUtility editStepsUtility;
 
     public EditTaskStepsListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
         this.context = context;
+
+        editStepsUtility = new EditStepsUtilityController(context);
     }
 
     /**
@@ -93,12 +101,15 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
             holder.titleTaskStep.setText(currentTaskStep.getTitle());
             holder.taskStepType.setText(context.getString(R.string.type, currentTaskStep.getType()));
             holder.taskImage.setImageResource(R.drawable.ic_launcher_background/*TODO change */);
+            // Go to the edit screen corresponding to the current step format
             holder.editButton.setOnClickListener(v -> {
                 //todo start new intent which goes to edit task step
-                /*Intent intent = new Intent(context, EditTaskActivity.class);
+                Intent intent = editStepsUtility.getHandlerIntent(currentTaskStep.getTypeAsTaskStepType());
+
                 intent.putExtra(MainActivity.TASK_INTENT_EXTRA, currentTaskStep);
-                context.startActivity(intent);*/
+                context.startActivity(intent);
             });
+
             holder.deleteButton.setOnClickListener(v -> {
                 //todo implement deletion of step
             });

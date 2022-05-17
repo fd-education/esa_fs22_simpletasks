@@ -49,6 +49,7 @@
             android:id="@+id/taskStepTitle_editTask"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:singleLine="true"
             android:text="@string/placeholder"
             android:textAlignment="viewStart"
             android:textColor="?colorOnPrimary"
