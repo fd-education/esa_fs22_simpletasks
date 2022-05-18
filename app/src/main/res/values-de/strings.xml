@@ -53,4 +53,6 @@
     <string name="start_recording">Aufnahme starten</string>
     <string name="delete_recording">Aufnahme löschen</string>
     <string name="step_title_image">Step Titelbild</string>
+    <string name="empty_step_title">Step Titel darf nicht leer sein!</string>
+    <string name="empty_step_description">Step Beschreibung darf nicht leer sein!</string>
 </resources>
