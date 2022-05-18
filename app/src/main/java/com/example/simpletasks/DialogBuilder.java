@@ -3,29 +3,32 @@ package com.example.simpletasks;
 import android.app.Dialog;
 import android.content.Context;
 
-public class DialogBuilder  {
-    private final String leftBtnld;
-    private final String leftBtnText;
-    private final String rightBtnld;
-    private final String rightBtnText;
+public class DialogBuilder extends Context implements IDialogBuilder {
+    private String leftBtnld;
+    private String leftBtnText;
+    private String rightBtnld;
+    private String rightBtnText;
 
-    public DialogBuilder(String leftBtnld, String leftBtnText, String rightBtnld, String rightBtnText) {
-        this.leftBtnld = leftBtnld;
-        this.leftBtnText = leftBtnText;
-        this.rightBtnld = rightBtnld;
-        this.rightBtnText = rightBtnText;
+    public DialogBuilder() {
+
     }
 
 
     public void setTwoButtonLayout(String leftBtnld, String leftBtnText, String rightBtnld, String rightBtnText) {
+        this.leftBtnld = leftBtnld;
+        this.leftBtnText = leftBtnText;
+        this.rightBtnld = rightBtnld;
+        this.rightBtnText = rightBtnText;
 
     }
 
     public void setCenterButtonLayout(String btnld, String btnText) {
-
+        this.btnld = btnld;
+        this.btnText = btnText;
     }
 
     public void setMainText(String text) {
+        this.text = text;
 
     }
 
@@ -34,10 +37,6 @@ public class DialogBuilder  {
     }
     public Dialog build() {
         Dialog dialog = new Dialog(this);
-        validateDialogObject(dialog);
         return dialog;
-    }
-
-    private void validateDialogObject(Dialog dialog) {
     }
 }
