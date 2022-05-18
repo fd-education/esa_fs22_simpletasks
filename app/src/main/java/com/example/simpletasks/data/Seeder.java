@@ -35,9 +35,9 @@ public class Seeder {
         Date today = new Date();
 
         for (int i = 0; i < quantity; i++) {
-            String title = "Task Title " + i;
-            String titleImagePath = "Path/Path/Path";
-            String description = "Task Description " + i;
+            String title = "Seed Task Title " + i;
+            String titleImagePath = "Seed Path/Path/Path";
+            String description = "Seed Task Description " + i;
             // date always incremented by the current number of iterations
             Date nextStart = new Date(today.getYear(), today.getMonth(), today.getDate() + i, today.getHours() + 1, today.getMinutes());
             // three days
@@ -48,7 +48,7 @@ public class Seeder {
             Date endDate = new Date(today.getYear(), today.getMonth(), today.getDate() + i + 7, today.getHours(), today.getMinutes());
 
             Task task = new Task(title, titleImagePath, description, nextStart, interval, notificationDelta, endDate);
-            addSteps(task);
+            addSteps(task, i);
             tasks.add(new TaskWithSteps(task, task.getSteps()));
         }
 
@@ -58,26 +58,23 @@ public class Seeder {
     }
 
     //Add a random amount of steps to the task passed as an argument
-    private void addSteps(Task task) {
+    private void addSteps(Task task, int index) {
         Log.d(TAG, "Add steps to " + task.getTitle() + ".");
 
         List<TaskStep> steps = new ArrayList<>();
 
-        String taskId = task.getId();
-
         int nbrOfSteps = (int) (Math.random() * 5 + 5);
-        Log.d(TAG, taskId + ": " + nbrOfSteps + " steps.");
+        Log.d(TAG, "Seed Task " + index + ": " + nbrOfSteps + " steps.");
 
-        String i = task.getTitle();
         for (int j = 0; j < nbrOfSteps; j++) {
             TaskStepTypes type = TaskStepTypes.values()[(int) (Math.random() * 3)];
-            String title = String.format("Step Title %s.%s", taskId, j);
-            String imageUri = String.format("Step Image URI %s.%s", taskId, j);
-            String description = String.format("Step Description %s.%s", taskId, j);
-            String videoUri = String.format("Step Video URI %s.%s", taskId, j);
-            String audioUri = String.format("Step Audio URI %s.%s", taskId, j);
+            String title = String.format("Seed Step Title %s.%s", index, j);
+            String imageUri = String.format("Seed Step Image URI %s.%s", index, j);
+            String description = String.format("Seed Step Description %s.%s", index, j);
+            String videoUri = String.format("Seed Step Video URI %s.%s", index, j);
+            String audioUri = String.format("Seed Step Audio URI %s.%s", index, j);
 
-            steps.add(j, new TaskStep(taskId, type, j, title, imageUri, description, videoUri, audioUri));
+            steps.add(j, new TaskStep(task.getId(), type, j, title, imageUri, description, videoUri, audioUri));
         }
 
         task.setSteps(steps);
