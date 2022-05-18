@@ -34,9 +34,6 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
-            android:exported="false" />
-        <activity
             android:name=".RemovePinActivity"
             android:exported="false" />
         <activity

@@ -47,14 +47,9 @@ public class EditTaskStepsListFragment extends Fragment {
         return view;
     }
 
-    // Set the task steps from the arguments in the bundle
-    private List<TaskStep> getTaskStepsFromArguments() {
-        if (getArguments() != null) {
-            Log.d(TAG, "successfully loaded task steps from fragment start");
-            TaskWithSteps task = (TaskWithSteps) getArguments().getSerializable(MainActivity.TASK_INTENT_EXTRA);
-            return task.getSteps();
-        }
-        return new ArrayList<>();
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     // Get the task steps from the database and set the adapter for the view
@@ -64,8 +59,17 @@ public class EditTaskStepsListFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        List<TaskStep> taskSteps = getTaskStepsFromArguments();
-        adapter.setTaskSteps(taskSteps);
+        adapter.setTaskSteps(getTaskStepsFromArguments());
         Log.d(TAG, "set task steps");
+    }
+
+    // Set the task steps from the arguments in the bundle
+    private List<TaskStep> getTaskStepsFromArguments() {
+        if (getArguments() != null) {
+            Log.d(TAG, "successfully loaded task steps from fragment start");
+            TaskWithSteps task = (TaskWithSteps) getArguments().getSerializable(MainActivity.TASK_INTENT_EXTRA);
+            return task.getSteps();
+        }
+        return new ArrayList<>();
     }
 }
