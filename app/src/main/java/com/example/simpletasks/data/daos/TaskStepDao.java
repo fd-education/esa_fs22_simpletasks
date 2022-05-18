@@ -30,7 +30,15 @@ public interface TaskStepDao {
     LiveData<List<TaskStep>> getByTaskId(String taskId);
 
     /**
-     * Insert a list of taskSteps into the tasks table.
+     * Insert a taskStep into the taskSteps table.
+     *
+     * @param taskStep the taskSteps to insert
+     */
+    @Insert(onConflict = REPLACE)
+    void insertTaskStep(TaskStep taskStep);
+
+    /**
+     * Insert a list of taskSteps into the taskSteps table.
      *
      * @param taskSteps the taskSteps to insert
      */
