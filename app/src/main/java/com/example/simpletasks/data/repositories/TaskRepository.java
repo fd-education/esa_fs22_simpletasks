@@ -134,6 +134,10 @@ public class TaskRepository {
         }
     }
 
+    public void updateTasks(final List<Task> tasks){
+        AppDatabase.databaseWriteExecutor.execute(() -> taskDao.updateTasks(tasks));
+    }
+
     /**
      * Delete a list of tasks with their steps from the tasks and the taskSteps tables.
      *

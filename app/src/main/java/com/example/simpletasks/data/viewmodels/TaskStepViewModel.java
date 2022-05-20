@@ -28,13 +28,23 @@ public class TaskStepViewModel extends AndroidViewModel {
     }
 
     /**
-     * Fetch all task step entities of a tasks ordered by their index
+     * Fetch all task step entities of a task ordered by their index
      *
      * @param task the task to lookup
      * @return LiveData<List<TaskStep>> observable with all task step entities of a task
      */
     public LiveData<List<TaskStep>>  getStepsOfTask(final Task task){
         return taskStepRepo.getByTaskId(task.getId());
+    }
+
+    /**
+     * Fetch all task step entities of a task specified by its id ordered by their index
+     *
+     * @param taskId the task id to lookup
+     * @return LiveData<List<TaskStep>> observable with all task step entities of a task
+     */
+    public LiveData<List<TaskStep>>  getStepsOfTaskById(final String taskId){
+        return taskStepRepo.getByTaskId(taskId);
     }
 
     /**
