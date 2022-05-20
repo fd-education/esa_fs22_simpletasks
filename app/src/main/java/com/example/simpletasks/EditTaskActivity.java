@@ -1,5 +1,7 @@
 package com.example.simpletasks;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,22 +11,24 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.simpletasks.data.entities.Task;
 import com.example.simpletasks.data.entities.TaskWithSteps;
 import com.example.simpletasks.data.viewmodels.TaskViewModel;
 import com.example.simpletasks.fragments.EditTaskStepsListFragment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Activity for the edit tasks screen.
  */
 public class EditTaskActivity extends AppCompatActivity {
     private static final String TAG = "EditTaskActivity";
-    private TaskWithSteps currentEditTask;
+    public static final String SHARED_PREF_TASK_ID = "TaskId";
+
+    private Task currentEditTask;
 
     // UI element to read from/ write to
     private EditText taskTitle;
+
+    private SharedPreferences sharedPreferences;
 
     /**
      * Set and adjust the view and set fragments.
@@ -45,9 +49,14 @@ public class EditTaskActivity extends AppCompatActivity {
         // Get the task from the intent
         currentEditTask = getTask();
 
+        SharedPreferences sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
+
+        sharedPreferences.edit().putString(SHARED_PREF_TASK_ID, currentEditTask.getId()).apply();
+
         // Set the fragments in the activity
         fillValuesOnUi();
         setFragment();
+
         Log.d(TAG, "finished initialisation");
     }
 
@@ -59,14 +68,12 @@ public class EditTaskActivity extends AppCompatActivity {
      */
     public void onSaveTaskClicked(View view) {
         // Fetch data from the ui
-        currentEditTask.getTask().setTitle(taskTitle.getText().toString());
+        currentEditTask.setTitle(taskTitle.getText().toString());
 
         // Save the data into the database
         TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
         //todo add in data layer another method for singular task update so i don't have to create a list
-        List<TaskWithSteps> list = new ArrayList<>();
-        list.add(currentEditTask);
-        taskViewModel.updateTasks(list);
+        taskViewModel.updateTask(currentEditTask);
         Log.d(TAG, "updating task finished");
 
         // Go back to the last screen
@@ -83,29 +90,23 @@ public class EditTaskActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    // Make a bundle of the task with its steps so that the fragment has the required data
-    private EditTaskStepsListFragment getFragmentWithTaskStepList() {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(MainActivity.TASK_INTENT_EXTRA, currentEditTask);
-        EditTaskStepsListFragment fragment = new EditTaskStepsListFragment();
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
     // Set the fragment that displays the step details
     private void setFragment() {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragmentContainerTaskStepList_editTask, getFragmentWithTaskStepList()).commit();
+                .add(R.id.fragmentContainerTaskStepList_editTask, new EditTaskStepsListFragment()).commit();
+
+        Log.e(TAG, "FRAGMENT SET");
     }
 
     // Set the task title in the UI
     private void fillValuesOnUi() {
         taskTitle = findViewById(R.id.taskTitle_editTask);
-        taskTitle.setText(currentEditTask.getTask().getTitle());
+        taskTitle.setText(currentEditTask.getTitle());
     }
 
     // Get the task from the intent
-    private TaskWithSteps getTask() {
-        return (TaskWithSteps) getIntent().getExtras().getSerializable(MainActivity.TASK_INTENT_EXTRA);
+    private Task getTask() {
+        TaskWithSteps taskWithSteps = (TaskWithSteps) getIntent().getExtras().getSerializable(MainActivity.TASK_INTENT_EXTRA);
+        return taskWithSteps.getTask();
     }
 }

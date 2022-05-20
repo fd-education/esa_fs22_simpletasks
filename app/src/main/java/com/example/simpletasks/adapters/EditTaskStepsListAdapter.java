@@ -2,6 +2,7 @@ package com.example.simpletasks.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +11,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.simpletasks.EditTaskActivity;
 import com.example.simpletasks.MainActivity;
 import com.example.simpletasks.R;
 import com.example.simpletasks.data.entities.TaskStep;
+import com.example.simpletasks.data.viewmodels.TaskStepViewModel;
 import com.example.simpletasks.domain.editSteps.EditStepsUtility;
 import com.example.simpletasks.domain.editSteps.EditStepsUtilityController;
 
@@ -55,7 +58,7 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
         }
     }
 
-    private static final String TAG = "EditTaskStepsListAdapter";
+    private static final String TAG = "EditTaskStepsListAdap";
     private final LayoutInflater mInflater;
     private Context context;
     private List<TaskStep> taskSteps;
@@ -103,7 +106,7 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
             holder.taskImage.setImageResource(R.drawable.ic_launcher_background/*TODO change */);
             // Go to the edit screen corresponding to the current step format
             holder.editButton.setOnClickListener(v -> {
-                //todo start new intent which goes to edit task step
+                // TODO start new intent which goes to edit task step
                 Intent intent = editStepsUtility.getHandlerIntent(currentTaskStep.getTypeAsTaskStepType());
 
                 intent.putExtra(MainActivity.TASK_INTENT_EXTRA, currentTaskStep);
@@ -111,7 +114,7 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
             });
 
             holder.deleteButton.setOnClickListener(v -> {
-                //todo implement deletion of step
+                // TODO implement deletion of step
             });
         } else {
             // Handle the case of data not being ready yet
