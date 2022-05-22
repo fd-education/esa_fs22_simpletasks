@@ -46,7 +46,7 @@ public class Seeder {
             // three hours
             Long notificationDelta = 3 * TaskWithSteps.ONE_HOUR_INTERVAL;
             // ends after 7 days
-            Date endDate = new Date(today.getYear(), today.getMonth(), today.getDate() + i + 7, today.getHours(), today.getMinutes());
+            Date endDate = new Date(today.getYear(), today.getMonth(), today.getDate() + i + 2, today.getHours(), today.getMinutes());
 
             Task task = new Task(title, description, nextStart, interval, notificationDelta, endDate);
             addSteps(task);

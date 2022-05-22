@@ -35,6 +35,7 @@
             style="@style/Theme.SimpleTasks.PositiveButton"
             android:id="@+id/nextButton"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/elementPadding"
             android:onClick="onNextClicked"
             android:text="@string/next"

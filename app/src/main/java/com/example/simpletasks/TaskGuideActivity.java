@@ -8,12 +8,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.simpletasks.data.entities.Task;
 import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.entities.TaskWithSteps;
+import com.example.simpletasks.data.viewmodels.TaskViewModel;
 import com.example.simpletasks.fragments.TaskGuideFragment;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,6 +24,7 @@ import java.util.List;
  */
 public class TaskGuideActivity extends AppCompatActivity {
     private static final String TAG = "TaskGuideActivity";
+    private TaskWithSteps taskWithSteps;
     private Task task;
     private List<TaskStep> taskSteps;
     private int currentStep;
@@ -53,6 +57,14 @@ public class TaskGuideActivity extends AppCompatActivity {
      * @param view the view that triggered the event
      */
     public void onBackClicked(View view) {
+        onBackPressed();
+    }
+
+    /**
+     * Handle click events on the back button
+     */
+    @Override
+    public void onBackPressed() {
         if (currentStep > 0) {
             currentStep--;
             replaceFragment();
@@ -75,8 +87,15 @@ public class TaskGuideActivity extends AppCompatActivity {
             replaceFragment();
             Log.d(TAG, "moved a step forward");
         } else if (currentStep == taskSteps.size() - 1) {
-            //TODO finish task
+            //TODO dialog which asks if user really wants to finish the task
+            //calculate new nextStartDate
+            Date nextStartDate = new Date(task.getNextStartDate().getTime() + task.getInterval());
+            task.setNextStartDate(nextStartDate);
+            //save the changes in the database
+            TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
+            taskViewModel.updateTask(taskWithSteps);
             Log.d(TAG, "finished steps");
+            //go back to the home screen (not local back because this would go to the last step)
             super.onBackPressed();
         }
     }
@@ -92,7 +111,7 @@ public class TaskGuideActivity extends AppCompatActivity {
 
     // Sets the instance variables
     private void setInstanceVariables() {
-        TaskWithSteps taskWithSteps = getTask();
+        taskWithSteps = getTask();
         task = taskWithSteps.getTask();
         taskSteps = taskWithSteps.getSteps();
         setTaskTitleOnUi();
