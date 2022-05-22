@@ -1,5 +1,6 @@
 package com.example.simpletasks;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -91,8 +92,22 @@ public class EditTaskActivity extends AppCompatActivity {
      * @param view the view that triggered the event
      */
     public void onBackClicked(View view) {
+        onBackPressed();
+    }
+
+    /**
+     * Handle click events on the back button with a dialog
+     */
+    @Override
+    public void onBackPressed() {
         //todo ask the user if he really wants to discard his changes
         super.onBackPressed();
+    }
+
+    public void onPlanTaskClicked(View view) {
+        Intent intent = new Intent(this, ScheduleTaskActivity.class);
+        intent.putExtra(MainActivity.TASK_INTENT_EXTRA, currentEditTask);
+        startActivity(intent);
     }
 
     // Make a bundle of the task with its steps so that the fragment has the required data
@@ -127,7 +142,7 @@ public class EditTaskActivity extends AppCompatActivity {
         if (taskTitle.getText().length() <= 1) {
             isValid = false;
         }
-        if(currentEditTask.getSteps().size() == 0) {
+        if (currentEditTask.getSteps().size() == 0) {
             isValid = false;
         }
         //more validating could be inserted here

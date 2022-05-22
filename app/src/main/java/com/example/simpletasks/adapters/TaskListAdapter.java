@@ -99,6 +99,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
                 context.startActivity(intent);
             });
             holder.skipTaskButton.setOnClickListener(v -> {
+                //TODO add dialog asking if skipping is okey
                 long newStartLong = currentTask.getNextStartDate().getTime() + currentTask.getInterval();
                 Date newStartDate = new Date(newStartLong);
                 currentTask.setNextStartDate(newStartDate);
