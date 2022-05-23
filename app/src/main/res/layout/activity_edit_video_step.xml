@@ -69,15 +69,30 @@
         android:id="@+id/imageButton_takeImageVideoStep"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/rounded_corner_background"
+        android:contentDescription="@string/change_image"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageButton_takeImageVideoStep2"
+        app:layout_constraintStart_toEndOf="@+id/imageView_videoStepImage"
+        app:layout_constraintTop_toTopOf="@+id/imageView_videoStepImage"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@android:drawable/ic_menu_camera"
+        tools:ignore="ImageContrastCheck" />
+
+    <ImageButton
+        android:id="@+id/imageButton_takeImageVideoStep2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:background="@drawable/rounded_corner_background"
         android:contentDescription="@string/change_image"
         android:minWidth="48dp"
         android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView_videoStepImage"
         app:layout_constraintStart_toEndOf="@+id/imageView_videoStepImage"
-        app:layout_constraintTop_toTopOf="@+id/imageView_videoStepImage"
-        app:srcCompat="@android:drawable/ic_menu_camera"
+        app:srcCompat="@android:drawable/ic_menu_gallery"
         tools:ignore="ImageContrastCheck" />
 
     <Button
