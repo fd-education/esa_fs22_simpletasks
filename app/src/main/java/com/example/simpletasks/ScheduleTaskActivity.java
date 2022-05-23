@@ -1,13 +1,11 @@
 package com.example.simpletasks;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
-import android.widget.DatePicker;
-import android.widget.TimePicker;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,16 +13,19 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.simpletasks.data.entities.TaskWithSteps;
 import com.example.simpletasks.data.viewmodels.TaskViewModel;
+import com.example.simpletasks.listener.DateTimePickerListener;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
-public class ScheduleTaskActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+public class ScheduleTaskActivity extends AppCompatActivity {
     private static final String TAG = "ScheduleTaskActivity";
 
     private TaskWithSteps task;
     private Calendar calendar;
-    private int newYear, newMonth, newDay, newHour, newMinute;
+    private DateTimePickerListener dateTimePickerNextExecution, dateTimePickerLastExecution;
 
     /**
      * set the view and get the task element from the intent
@@ -43,11 +44,39 @@ public class ScheduleTaskActivity extends AppCompatActivity implements DatePicke
         }
 
         task = getTask();
+        fillUiElements();
     }
 
-    public void onPlanNextExecutionButtonClicked(View view) {
-         calendar = Calendar.getInstance();
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    /**
+     * handles a click on the plan next execution button
+     *
+     * @param view the view that triggered the event
+     */
+    public void onPlanNextExecutionClicked(View view) {
+        calendar = Calendar.getInstance();
+        dateTimePickerNextExecution = new DateTimePickerListener(calendar);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, dateTimePickerNextExecution, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
+    }
+
+    /**
+     * handles a click on the plan next execution button
+     *
+     * @param view the view that triggered the event
+     */
+    public void onChangeIntervalClicked(View view) {
+        //TODO
+    }
+
+    /**
+     * handles a click on the plan next execution button
+     *
+     * @param view the view that triggered the event
+     */
+    public void onPlanLastExecutionClicked(View view) {
+        calendar = Calendar.getInstance();
+        dateTimePickerLastExecution = new DateTimePickerListener(calendar);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, dateTimePickerLastExecution, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
     }
 
@@ -57,15 +86,26 @@ public class ScheduleTaskActivity extends AppCompatActivity implements DatePicke
      * @param view the view that triggered the event
      */
     public void onSaveTaskClicked(View view) {
-        //todo implement
+        //todo implement the rest
+        //save the new start date
+        if(dateTimePickerNextExecution != null) {
+            Date newNextStartDate = dateTimePickerNextExecution.getUpdatedCalendar().getTime();
+            task.getTask().setNextStartDate(newNextStartDate);
+        }
 
-        Date newNextStartDate = new Date(newYear, newMonth, newDay, newHour, newMinute);
-        task.getTask().setNextStartDate(newNextStartDate);
+        //save the new end date
+        if(dateTimePickerLastExecution != null) {
+            Date newEndDate = dateTimePickerLastExecution.getUpdatedCalendar().getTime();
+            task.getTask().setEndDate(newEndDate);
+        }
 
         //save the new start date in the database
         TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
         taskViewModel.updateTask(task);
         Log.d(TAG, "updated the task times");
+
+        //go back (call super method because local method is asking to discard changes)
+        super.onBackPressed();
     }
 
     /**
@@ -77,39 +117,31 @@ public class ScheduleTaskActivity extends AppCompatActivity implements DatePicke
         onBackPressed();
     }
 
-    /**
-     * handles the event when the user clicks "ok" in the date picker
-     *
-     * @param datePicker the date picker
-     * @param year       the selected year
-     * @param month      the selected month
-     * @param dayOfMonth the selected day of the month
-     */
     @Override
-    public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-        newYear = year;
-        newMonth = month;
-        newDay = dayOfMonth;
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, this, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), DateFormat.is24HourFormat(this));
-        timePickerDialog.show();
+    public void onBackPressed() {
+        //todo ask user if he wants to discard changes
+        super.onBackPressed();
     }
 
-    /**
-     * handles the event when the user clicks "ok" in the time picker
-     *
-     * @param timePicker the time picker
-     * @param hour       the selected hour
-     * @param minute     the selected minute
-     */
-    @Override
-    public void onTimeSet(TimePicker timePicker, int hour, int minute) {
-        newHour = hour;
-        newMinute = minute;
-    }
 
     //gets the task with steps object from the intent
     private TaskWithSteps getTask() {
-        return getIntent().getParcelableExtra(MainActivity.TASK_INTENT_EXTRA);
+        //TODO change to fetch directly from database
+        return (TaskWithSteps) getIntent().getSerializableExtra(MainActivity.TASK_INTENT_EXTRA);
+    }
+
+    //fills the ui elements with the data
+    private void fillUiElements() {
+        //use this suppress because we really want this specific date time format to appear
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(getString(R.string.date_time_format), Locale.GERMANY);
+        String currentNextExecutionDate = simpleDateFormat.format(task.getTask().getNextStartDate());
+        String currentLastExecutionDate = simpleDateFormat.format(task.getTask().getEndDate());
+
+        TextView textView = findViewById(R.id.nextExecutionTextView_scheduleTask);
+        textView.setText(getString(R.string.current_next_execution, currentNextExecutionDate));
+        textView = findViewById(R.id.lastExecutionTextView_scheduleTask);
+        textView.setText(getString(R.string.current_last_execution, currentLastExecutionDate));
     }
 
 

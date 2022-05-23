@@ -133,7 +133,7 @@ public class EditTaskActivity extends AppCompatActivity {
 
     // Get the task from the intent
     private TaskWithSteps getTask() {
-        return (TaskWithSteps) getIntent().getExtras().getSerializable(MainActivity.TASK_INTENT_EXTRA);
+        return (TaskWithSteps) getIntent().getSerializableExtra(MainActivity.TASK_INTENT_EXTRA);
     }
 
     //validates the data of the ui, which was not validated before.

@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name" translatable="false">SimpleTasks</string>
+    <string name="date_time_format" translatable="false">dd. MMMM yyyy, HH:mm</string>
+
+
     <string name="tasks_today">Tasks Today</string>
     <string name="edit_tasks">Edit Tasks</string>
     <string name="caretaker_login">Caretaker Login</string>
@@ -25,6 +28,11 @@
     <string name="type">Type: %1$s</string>
     <string name="drag_task">Drag Task</string>
     <string name="plan_next_execution">Plan next execution</string>
+    <string name="current_next_execution">Next execution: %1$s</string>
+    <string name="plan_last_execution">Plan last execution</string>
+    <string name="current_last_execution">Last execution: %1$s</string>
+    <string name="change_interval">Change interval</string>
+    <string name="current_interval">Interval: %1$s</string>
 
     <string name="placeholder" translatable="false">Placeholder</string>
     <string name="pin">Pin</string>

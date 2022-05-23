@@ -24,6 +24,12 @@
     <string name="type">Typ: %1$s</string>
     <string name="drag_task">Bewege Task</string>
     <string name="plan_next_execution">Nächste Ausführung planen</string>
+    <string name="current_next_execution">Nächste Ausführung: %1$s</string>
+    <string name="plan_last_execution">Letzte Ausführung planen</string>
+    <string name="current_last_execution">Letzte Ausführung: %1$s</string>
+    <string name="change_interval">Intervall ändern</string>
+    <string name="current_interval">Intervall: %1$s</string>
+
 
 
 
