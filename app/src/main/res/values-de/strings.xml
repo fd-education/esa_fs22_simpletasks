@@ -48,4 +48,11 @@
     <string name="title_remove_pin">PIN entfernen</string>
     <string name="remove_pin_hint">PIN</string>
     <string name="remove_pin_intro_warning_last_pin">Achtung: Das ist der letzte PIN. Wird dieser PIN entfernt, können alle Tasks und Einstellungen ohne Schutz bearbeitet werden.</string>
+    <string name="invalid_pin">Ungültiger PIN</string>
+    <string name="pin_not_found">Dieser PIN existiert nicht</string>
+    <string name="unknown_error_msg">Etwas hat nicht funktioniert. Bitte später nochmals versuchen.</string>
+    <string name="change_language_settings">Sprache ändern</string>
+    <string name="language_settings">Spracheinstellungen</string>
+    <string name="no_pin_set_explanation">Momentan keine PINs gesetzt!</string>
+    <string name="not_logged_in_explanation">Nicht eingelogged!</string>
 </resources>

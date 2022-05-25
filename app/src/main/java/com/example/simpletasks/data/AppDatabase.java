@@ -152,8 +152,8 @@ public abstract class AppDatabase extends RoomDatabase {
 
                 pinDao.deleteAll();
 
-                pinDao.insertPin(pin1);
-                pinDao.insertPin(pin2);
+                // pinDao.insertPin(pin1);
+                // pinDao.insertPin(pin2);
                 Log.d(TAG, "finished seeding pins");
             });
         }

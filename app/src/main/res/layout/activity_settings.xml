@@ -51,7 +51,7 @@
 
 
     <Button
-        android:id="@+id/setPinButton"
+        android:id="@+id/addPinButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/elementPadding"
@@ -68,13 +68,13 @@
         android:id="@+id/removePinButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/accent_blue"
         android:layout_marginTop="@dimen/elementPadding"
+        android:backgroundTint="@color/accent_blue"
         android:onClick="onRemovePinClicked"
         android:text="@string/remove_pin"
         android:textSize="@dimen/p"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/setPinButton"
+        app:layout_constraintStart_toEndOf="@+id/addPinButton"
         app:layout_constraintTop_toBottomOf="@id/titleCaretakerSettings" />
 
     <TextView
@@ -89,7 +89,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/setPinButton" />
+        app:layout_constraintTop_toBottomOf="@+id/pinRemoveButtonDeactivatedText" />
 
     <Button
         android:id="@+id/displayFontSizeSettingsButton"
@@ -104,6 +104,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleInterfaceSettings" />
 
+    <TextView
+        android:id="@+id/titleLanguageSettings"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/elementPadding"
+        android:text="@string/language_settings"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/h2"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/displayFontSizeSettingsButton" />
+
+    <Button
+        android:id="@+id/languageSettingsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/accent_blue"
+        android:layout_marginTop="@dimen/elementPadding"
+        android:onClick="onOpenLanguageSettingsButton"
+        android:text="@string/change_language_settings"
+        android:textSize="@dimen/p"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleLanguageSettings" />
+
     <Button
         android:id="@+id/logoutButton"
         android:layout_width="wrap_content"
@@ -116,6 +143,26 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/pinRemoveButtonDeactivatedText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_pin_set_explanation"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/removePinButton"
+        app:layout_constraintStart_toStartOf="@+id/removePinButton"
+        app:layout_constraintTop_toBottomOf="@+id/removePinButton" />
+
+    <TextView
+        android:id="@+id/buttonsDeactivatedText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/not_logged_in_explanation"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/removePinButton"
+        app:layout_constraintStart_toStartOf="@+id/addPinButton"
+        app:layout_constraintTop_toBottomOf="@+id/addPinButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
