@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import androidx.test.core.app.ApplicationProvider;
 
 import com.example.simpletasks.data.entities.Pin;
-import com.example.simpletasks.domain.settings.AddPinController;
+import com.example.simpletasks.domain.settings.PinController;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.functions.FirebaseFunctions;
@@ -25,7 +25,8 @@ public class AddPinActivityTest {
         PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
         String numberToParse = "+41790000000"; //This phone number is ignored and does not send a sms
         PhoneNumber phoneNumber = phoneNumberUtil.parseAndKeepRawInput(numberToParse, "CH");
-        Task<String> task = AddPinController.sendPin(Pin.fromInt(123123), phoneNumber, functions);
+        PinController pinController = new PinController(ApplicationProvider.getApplicationContext());
+        Task<String> task = pinController.sendPin(Pin.fromInt(123123), phoneNumber, functions);
         //noinspection StatementWithEmptyBody
         while (!task.isComplete()) ;
         assertEquals(task.getResult(), "Success");
