@@ -31,8 +31,10 @@
     <string name="current_next_execution">Next execution: %1$s</string>
     <string name="plan_last_execution">Plan last execution</string>
     <string name="current_last_execution">Last execution: %1$s</string>
-    <string name="change_interval">Change interval</string>
-    <string name="current_interval">Interval: %1$s</string>
+    <string name="current_interval">Interval: %1$d Days, %2$d Hours, %3$d Minutes</string>
+    <string name="days">Days</string>
+    <string name="hours">Hours</string>
+    <string name="minutes">Minutes</string>
 
     <string name="placeholder" translatable="false">Placeholder</string>
     <string name="pin">Pin</string>

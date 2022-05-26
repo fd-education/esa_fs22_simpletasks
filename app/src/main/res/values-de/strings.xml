@@ -27,10 +27,10 @@
     <string name="current_next_execution">Nächste Ausführung: %1$s</string>
     <string name="plan_last_execution">Letzte Ausführung planen</string>
     <string name="current_last_execution">Letzte Ausführung: %1$s</string>
-    <string name="change_interval">Intervall ändern</string>
-    <string name="current_interval">Intervall: %1$s</string>
-
-
+    <string name="current_interval">Intervall: %1$d Tage, %2$d Stunden, %3$d Minuten</string>
+    <string name="days">Tage</string>
+    <string name="hours">Stunden</string>
+    <string name="minutes">Minuten</string>
 
 
     <string name="placeholder">Platzhalter</string>

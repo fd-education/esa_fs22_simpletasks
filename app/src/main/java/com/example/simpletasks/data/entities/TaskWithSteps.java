@@ -12,7 +12,8 @@ import java.util.List;
  * Entity that models a task with its steps.
  */
 public class TaskWithSteps implements Serializable {
-    public static final long ONE_HOUR_INTERVAL = 60 * 60 * 1000L;
+    public static final long ONE_MINUTE_INTERVAL = 60 * 1000L;
+    public static final long ONE_HOUR_INTERVAL = 60 * ONE_MINUTE_INTERVAL;
     public static final long ONE_DAY_INTERVAL = 24 * ONE_HOUR_INTERVAL;
     public static final long ONE_WEEK_INTERVAL = 7 * ONE_DAY_INTERVAL;
 
