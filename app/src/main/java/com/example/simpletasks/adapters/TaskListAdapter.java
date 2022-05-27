@@ -91,7 +91,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
             List<TaskStep> currentSteps = taskWithSteps.getSteps();
             holder.titleTask.setText(currentTask.getTitle());
             holder.countStepsIndicator.setText(context.getString(R.string.total_steps, currentSteps.size()));
-            holder.taskImage.setImageResource(R.drawable.ic_launcher_background/*TODO change */);
+            holder.taskImage.setImageResource(R.drawable.image_placeholder/*TODO change */);
             holder.itemView.setOnClickListener(v -> {
                 //when clicked on a list item, execute following code
                 Intent intent = new Intent(context, TaskGuideActivity.class);

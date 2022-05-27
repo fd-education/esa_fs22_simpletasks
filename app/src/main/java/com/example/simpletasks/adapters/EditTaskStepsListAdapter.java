@@ -103,7 +103,7 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
             });
             holder.titleTaskStep.setText(currentTaskStep.getTitle());
             holder.taskStepType.setText(context.getString(R.string.type, currentTaskStep.getType()));
-            holder.taskImage.setImageResource(R.drawable.ic_launcher_background/*TODO change */);
+            holder.taskImage.setImageResource(R.drawable.image_placeholder/*TODO change */);
             // Go to the edit screen corresponding to the current step format
             holder.editButton.setOnClickListener(v -> {
                 // TODO start new intent which goes to edit task step
