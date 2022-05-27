@@ -22,16 +22,16 @@
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/sidesPadding"
-        android:layout_marginTop="@dimen/sidesPadding"
         android:layout_marginEnd="@dimen/sidesPadding"
         android:text="@string/title_add_pin"
         android:textAlignment="center"
         android:textColor="?colorOnBackground"
-        android:textSize="@dimen/h1"
+        android:textSize="@dimen/h2"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/backButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/backButton" />

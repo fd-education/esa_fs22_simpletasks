@@ -95,8 +95,8 @@ public class SettingsActivity extends AppCompatActivity {
         final View buttonsDeactivatedTextView = findViewById(R.id.buttonsDeactivatedText);
 
         // reset all buttons
-        pinRemoveDeactivatedTextView.setVisibility(View.INVISIBLE);
-        buttonsDeactivatedTextView.setVisibility(View.INVISIBLE);
+        pinRemoveDeactivatedTextView.setVisibility(View.GONE);
+        buttonsDeactivatedTextView.setVisibility(View.GONE);
         setButtonEnabled(removePinButtonView, true);
         setButtonEnabled(addPinButtonView, true);
 
