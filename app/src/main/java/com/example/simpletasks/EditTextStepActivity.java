@@ -6,30 +6,16 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.viewmodels.TaskStepViewModel;
-import com.example.simpletasks.domain.fileSystem.FileSystemUtility;
-import com.example.simpletasks.domain.fileSystem.FileSystemUtilityController;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class EditTextStepActivity extends AppCompatActivity {
@@ -66,7 +52,7 @@ public class EditTextStepActivity extends AppCompatActivity {
             stepDescriptionInput.setText(step.getDescription());
 
             if(step.getImagePath() != null){
-                Uri uri = Uri.fromFile(new File(step.getImagePath()));
+                Uri uri = Uri.parse(step.getImagePath());
                 stepImageView.setImageURI(uri);
             }
         }
