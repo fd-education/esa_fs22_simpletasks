@@ -2,6 +2,7 @@ package com.example.simpletasks.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.FileProvider;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +24,7 @@ import com.example.simpletasks.data.viewmodels.TaskStepViewModel;
 import com.example.simpletasks.domain.editSteps.EditStepsUtility;
 import com.example.simpletasks.domain.editSteps.EditStepsUtilityController;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -103,7 +106,14 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
             });
             holder.titleTaskStep.setText(currentTaskStep.getTitle());
             holder.taskStepType.setText(context.getString(R.string.type, currentTaskStep.getType()));
-            holder.taskImage.setImageResource(R.drawable.image_placeholder/*TODO change */);
+
+            if(taskSteps.get(position).getImagePath() != null){
+                Log.e(TAG, Uri.parse(taskSteps.get(position).getImagePath()).toString());
+                holder.taskImage.setImageURI(Uri.parse(taskSteps.get(position).getImagePath()));
+            } else {
+                holder.taskImage.setImageResource(R.drawable.image_placeholder);
+            }
+
             // Go to the edit screen corresponding to the current step format
             holder.editButton.setOnClickListener(v -> {
                 // TODO start new intent which goes to edit task step

@@ -74,28 +74,11 @@
         android:contentDescription="@string/change_image"
         android:minWidth="48dp"
         android:minHeight="48dp"
-        android:onClick="capturePhoto"
+        android:onClick="onTitleImageClicked"
         app:layout_constraintBottom_toBottomOf="@+id/imageView_textStepImage"
         app:layout_constraintStart_toEndOf="@+id/imageView_textStepImage"
         app:layout_constraintTop_toTopOf="@+id/imageView_textStepImage"
-        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@android:drawable/ic_menu_camera"
-        tools:ignore="ImageContrastCheck" />
-
-    <ImageButton
-        android:id="@+id/imageButton_galleryImageTextStep"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:background="@drawable/rounded_corner_background"
-        android:contentDescription="@string/change_image"
-        android:minWidth="48dp"
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView_textStepImage"
-        app:layout_constraintStart_toEndOf="@+id/imageView_textStepImage"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton_takeImageTextStep"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@android:drawable/ic_menu_gallery"
         tools:ignore="ImageContrastCheck" />
 
     <Button

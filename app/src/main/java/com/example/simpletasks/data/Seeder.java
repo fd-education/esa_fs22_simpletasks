@@ -69,12 +69,9 @@ public class Seeder {
         for (int j = 0; j < nbrOfSteps; j++) {
             TaskStepTypes type = TaskStepTypes.values()[(int) (Math.random() * 3)];
             String title = String.format("Seed Step Title %s.%s", index, j);
-            String imageUri = String.format("Seed Step Image URI %s.%s", index, j);
             String description = String.format("Seed Step Description %s.%s", index, j);
-            String videoUri = String.format("Seed Step Video URI %s.%s", index, j);
-            String audioUri = String.format("Seed Step Audio URI %s.%s", index, j);
 
-            steps.add(j, new TaskStep(task.getId(), type, j, title, imageUri, description, videoUri, audioUri));
+            steps.add(j, new TaskStep(task.getId(), type, j, title, null, description, "", ""));
         }
 
         task.setSteps(steps);

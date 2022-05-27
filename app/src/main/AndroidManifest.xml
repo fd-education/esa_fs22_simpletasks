@@ -16,6 +16,9 @@
             android:name=".ChoseFormatActivity"
             android:exported="false" />
         <activity
+            android:name=".ImageCaptureActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditAudioStepActivity"
             android:exported="false" />
         <activity

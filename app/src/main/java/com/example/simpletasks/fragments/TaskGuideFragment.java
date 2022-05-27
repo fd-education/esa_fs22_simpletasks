@@ -59,9 +59,13 @@ public class TaskGuideFragment extends Fragment {
         taskStepTitle.setText(taskStep.getTitle());
         //TODO status bar
         ImageView taskImage = view.findViewById(R.id.taskStepImage_TaskGuide);
-        taskImage.setImageURI(Uri.parse(taskStep.getImagePath()));
+        if(taskStep.getImagePath() != null){
+            taskImage.setImageURI(Uri.parse(taskStep.getImagePath()));
+        } else {
+            taskImage.setImageResource(R.drawable.image_placeholder);
+        }
+
         TextView taskDescription = view.findViewById(R.id.titleTaskStepDescription_TaskGuide);
         taskDescription.setText(taskStep.getDescription());
-
     }
 }

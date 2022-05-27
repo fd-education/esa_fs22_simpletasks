@@ -55,11 +55,13 @@ public class ImageCaptureActivity extends AppCompatActivity {
 
         if(imageUri != null){
             imagePath = Uri.fromFile(new File(imageUri));
+            Log.e(TAG, imagePath.toString());
         }
 
         initializeFields();
 
         if(imagePath == null){
+            Log.e(TAG, "Set Placeholder for view.");
             titleImageView.setImageResource(R.drawable.image_placeholder);
         }
     }
@@ -70,21 +72,25 @@ public class ImageCaptureActivity extends AppCompatActivity {
     }
 
     public void onTakeImageClicked(View view){
+        Log.d(TAG, "Take image capture clicked.");
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-        if(takePictureIntent.resolveActivity(getPackageManager()) != null){
+            Log.d(TAG, "package Manager existing.");
+
             try{
+                Log.d(TAG, "Creating photofile.");
                 photoFile = fileSystemUtility.createImageFile(getExternalFilesDir(Environment.DIRECTORY_PICTURES));
             } catch(IOException ex){
                 // TODO
+                Log.e(TAG, ex.toString());
             }
 
             if(photoFile != null){
+                Log.d(TAG, "Launching intent.");
                 Uri photoUri = FileProvider.getUriForFile(this, "com.example.android.fileprovider", photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 takePicture.launch(takePictureIntent);
             }
-        }
     }
 
     public void onGalleryPickClicked(View view){
@@ -94,8 +100,7 @@ public class ImageCaptureActivity extends AppCompatActivity {
 
     public void onSaveClicked(View view){
         Intent data = new Intent();
-        Uri imageUri = FileProvider.getUriForFile(this, "com.example.android.fileprovider", photoFile);
-        data.setData(imageUri);
+        data.setData(Uri.fromFile(photoFile));
         setResult(RESULT_OK, data);
         finish();
     }

@@ -1,15 +1,35 @@
 package com.example.simpletasks;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.viewmodels.TaskStepViewModel;
+import com.example.simpletasks.domain.fileSystem.FileSystemUtility;
+import com.example.simpletasks.domain.fileSystem.FileSystemUtilityController;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class EditTextStepActivity extends AppCompatActivity {
@@ -19,7 +39,7 @@ public class EditTextStepActivity extends AppCompatActivity {
     private TaskStep step;
     private EditText stepTitleInput;
     private EditText stepDescriptionInput;
-
+    private ImageView stepImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +56,7 @@ public class EditTextStepActivity extends AppCompatActivity {
 
         stepTitleInput = findViewById(R.id.editText_textStepTitle);
         stepDescriptionInput = findViewById(R.id.editText_textStepDescription);
+        stepImageView = findViewById(R.id.imageView_textStepImage);
 
         Bundle bundle = getIntent().getExtras();
         if(!bundle.isEmpty() && bundle.containsKey(MainActivity.TASK_INTENT_EXTRA)){
@@ -43,9 +64,13 @@ public class EditTextStepActivity extends AppCompatActivity {
 
             stepTitleInput.setText(step.getTitle());
             stepDescriptionInput.setText(step.getDescription());
+
+            if(step.getImagePath() != null){
+                Uri uri = Uri.fromFile(new File(step.getImagePath()));
+                stepImageView.setImageURI(uri);
+            }
         }
     }
-
 
     public void onSaveClicked(View view){
         if(isEmpty(stepTitleInput)){
@@ -68,6 +93,24 @@ public class EditTextStepActivity extends AppCompatActivity {
 
         super.onBackPressed();
     }
+
+    public void onTitleImageClicked(View v){
+        Intent intent = new Intent(this, ImageCaptureActivity.class);
+        intent.putExtra("image_path", step.getImagePath());
+        chooseTitleImage.launch(intent);
+    }
+
+    ActivityResultLauncher<Intent> chooseTitleImage = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == RESULT_OK) {
+                        Uri uri = result.getData().getData();
+                        step.setImagePath(uri.getPath());
+                        stepImageView.setImageURI(uri);
+                    }
+                }
+            });
 
     /**
      * Handle click events on the back button
