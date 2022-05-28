@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public interface FileSystemUtility {
-    public File createImageFile(File storageFile) throws IOException;
-    public void copyStream(InputStream input, OutputStream output) throws IOException;
+    File createImageFile(File storageDir) throws IOException;
+    File createVideoFile(File storageDir) throws IOException;
+    void copyStream(InputStream input, OutputStream output) throws IOException;
 }

@@ -50,9 +50,14 @@
     <string name="change_image">Bild ändern</string>
     <string name="step_title">Step Titel</string>
     <string name="step_description">Step Beschreibung</string>
-    <string name="start_recording">Aufnahme starten</string>
+    <string name="new_recording">Neue Aufnahme</string>
     <string name="delete_recording">Aufnahme löschen</string>
     <string name="step_title_image">Step Titelbild</string>
     <string name="empty_step_title">Step Titel darf nicht leer sein!</string>
     <string name="empty_step_description">Step Beschreibung darf nicht leer sein!</string>
+    <string name="play">Abspielen</string>
+    <string name="pause">Pausieren</string>
+    <string name="stop">Abbrechen</string>
+    <string name="no_video">Keine Aufnahme vorhanden.</string>
+    <string name="no_audio">Keine Aufnahme vorhanden.</string>
 </resources>

@@ -1,5 +1,7 @@
 package com.example.simpletasks.domain.fileSystem;
 
+import android.content.Context;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +23,19 @@ public class FileSystemUtilityController implements FileSystemUtility{
 
         return image;
     }
+
+     @Override
+     public File createVideoFile(File storageDir) throws IOException{
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String videoFileName = "MP4_" + timeStamp + "_";
+        File video = File.createTempFile(
+                videoFileName,
+                ".mp4",
+                storageDir
+        );
+
+        return video;
+     }
 
     @Override
     public void copyStream(InputStream input, OutputStream output) throws IOException{

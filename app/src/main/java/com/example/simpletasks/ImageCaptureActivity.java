@@ -11,6 +11,7 @@ import androidx.core.content.FileProvider;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -55,7 +56,7 @@ public class ImageCaptureActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String imageUri = intent.getStringExtra("image_path");
-        Log.d(TAG, imageUri);
+        Log.d(TAG, "" + imageUri);
 
         if(imageUri != null){
             imagePath = Uri.parse(imageUri);
@@ -77,11 +78,9 @@ public class ImageCaptureActivity extends AppCompatActivity {
         Log.d(TAG, "Take image capture clicked.");
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-            Log.d(TAG, "package Manager existing.");
-
             try{
                 Log.d(TAG, "Creating photofile.");
-                photoFile = fileSystemUtility.createImageFile(getExternalFilesDir(Environment.DIRECTORY_PICTURES));
+                photoFile = fileSystemUtility.createImageFile(getExternalFilesDir(FileSystemConstants.IMAGE_DIR));
             } catch(IOException ex){
                 // TODO
                 Log.e(TAG, ex.toString());
@@ -89,7 +88,7 @@ public class ImageCaptureActivity extends AppCompatActivity {
 
             if(photoFile != null){
                 Log.d(TAG, "Launching intent.");
-                Uri photoUri = FileProvider.getUriForFile(this, "com.example.android.fileprovider", photoFile);
+                Uri photoUri = FileProvider.getUriForFile(this, FileSystemConstants.FILEPROVIDER_AUTHORITY, photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 takePicture.launch(takePictureIntent);
             }
@@ -128,7 +127,7 @@ public class ImageCaptureActivity extends AppCompatActivity {
                         File newPhotoFile;
                         try{
                             try{
-                                newPhotoFile = fileSystemUtility.createImageFile(getExternalFilesDir(Environment.DIRECTORY_PICTURES));
+                                newPhotoFile = fileSystemUtility.createImageFile(getExternalFilesDir(FileSystemConstants.IMAGE_DIR));
                             } catch(IOException e){
                                 Log.e(TAG, e.toString());
                                 return;
@@ -154,14 +153,15 @@ public class ImageCaptureActivity extends AppCompatActivity {
 
     private void performCrop(){
         try {
+
             Intent cropIntent = new Intent("com.android.camera.action.CROP");
-            cropIntent.setDataAndType(FileProvider.getUriForFile(this, "com.example.android.fileprovider", photoFile), "image/*");
+            cropIntent.setDataAndType(FileProvider.getUriForFile(this, FileSystemConstants.FILEPROVIDER_AUTHORITY, photoFile), "image/*");
             cropIntent.putExtra("crop", "true");
             cropIntent.putExtra("aspectX", 1).putExtra("aspectY", 1);
             cropIntent.putExtra("outputX", 256).putExtra("outputY", 256);
             cropIntent.putExtra("return-data", true);
             cropIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION).addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-            cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(this, "com.example.android.fileprovider", photoFile));
+            cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(this, FileSystemConstants.FILEPROVIDER_AUTHORITY, photoFile));
             cropImage.launch(cropIntent);
         } catch(ActivityNotFoundException anfe){
             String errorMessage = "Your device doesn't support the crop action!";

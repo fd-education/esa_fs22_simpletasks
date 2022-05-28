@@ -50,9 +50,14 @@
     <string name="change_image">Change Image</string>
     <string name="step_title">Step Title</string>
     <string name="step_description">Step Description</string>
-    <string name="start_recording">Start Recording</string>
+    <string name="new_recording">New Recording</string>
     <string name="delete_recording">Delete Recording</string>
     <string name="step_title_image">Step Title Image</string>
     <string name="empty_step_title">Step Title must not be empty!</string>
     <string name="empty_step_description">Step Description must not be empty!</string>
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="stop">Stop</string>
+    <string name="no_video">No Video recorded yet.</string>
+    <string name="no_audio">No Audio recorded yet.</string>
 </resources>
