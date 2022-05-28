@@ -40,9 +40,9 @@ public class EditTextStepActivity extends AppCompatActivity {
 
         taskStepViewModel = new TaskStepViewModel(this.getApplication());
 
-        stepTitleInput = findViewById(R.id.editText_textStepTitle);
-        stepDescriptionInput = findViewById(R.id.editText_textStepDescription);
-        stepImageView = findViewById(R.id.imageView_textStepImage);
+        stepTitleInput = findViewById(R.id.et_edittextstep_title);
+        stepDescriptionInput = findViewById(R.id.et_edittextstep_description);
+        stepImageView = findViewById(R.id.iv_edittextstep_image);
 
         Bundle bundle = getIntent().getExtras();
         if(!bundle.isEmpty() && bundle.containsKey(MainActivity.TASK_INTENT_EXTRA)){

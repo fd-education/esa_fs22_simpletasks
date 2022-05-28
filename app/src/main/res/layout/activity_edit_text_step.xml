@@ -7,7 +7,7 @@
     tools:context=".EditTextStepActivity">
 
     <ImageButton
-        android:id="@+id/backButton_textStep"
+        android:id="@+id/ib_edittextstep_back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/sidesPadding"
@@ -21,7 +21,7 @@
         app:tint="?colorOnBackground" />
 
     <TextView
-        android:id="@+id/textView_textStepTitle"
+        android:id="@+id/tv_edittextstep_activity_title"
         android:layout_width="wrap_content"
         android:layout_height="27dp"
         android:layout_marginStart="@dimen/sidesPadding"
@@ -31,13 +31,13 @@
         android:textColor="?colorOnBackground"
         android:textSize="@dimen/h2"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/backButton_textStep"
+        app:layout_constraintBottom_toBottomOf="@+id/ib_edittextstep_back_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/backButton_textStep" />
+        app:layout_constraintTop_toTopOf="@+id/ib_edittextstep_back_button" />
 
     <ImageView
-        android:id="@+id/imageView_textStepImage"
+        android:id="@+id/iv_edittextstep_image"
         android:layout_width="105dp"
         android:layout_height="105dp"
         android:layout_marginTop="48dp"
@@ -45,12 +45,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.379"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_textStepTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tv_edittextstep_activity_title"
         app:srcCompat="@drawable/image_placeholder"
         tools:ignore="ImageContrastCheck" />
 
     <ImageButton
-        android:id="@+id/imageButton_takeImageTextStep"
+        android:id="@+id/ib_edittextstep_capture_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -59,15 +59,15 @@
         android:minWidth="48dp"
         android:minHeight="48dp"
         android:onClick="onTitleImageClicked"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView_textStepImage"
-        app:layout_constraintStart_toEndOf="@+id/imageView_textStepImage"
-        app:layout_constraintTop_toTopOf="@+id/imageView_textStepImage"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_edittextstep_image"
+        app:layout_constraintStart_toEndOf="@+id/iv_edittextstep_image"
+        app:layout_constraintTop_toTopOf="@+id/iv_edittextstep_image"
         app:srcCompat="@android:drawable/ic_menu_camera"
         tools:ignore="ImageContrastCheck" />
 
 
     <EditText
-        android:id="@+id/editText_textStepTitle"
+        android:id="@+id/et_edittextstep_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -80,12 +80,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView_textStepImage" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_edittextstep_image" />
 
 
 
     <Button
-        android:id="@+id/button_saveTextStep"
+        android:id="@+id/b_edittextstep_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
@@ -99,7 +99,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/editText_textStepDescription"
+        android:id="@+id/et_edittextstep_description"
         android:layout_width="278dp"
         android:layout_height="282dp"
         android:layout_marginTop="32dp"
@@ -108,11 +108,11 @@
         android:hint="@string/step_description"
         android:inputType="textMultiLine"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/button_saveTextStep"
+        app:layout_constraintBottom_toTopOf="@+id/b_edittextstep_save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_textStepTitle"
+        app:layout_constraintTop_toBottomOf="@+id/et_edittextstep_title"
         app:layout_constraintVertical_bias="0.0"
         tools:text="@string/step_description" />
 

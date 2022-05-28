@@ -81,47 +81,36 @@ public class EditVideoStepActivity extends AppCompatActivity {
         fileSystemUtility = new FileSystemUtilityController();
         taskStepViewModel = new TaskStepViewModel(this.getApplication());
 
-        stepTitleInput = findViewById(R.id.et_step_title);
-        stepVideo = findViewById(R.id.vv_step_video);
-        videoPlayer = findViewById(R.id.ll_video_player);
+        stepTitleInput = findViewById(R.id.et_editvideostep_step_title);
+        stepVideo = findViewById(R.id.vv_editvideostep_step_video);
+        videoPlayer = findViewById(R.id.ll_editvideostep_player);
 
-        fabPlay = findViewById(R.id.fab_play);
-        fabPause = findViewById(R.id.fab_pause);
+        fabPlay = findViewById(R.id.fab_editvideostep_play);
+        fabPause = findViewById(R.id.fab_editvideostep_pause);
         fabPause.setVisibility(View.GONE);
-        fabStop = findViewById(R.id.fab_stop);
+        fabStop = findViewById(R.id.fab_editvideostep_stop);
 
-        noVideoWarning = findViewById(R.id.tv_no_video);
-        backButton = findViewById(R.id.ib_back_button);
-        recordVideo = findViewById(R.id.b_start_recording);
-        saveStep = findViewById(R.id.b_save_step);
+        noVideoWarning = findViewById(R.id.tv_editvideostep_no_video);
+        backButton = findViewById(R.id.ib_editvideostep_back_button);
+        recordVideo = findViewById(R.id.b_editvideostep_start_recording);
+        saveStep = findViewById(R.id.b_editvideostep_save_step);
 
         context = this;
     }
 
     private void initializeUi(){
+        backButton.setOnClickListener(view -> {
+            //TODO ask the user if he really wants to discard his changes
+            EditVideoStepActivity.super.onBackPressed();
+        });
+
         recordVideo.setOnClickListener(view -> captureVideo());
 
         saveStep.setOnClickListener(view -> {
             persistStep();
             finish();
         });
-
-        backButton.setOnClickListener(view -> {
-            //todo ask the user if he really wants to discard his changes
-            EditVideoStepActivity.super.onBackPressed();
-        });
     }
-
-    final ActivityResultLauncher<Intent> captureVideo = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == RESULT_OK) {
-                        step.setVideoPath(videoPath.toString());
-                        showVideo(videoPath);
-                    }
-                }
-            });
 
     private void captureVideo(){
         Intent captureVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
@@ -144,6 +133,17 @@ public class EditVideoStepActivity extends AppCompatActivity {
             captureVideo.launch(captureVideoIntent);
         }
     }
+
+    final ActivityResultLauncher<Intent> captureVideo = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == RESULT_OK) {
+                        step.setVideoPath(videoPath.toString());
+                        showVideo(videoPath);
+                    }
+                }
+            });
 
     private void showVideo(Uri videoPath) {
         noVideoWarning.setVisibility(View.GONE);
