@@ -50,15 +50,17 @@ public class ImageCaptureActivity extends AppCompatActivity {
             actionBar.hide();
         }
 
+        initializeFields();
+        titleImageView.setImageResource(R.drawable.image_placeholder);
+
         Intent intent = getIntent();
         String imageUri = intent.getStringExtra("image_path");
+        Log.d(TAG, imageUri);
 
         if(imageUri != null){
-            imagePath = Uri.fromFile(new File(imageUri));
+            imagePath = Uri.parse(imageUri);
             Log.e(TAG, imagePath.toString());
         }
-
-        initializeFields();
 
         if(imagePath == null){
             Log.e(TAG, "Set Placeholder for view.");

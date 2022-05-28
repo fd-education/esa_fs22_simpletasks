@@ -49,6 +49,23 @@
         app:srcCompat="@drawable/image_placeholder"
         tools:ignore="ImageContrastCheck" />
 
+    <ImageButton
+        android:id="@+id/imageButton_takeImageTextStep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/rounded_corner_background"
+        android:contentDescription="@string/change_image"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        android:onClick="onTitleImageClicked"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_textStepImage"
+        app:layout_constraintStart_toEndOf="@+id/imageView_textStepImage"
+        app:layout_constraintTop_toTopOf="@+id/imageView_textStepImage"
+        app:srcCompat="@android:drawable/ic_menu_camera"
+        tools:ignore="ImageContrastCheck" />
+
+
     <EditText
         android:id="@+id/editText_textStepTitle"
         android:layout_width="wrap_content"
@@ -65,21 +82,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView_textStepImage" />
 
-    <ImageButton
-        android:id="@+id/imageButton_takeImageTextStep"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:background="@drawable/rounded_corner_background"
-        android:contentDescription="@string/change_image"
-        android:minWidth="48dp"
-        android:minHeight="48dp"
-        android:onClick="onTitleImageClicked"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView_textStepImage"
-        app:layout_constraintStart_toEndOf="@+id/imageView_textStepImage"
-        app:layout_constraintTop_toTopOf="@+id/imageView_textStepImage"
-        app:srcCompat="@android:drawable/ic_menu_camera"
-        tools:ignore="ImageContrastCheck" />
+
 
     <Button
         android:id="@+id/button_saveTextStep"

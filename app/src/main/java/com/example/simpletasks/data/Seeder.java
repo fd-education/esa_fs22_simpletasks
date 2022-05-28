@@ -36,7 +36,7 @@ public class Seeder {
 
         for (int i = 0; i < quantity; i++) {
             String title = "Seed Task Title " + i;
-            String titleImagePath = "Seed Path/Path/Path";
+            String titleImagePath = "";
             String description = "Seed Task Description " + i;
             // date always incremented by the current number of iterations
             Date nextStart = new Date(today.getYear(), today.getMonth(), today.getDate() + i, today.getHours() + 1, today.getMinutes());
