@@ -120,7 +120,7 @@ public class EditVideoStepActivity extends AppCompatActivity {
         try {
             videoFile = fileSystemUtility.createVideoFile(getExternalFilesDir(FileSystemConstants.VIDEO_DIR));
         } catch (IOException e) {
-            String message = "Unable to capture title image.";
+            String message = "Unable to capture video.";
             Toast.makeText(context, message, Toast.LENGTH_LONG).show();
             Log.e(TAG, e.toString());
             return;
@@ -128,7 +128,7 @@ public class EditVideoStepActivity extends AppCompatActivity {
 
         if (videoFile != null) {
             Log.d(TAG, "Launching intent to capture video.");
-            videoPath = FileProvider.getUriForFile(this, FileSystemConstants.FILEPROVIDER_AUTHORITY, videoFile);
+            videoPath = FileProvider.getUriForFile(context, FileSystemConstants.FILEPROVIDER_AUTHORITY, videoFile);
             captureVideoIntent.putExtra(MediaStore.EXTRA_OUTPUT, videoPath);
             captureVideo.launch(captureVideoIntent);
         }

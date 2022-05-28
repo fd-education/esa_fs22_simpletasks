@@ -56,17 +56,15 @@ public class EditTaskActivity extends AppCompatActivity {
 
         // Get the task from the intent
         currentEditTask = getTask();
-
         taskImageView = findViewById(R.id.imageView_taskImage);
 
-        if(currentEditTask.getTitleImagePath() == ""){
+        if(currentEditTask.getTitleImagePath().isEmpty()){
             taskImageView.setImageResource(R.drawable.image_placeholder);
         } else {
             taskImageView.setImageURI(Uri.parse(currentEditTask.getTitleImagePath()));
         }
 
         SharedPreferences sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
-
         sharedPreferences.edit().putString(SHARED_PREF_TASK_ID, currentEditTask.getId()).apply();
 
         // Set the fragments in the activity

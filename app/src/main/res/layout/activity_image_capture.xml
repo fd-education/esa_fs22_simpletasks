@@ -43,6 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="92dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="116dp"
         android:background="@drawable/rounded_corner_background"
         android:contentDescription="@string/change_image"
@@ -50,14 +51,16 @@
         android:minHeight="@dimen/buttonHeight"
         android:onClick="onTakeImageClicked"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton_galleryImage"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_camera"
+        app:srcCompat="@drawable/ic_baseline_photo_camera_24"
         tools:ignore="ImageContrastCheck" />
 
     <ImageButton
         android:id="@+id/imageButton_galleryImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginEnd="92dp"
         android:layout_marginBottom="116dp"
         android:background="@drawable/rounded_corner_background"
@@ -67,7 +70,8 @@
         android:onClick="onGalleryPickClicked"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_gallery"
+        app:layout_constraintStart_toEndOf="@+id/imageButton_captureImage"
+        app:srcCompat="@drawable/ic_baseline_photo_24"
         tools:ignore="ImageContrastCheck" />
 
     <Button

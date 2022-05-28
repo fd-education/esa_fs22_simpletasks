@@ -134,7 +134,7 @@
                 android:focusable="true"
                 app:backgroundTint="?attr/colorPrimary"
                 app:fabCustomSize="48dp"
-                app:srcCompat="@android:drawable/ic_media_play" />
+                app:srcCompat="@drawable/ic_baseline_play_arrow_24" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_editvideostep_pause"
@@ -149,7 +149,7 @@
                 android:focusable="true"
                 app:backgroundTint="?attr/colorPrimary"
                 app:fabCustomSize="48dp"
-                app:srcCompat="@android:drawable/ic_media_pause" />
+                app:srcCompat="@drawable/ic_baseline_pause_24" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_editvideostep_stop"

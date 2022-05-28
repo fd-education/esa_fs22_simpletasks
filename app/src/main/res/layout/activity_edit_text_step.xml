@@ -62,7 +62,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/iv_edittextstep_image"
         app:layout_constraintStart_toEndOf="@+id/iv_edittextstep_image"
         app:layout_constraintTop_toTopOf="@+id/iv_edittextstep_image"
-        app:srcCompat="@android:drawable/ic_menu_camera"
+        app:srcCompat="@drawable/ic_baseline_photo_camera_24"
         tools:ignore="ImageContrastCheck" />
 
 

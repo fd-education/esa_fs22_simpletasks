@@ -1,5 +1,16 @@
 package com.example.simpletasks;
 
+import android.content.ActivityNotFoundException;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -8,20 +19,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
-import android.content.ActivityNotFoundException;
-import android.content.Context;
-import android.content.Intent;
-import android.hardware.Camera;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
-
-import com.example.simpletasks.domain.fileSystem.*;
+import com.example.simpletasks.domain.fileSystem.FileSystemConstants;
+import com.example.simpletasks.domain.fileSystem.FileSystemUtility;
+import com.example.simpletasks.domain.fileSystem.FileSystemUtilityController;
 
 import java.io.File;
 import java.io.FileOutputStream;
