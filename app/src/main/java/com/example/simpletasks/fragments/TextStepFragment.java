@@ -9,21 +9,65 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.simpletasks.MainActivity;
 import com.example.simpletasks.R;
-import com.example.simpletasks.data.entities.Task;
-import com.example.simpletasks.data.entities.TaskStep;
 
 /**
  * Fragment for the task guide screens.
  */
 public class TextStepFragment extends Fragment {
-    private static final String TAG = "TaskGuideFragment";
-    private View view;
-    private Task task;
-    private TaskStep taskStep;
+    // the fragment initialization parameters
+    private static final String STEP_TITLE = "STEP_TITLE";
+    private static final String IMAGE_PATH = "IMAGE_PATH";
+    private static final String STEP_DESCRIPTION = "STEP_DESCRIPTION";
+
+    private static final String TAG = "TextStepFragment";
+
+    // the parameters to initialize
+    private String stepTitle;
+    private String imagePath;
+    private String stepDescription;
+
+    // UI fields
+    private TextView title;
+    private ImageView imageView;
+    private TextView description;
+
+    public TextStepFragment(){
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param stepTitle Parameter 1.
+     * @param imagePath Parameter 2.
+     * @param stepDescription Parameter 3.
+     * @return A new instance of fragment TaskStepFragment.
+     */
+    public static TextStepFragment getNewInstance(String stepTitle, String imagePath, String stepDescription) {
+        TextStepFragment fragment = new TextStepFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(STEP_TITLE, stepTitle);
+        bundle.putString(IMAGE_PATH, imagePath);
+        bundle.putString(STEP_DESCRIPTION, stepDescription);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if(getArguments() != null){
+            stepTitle = getArguments().getString(STEP_TITLE);
+            imagePath = getArguments().getString(IMAGE_PATH);
+            stepDescription = getArguments().getString(STEP_DESCRIPTION);
+        }
+    }
 
     /**
      * Inflate the fragments layout and set the adapter for the task steps list.
@@ -37,35 +81,30 @@ public class TextStepFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_show_text_step, container, false);
+        View view = inflater.inflate(R.layout.fragment_show_text_step, container, false);
 
-        setTaskStepFromArguments();
+        initializeFields(view);
+        initializeUi();
+
         Log.d(TAG, "finished initialisation");
         return view;
     }
 
-    // Set the task steps from the arguments in the bundle
-    private void setTaskStepFromArguments() {
-        if (getArguments() != null) {
-            taskStep = (TaskStep) getArguments().getSerializable(MainActivity.CURRENT_TASK_STEP_INTENT_EXTRA);
-            Log.d(TAG, "successfully loaded task step from fragment start");
-            setTaskStepDetailsOnUi();
-        }
+    private void initializeFields(View view){
+        title = view.findViewById(R.id.tv_showtextstep_title);
+        imageView = view.findViewById(R.id.iv_showtextstep_image);
+        description = view.findViewById(R.id.tv_showtextstep_description);
     }
 
-    // Set the text views on the fragment using the data of a step.
-    private void setTaskStepDetailsOnUi() {
-        TextView taskStepTitle = view.findViewById(R.id.tv_showtextstep_title);
-        taskStepTitle.setText(taskStep.getTitle());
-        //TODO status bar
-        ImageView taskImage = view.findViewById(R.id.iv_showtextstep_image);
-        if(taskStep.getImagePath() != null){
-            taskImage.setImageURI(Uri.parse(taskStep.getImagePath()));
+    private void initializeUi(){
+        title.setText(stepTitle);
+
+        if(imagePath != null && !imagePath.isEmpty()){
+            imageView.setImageURI(Uri.parse(imagePath));
         } else {
-            taskImage.setImageResource(R.drawable.image_placeholder);
+            imageView.setImageResource(R.drawable.image_placeholder);
         }
 
-        TextView taskDescription = view.findViewById(R.id.tv_showtextstep_description);
-        taskDescription.setText(taskStep.getDescription());
+        description.setText(stepDescription);
     }
 }

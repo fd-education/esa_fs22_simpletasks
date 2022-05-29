@@ -143,7 +143,7 @@ public class TaskGuideActivity extends AppCompatActivity {
             case AUDIO:
                 return AudioStepFragment.getNewInstance(step.getTitle(), step.getImagePath(), step.getAudioPath());
             default:
-                return new TextStepFragment();
+                return TextStepFragment.getNewInstance(step.getTitle(), step.getImagePath(), step.getDescription());
         }
     }
 

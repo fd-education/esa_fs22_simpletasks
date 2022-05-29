@@ -18,7 +18,7 @@ import com.example.simpletasks.R;
  * create an instance of this fragment.
  */
 public class AudioStepFragment extends Fragment {
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    // the fragment initialization parameters
     private static final String STEP_TITLE = "STEP_TITLE";
     private static final String IMAGE_PATH = "IMAGE_PATH";
     private static final String AUDIO_PATH = "AUDIO_PATH";
