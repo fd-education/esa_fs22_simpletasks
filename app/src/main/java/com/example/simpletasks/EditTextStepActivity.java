@@ -1,5 +1,13 @@
 package com.example.simpletasks;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -7,15 +15,9 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
-
 import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.viewmodels.TaskStepViewModel;
+
 import java.util.ArrayList;
 
 public class EditTextStepActivity extends AppCompatActivity {
@@ -23,9 +25,13 @@ public class EditTextStepActivity extends AppCompatActivity {
 
     private TaskStepViewModel taskStepViewModel;
     private TaskStep step;
+
+    private ImageButton backButton;
     private EditText stepTitleInput;
     private EditText stepDescriptionInput;
     private ImageView stepImageView;
+    private ImageButton captureImage;
+    private Button saveStep;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +44,44 @@ public class EditTextStepActivity extends AppCompatActivity {
             actionBar.hide();
         }
 
+        initializeFields();
+        initializeUi();
+
+        if(getIntent() != null){
+            handleIntent(getIntent().getExtras());
+        }
+    }
+
+    private void initializeFields(){
         taskStepViewModel = new TaskStepViewModel(this.getApplication());
 
+        backButton = findViewById(R.id.ib_edittextstep_back_button);
         stepTitleInput = findViewById(R.id.et_edittextstep_title);
         stepDescriptionInput = findViewById(R.id.et_edittextstep_description);
         stepImageView = findViewById(R.id.iv_edittextstep_image);
+        captureImage = findViewById(R.id.ib_edittextstep_capture_image);
+        saveStep = findViewById(R.id.b_edittextstep_save);
+    }
 
-        Bundle bundle = getIntent().getExtras();
+    private void initializeUi(){
+        backButton.setOnClickListener(view -> {
+            //todo ask the user if he really wants to discard his changes
+            super.onBackPressed();
+        });
+
+        captureImage.setOnClickListener(view -> {
+            Intent intent = new Intent(this, ImageCaptureActivity.class);
+            intent.putExtra("image_path", step.getImagePath());
+            chooseTitleImage.launch(intent);
+        });
+
+        saveStep.setOnClickListener(view -> {
+            persistStep();
+            finish();
+        });
+    }
+
+    private void handleIntent(Bundle bundle){
         if(!bundle.isEmpty() && bundle.containsKey(MainActivity.TASK_INTENT_EXTRA)){
             step = (TaskStep) bundle.get(MainActivity.TASK_INTENT_EXTRA);
 
@@ -58,7 +95,7 @@ public class EditTextStepActivity extends AppCompatActivity {
         }
     }
 
-    public void onSaveClicked(View view){
+    private void persistStep(){
         if(isEmpty(stepTitleInput)){
             stepTitleInput.setError(getString(R.string.empty_step_title));
             return;
@@ -76,17 +113,9 @@ public class EditTextStepActivity extends AppCompatActivity {
         steps.add(step);
 
         taskStepViewModel.updateTaskSteps(steps);
-
-        super.onBackPressed();
     }
 
-    public void onTitleImageClicked(View v){
-        Intent intent = new Intent(this, ImageCaptureActivity.class);
-        intent.putExtra("image_path", step.getImagePath());
-        chooseTitleImage.launch(intent);
-    }
-
-    ActivityResultLauncher<Intent> chooseTitleImage = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+    final ActivityResultLauncher<Intent> chooseTitleImage = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
@@ -97,16 +126,6 @@ public class EditTextStepActivity extends AppCompatActivity {
                     }
                 }
             });
-
-    /**
-     * Handle click events on the back button
-     *
-     * @param view the view that triggered the event
-     */
-    public void onBackClicked(View view) {
-        //todo ask the user if he really wants to discard his changes
-        super.onBackPressed();
-    }
 
     private boolean isEmpty(EditText editText){
         return editText.getText().toString().trim().length() == 0;

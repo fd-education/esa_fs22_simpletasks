@@ -14,7 +14,7 @@ import java.util.List;
  */
 @SuppressWarnings("deprecation")
 public class Seeder {
-    String TAG = "Seeder";
+    final String TAG = "Seeder";
 
     private Seeder(){}
 

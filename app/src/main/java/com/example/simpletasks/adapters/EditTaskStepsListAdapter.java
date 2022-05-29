@@ -12,19 +12,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.FileProvider;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.simpletasks.EditTaskActivity;
 import com.example.simpletasks.MainActivity;
 import com.example.simpletasks.R;
 import com.example.simpletasks.data.entities.TaskStep;
-import com.example.simpletasks.data.viewmodels.TaskStepViewModel;
 import com.example.simpletasks.domain.editSteps.EditStepsUtility;
 import com.example.simpletasks.domain.editSteps.EditStepsUtilityController;
 
-import java.io.File;
 import java.util.List;
 
 /**

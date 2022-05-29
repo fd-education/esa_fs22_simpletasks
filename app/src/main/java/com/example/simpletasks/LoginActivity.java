@@ -15,7 +15,7 @@ import com.example.simpletasks.domain.login.*;
  * LoginActivity handles lifecycle and business calls for the caretaker login screen.
  */
 public class LoginActivity extends AppCompatActivity {
-    String TAG = "LoginActivity";
+    final String TAG = "LoginActivity";
 
     Login login;
 

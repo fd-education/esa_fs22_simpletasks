@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<paths xmlns:android="http://schemas.android.com/apk/res/android">
+<paths>
     <external-files-path name="simpletasks_images" path="simpletasks_images/" />
     <external-files-path name="simpletasks_videos" path="simpletasks_videos/" />
     <external-files-path name="simpletasks_recordings" path="simpletasks_recordings/" />

@@ -38,7 +38,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class EditAudioStepActivity extends AppCompatActivity {
-    String TAG = "EditAudioStepActivity";
+    final String TAG = "EditAudioStepActivity";
 
     private Context context;
     private FileSystemUtility fileSystemUtility;
@@ -239,7 +239,7 @@ public class EditAudioStepActivity extends AppCompatActivity {
         chooseTitleImage.launch(intent);
     }
 
-    ActivityResultLauncher<Intent> chooseTitleImage = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+    final ActivityResultLauncher<Intent> chooseTitleImage = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {

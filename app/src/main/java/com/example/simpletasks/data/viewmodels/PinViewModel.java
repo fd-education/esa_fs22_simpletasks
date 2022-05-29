@@ -3,7 +3,6 @@ package com.example.simpletasks.data.viewmodels;
 import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 
 import com.example.simpletasks.data.entities.*;
 import com.example.simpletasks.data.repositories.PinRepository;

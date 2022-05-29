@@ -14,7 +14,6 @@
         android:layout_marginTop="@dimen/sidesPadding"
         android:backgroundTint="#00000000"
         android:contentDescription="@string/back"
-        android:onClick="onBackClicked"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/arrow_back_black_24dp"
@@ -58,13 +57,11 @@
         android:contentDescription="@string/change_image"
         android:minWidth="48dp"
         android:minHeight="48dp"
-        android:onClick="onTitleImageClicked"
         app:layout_constraintBottom_toBottomOf="@+id/iv_edittextstep_image"
         app:layout_constraintStart_toEndOf="@+id/iv_edittextstep_image"
         app:layout_constraintTop_toTopOf="@+id/iv_edittextstep_image"
         app:srcCompat="@drawable/ic_baseline_photo_camera_24"
         tools:ignore="ImageContrastCheck" />
-
 
     <EditText
         android:id="@+id/et_edittextstep_title"
@@ -80,9 +77,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_edittextstep_image" />
-
-
+        app:layout_constraintTop_toBottomOf="@+id/iv_edittextstep_image"
+        tools:ignore="TextContrastCheck" />
 
     <Button
         android:id="@+id/b_edittextstep_save"
@@ -90,7 +86,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:background="@drawable/rounded_corner_background"
-        android:onClick="onSaveClicked"
         android:text="@string/save"
         app:backgroundTint="?buttonBarPositiveButtonStyle"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -114,6 +109,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_edittextstep_title"
         app:layout_constraintVertical_bias="0.0"
-        tools:text="@string/step_description" />
+        tools:text="@string/step_description"
+        android:importantForAutofill="no" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

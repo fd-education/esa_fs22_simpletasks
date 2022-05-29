@@ -4,25 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:onClick="onTakeImageClicked"
     tools:context=".ImageCaptureActivity">
 
     <ImageButton
-        android:id="@+id/backButton_captureImage"
+        android:id="@+id/ib_imagecapture_back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/sidesPadding"
         android:layout_marginTop="@dimen/sidesPadding"
         android:backgroundTint="#00000000"
         android:contentDescription="@string/back"
-        android:onClick="onBackPressed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/arrow_back_black_24dp"
         app:tint="?colorOnBackground" />
 
     <ImageView
-        android:id="@+id/imageView_preview"
+        android:id="@+id/iv_imagecapture_preview"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_marginStart="40dp"
@@ -39,7 +37,7 @@
         app:layout_constraintVertical_bias="0.393" />
 
     <ImageButton
-        android:id="@+id/imageButton_captureImage"
+        android:id="@+id/ib_imagecapture_capture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="92dp"
@@ -49,15 +47,14 @@
         android:contentDescription="@string/change_image"
         android:minWidth="96dp"
         android:minHeight="@dimen/buttonHeight"
-        android:onClick="onTakeImageClicked"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton_galleryImage"
+        app:layout_constraintEnd_toStartOf="@+id/ib_imagecapture_gallery"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_baseline_photo_camera_24"
         tools:ignore="ImageContrastCheck" />
 
     <ImageButton
-        android:id="@+id/imageButton_galleryImage"
+        android:id="@+id/ib_imagecapture_gallery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -67,20 +64,18 @@
         android:contentDescription="@string/change_image"
         android:minWidth="96dp"
         android:minHeight="@dimen/buttonHeight"
-        android:onClick="onGalleryPickClicked"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageButton_captureImage"
+        app:layout_constraintStart_toEndOf="@+id/ib_imagecapture_capture"
         app:srcCompat="@drawable/ic_baseline_photo_24"
         tools:ignore="ImageContrastCheck" />
 
     <Button
-        android:id="@+id/button_saveImage"
+        android:id="@+id/b_imagecapture_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:background="@drawable/rounded_corner_background"
-        android:onClick="onSaveClicked"
         android:text="@string/save"
         app:backgroundTint="?buttonBarPositiveButtonStyle"
         app:layout_constraintBottom_toBottomOf="parent"
