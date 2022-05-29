@@ -51,12 +51,6 @@ public class ImageCaptureActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_capture);
 
-        // Remove the action bar at the top of the screen
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
-
         initializeFields();
         initializeUi();
         titleImageView.setImageResource(R.drawable.image_placeholder);
