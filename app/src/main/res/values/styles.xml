@@ -50,6 +50,7 @@
         <item name="android:textColor">?colorOnPrimary</item>
         <item name="android:textSize">@dimen/h2</item>
         <item name="android:padding">@dimen/elementPadding</item>
+        <item name="layout_goneMarginLeft">@dimen/elementPadding</item>
     </style>
     <style name="Theme.SimpleTasks.CustomProgressBarCurrent" parent="Theme.SimpleTasks.CustomProgressBarFinished">
         <item name="android:background">@drawable/custom_progress_bar_current</item>

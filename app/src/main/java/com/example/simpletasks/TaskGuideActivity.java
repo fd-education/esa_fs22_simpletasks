@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -132,7 +133,7 @@ public class TaskGuideActivity extends AppCompatActivity {
         // if task has no steps, go back to the last activity and throw an error
         if (taskSteps.size() == 0) {
             super.onBackPressed();
-            //todo implement error message
+            //todo implement dialog error message
         }
     }
 
@@ -186,8 +187,14 @@ public class TaskGuideActivity extends AppCompatActivity {
             contextThemeWrapper = new ContextThemeWrapper(this, R.style.Theme_SimpleTasks_CustomProgressBarUndone);
         }
 
+        //create the layout parameters object
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        int margin = (int) getResources().getDimension(R.dimen.halfElementPadding);
+        layoutParams.setMargins(margin, 0, margin, 0);
+
         //create new text view
         TextView newTextView = new TextView(contextThemeWrapper);
+        newTextView.setLayoutParams(layoutParams);
         //set the number
         newTextView.setText(String.valueOf(i + 1));
         return newTextView;
