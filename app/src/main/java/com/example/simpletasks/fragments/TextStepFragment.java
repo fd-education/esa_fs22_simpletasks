@@ -19,7 +19,7 @@ import com.example.simpletasks.data.entities.TaskStep;
 /**
  * Fragment for the task guide screens.
  */
-public class TaskGuideFragment extends Fragment {
+public class TextStepFragment extends Fragment {
     private static final String TAG = "TaskGuideFragment";
     private View view;
     private Task task;
@@ -37,7 +37,7 @@ public class TaskGuideFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_task_guide, container, false);
+        view = inflater.inflate(R.layout.fragment_show_text_step, container, false);
 
         setTaskStepFromArguments();
         Log.d(TAG, "finished initialisation");
@@ -55,17 +55,17 @@ public class TaskGuideFragment extends Fragment {
 
     // Set the text views on the fragment using the data of a step.
     private void setTaskStepDetailsOnUi() {
-        TextView taskStepTitle = view.findViewById(R.id.titleTaskStep_TaskGuide);
+        TextView taskStepTitle = view.findViewById(R.id.tv_showtextstep_title);
         taskStepTitle.setText(taskStep.getTitle());
         //TODO status bar
-        ImageView taskImage = view.findViewById(R.id.taskStepImage_TaskGuide);
+        ImageView taskImage = view.findViewById(R.id.iv_showtextstep_image);
         if(taskStep.getImagePath() != null){
             taskImage.setImageURI(Uri.parse(taskStep.getImagePath()));
         } else {
             taskImage.setImageResource(R.drawable.image_placeholder);
         }
 
-        TextView taskDescription = view.findViewById(R.id.titleTaskStepDescription_TaskGuide);
+        TextView taskDescription = view.findViewById(R.id.tv_showtextstep_description);
         taskDescription.setText(taskStep.getDescription());
     }
 }

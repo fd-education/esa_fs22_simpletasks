@@ -3,16 +3,20 @@ package com.example.simpletasks;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.fragment.app.Fragment;
 
-import com.example.simpletasks.data.entities.TaskWithSteps;
 import com.example.simpletasks.data.entities.Task;
 import com.example.simpletasks.data.entities.TaskStep;
-import com.example.simpletasks.fragments.TaskGuideFragment;
+import com.example.simpletasks.data.entities.TaskWithSteps;
+import com.example.simpletasks.fragments.AudioStepFragment;
+import com.example.simpletasks.fragments.TextStepFragment;
+import com.example.simpletasks.fragments.VideoStepFragment;
 
 import java.util.List;
 
@@ -26,6 +30,8 @@ public class TaskGuideActivity extends AppCompatActivity {
     private List<TaskStep> taskSteps;
     private int currentStep;
 
+    private LinearLayout progressBar;
+
     /**
      * Set and adjust the view and set its fragment.
      *
@@ -37,6 +43,7 @@ public class TaskGuideActivity extends AppCompatActivity {
         setContentView(R.layout.activity_task_guide);
 
         setInstanceVariables();
+        setProgressBar();
 
         setFragment();
         Log.d(TAG, "finished initialisation");
@@ -92,6 +99,8 @@ public class TaskGuideActivity extends AppCompatActivity {
         taskSteps = taskWithSteps.getSteps();
         setTaskTitleOnUi();
 
+        progressBar = findViewById(R.id.ll_task_progress);
+
         currentStep = 0;
     }
 
@@ -102,29 +111,68 @@ public class TaskGuideActivity extends AppCompatActivity {
 
     // Set the title of the task for all steps
     private void setTaskTitleOnUi() {
-        TextView taskTitle = findViewById(R.id.taskTitle_TaskGuide);
+        TextView taskTitle = findViewById(R.id.tv_taskstep_tasktitle);
         taskTitle.setText(task.getTitle());
     }
 
     // Add the fragment which displays the step details
     private void setFragment() {
+        setActiveStep(currentStep);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragmentContainerTaskStep_taskGuide, getTaskGuideFragmentWithArguments()).commit();
     }
 
     // Replace the fragment which displays the step details
     private void replaceFragment() {
+        setActiveStep(currentStep);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainerTaskStep_taskGuide, getTaskGuideFragmentWithArguments()).commit();
     }
 
     // Get the fragment with details
     @NonNull
-    private TaskGuideFragment getTaskGuideFragmentWithArguments() {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(MainActivity.CURRENT_TASK_STEP_INTENT_EXTRA, taskSteps.get(currentStep));
-        TaskGuideFragment fragment = new TaskGuideFragment();
-        fragment.setArguments(bundle);
-        return fragment;
+    private Fragment getTaskGuideFragmentWithArguments() {
+        TaskStep step = taskSteps.get(currentStep);
+        return getFragmentForStep(step);
+    }
+
+    private Fragment getFragmentForStep(TaskStep step){
+        switch(step.getTypeAsTaskStepType()) {
+            case VIDEO:
+                return VideoStepFragment.getNewInstance(step.getTitle(), step.getVideoPath());
+            case AUDIO:
+                return AudioStepFragment.getNewInstance(step.getTitle(), step.getImagePath(), step.getAudioPath());
+            default:
+                return new TextStepFragment();
+        }
+    }
+
+    private void setActiveStep(int currentStep){
+        int stepIndex = currentStep + 1;
+        if(stepIndex > 1){
+            // Set previous step to be done
+            progressBar.findViewById(stepIndex - 1).setBackground(AppCompatResources.getDrawable(getApplicationContext(), R.drawable.progress_done));
+        }
+
+        if(stepIndex < taskSteps.size()){
+            progressBar.findViewById(stepIndex + 1).setBackground(AppCompatResources.getDrawable(getApplicationContext(), R.drawable.progress_open));
+        }
+
+        // Set current step to be active
+        progressBar.findViewById(stepIndex).setBackground(AppCompatResources.getDrawable(getApplicationContext(), R.drawable.progress_active));
+    }
+
+    private void setProgressBar(){
+        for(int i = 1; i <= taskSteps.size(); i++){
+            progressBar.addView(getProgressStep(i));
+        }
+    }
+
+    private TextView getProgressStep(int stepNumber){
+        TextView textView = (TextView) getLayoutInflater().inflate(R.layout.textview_progress_step, progressBar, false);
+        textView.setText(String.valueOf(stepNumber));
+        textView.setId(stepNumber);
+
+        return textView;
     }
 }

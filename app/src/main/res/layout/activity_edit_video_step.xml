@@ -95,77 +95,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_editvideostep_step_title" />
 
-    <LinearLayout
-        android:id="@+id/ll_editvideostep_player"
-        android:layout_width="294dp"
-        android:layout_height="434dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="visible"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/frag_editvideostep_videoplayer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/b_editvideostep_start_recording"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_editvideostep_step_title"
-        app:layout_constraintVertical_bias="0.416">
-
-        <VideoView
-            android:id="@+id/vv_editvideostep_step_video"
-            android:layout_width="306dp"
-            android:layout_height="360dp" />
-
-        <LinearLayout
-            android:id="@+id/ll_editvideostep_controls_container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_editvideostep_play"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="10dp"
-                android:clickable="true"
-                android:contentDescription="@string/play"
-                android:focusable="true"
-                app:backgroundTint="?attr/colorPrimary"
-                app:fabCustomSize="48dp"
-                app:srcCompat="@drawable/ic_baseline_play_arrow_24" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_editvideostep_pause"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="10dp"
-                android:clickable="true"
-                android:contentDescription="@string/pause"
-                android:focusable="true"
-                app:backgroundTint="?attr/colorPrimary"
-                app:fabCustomSize="48dp"
-                app:srcCompat="@drawable/ic_baseline_pause_24" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_editvideostep_stop"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="10dp"
-                android:clickable="true"
-                android:contentDescription="@string/stop"
-                android:focusable="true"
-                app:backgroundTint="?attr/colorPrimary"
-                app:fabCustomSize="48dp"
-                app:srcCompat="@drawable/ic_baseline_stop_24" />
-        </LinearLayout>
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/et_editvideostep_step_title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -59,14 +59,12 @@ public class EditTaskStepsListFragment extends Fragment {
 
         LiveData<List<TaskStep>> taskSteps = taskStepViewModel.getStepsOfTaskById(taskId);
 
-        final Observer<List<TaskStep>> taskStepsObserver = taskSteps1 -> setAdapterWithTaskSteps(taskSteps1);
+        final Observer<List<TaskStep>> taskStepsObserver = this::setAdapterWithTaskSteps;
 
         taskSteps.observe(getActivity(), taskStepsObserver);
 
         super.onResume();
     }
-
-
 
     // Get the task steps from the database and set the adapter for the view
     private void setAdapterWithTaskSteps(List<TaskStep> taskSteps) {

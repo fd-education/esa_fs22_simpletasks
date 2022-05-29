@@ -10,25 +10,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.FragmentContainerView;
 
 import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.viewmodels.TaskStepViewModel;
 import com.example.simpletasks.domain.fileSystem.FileSystemConstants;
 import com.example.simpletasks.domain.fileSystem.FileSystemUtility;
 import com.example.simpletasks.domain.fileSystem.FileSystemUtilityController;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.simpletasks.fragments.VideoPlayerFragment;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,16 +42,12 @@ public class EditVideoStepActivity extends AppCompatActivity {
     private TaskStepViewModel taskStepViewModel;
     private TaskStep step;
     private EditText stepTitleInput;
-    private VideoView stepVideo;
-    private LinearLayout videoPlayer;
+    private FragmentContainerView videoPlayer;
     private TextView noVideoWarning;
 
     private ImageButton backButton;
     private Button recordVideo;
     private Button saveStep;
-    private FloatingActionButton fabPlay;
-    private FloatingActionButton fabPause;
-    private FloatingActionButton fabStop;
 
     private Uri videoPath;
 
@@ -76,13 +70,7 @@ public class EditVideoStepActivity extends AppCompatActivity {
         taskStepViewModel = new TaskStepViewModel(this.getApplication());
 
         stepTitleInput = findViewById(R.id.et_editvideostep_step_title);
-        stepVideo = findViewById(R.id.vv_editvideostep_step_video);
-        videoPlayer = findViewById(R.id.ll_editvideostep_player);
-
-        fabPlay = findViewById(R.id.fab_editvideostep_play);
-        fabPause = findViewById(R.id.fab_editvideostep_pause);
-        fabPause.setVisibility(View.GONE);
-        fabStop = findViewById(R.id.fab_editvideostep_stop);
+        videoPlayer = findViewById(R.id.frag_editvideostep_videoplayer);
 
         noVideoWarning = findViewById(R.id.tv_editvideostep_no_video);
         backButton = findViewById(R.id.ib_editvideostep_back_button);
@@ -139,52 +127,21 @@ public class EditVideoStepActivity extends AppCompatActivity {
                 }
             });
 
+    private void setVideoPlayer(String videoPath){
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.frag_editvideostep_videoplayer, VideoPlayerFragment.getNewInstance(videoPath)).commit();
+    }
+
     private void showVideo(Uri videoPath) {
         noVideoWarning.setVisibility(View.GONE);
         videoPlayer.setVisibility(View.VISIBLE);
-        stepVideo.setVideoURI(videoPath);
-        stepVideo.seekTo(1);
-        controlVideo();
+        setVideoPlayer(videoPath.toString());
     }
 
     private void showVideo(String videoPath) {
         noVideoWarning.setVisibility(View.GONE);
         videoPlayer.setVisibility(View.VISIBLE);
-        stepVideo.setVideoPath(videoPath);
-        stepVideo.seekTo(1);
-        controlVideo();
-    }
-
-    private void controlVideo() {
-        fabPlay.setOnClickListener(view -> {
-                    if(step.getVideoPath() != null && !step.getVideoPath().isEmpty()){
-                        stepVideo.start();
-                        fabPlay.setVisibility(View.GONE);
-                        fabPause.setVisibility(View.VISIBLE);
-                    }
-                }
-        );
-
-        fabPause.setOnClickListener(view -> {
-            if (stepVideo.canPause()) {
-                stepVideo.pause();
-                fabPause.setVisibility(View.GONE);
-                fabPlay.setVisibility(View.VISIBLE);
-            }
-        });
-
-        fabStop.setOnClickListener(view -> {
-            if (stepVideo.canPause()) {
-                stepVideo.pause();
-                stepVideo.seekTo(0);
-            }
-        });
-
-        stepVideo.setOnCompletionListener(mediaPlayer -> {
-            stepVideo.seekTo(0);
-            fabPause.setVisibility(View.GONE);
-            fabPlay.setVisibility(View.VISIBLE);
-        });
+        setVideoPlayer(videoPath);
     }
 
     private void persistStep(){

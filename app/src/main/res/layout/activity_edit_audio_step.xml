@@ -95,78 +95,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_editaudiostep_title" />
 
-    <LinearLayout
-        android:id="@+id/ll_editaudiostep_player"
-        android:layout_width="276dp"
-        android:layout_height="91dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/frag_editaudiostep_audioplayer"
+        android:name="com.example.simpletasks.fragments.AudioPlayerFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/b_editaudiostep_record_audio"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_editaudiostep_title">
-
-        <SeekBar
-            android:id="@+id/sb_editaudiostep_progress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:thumbTint="?attr/colorPrimary" />
-
-        <LinearLayout
-            android:id="@+id/ll_editaudiostep_controls_container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_editaudiostep_play"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="10dp"
-                android:clickable="true"
-                android:contentDescription="@string/play"
-                android:focusable="true"
-                app:backgroundTint="?attr/colorPrimary"
-                app:fabCustomSize="48dp"
-                app:srcCompat="@drawable/ic_baseline_play_arrow_24" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_editaudiostep_pause"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="10dp"
-                android:clickable="true"
-                android:contentDescription="@string/pause"
-                android:focusable="true"
-                app:backgroundTint="?attr/colorPrimary"
-                app:fabCustomSize="48dp"
-                app:srcCompat="@drawable/ic_baseline_pause_24" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_editaudiostep_stop"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="10dp"
-                android:clickable="true"
-                android:contentDescription="@string/stop"
-                android:focusable="true"
-                app:backgroundTint="?attr/colorPrimary"
-                app:fabCustomSize="48dp"
-                app:srcCompat="@drawable/ic_baseline_stop_24" />
-        </LinearLayout>
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/et_editaudiostep_title" />
 
     <Button
         android:id="@+id/b_editaudiostep_record_audio"
