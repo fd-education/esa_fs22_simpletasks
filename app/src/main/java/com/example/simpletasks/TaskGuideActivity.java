@@ -3,6 +3,7 @@ package com.example.simpletasks;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,6 +32,7 @@ public class TaskGuideActivity extends AppCompatActivity {
     private int currentStep;
 
     private LinearLayout progressBar;
+    private HorizontalScrollView progressScroll;
 
     /**
      * Set and adjust the view and set its fragment.
@@ -100,6 +102,7 @@ public class TaskGuideActivity extends AppCompatActivity {
         setTaskTitleOnUi();
 
         progressBar = findViewById(R.id.ll_task_progress);
+        progressScroll = findViewById(R.id.sv_task_progress_container);
 
         currentStep = 0;
     }
@@ -159,7 +162,16 @@ public class TaskGuideActivity extends AppCompatActivity {
         }
 
         // Set current step to be active
-        progressBar.findViewById(stepIndex).setBackground(AppCompatResources.getDrawable(getApplicationContext(), R.drawable.progress_active));
+        TextView active = progressBar.findViewById(stepIndex);
+        active.setBackground(AppCompatResources.getDrawable(getApplicationContext(), R.drawable.progress_active));
+
+        // Scroll automatically after a certain threshold of steps is reached
+        int scrollThreshold = 3;
+        if(stepIndex > scrollThreshold){
+            int leftMargin = 20;
+            int scrollPositionX = active.getLeft() - scrollThreshold * active.getWidth() - leftMargin;
+            progressScroll.post(() -> progressScroll.smoothScrollTo(scrollPositionX, 0));
+        }
     }
 
     private void setProgressBar(){

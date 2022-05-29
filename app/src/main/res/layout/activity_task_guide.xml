@@ -22,15 +22,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/ll_task_progress"
-        android:layout_width="match_parent"
+    <HorizontalScrollView
+        android:id="@+id/sv_task_progress_container"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_taskstep_tasktitle"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_taskstep_tasktitle"
+        app:layout_constraintBottom_toTopOf="@+id/fragmentContainerTaskStep_taskGuide">
+
+        <LinearLayout
+            android:id="@+id/ll_task_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
 
     <Button
         android:id="@+id/b_taskstep_problem"
@@ -53,13 +60,12 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/sidesPadding"
-        android:layout_marginTop="@dimen/elementPadding"
         android:layout_marginEnd="@dimen/sidesPadding"
         android:layout_marginBottom="@dimen/elementPadding"
         app:layout_constraintBottom_toTopOf="@+id/b_taskstep_problem"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_task_progress" />
+        app:layout_constraintTop_toBottomOf="@+id/sv_task_progress_container" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ll_taskstep_buttongroup"
@@ -87,7 +93,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/ib_taskstep_nextbutton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TextContrastCheck" />
 
         <Button
             android:id="@+id/ib_taskstep_nextbutton"
