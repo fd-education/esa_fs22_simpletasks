@@ -111,9 +111,6 @@ public interface TaskDao {
 
     /**
      * Delete all data from the tasks database.
-     *
-     * Currently only used for the seeding process to avoid huge amounts of data
-     * through constant seeding at application start-up.
      */
     @Query("DELETE FROM tasks")
     void deleteAll();

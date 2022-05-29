@@ -1,6 +1,6 @@
 package com.example.simpletasks.data.repositories;
 
-import android.app.Application;
+import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
@@ -17,14 +17,14 @@ public class TaskStepRepository {
     private final TaskStepDao taskStepDao;
 
     /**
-     * Initialize the repository using the application context.
+     * Initialize the repository using a context.
      *
-     * @param application the context
+     * @param context the context
      */
-    public TaskStepRepository(Application application){
+    public TaskStepRepository(Context context){
         // TODO Uncomment for final submission and delete seed version
         // AppDatabase db = AppDatabase.getAppDb(application);
-        AppDatabase db = AppDatabase.getSeededAppDb(application, true, true);
+        AppDatabase db = AppDatabase.getSeededAppDb(context, true, true);
         taskStepDao = db.taskStepDao();
     }
 
