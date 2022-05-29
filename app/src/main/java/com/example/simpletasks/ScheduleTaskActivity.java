@@ -79,7 +79,6 @@ public class ScheduleTaskActivity extends AppCompatActivity {
      * @param view the view that triggered the event
      */
     public void onSaveTaskClicked(View view) {
-        //todo implement the rest
         //save the new start date
         if(dateTimePickerNextExecution != null) {
             Date newNextStartDate = dateTimePickerNextExecution.getUpdatedCalendar().getTime();
@@ -94,7 +93,6 @@ public class ScheduleTaskActivity extends AppCompatActivity {
 
         //save the interval
         setNewInterval();
-
 
         //save the new start date in the database
         TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
