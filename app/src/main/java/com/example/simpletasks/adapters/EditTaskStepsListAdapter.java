@@ -102,7 +102,7 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
             holder.titleTaskStep.setText(currentTaskStep.getTitle());
             holder.taskStepType.setText(context.getString(R.string.type, currentTaskStep.getType()));
 
-            if(taskSteps.get(position).getImagePath() != null){
+            if(taskSteps.get(position).getImagePath() != null && !taskSteps.get(position).getImagePath().isEmpty()){
                 Log.e(TAG, Uri.parse(taskSteps.get(position).getImagePath()).toString());
                 holder.taskImage.setImageURI(Uri.parse(taskSteps.get(position).getImagePath()));
             } else {
@@ -111,9 +111,7 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
 
             // Go to the edit screen corresponding to the current step format
             holder.editButton.setOnClickListener(v -> {
-                // TODO start new intent which goes to edit task step
                 Intent intent = editStepsUtility.getHandlerIntent(currentTaskStep.getTypeAsTaskStepType());
-
                 intent.putExtra(MainActivity.TASK_INTENT_EXTRA, currentTaskStep);
                 context.startActivity(intent);
             });

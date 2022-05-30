@@ -47,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
      * @param view the view whose click event was triggered
      */
     public void onLoginClicked(View view) {
-        Intent intent = new Intent(this, LoginActivity.class);
+//        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, ManageTasksActivity.class);
         startActivity(intent);
     }
 

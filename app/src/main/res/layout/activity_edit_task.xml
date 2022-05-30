@@ -46,6 +46,7 @@
         android:clickable="true"
         android:contentDescription="@string/add_task"
         android:focusable="true"
+        android:onClick="onAddTaskStepClicked"
         app:layout_constraintBottom_toBottomOf="@+id/saveTaskButton_editTask"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/saveTaskButton_editTask"

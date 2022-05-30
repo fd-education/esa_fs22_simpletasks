@@ -3,6 +3,7 @@ package com.example.simpletasks;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -44,6 +45,8 @@ public class EditTextStepActivity extends AppCompatActivity {
         if(getIntent() != null){
             handleIntent(getIntent().getExtras());
         }
+
+        Log.d(TAG, "Created edit text step activity.");
     }
 
     private void initializeFields(){
@@ -82,7 +85,7 @@ public class EditTextStepActivity extends AppCompatActivity {
             stepTitleInput.setText(step.getTitle());
             stepDescriptionInput.setText(step.getDescription());
 
-            if(step.getImagePath() != null){
+            if(step.getImagePath() != null && !step.getVideoPath().isEmpty()){
                 Uri uri = Uri.parse(step.getImagePath());
                 stepImageView.setImageURI(uri);
             }
@@ -106,7 +109,7 @@ public class EditTextStepActivity extends AppCompatActivity {
         ArrayList<TaskStep> steps = new ArrayList<>();
         steps.add(step);
 
-        taskStepViewModel.updateTaskSteps(steps);
+        taskStepViewModel.insertTaskSteps(steps);
     }
 
     final ActivityResultLauncher<Intent> chooseTitleImage = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),

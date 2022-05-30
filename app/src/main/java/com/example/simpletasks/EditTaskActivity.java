@@ -14,12 +14,14 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.simpletasks.data.entities.Task;
+import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.entities.TaskWithSteps;
+import com.example.simpletasks.data.types.TaskStepTypes;
 import com.example.simpletasks.data.viewmodels.TaskViewModel;
 import com.example.simpletasks.fragments.EditTaskStepsListFragment;
 
@@ -36,8 +38,6 @@ public class EditTaskActivity extends AppCompatActivity {
     private EditText taskTitle;
     private ImageView taskImageView;
 
-    private SharedPreferences sharedPreferences;
-
     /**
      * Set and adjust the view and set fragments.
      *
@@ -52,7 +52,7 @@ public class EditTaskActivity extends AppCompatActivity {
         currentEditTask = getTask();
         taskImageView = findViewById(R.id.imageView_taskImage);
 
-        if(currentEditTask.getTitleImagePath().isEmpty()){
+        if (currentEditTask.getTitleImagePath().isEmpty()) {
             taskImageView.setImageResource(R.drawable.image_placeholder);
         } else {
             taskImageView.setImageURI(Uri.parse(currentEditTask.getTitleImagePath()));
@@ -66,6 +66,10 @@ public class EditTaskActivity extends AppCompatActivity {
         setFragment();
 
         Log.d(TAG, "finished initialisation");
+    }
+
+    public void onAddTaskStepClicked(View view) {
+        getChoseFormatDialog().show();
     }
 
     /**
@@ -88,7 +92,7 @@ public class EditTaskActivity extends AppCompatActivity {
         onBackPressed();
     }
 
-    public void onTitleImageClicked(View v){
+    public void onTitleImageClicked(View v) {
         Intent intent = new Intent(this, ImageCaptureActivity.class);
         intent.putExtra("image_path", currentEditTask.getTitleImagePath());
         chooseTitleImage.launch(intent);
@@ -98,7 +102,7 @@ public class EditTaskActivity extends AppCompatActivity {
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == RESULT_OK) {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                         Uri uri = result.getData().getData();
                         currentEditTask.setTitleImagePath(uri.getPath());
                         taskImageView.setImageURI(uri);
@@ -134,5 +138,47 @@ public class EditTaskActivity extends AppCompatActivity {
     private Task getTask() {
         TaskWithSteps taskWithSteps = (TaskWithSteps) getIntent().getExtras().getSerializable(MainActivity.TASK_INTENT_EXTRA);
         return taskWithSteps.getTask();
+    }
+
+    // TODO JAN FRAGEN
+    // TODO - position drag
+    private AlertDialog getChoseFormatDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Step Types");
+
+        builder.setItems(new CharSequence[]
+                {"TEXT STEP", "AUDIO STEP", "VIDEO STEP", "CANCEL"},
+                (dialog, which) -> {
+                    switch(which){
+                        case 0:
+                            TaskStep newTextStep = new TaskStep(currentEditTask.getId(), TaskStepTypes.TEXT, currentEditTask.getSteps().size() + 1, "", "", "", "", "");
+
+                            Intent textIntent = new Intent(getBaseContext(), EditTextStepActivity.class);
+                            textIntent.putExtra(MainActivity.TASK_INTENT_EXTRA, newTextStep);
+                            startActivity(textIntent);
+                            break;
+                        case 1:
+                            TaskStep audioStep = new TaskStep(currentEditTask.getId(), TaskStepTypes.TEXT, currentEditTask.getSteps().size() + 1, "", "", "", "", "");
+
+                            Intent audioIntent = new Intent(getBaseContext(), EditAudioStepActivity.class);
+                            audioIntent.putExtra(MainActivity.TASK_INTENT_EXTRA, audioStep);
+                            startActivity(audioIntent);
+                            break;
+                        case 2:
+                            TaskStep videoStep = new TaskStep(currentEditTask.getId(), TaskStepTypes.TEXT, currentEditTask.getSteps().size() + 1, "", "", "", "", "");
+
+                            Intent videoIntent = new Intent(getBaseContext(), EditVideoStepActivity.class);
+                            videoIntent.putExtra(MainActivity.TASK_INTENT_EXTRA, videoStep);
+                            startActivity(videoIntent);
+                            Log.d(TAG, "VIDEO STEP");
+                            break;
+                        case 3:
+                            Log.d(TAG, "CANCEL");
+                            break;
+                    }
+                });
+
+        return builder.create();
     }
 }
