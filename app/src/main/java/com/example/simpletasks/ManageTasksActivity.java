@@ -1,5 +1,6 @@
 package com.example.simpletasks;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -76,7 +77,7 @@ public class ManageTasksActivity extends AppCompatActivity {
      * @param view the view that triggered the event
      */
     public void onSettingsClicked(View view) {
-        //TODO
-        Toast.makeText(this, "on settings button clicked", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 }
