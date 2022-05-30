@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.simpletasks.ManageTasksActivity;
 import com.example.simpletasks.R;
 import com.example.simpletasks.adapters.ManageTaskListAdapter;
 import com.example.simpletasks.data.viewmodels.TaskViewModel;
@@ -54,7 +53,6 @@ public class ManageTasksListFragment extends Fragment {
             Log.d(TAG, "all Tasks successfully fetched from db");
 
             adapter.setTasks(tasks);
-            ManageTasksActivity.setTasks(tasks);
         });
     }
 }

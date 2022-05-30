@@ -13,15 +13,24 @@
     <string name="add_task">Task hinzufügen</string>
     <string name="run_task">Task durchführen</string>
     <string name="skip_task">Task überspringen</string>
-    <string name="task_image">Taskbild</string>
+    <string name="schedule_task">Task planen</string>
+    <string name="task_image">Bild von Task</string>
+    <string name="task_step_image">Bild von Taskschritt</string>
+    <string name="add_task_step">Taskschritt hinzufügen</string>
     <string name="caretaker_login_hint">Logge dich ein, um Tasks bearbeiten zu können</string>
     <string name="open_settings">Einstellungen öffnen</string>
-    <string name="plan_task">Task planen</string>
-    <string name="save">SPEICHERN</string>
+    <string name="save">Speichern</string>
     <string name="task_title_hint">Titel des Tasks</string>
     <string name="type">Typ: %1$s</string>
     <string name="drag_task">Bewege Task</string>
-
+    <string name="plan_next_execution">Nächste Ausführung planen</string>
+    <string name="current_next_execution">Nächste Ausführung: %1$s</string>
+    <string name="plan_last_execution">Letzte Ausführung planen</string>
+    <string name="current_last_execution">Letzte Ausführung: %1$s</string>
+    <string name="current_interval">Intervall: %1$d Tage, %2$d Stunden, %3$d Minuten</string>
+    <string name="days">Tage</string>
+    <string name="hours">Stunden</string>
+    <string name="minutes">Minuten</string>
 
 
     <string name="placeholder">Platzhalter</string>

@@ -1,9 +1,11 @@
 package com.example.simpletasks;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,9 +14,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.simpletasks.data.entities.TaskWithSteps;
 import com.example.simpletasks.data.viewmodels.TaskViewModel;
 import com.example.simpletasks.fragments.EditTaskStepsListFragment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Activity for the edit tasks screen.
@@ -52,8 +51,7 @@ public class EditTaskActivity extends AppCompatActivity {
     }
 
     /**
-     * Handle click events on the save button.
-     * Save the current task to the database.
+     * Handle click events on the save button. Save the current task to the database.
      *
      * @param view the view that triggered the event
      */
@@ -61,16 +59,31 @@ public class EditTaskActivity extends AppCompatActivity {
         // Fetch data from the ui
         currentEditTask.getTask().setTitle(taskTitle.getText().toString());
 
-        // Save the data into the database
-        TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
-        //todo add in data layer another method for singular task update so i don't have to create a list
-        List<TaskWithSteps> list = new ArrayList<>();
-        list.add(currentEditTask);
-        taskViewModel.updateTasks(list);
-        Log.d(TAG, "updating task finished");
+        boolean isValid = validateData();
 
-        // Go back to the last screen
-        onBackPressed();
+        if (isValid) {
+            // Save the data into the database
+            TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
+            // using insert rather than update, so new and updated tasks will be saved
+            taskViewModel.insertTask(currentEditTask);
+            Log.d(TAG, "inserting or updating task finished");
+            // Go back to the last screen
+            onBackPressed();
+        } else {
+            //TODO implement error message
+            Toast.makeText(this, "Error when validating the data - check again", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * handle the click event of the add task step button. adds a new task step at the end of the
+     * list
+     *
+     * @param view the view that triggered the event
+     */
+    public void onAddTaskStepClicked(View view) {
+        //TODO implement adding new Task step
+        Toast.makeText(this, "on add task step clicked", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -79,8 +92,22 @@ public class EditTaskActivity extends AppCompatActivity {
      * @param view the view that triggered the event
      */
     public void onBackClicked(View view) {
+        onBackPressed();
+    }
+
+    /**
+     * Handle click events on the back button with a dialog
+     */
+    @Override
+    public void onBackPressed() {
         //todo ask the user if he really wants to discard his changes
         super.onBackPressed();
+    }
+
+    public void onPlanTaskClicked(View view) {
+        Intent intent = new Intent(this, ScheduleTaskActivity.class);
+        intent.putExtra(MainActivity.TASK_INTENT_EXTRA, currentEditTask);
+        startActivity(intent);
     }
 
     // Make a bundle of the task with its steps so that the fragment has the required data
@@ -106,6 +133,19 @@ public class EditTaskActivity extends AppCompatActivity {
 
     // Get the task from the intent
     private TaskWithSteps getTask() {
-        return (TaskWithSteps) getIntent().getExtras().getSerializable(MainActivity.TASK_INTENT_EXTRA);
+        return (TaskWithSteps) getIntent().getSerializableExtra(MainActivity.TASK_INTENT_EXTRA);
+    }
+
+    //validates the data of the ui, which was not validated before.
+    private boolean validateData() {
+        boolean isValid = true;
+        if (taskTitle.getText().length() <= 1) {
+            isValid = false;
+        }
+        if (currentEditTask.getSteps().size() == 0) {
+            isValid = false;
+        }
+        //more validating could be inserted here
+        return isValid;
     }
 }

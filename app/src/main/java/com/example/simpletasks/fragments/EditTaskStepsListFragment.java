@@ -64,7 +64,7 @@ public class EditTaskStepsListFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        List<TaskStep> taskSteps = getTaskStepsFromArguments();
+        taskSteps = getTaskStepsFromArguments();
         adapter.setTaskSteps(taskSteps);
         Log.d(TAG, "set task steps");
     }
