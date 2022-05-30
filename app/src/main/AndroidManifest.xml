@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.simpletasks" >
+    package="com.example.simpletasks">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -8,16 +11,35 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SimpleTasks" >
+        android:theme="@style/Theme.SimpleTasks">
+        <activity
+            android:name=".ScheduleTaskActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RemovePinActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddPinActivity"
+            android:exported="false" />
         <activity
             android:name=".EditTaskActivity"
-            android:exported="false"/>
+            android:exported="false" />
+        <activity
+            android:name=".ManageTasksActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
         <activity
             android:name=".TaskGuideActivity"
             android:exported="false" />
         <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_settings" />
+        <activity
             android:name=".MainActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

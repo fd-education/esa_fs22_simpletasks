@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:onClick="onAddTaskClicked"
+    tools:context=".ManageTasksActivity">
+
+
+    <ImageButton
+        style="@style/Theme.SimpleTasks.BackButton"
+        android:id="@+id/backButton_EditTasks"
+        android:layout_marginStart="@dimen/sidesPadding"
+        android:layout_marginTop="@dimen/sidesPadding"
+        android:contentDescription="@string/back"
+        android:onClick="onLogoutClicked"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/editTasksTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/sidesPadding"
+        android:layout_marginEnd="@dimen/sidesPadding"
+        android:text="@string/edit_tasks"
+        android:textAlignment="center"
+        android:textColor="?colorOnBackground"
+        android:textSize="@dimen/h2"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/backButton_EditTasks"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/backButton_EditTasks" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerTaskList"
+        android:name="com.example.simpletasks.fragments.ManageTasksListFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/sidesPadding"
+        android:layout_marginTop="@dimen/elementPadding"
+        android:layout_marginEnd="@dimen/sidesPadding"
+        android:layout_marginBottom="@dimen/elementPadding"
+        app:layout_constraintBottom_toTopOf="@+id/caretakerLogoutButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backButton_EditTasks"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/caretakerLogoutButton"
+        style="@style/Theme.SimpleTasks.ErrorButton"
+        android:onClick="onLogoutClicked"
+        android:text="@string/logout"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageButton" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        style="@style/Theme.SimpleTasks.IconButtonPrimary"
+        android:layout_marginBottom="@dimen/sidesPadding"
+        android:contentDescription="@string/open_settings"
+        android:onClick="onSettingsClicked"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/fragmentContainerTaskList"
+        app:srcCompat="@drawable/ic_baseline_settings_24" />
+
+    <ImageButton
+        android:id="@+id/addTask_manageTasks"
+        style="@style/Theme.SimpleTasks.IconButtonPrimary"
+        android:contentDescription="@string/add_task"
+        android:onClick="onAddTaskClicked"
+        app:layout_constraintBottom_toBottomOf="@+id/caretakerLogoutButton"
+        app:layout_constraintEnd_toEndOf="@+id/fragmentContainerTaskList"
+        app:layout_constraintTop_toTopOf="@+id/caretakerLogoutButton"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

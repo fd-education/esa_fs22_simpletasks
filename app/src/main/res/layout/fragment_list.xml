@@ -6,12 +6,11 @@
     tools:context=".fragments.TasksListFragment">
 
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tasks_list"
         style="@style/Widget.AppCompat.ListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:dividerHeight="@dimen/dividerHeight" />
+        android:layout_height="match_parent"/>
 
 
 </FrameLayout>

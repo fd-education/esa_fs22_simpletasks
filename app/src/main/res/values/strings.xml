@@ -1,12 +1,70 @@
 <resources>
     <string name="app_name" translatable="false">SimpleTasks</string>
+    <string name="date_time_format" translatable="false">dd. MMMM yyyy, HH:mm</string>
+
+
     <string name="tasks_today">Tasks Today</string>
     <string name="edit_tasks">Edit Tasks</string>
     <string name="caretaker_login">Caretaker Login</string>
+    <string name="login">Login</string>
     <string name="logout">Logout</string>
     <string name="total_steps">%1$d Steps</string>
     <string name="have_problem">I have a problem</string>
     <string name="back">Back</string>
     <string name="next">Next step</string>
     <string name="popup">Popup</string>
+    <string name="delete_task">Delete Task</string>
+    <string name="edit_task">Edit Task</string>
+    <string name="add_task">Add task</string>
+    <string name="run_task">Run Task</string>
+    <string name="skip_task">Skip Task</string>
+    <string name="schedule_task">Schedule Task</string>
+    <string name="task_image">Task Image</string>
+    <string name="task_step_image">Task Step Image</string>
+    <string name="add_task_step">Add Task Step</string>
+    <string name="caretaker_login_hint">Log in to gain access to edit tasks</string>
+    <string name="open_settings">Open settings</string>
+    <string name="save">Save</string>
+    <string name="task_title_hint">Task title</string>
+    <string name="type">Type: %1$s</string>
+    <string name="drag_task">Drag Task</string>
+    <string name="plan_next_execution">Plan next execution</string>
+    <string name="current_next_execution">Next execution: %1$s</string>
+    <string name="plan_last_execution">Plan last execution</string>
+    <string name="current_last_execution">Last execution: %1$s</string>
+    <string name="current_interval">Interval: %1$d Days, %2$d Hours, %3$d Minutes</string>
+    <string name="days">Days</string>
+    <string name="hours">Hours</string>
+    <string name="minutes">Minutes</string>
+
+    <string name="placeholder">Placeholder</string>
+    <string name="pin">Pin</string>
+    <string name="login_error">Wrong pin!</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="caretaker_settings">Caretaker settings</string>
+    <string name="add_pin">Add PIN</string>
+    <string name="remove_pin">Remove PIN</string>
+    <string name="display_settings">Display settings</string>
+    <string name="display_font_size_settings">Set display and font size</string>
+    <string name="create_pin_hint">At least five digits</string>
+    <string name="send_pin_explanation">Send the PIN to someone else</string>
+    <string name="local_pin_explanation">The PIN is for me</string>
+    <string name="phone_number_hint">Phone number</string>
+    <string name="phone_number_error">Not a valid phone number.</string>
+    <string name="generate_pin">Generate PIN</string>
+    <string name="title_add_pin">Add PIN</string>
+    <string name="add_pin_explanation">Generates a new PIN that will be added to the existing ones.</string>
+    <string name="send_pin_error">An error has occurred while sending the PIN. Please try again later.</string>
+    <string name="title_remove_pin">Remove PIN</string>
+    <string name="remove_pin_explanation">Enter your PIN to remove it from the available PINs.</string>
+    <string name="remove_pin_intro_warning_more_pins">Warning: There are more PINs than this one. If you don\'t know any other PIN, you will not be able to access protected areas like this one anymore!</string>
+    <string name="remove_pin_intro_warning_last_pin">Warning: This is the last PIN. Removing it will let anyone with access to your phone edit the settings and tasks.</string>
+    <string name="remove_pin_hint">PIN</string>
+    <string name="pin_not_found">This PIN does not exist</string>
+    <string name="invalid_pin">PIN is not valid</string>
+    <string name="unknown_error_msg">Something went wrong. Please try again later.</string>
+    <string name="change_language_settings">Change language</string>
+    <string name="language_settings">Language settings</string>
+    <string name="no_pin_set_explanation">Currently no PIN set!</string>
+    <string name="not_logged_in_explanation">You are currently not logged in!</string>
 </resources>

@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageButton
+        style="@style/Theme.SimpleTasks.IconButtonPrimary"
+        android:id="@+id/imageButton"
+        android:layout_marginBottom="@dimen/sidesPadding"
+        android:onClick="onSettingsClicked"
+        android:contentDescription="@string/open_settings"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/caretakerLoginButton"
+        app:srcCompat="@drawable/ic_baseline_settings_24" />
+
     <TextView
         android:id="@+id/titleHome"
         android:layout_width="0dp"
@@ -14,7 +25,7 @@
         android:layout_marginTop="@dimen/sidesPadding"
         android:layout_marginEnd="@dimen/sidesPadding"
         android:text="@string/app_name"
-        android:textColor="@color/black"
+        android:textColor="?colorOnBackground"
         android:textSize="@dimen/h1"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/elementPadding"
         android:text="@string/tasks_today"
-        android:textColor="@color/black"
+        android:textColor="?colorOnBackground"
         android:textSize="@dimen/h2"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/titleHome"
@@ -41,23 +52,32 @@
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/elementPadding"
         android:layout_marginBottom="@dimen/elementPadding"
-        app:layout_constraintBottom_toTopOf="@+id/caretakerLoginButton"
+        app:layout_constraintBottom_toTopOf="@+id/loginHint"
         app:layout_constraintEnd_toEndOf="@+id/editTasksTitle"
         app:layout_constraintStart_toStartOf="@+id/editTasksTitle"
         app:layout_constraintTop_toBottomOf="@+id/editTasksTitle" />
 
     <Button
+        style="@style/Theme.SimpleTasks.PrimaryButton"
         android:id="@+id/caretakerLoginButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/sidesPadding"
-        android:backgroundTint="@color/accent_blue"
         android:onClick="onLoginClicked"
         android:text="@string/caretaker_login"
-        android:textSize="@dimen/p"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton"
+        app:layout_constraintEnd_toEndOf="@+id/fragmentContainerTaskList"
+        app:layout_constraintStart_toStartOf="@+id/fragmentContainerTaskList"
+        app:layout_constraintTop_toTopOf="@+id/imageButton"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/loginHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/elementPadding"
+        android:text="@string/caretaker_login_hint"
+        android:textColor="?attr/hintTextColor"
+        app:layout_constraintBottom_toTopOf="@+id/caretakerLoginButton"
+        app:layout_constraintEnd_toEndOf="@+id/fragmentContainerTaskList"
+        app:layout_constraintStart_toStartOf="@+id/fragmentContainerTaskList" />
 
     <Button
         android:id="@+id/popupBTN"

@@ -1,48 +1,92 @@
 package com.example.simpletasks;
 
-import android.app.Dialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 
-import java.util.Objects;
+import com.example.simpletasks.data.entities.TaskWithSteps;
+import com.example.simpletasks.data.viewmodels.TaskViewModel;
 
+import java.util.List;
+
+/**
+ * Activity for the main screen
+ */
 public class MainActivity extends AppCompatActivity {
+    // Keys for the intent extras
+    public static final String TASK_INTENT_EXTRA = "task_intent_extra";
+    public static final String CURRENT_TASK_STEP_INTENT_EXTRA = "current_task_step_intent_extra";
 
-    Button popupBTN;
-    Dialog mDialog;
+    private static final String TAG = "MainActivity";
+    private static List<TaskWithSteps> tasks;
+    private static ViewModelStoreOwner owner;
 
+    /**
+     * Set and adjust the view and the life cycle owner
+     *
+     * @param savedInstanceState reconstruction of a previous state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        popupBTN = findViewById(R.id.popupBTN);
-        mDialog = new Dialog(this);
+        // Remove the action bar at the top of the screen
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
 
-        popupBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mDialog.setContentView(R.layout.popup);
-                mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            }
-        });
-        Objects.requireNonNull(getSupportActionBar()).hide();
+        // Set the life cycle owner
+        owner = this;
+        Log.d(TAG, "finished initialisation");
     }
 
-    public void onSkipClicked(View view) {
-        //TODO
-    }
-
+    /**
+     * Handle click events of the login button
+     *
+     * @param view the view whose click event was triggered
+     */
     public void onLoginClicked(View view) {
-        //TODO
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
+    /**
+     * Handle click events of the settings button
+     *
+     * @param view the view whose click event was triggered
+     */
     public void onSettingsClicked(View view) {
-        //TODO
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
+
+    /**
+     * Set the tasks in the task list view
+     *
+     * @param tasks all tasks to be listed in the fragment
+     */
+    public static void setTasks(List<TaskWithSteps> tasks) {
+        MainActivity.tasks = tasks;
+    }
+
+    /**
+     * Updates the tasks in the database
+     *
+     * @param tasks the list with the tasks
+     */
+    public static void updateTasksInDatabase(List<TaskWithSteps> tasks) {
+        Log.d(TAG, "updating tasks");
+        TaskViewModel taskViewModel = new ViewModelProvider(MainActivity.owner).get(TaskViewModel.class);
+        taskViewModel.updateTasks(tasks);
+        Log.d(TAG, "updating tasks finished");
+    }
+
 }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "781752895276",
+    "project_id": "simple-tasks-4c28e",
+    "storage_bucket": "simple-tasks-4c28e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:781752895276:android:26dd9607c9358d716d4e89",
+        "android_client_info": {
+          "package_name": "com.example.simpletasks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "781752895276-jr6tgtke9fjcpainfol92ee970bu1k3l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqn2QsN2B5z8qQcsts4H7dt2xqN5qwa0w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "781752895276-jr6tgtke9fjcpainfol92ee970bu1k3l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

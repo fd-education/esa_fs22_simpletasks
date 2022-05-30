@@ -4,61 +4,98 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".EditTaskActivity">
+
+    <ImageButton
+        android:id="@+id/addTaskStep_editTask"
+        style="@style/Theme.SimpleTasks.IconButtonPrimary"
+        android:layout_marginEnd="@dimen/sidesPadding"
+        android:contentDescription="@string/add_task_step"
+        android:onClick="onAddTaskStepClicked"
+        app:layout_constraintBottom_toBottomOf="@+id/saveTaskButton_editTask"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/saveTaskButton_editTask"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
     <ImageButton
         android:id="@+id/backButton_EditTasks"
+        style="@style/Theme.SimpleTasks.BackButton"
+        android:layout_marginStart="@dimen/sidesPadding"
+        android:layout_marginTop="@dimen/sidesPadding"
+        android:contentDescription="@string/back"
+        android:onClick="onBackClicked"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/editTaskTitle_editTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/sidesPadding"
-        android:layout_marginTop="@dimen/sidesPadding"
-        android:backgroundTint="#00000000"
-        android:contentDescription="@string/back"
-        android:onClick="onLogoutClicked"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/arrow_back_black_24dp" />
-
-    <TextView
-        android:id="@+id/editTasksTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/sidesPadding"
         android:layout_marginEnd="@dimen/sidesPadding"
-        android:layout_marginBottom="@dimen/elementPadding"
-        android:text="@string/edit_tasks"
+        android:text="@string/edit_task"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="?colorOnBackground"
         android:textSize="@dimen/h2"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/fragmentContainerTaskList"
+        app:layout_constraintBottom_toBottomOf="@+id/backButton_EditTasks"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/backButton_EditTasks" />
 
+    <Button
+        android:id="@+id/saveTaskButton_editTask"
+        style="@style/Theme.SimpleTasks.PositiveButton"
+        android:layout_marginBottom="@dimen/sidesPadding"
+        android:onClick="onSaveTaskClicked"
+        android:text="@string/save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/taskTitle_editTask"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/sidesPadding"
+        android:layout_marginTop="@dimen/sidesPadding"
+        android:layout_marginEnd="@dimen/sidesPadding"
+        android:autofillHints="name"
+        android:hint="@string/task_title_hint"
+        android:inputType="text"
+        android:maxEms="11"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backButton_EditTasks" />
+
+    <Button
+        android:id="@+id/planTaskButton_editTask"
+        style="@style/Theme.SimpleTasks.InvertedPrimaryButton"
+        android:layout_width="0dp"
+        android:layout_marginStart="@dimen/sidesPadding"
+        android:layout_marginTop="@dimen/elementPadding"
+        android:layout_marginEnd="@dimen/sidesPadding"
+        android:text="@string/schedule_task"
+        android:onClick="onPlanTaskClicked"
+        app:icon="@drawable/ic_outline_event_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskTitle_editTask" />
+
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerTaskList"
-        android:name="com.example.simpletasks.fragments.TasksListFragment"
+        android:id="@+id/fragmentContainerTaskStepList_editTask"
+        android:name="com.example.simpletasks.fragments.EditTaskStepsListFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/elementPadding"
         android:layout_marginBottom="@dimen/elementPadding"
-        app:layout_constraintBottom_toTopOf="@+id/caretakerLoginButton"
-        app:layout_constraintEnd_toEndOf="@+id/editTasksTitle"
-        app:layout_constraintStart_toStartOf="@+id/editTasksTitle"
-        app:layout_constraintTop_toBottomOf="@+id/backButton_EditTasks" />
-
-    <Button
-        android:id="@+id/caretakerLoginButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/sidesPadding"
-        android:backgroundTint="@color/red"
-        android:onClick="onLogoutClicked"
-        android:text="@string/logout"
-        android:textSize="@dimen/p"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/saveTaskButton_editTask"
+        app:layout_constraintEnd_toEndOf="@+id/planTaskButton_editTask"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/planTaskButton_editTask"
+        app:layout_constraintTop_toBottomOf="@+id/planTaskButton_editTask"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

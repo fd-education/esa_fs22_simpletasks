@@ -5,5 +5,9 @@
     <dimen name="p">14sp</dimen>
     <dimen name="sidesPadding">32dp</dimen>
     <dimen name="elementPadding">8dp</dimen>
+    <dimen name="halfElementPadding">4dp</dimen>
+    <dimen name="buttonHeight">48dp</dimen>
     <dimen name="dividerHeight">5dp</dimen>
+    <dimen name="radius">5dp</dimen>
+
 </resources>

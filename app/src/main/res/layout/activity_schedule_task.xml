@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ScheduleTaskActivity">
+
+    <ImageButton
+        android:id="@+id/backButton_scheduleTasks"
+        style="@style/Theme.SimpleTasks.BackButton"
+        android:layout_marginStart="@dimen/sidesPadding"
+        android:layout_marginTop="@dimen/sidesPadding"
+        android:contentDescription="@string/back"
+        android:onClick="onBackClicked"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/scheduleTaskTitle_scheduleTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/sidesPadding"
+        android:layout_marginEnd="@dimen/sidesPadding"
+        android:text="@string/schedule_task"
+        android:textAlignment="center"
+        android:textColor="?colorOnBackground"
+        android:textSize="@dimen/h2"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/backButton_scheduleTasks"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/backButton_scheduleTasks" />
+
+    <TextView
+        android:id="@+id/nextExecutionTextView_scheduleTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sidesPadding"
+        android:text="@string/current_next_execution"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scheduleTaskTitle_scheduleTask" />
+
+    <Button
+        android:id="@+id/planNextExecutionButton_scheduleTask"
+        style="@style/Theme.SimpleTasks.PrimaryButton"
+        android:layout_marginTop="@dimen/elementPadding"
+        android:onClick="onPlanNextExecutionClicked"
+        android:text="@string/plan_next_execution"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nextExecutionTextView_scheduleTask" />
+
+    <TextView
+        android:id="@+id/intervalTextView_scheduleTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sidesPadding"
+        android:text="@string/current_interval"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/planLastExecutionButton_scheduleTask" />
+
+    <TextView
+        android:id="@+id/lastExecutionTextView_scheduleTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sidesPadding"
+        android:text="@string/current_last_execution"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/planNextExecutionButton_scheduleTask" />
+
+    <Button
+        android:id="@+id/planLastExecutionButton_scheduleTask"
+        style="@style/Theme.SimpleTasks.PrimaryButton"
+        android:layout_marginTop="@dimen/elementPadding"
+        android:onClick="onPlanLastExecutionClicked"
+        android:text="@string/plan_last_execution"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lastExecutionTextView_scheduleTask" />
+
+    <Button
+        android:id="@+id/saveTaskButton_scheduleTask"
+        style="@style/Theme.SimpleTasks.PositiveButton"
+        android:layout_marginBottom="@dimen/sidesPadding"
+        android:onClick="onSaveTaskClicked"
+        android:text="@string/save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/elementPadding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/intervalTextView_scheduleTask">
+
+        <TextView
+            android:id="@+id/daysLabel_ScheduleTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/days"
+            app:layout_constraintEnd_toEndOf="@+id/daysDecimalInput_ScheduleTask"
+            app:layout_constraintStart_toStartOf="@+id/daysDecimalInput_ScheduleTask"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/hoursLabel_ScheduleTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hours"
+            app:layout_constraintEnd_toEndOf="@+id/hoursDecimalInput_ScheduleTask"
+            app:layout_constraintStart_toStartOf="@+id/hoursDecimalInput_ScheduleTask"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/minutesLabel_ScheduleTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/minutes"
+            app:layout_constraintEnd_toEndOf="@+id/minutesDecimalInput_ScheduleTask"
+            app:layout_constraintStart_toStartOf="@+id/minutesDecimalInput_ScheduleTask"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/daysDecimalInput_ScheduleTask"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/buttonHeight"
+            android:ems="2"
+            android:inputType="numberDecimal"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/daysLabel_ScheduleTask" />
+
+        <EditText
+            android:id="@+id/hoursDecimalInput_ScheduleTask"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/buttonHeight"
+            android:layout_marginStart="@dimen/elementPadding"
+            android:ems="2"
+            android:inputType="numberDecimal"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/daysDecimalInput_ScheduleTask"
+            app:layout_constraintTop_toBottomOf="@+id/hoursLabel_ScheduleTask" />
+
+        <EditText
+            android:id="@+id/minutesDecimalInput_ScheduleTask"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/buttonHeight"
+            android:layout_marginStart="@dimen/elementPadding"
+            android:ems="2"
+            android:inputType="numberDecimal"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/hoursDecimalInput_ScheduleTask"
+            app:layout_constraintTop_toBottomOf="@+id/minutesLabel_ScheduleTask" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
