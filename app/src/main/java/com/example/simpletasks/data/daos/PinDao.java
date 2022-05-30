@@ -22,7 +22,7 @@ public interface PinDao {
      * @param pin the pin entity to insert
      */
     @Insert(onConflict = REPLACE)
-    void insertPin(Pin pin);
+    ListenableFuture<Long> insertPin(Pin pin);
 
 
     /**
@@ -51,4 +51,21 @@ public interface PinDao {
      */
     @Query("DELETE FROM pins")
     void deleteAll();
+
+    /**
+     * Returns all pins that match the given hash
+     *
+     * @param pinHash the hash to be looked up
+     * @return a future that returns all found pins
+     */
+    @Query("SELECT * FROM Pins WHERE hash = :pinHash")
+    ListenableFuture<Pin[]> findByHash(int pinHash);
+
+    /**
+     * Returns all stored pins
+     *
+     * @return all pins stored in the database
+     */
+    @Query("SELECT * FROM Pins")
+    ListenableFuture<Pin[]> getPins();
 }

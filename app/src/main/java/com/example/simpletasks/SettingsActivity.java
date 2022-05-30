@@ -6,8 +6,17 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.simpletasks.domain.login.User;
+import com.example.simpletasks.domain.settings.PinController;
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Activity for the settings screen.
@@ -15,6 +24,8 @@ import androidx.appcompat.app.AppCompatActivity;
 public class SettingsActivity extends AppCompatActivity {
 
     private static final String TAG = "SettingsActivity";
+    private final User user = User.getUser();
+    private ExecutorService executorService;
 
     /**
      * Set and adjust the view.
@@ -24,7 +35,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings_activity);
+        setContentView(R.layout.activity_settings);
 
         // Remove the action bar at the top of the screen
         ActionBar actionBar = getSupportActionBar();
@@ -32,7 +43,77 @@ public class SettingsActivity extends AppCompatActivity {
             actionBar.hide();
         }
 
+        executorService = Executors.newSingleThreadExecutor();
+
         Log.d(TAG, "finished initialisation");
+    }
+
+    /**
+     * Disables the add and remove pin buttons if a pin is set, but the user is not logged in and
+     * disables the remove pin button if no pin is set.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        PinController pinController = new PinController(this.getApplication());
+        Futures.addCallback(pinController.getPinCount(), new FutureCallback<Integer>() {
+            @Override
+            public void onSuccess(Integer pinCount) {
+                runOnUiThread(() -> checkShowButtons(pinCount));
+            }
+
+            @Override
+            public void onFailure(@NonNull Throwable t) {
+                Log.e(TAG, "pin count could not be loaded, disabling remove pin button. Error was:");
+                Log.e(TAG, t.getMessage());
+                runOnUiThread(() -> checkShowButtons(0));
+            }
+        }, executorService);
+
+        if (!user.isLoggedIn()) {
+            final View logoutButton = findViewById(R.id.logoutButton);
+            logoutButton.setVisibility(View.GONE);
+        }
+    }
+
+    // Enables or disables the button by setting the alpha value / opacity
+    private void setButtonEnabled(View button, boolean enable) {
+        if (enable) {
+            button.setAlpha(1f);
+            button.setClickable(true);
+        } else {
+            button.setAlpha(0.5f);
+            button.setClickable(false);
+        }
+    }
+
+    // Enables or disables the add pin and remove pin buttons
+    private void checkShowButtons(Integer pinCount) {
+        final View removePinButtonView = findViewById(R.id.removePinButton);
+        final View addPinButtonView = findViewById(R.id.addPinButton);
+        final View pinRemoveDeactivatedTextView = findViewById(R.id.pinRemoveButtonDeactivatedText);
+        final View buttonsDeactivatedTextView = findViewById(R.id.buttonsDeactivatedText);
+
+        // reset all buttons
+        pinRemoveDeactivatedTextView.setVisibility(View.GONE);
+        buttonsDeactivatedTextView.setVisibility(View.GONE);
+        setButtonEnabled(removePinButtonView, true);
+        setButtonEnabled(addPinButtonView, true);
+
+        Log.d(TAG, "checking pin count");
+        if (pinCount == 0) {
+            Log.d(TAG, "no pins are currently set");
+            pinRemoveDeactivatedTextView.setVisibility(View.VISIBLE);
+            setButtonEnabled(removePinButtonView, false);
+        } else {
+            Log.d(TAG, "checking if user is logged in");
+            if (!user.isLoggedIn()) {
+                Log.d(TAG, "user is not logged in");
+                buttonsDeactivatedTextView.setVisibility(View.VISIBLE);
+                setButtonEnabled(removePinButtonView, false);
+                setButtonEnabled(addPinButtonView, false);
+            }
+        }
     }
 
     /**
@@ -83,6 +164,27 @@ public class SettingsActivity extends AppCompatActivity {
      * @param view the view that triggered the event
      */
     public void onLogoutClicked(View view) {
-        // TODO: implement when user info is ready
+        user.logOut();
+        finish();
+    }
+
+    /**
+     * Handle click event on the open language settings button.
+     * Opens the system settings for localisation / language.
+     *
+     * @param view the view that triggered the event
+     */
+    public void onOpenLanguageSettingsButton(View view) {
+        Intent languageSettingsIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
+        startActivity(languageSettingsIntent);
+    }
+
+    /**
+     * Shuts down the executor service after the activity is destroyed
+     */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        executorService.shutdown();
     }
 }

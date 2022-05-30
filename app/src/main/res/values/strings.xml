@@ -36,7 +36,7 @@
     <string name="hours">Hours</string>
     <string name="minutes">Minutes</string>
 
-    <string name="placeholder" translatable="false">Placeholder</string>
+    <string name="placeholder">Placeholder</string>
     <string name="pin">Pin</string>
     <string name="login_error">Wrong pin!</string>
     <string name="title_activity_settings">Settings</string>
@@ -59,4 +59,11 @@
     <string name="remove_pin_intro_warning_more_pins">Warning: There are more PINs than this one. If you don\'t know any other PIN, you will not be able to access protected areas like this one anymore!</string>
     <string name="remove_pin_intro_warning_last_pin">Warning: This is the last PIN. Removing it will let anyone with access to your phone edit the settings and tasks.</string>
     <string name="remove_pin_hint">PIN</string>
+    <string name="pin_not_found">This PIN does not exist</string>
+    <string name="invalid_pin">PIN is not valid</string>
+    <string name="unknown_error_msg">Something went wrong. Please try again later.</string>
+    <string name="change_language_settings">Change language</string>
+    <string name="language_settings">Language settings</string>
+    <string name="no_pin_set_explanation">Currently no PIN set!</string>
+    <string name="not_logged_in_explanation">You are currently not logged in!</string>
 </resources>
