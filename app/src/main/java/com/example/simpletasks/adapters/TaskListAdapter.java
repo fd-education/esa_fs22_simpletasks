@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.simpletasks.DialogBuilder;
 import com.example.simpletasks.MainActivity;
 import com.example.simpletasks.R;
 import com.example.simpletasks.TaskGuideActivity;
@@ -99,7 +100,8 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
                 context.startActivity(intent);
             });
             holder.skipTaskButton.setOnClickListener(v -> {
-                //TODO add dialog asking if skipping is okey
+                //
+                new DialogBuilder().setContext(context).build().show();
                 long newStartLong = currentTask.getNextStartDate().getTime() + currentTask.getInterval();
                 Date newStartDate = new Date(newStartLong);
                 currentTask.setNextStartDate(newStartDate);

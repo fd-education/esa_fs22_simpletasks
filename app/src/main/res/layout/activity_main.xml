@@ -79,14 +79,4 @@
         app:layout_constraintEnd_toEndOf="@+id/fragmentContainerTaskList"
         app:layout_constraintStart_toStartOf="@+id/fragmentContainerTaskList" />
 
-    <Button
-        android:id="@+id/popupBTN"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Show popup"
-        tools:layout_editor_absoluteX="138dp"
-        tools:layout_editor_absoluteY="377dp" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,43 +1,61 @@
-/* package com.example.simpletasks;
+package com.example.simpletasks;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 
-public class DialogBuilder extends Context implements IDialogBuilder {
-    private String leftBtnld;
+/**
+ * Builds a custom dialog
+ * Use like new DialogBuilder().setContext(context).build().show();
+ */
+public class DialogBuilder implements IDialogBuilder {
+    private Context context;
     private String leftBtnText;
-    private String rightBtnld;
     private String rightBtnText;
+    private String btnText;
+    private String descriptionText;
 
     public DialogBuilder() {
 
     }
 
-
-    public void setTwoButtonLayout(String leftBtnld, String leftBtnText, String rightBtnld, String rightBtnText) {
-        this.leftBtnld = leftBtnld;
+    @Override
+    public IDialogBuilder setTwoButtonLayout(String leftBtnText, String rightBtnText) {
         this.leftBtnText = leftBtnText;
-        this.rightBtnld = rightBtnld;
         this.rightBtnText = rightBtnText;
-
+        return this;
     }
 
-    public void setCenterButtonLayout(String btnld, String btnText) {
-        this.btnld = btnld;
+    @Override
+    public IDialogBuilder setCenterButtonLayout(String btnText) {
         this.btnText = btnText;
+        return this;
     }
 
-    public void setMainText(String text) {
-        this.text = text;
+    @Override
+    public IDialogBuilder setDescriptionText(String text) {
+        this.descriptionText = text;
+        return this;
 
     }
 
+    @Override
     public void getResult() {
 
     }
+
+    @Override
+    public IDialogBuilder setContext(Context context) {
+        this.context = context;
+        return this;
+    }
+
+    @Override
     public Dialog build() {
-        Dialog dialog = new Dialog(this);
+        Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.popup);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         return dialog;
     }
 }
-*/
