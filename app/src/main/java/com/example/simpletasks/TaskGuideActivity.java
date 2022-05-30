@@ -171,6 +171,8 @@ public class TaskGuideActivity extends AppCompatActivity {
             int leftMargin = 20;
             int scrollPositionX = active.getLeft() - scrollThreshold * active.getWidth() - leftMargin;
             progressScroll.post(() -> progressScroll.smoothScrollTo(scrollPositionX, 0));
+        } else {
+            progressScroll.post(() -> progressScroll.smoothScrollTo(0, 0));
         }
     }
 
@@ -181,7 +183,16 @@ public class TaskGuideActivity extends AppCompatActivity {
     }
 
     private TextView getProgressStep(int stepNumber){
-        TextView textView = (TextView) getLayoutInflater().inflate(R.layout.textview_progress_step, progressBar, false);
+        TextView textView;
+
+        if(stepNumber == 1){
+            textView = (TextView) getLayoutInflater().inflate(R.layout.textview_progress_first_step, progressBar, false);
+        } else if(stepNumber == taskSteps.size()){
+            textView = (TextView) getLayoutInflater().inflate(R.layout.textview_progress_last_step, progressBar, false);
+        } else {
+            textView = (TextView) getLayoutInflater().inflate(R.layout.textview_progress_step, progressBar, false);
+        }
+
         textView.setText(String.valueOf(stepNumber));
         textView.setId(stepNumber);
 

@@ -24,8 +24,11 @@
 
     <HorizontalScrollView
         android:id="@+id/sv_task_progress_container"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/sidesPadding"
+        android:layout_marginRight="@dimen/sidesPadding"
+        android:fillViewport="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_taskstep_tasktitle"
@@ -37,6 +40,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal" />
+
     </HorizontalScrollView>
 
     <Button

@@ -2,7 +2,6 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="48dp"
     android:layout_height="48dp"
-    android:layout_marginEnd="5dp"
     android:layout_marginStart="5dp"
     android:background="@drawable/progress_open"
     android:gravity="center"
