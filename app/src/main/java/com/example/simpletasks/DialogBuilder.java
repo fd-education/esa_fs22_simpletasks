@@ -1,4 +1,4 @@
-package com.example.simpletasks;
+/* package com.example.simpletasks;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -33,10 +33,11 @@ public class DialogBuilder extends Context implements IDialogBuilder {
     }
 
     public void getResult() {
-        
+
     }
     public Dialog build() {
         Dialog dialog = new Dialog(this);
         return dialog;
     }
 }
+*/
