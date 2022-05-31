@@ -35,6 +35,9 @@
     <string name="days">Days</string>
     <string name="hours">Hours</string>
     <string name="minutes">Minutes</string>
+    <string name="task_notification_title">Task reminder</string>
+    <string name="task_notification_description">You have an open task. Take care of it now.</string>
+
 
     <string name="placeholder">Placeholder</string>
     <string name="pin">Pin</string>

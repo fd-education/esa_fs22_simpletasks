@@ -1,15 +1,18 @@
 package com.example.simpletasks.data.repositories;
 
 import android.content.Context;
+import android.os.SystemClock;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.simpletasks.R;
 import com.example.simpletasks.data.AppDatabase;
 import com.example.simpletasks.data.daos.TaskDao;
 import com.example.simpletasks.data.daos.TaskStepDao;
 import com.example.simpletasks.data.entities.Task;
 import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.entities.TaskWithSteps;
+import com.example.simpletasks.notifications.NotificationManager;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,10 +25,11 @@ import java.util.List;
 public class TaskRepository {
     private final TaskDao taskDao;
     private final TaskStepDao taskStepDao;
+    private final Context context;
 
     /**
-     * Initialize the repository using a context.
-     * Initialize the observable lists for all tasks and all tasks with their steps.
+     * Initialize the repository using a context. Initialize the observable lists for all tasks and
+     * all tasks with their steps.
      *
      * @param context the context
      */
@@ -35,12 +39,13 @@ public class TaskRepository {
         AppDatabase db = AppDatabase.getSeededAppDb(context, true, true);
         taskDao = db.taskDao();
         taskStepDao = db.taskStepDao();
+        this.context = context;
     }
 
     /**
      * Fetch all task entities from the tasks table
      *
-     * @return LiveData<List<Task>> observable with all task entities
+     * @return LiveData<List < Task>> observable with all task entities
      */
     public LiveData<List<Task>> getAllTasks() {
         return taskDao.getAll();
@@ -49,7 +54,7 @@ public class TaskRepository {
     /**
      * Fetch all task entities with their steps from the tasks table
      *
-     * @return LiveData<List<TaskWithSteps>> observable with all task entities and their steps
+     * @return LiveData<List < TaskWithSteps>> observable with all task entities and their steps
      */
     public LiveData<List<TaskWithSteps>> getAllTasksWithSteps() {
         return taskDao.getAllWithSteps();
@@ -59,7 +64,7 @@ public class TaskRepository {
      * Fetch all task entities from a given date.
      *
      * @param date the date to look up
-     * @return LiveData<List<Task>> observable with all task entities of the specified date
+     * @return LiveData<List < Task>> observable with all task entities of the specified date
      */
     public LiveData<List<Task>> getTasksByDate(final Date date) {
         Date startDate = new Date(date.getYear(), date.getMonth(), date.getDate(), 0, 0, 0);
@@ -72,7 +77,8 @@ public class TaskRepository {
      * Fetch all task entities with their task steps from a given date.
      *
      * @param date the date to look up
-     * @return LiveData<List<TaskWithSteps>> observable with all TaskWithSteps entities of the specified date
+     * @return LiveData<List < TaskWithSteps>> observable with all TaskWithSteps entities of the
+     * specified date
      */
     public LiveData<List<TaskWithSteps>> getTasksByDateWithSteps(final Date date) {
         Date startDate = new Date(date.getYear(), date.getMonth(), date.getDate(), 0, 0, 0);
@@ -101,8 +107,9 @@ public class TaskRepository {
 
         for (TaskWithSteps task : tasksWithSteps) {
             taskList.add(task.getTask());
-
             stepList.addAll(task.getSteps());
+            //getNotificationManager(task).scheduleNotification(task.getTask().getNextStartDate().getTime());
+            getNotificationManager(task).scheduleNotification(SystemClock.elapsedRealtime() + 5000);
         }
 
         AppDatabase.databaseWriteExecutor.execute(() -> {
@@ -118,13 +125,15 @@ public class TaskRepository {
      */
     public void updateTasksWithSteps(final List<TaskWithSteps> tasksWithSteps) {
         List<Task> tasks = new ArrayList<>();
-        for(TaskWithSteps task : tasksWithSteps) {
+        for (TaskWithSteps task : tasksWithSteps) {
             tasks.add(task.getTask());
+            //getNotificationManager(task).scheduleNotification(task.getTask().getNextStartDate().getTime());
+            getNotificationManager(task).scheduleNotification(SystemClock.elapsedRealtime() + 5000);
         }
 
         AppDatabase.databaseWriteExecutor.execute(() -> taskDao.updateTasks(tasks));
 
-        for(TaskWithSteps task : tasksWithSteps) {
+        for (TaskWithSteps task : tasksWithSteps) {
             AppDatabase.databaseWriteExecutor.execute(() -> taskStepDao.updateTaskSteps(task.getSteps()));
         }
     }
@@ -136,14 +145,19 @@ public class TaskRepository {
      */
     public void deleteTasks(final List<TaskWithSteps> tasksWithSteps) {
         List<Task> tasks = new ArrayList<>();
-        for(TaskWithSteps task : tasksWithSteps) {
+        for (TaskWithSteps task : tasksWithSteps) {
             tasks.add(task.getTask());
+            getNotificationManager(task).cancelNotification();
         }
 
         AppDatabase.databaseWriteExecutor.execute(() -> taskDao.deleteTasks(tasks));
 
-        for(TaskWithSteps task : tasksWithSteps) {
+        for (TaskWithSteps task : tasksWithSteps) {
             AppDatabase.databaseWriteExecutor.execute(() -> taskStepDao.deleteTaskSteps(task.getSteps()));
         }
+    }
+
+    private NotificationManager getNotificationManager(TaskWithSteps task) {
+        return new NotificationManager(context, context.getString(R.string.task_notification_title), context.getString(R.string.task_notification_description), task.hashCode());
     }
 }

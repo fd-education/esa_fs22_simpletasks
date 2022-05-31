@@ -83,4 +83,7 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-functions'
     annotationProcessor 'androidx.room:room-compiler:2.4.2'
+
+    //for the notifications
+    implementation "androidx.core:core:1.7.0"
 }

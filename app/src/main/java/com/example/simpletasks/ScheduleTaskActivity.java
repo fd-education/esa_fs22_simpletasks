@@ -79,16 +79,18 @@ public class ScheduleTaskActivity extends AppCompatActivity {
      * @param view the view that triggered the event
      */
     public void onSaveTaskClicked(View view) {
-        //save the new start date
-        if(dateTimePickerNextExecution != null) {
-            Date newNextStartDate = dateTimePickerNextExecution.getUpdatedCalendar().getTime();
-            task.getTask().setNextStartDate(newNextStartDate);
-        }
-
         //save the new end date
-        if(dateTimePickerLastExecution != null) {
+        if (dateTimePickerLastExecution != null) {
             Date newEndDate = dateTimePickerLastExecution.getUpdatedCalendar().getTime();
             task.getTask().setEndDate(newEndDate);
+        }
+
+        //save the new start date if not after end date
+        if (dateTimePickerNextExecution != null) {
+            Date newNextStartDate = dateTimePickerNextExecution.getUpdatedCalendar().getTime();
+            if (newNextStartDate.before(task.getTask().getEndDate())) {
+                task.getTask().setNextStartDate(newNextStartDate);
+            }
         }
 
         //save the interval
@@ -176,6 +178,5 @@ public class ScheduleTaskActivity extends AppCompatActivity {
         //set the calculated value as interval
         task.getTask().setInterval(newInterval);
     }
-
 
 }

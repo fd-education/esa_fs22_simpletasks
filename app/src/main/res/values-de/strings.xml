@@ -31,6 +31,8 @@
     <string name="days">Tage</string>
     <string name="hours">Stunden</string>
     <string name="minutes">Minuten</string>
+    <string name="task_notification_title">Taskerinnerung</string>
+    <string name="task_notification_description">Du hast einen offenen Task. Erledige ihn jetzt.</string>
 
 
     <string name="placeholder">Platzhalter</string>
