@@ -1,5 +1,6 @@
 package com.example.simpletasks;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -48,10 +49,10 @@ public class TaskGuideActivity extends AppCompatActivity {
             actionBar.hide();
         }
 
-        setInstanceVariables();
-
-        setFragment();
-        Log.d(TAG, "finished initialisation");
+        if(setInstanceVariables()) {
+            setFragment();
+            Log.d(TAG, "finished initialisation");
+        }
     }
 
     /**
@@ -121,8 +122,11 @@ public class TaskGuideActivity extends AppCompatActivity {
     }
 
     // Sets the instance variables
-    private void setInstanceVariables() {
+    private boolean setInstanceVariables() {
         taskWithSteps = getTask();
+        if(taskWithSteps == null) {
+            return false;
+        }
         task = taskWithSteps.getTask();
         taskSteps = taskWithSteps.getSteps();
 
@@ -135,11 +139,20 @@ public class TaskGuideActivity extends AppCompatActivity {
             super.onBackPressed();
             //todo implement dialog error message
         }
+
+        return true;
     }
 
     // Get the task from the intent
     private TaskWithSteps getTask() {
-        return (TaskWithSteps) getIntent().getExtras().getSerializable(MainActivity.TASK_INTENT_EXTRA);
+        TaskWithSteps localTaskWithSteps = (TaskWithSteps) getIntent().getExtras().getSerializable(MainActivity.TASK_INTENT_EXTRA);
+        if (localTaskWithSteps != null) {
+            return localTaskWithSteps;
+        } else {
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+            return null;
+        }
     }
 
     // fill the ui with the task details

@@ -108,8 +108,8 @@ public class TaskRepository {
         for (TaskWithSteps task : tasksWithSteps) {
             taskList.add(task.getTask());
             stepList.addAll(task.getSteps());
-            //getNotificationManager(task).scheduleNotification(task.getTask().getNextStartDate().getTime());
-            getNotificationManager(task).scheduleNotification(SystemClock.elapsedRealtime() + 5000);
+            //getNotificationManager(task).scheduleNotification(task.getTask().getNextStartDate().getTime(), task.getTask().getId());
+            getNotificationManager(task).scheduleNotification(SystemClock.elapsedRealtime() + 5000, task.getTask().getId());
         }
 
         AppDatabase.databaseWriteExecutor.execute(() -> {
@@ -127,8 +127,8 @@ public class TaskRepository {
         List<Task> tasks = new ArrayList<>();
         for (TaskWithSteps task : tasksWithSteps) {
             tasks.add(task.getTask());
-            //getNotificationManager(task).scheduleNotification(task.getTask().getNextStartDate().getTime());
-            getNotificationManager(task).scheduleNotification(SystemClock.elapsedRealtime() + 5000);
+            //getNotificationManager(task).scheduleNotification(task.getTask().getNextStartDate().getTime(), task.getTask().getId());
+            getNotificationManager(task).scheduleNotification(SystemClock.elapsedRealtime() + 5000, task.getTask().getId());
         }
 
         AppDatabase.databaseWriteExecutor.execute(() -> taskDao.updateTasks(tasks));
@@ -158,6 +158,6 @@ public class TaskRepository {
     }
 
     private NotificationManager getNotificationManager(TaskWithSteps task) {
-        return new NotificationManager(context, context.getString(R.string.task_notification_title), context.getString(R.string.task_notification_description), task.hashCode());
+        return new NotificationManager(context, context.getString(R.string.task_notification_title), context.getString(R.string.task_notification_description));
     }
 }

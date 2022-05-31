@@ -9,6 +9,7 @@ import android.content.Intent;
 import androidx.core.app.NotificationCompat;
 
 import com.example.simpletasks.R;
+import com.example.simpletasks.TaskGuideActivity;
 
 public class NotificationManager {
     public static final String DEFAULT_NOTIFICATION_CHANNEL_ID = "default_notification_channel";
@@ -17,7 +18,6 @@ public class NotificationManager {
     private final Context context;
     private final String notificationTitle;
     private final String notificationDescription;
-    private final int taskId;
 
     /**
      * constructor for a new notification manager
@@ -25,21 +25,23 @@ public class NotificationManager {
      * @param context     the context where the notification comes from
      * @param title       the title of the notification
      * @param description the description of the notification
-     * @param taskId      the id of the task to set the notification
      */
-    public NotificationManager(Context context, String title, String description, int taskId) {
+    public NotificationManager(Context context, String title, String description) {
         this.context = context;
         this.notificationTitle = title;
         this.notificationDescription = description;
-        this.taskId = taskId;
     }
 
     /**
      * schedules the notification at the given time
      */
-    public void scheduleNotification(long notificationTimeMillis) {
+    public void scheduleNotification(long notificationTimeMillis, String taskId) {
+        Intent intentOnClick = new Intent(context, TaskGuideActivity.class);
+        //TODO change to the constant in edit task guide
+        intentOnClick.putExtra("task id", taskId);
+        PendingIntent pendingIntentOnClick = PendingIntent.getActivity(context, 0, intentOnClick, 0);
         //get the notification
-        Notification notification = getNotification();
+        Notification notification = getNotification(pendingIntentOnClick);
 
         //create intent with notification
         Intent notificationIntent = new Intent(context, NotificationPublisher.class);
@@ -67,10 +69,11 @@ public class NotificationManager {
     }
 
     //builds a notification with the given properties
-    private Notification getNotification() {
+    private Notification getNotification(PendingIntent intentOnClick) {
         return new NotificationCompat.Builder(context, DEFAULT_NOTIFICATION_CHANNEL_ID)
                 .setContentTitle(notificationTitle)
                 .setContentText(notificationDescription)
+                .setContentIntent(intentOnClick)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setAutoCancel(true)
                 .build();
