@@ -66,4 +66,9 @@
     <string name="language_settings">Language settings</string>
     <string name="no_pin_set_explanation">Currently no PIN set!</string>
     <string name="not_logged_in_explanation">You are currently not logged in!</string>
+    <string name="title_report_problem">Report your problem</string>
+    <string name="report_problem_explanation">You have encountered a problem and are stuck? No worries, you can write your problem here and use the button below to send it!</string>
+    <string name="report_problem_send_button">Send problem</string>
+    <string name="report_problem_abort">Back to task</string>
+    <string name="no_problem_stated">Please describe your problem first!</string>
 </resources>

@@ -64,4 +64,9 @@
     <string name="language_settings">Spracheinstellungen</string>
     <string name="no_pin_set_explanation">Momentan keine PINs gesetzt!</string>
     <string name="not_logged_in_explanation">Nicht eingelogged!</string>
+    <string name="title_report_problem">Problem beschreiben</string>
+    <string name="report_problem_explanation">Sie haben ein Problem und kommen nicht weiter? Kein Problem! Beschreiben Sie hier, was nicht funktioniert, und senden Sie es dann mit dem Knopf!</string>
+    <string name="report_problem_send_button">Problem senden</string>
+    <string name="report_problem_abort">Zurück zum Task</string>
+    <string name="no_problem_stated">Bitte zuerst das Problem beschreiben!</string>
 </resources>

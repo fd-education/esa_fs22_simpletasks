@@ -1,5 +1,6 @@
 package com.example.simpletasks;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -117,7 +118,9 @@ public class TaskGuideActivity extends AppCompatActivity {
      * @param view the view that triggered the event
      */
     public void onProblemClicked(View view) {
-        //TODO to implement a dialog
+        final Intent intent = new Intent(this, ReportProblemActivity.class);
+
+        startActivity(intent);
     }
 
     // Sets the instance variables
