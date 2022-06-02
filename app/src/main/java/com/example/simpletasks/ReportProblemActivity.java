@@ -8,7 +8,16 @@ import android.widget.EditText;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.simpletasks.data.entities.Task;
+import com.example.simpletasks.data.entities.TaskStep;
+import com.example.simpletasks.data.entities.TaskWithSteps;
+
+import java.util.Locale;
+
 public class ReportProblemActivity extends AppCompatActivity {
+    public static final String TASK_INTENT_EXTRA = "task_intent_extra";
+    public static final String CURRENT_TASK_STEP_INDEX = "current_task_step_index";
+
 
     /**
      * initialises the activity
@@ -46,6 +55,19 @@ public class ReportProblemActivity extends AppCompatActivity {
             problemTextErrorView.setVisibility(View.GONE);
         }
 
+        if (getIntent().hasExtra(TASK_INTENT_EXTRA) && getIntent().hasExtra(CURRENT_TASK_STEP_INDEX)) {
+            final TaskWithSteps taskWithSteps = (TaskWithSteps) getIntent().getSerializableExtra(TASK_INTENT_EXTRA);
+            final int currentStepIndex = getIntent().getIntExtra(CURRENT_TASK_STEP_INDEX, 0);
+            final TaskStep currentStep = taskWithSteps.getSteps().get(currentStepIndex);
+            final Task task = taskWithSteps.getTask();
+
+            final String additionalInformation = getString(
+                    R.string.problem_statement_additional_information,
+                    task.getTitle(), currentStep.getTitle(), currentStepIndex + 1);
+            problemText = String.format(Locale.getDefault(),
+                    "%s%n%n%s", problemText, additionalInformation
+            );
+        }
         // TODO: Maybe explain with popup
         sendWithShareSheet(problemText);
         finish();

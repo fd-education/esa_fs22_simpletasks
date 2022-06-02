@@ -69,4 +69,5 @@
     <string name="report_problem_send_button">Problem senden</string>
     <string name="report_problem_abort">Zurück zum Task</string>
     <string name="no_problem_stated">Bitte zuerst das Problem beschreiben!</string>
+    <string name="problem_statement_additional_information">Zusätzliche Informationen:\nTasktitel: %1$s\nSchritttitel: %2$s\nSchrittindex: %3$d</string>
 </resources>

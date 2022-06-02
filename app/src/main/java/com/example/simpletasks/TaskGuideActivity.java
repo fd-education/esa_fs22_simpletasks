@@ -119,7 +119,8 @@ public class TaskGuideActivity extends AppCompatActivity {
      */
     public void onProblemClicked(View view) {
         final Intent intent = new Intent(this, ReportProblemActivity.class);
-
+        intent.putExtra(ReportProblemActivity.TASK_INTENT_EXTRA, taskWithSteps);
+        intent.putExtra(ReportProblemActivity.CURRENT_TASK_STEP_INDEX, currentStep);
         startActivity(intent);
     }
 
