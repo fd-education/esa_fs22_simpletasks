@@ -1,4 +1,4 @@
-package com.example.simpletasks;
+package com.example.simpletasks.domain.settings;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
