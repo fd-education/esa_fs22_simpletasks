@@ -22,6 +22,7 @@ import com.example.simpletasks.data.entities.TaskWithSteps;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -120,8 +121,12 @@ public abstract class AppDatabase extends RoomDatabase {
 
                 List<Task> tasks = new ArrayList<>();
 
-                taskDao.deleteAll();
-                taskStepDao.deleteAll();
+                try {
+                    taskDao.deleteAll().get();
+                    taskStepDao.deleteAll().get();
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
 
                 for (TaskWithSteps task : tasksWithSteps) {
                     tasks.add(task.getTask());
