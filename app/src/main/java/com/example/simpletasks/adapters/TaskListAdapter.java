@@ -2,6 +2,7 @@ package com.example.simpletasks.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,7 +92,13 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
             List<TaskStep> currentSteps = taskWithSteps.getSteps();
             holder.titleTask.setText(currentTask.getTitle());
             holder.countStepsIndicator.setText(context.getString(R.string.total_steps, currentSteps.size()));
-            holder.taskImage.setImageResource(R.drawable.image_placeholder/*TODO change */);
+
+            if(!currentTask.getTitleImagePath().isEmpty()){
+                holder.taskImage.setImageURI(Uri.parse(currentTask.getTitleImagePath()));
+            } else {
+                holder.taskImage.setImageResource(R.drawable.image_placeholder/*TODO change */);
+            }
+
             holder.itemView.setOnClickListener(v -> {
                 //when clicked on a list item, execute following code
                 Intent intent = new Intent(context, TaskGuideActivity.class);

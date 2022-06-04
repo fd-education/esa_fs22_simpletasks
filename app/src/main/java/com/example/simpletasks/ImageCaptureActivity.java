@@ -70,8 +70,8 @@ public class ImageCaptureActivity extends AppCompatActivity {
 
     private void initializeUi(){
         backButton.setOnClickListener(view -> {
-            Log.e(TAG, "Back button pressed.");
-            ImageCaptureActivity.super.onBackPressed();
+            Log.d(TAG, "Back button pressed.");
+            super.onBackPressed();
         });
 
         captureImage.setOnClickListener(view -> {
@@ -142,6 +142,8 @@ public class ImageCaptureActivity extends AppCompatActivity {
                                 newPhotoFile = fileSystemUtility.createImageFile(getExternalFilesDir(FileSystemConstants.IMAGE_DIR));
                             } catch(IOException e){
                                 Log.e(TAG, e.toString());
+                                String message = "Could not create image file.";
+                                Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
                                 return;
                                 // TODO
                             }

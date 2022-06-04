@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.simpletasks.MainActivity;
 import com.example.simpletasks.R;
 import com.example.simpletasks.data.entities.TaskStep;
+import com.example.simpletasks.domain.dragdrop.ItemTouchHelperAdapter;
 import com.example.simpletasks.domain.editSteps.EditStepsUtility;
 import com.example.simpletasks.domain.editSteps.EditStepsUtilityController;
 
@@ -25,7 +26,7 @@ import java.util.List;
 /**
  * Adapter to handle the display of task steps for the editing screen.
  */
-public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskStepsListAdapter.TaskStepListViewHolder> {
+public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskStepsListAdapter.TaskStepListViewHolder> implements ItemTouchHelperAdapter {
 
     /**
      * TaskListViewHolder acts as a layer between code and xml layout.
@@ -94,16 +95,15 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
      */
     @Override
     public void onBindViewHolder(@NonNull TaskStepListViewHolder holder, int position) {
+
         if (taskSteps != null) {
             TaskStep currentTaskStep = taskSteps.get(position);
-            holder.dragTaskStepButton.setOnClickListener(v -> {
-                // TODO Implement drag to position
-            });
+            // TODO Probably remove drag button or leave as hint?
+
             holder.titleTaskStep.setText(currentTaskStep.getTitle());
             holder.taskStepType.setText(context.getString(R.string.type, currentTaskStep.getType()));
 
             if(taskSteps.get(position).getImagePath() != null && !taskSteps.get(position).getImagePath().isEmpty()){
-                Log.e(TAG, Uri.parse(taskSteps.get(position).getImagePath()).toString());
                 holder.taskImage.setImageURI(Uri.parse(taskSteps.get(position).getImagePath()));
             } else {
                 holder.taskImage.setImageResource(R.drawable.image_placeholder);
@@ -125,7 +125,6 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
             holder.taskStepType.setText(R.string.placeholder);
             holder.taskImage.setImageResource(R.drawable.image_placeholder);
         }
-
     }
 
     /**
@@ -134,6 +133,8 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
      * @param taskSteps the task steps to set
      */
     public void setTaskSteps(final List<TaskStep> taskSteps) {
+        Log.d(TAG, "Setting task steps: " + taskSteps.toString());
+
         this.taskSteps = taskSteps;
         notifyDataSetChanged();
     }
@@ -146,5 +147,14 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
     @Override
     public int getItemCount() {
         return taskSteps != null? taskSteps.size() : 0;
+    }
+
+    @Override
+    public boolean onItemMove(int fromPosition, int toPosition) {
+        Log.d(TAG, String.format("DRAGGING: Moving %s from %d to %d", taskSteps.get(toPosition).getTitle(), fromPosition, toPosition));
+
+        notifyItemMoved(fromPosition, toPosition);
+
+        return true;
     }
 }

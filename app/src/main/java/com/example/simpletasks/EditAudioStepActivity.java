@@ -66,7 +66,7 @@ public class EditAudioStepActivity extends AppCompatActivity {
         if(!bundle.isEmpty()){
             handleTaskStepExtras(bundle);
         } else {
-            Log.e(TAG, "Bundle is empty!");
+            Log.d(TAG, "Bundle is empty!");
         }
     }
 
@@ -97,6 +97,7 @@ public class EditAudioStepActivity extends AppCompatActivity {
 
         saveStep.setOnClickListener(view -> {
             persistStep();
+            setResult();
             finish();
         });
     }
@@ -183,6 +184,12 @@ public class EditAudioStepActivity extends AppCompatActivity {
 
     private boolean isEmpty(EditText editText){
         return editText.getText().toString().trim().length() == 0;
+    }
+
+    private void setResult(){
+        Intent result = new Intent();
+        result.putExtra(EditTaskActivity.NEW_STEP, step);
+        setResult(RESULT_OK, result);
     }
 
     private void handleTaskStepExtras(Bundle bundle){

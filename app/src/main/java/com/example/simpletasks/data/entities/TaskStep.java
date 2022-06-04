@@ -274,4 +274,10 @@ public class TaskStep implements Serializable {
     public int hashCode() {
         return Objects.hash(id, index, type, title, imagePath, description, videoPath, audioPath, taskId);
     }
+
+    @NonNull
+    @Override
+    public String toString(){
+        return String.format("\n%s: %s (%s)", index, title, id);
+    }
 }

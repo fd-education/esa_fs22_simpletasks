@@ -74,6 +74,7 @@ public class EditTextStepActivity extends AppCompatActivity {
 
         saveStep.setOnClickListener(view -> {
             persistStep();
+            setResult();
             finish();
         });
     }
@@ -123,6 +124,12 @@ public class EditTextStepActivity extends AppCompatActivity {
                     }
                 }
             });
+
+    private void setResult(){
+        Intent result = new Intent();
+        result.putExtra(EditTaskActivity.NEW_STEP, step);
+        setResult(RESULT_OK, result);
+    }
 
     private boolean isEmpty(EditText editText){
         return editText.getText().toString().trim().length() == 0;

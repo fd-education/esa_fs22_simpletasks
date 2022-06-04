@@ -90,6 +90,7 @@ public class EditVideoStepActivity extends AppCompatActivity {
 
         saveStep.setOnClickListener(view -> {
             persistStep();
+            setResult();
             finish();
         });
     }
@@ -144,6 +145,12 @@ public class EditVideoStepActivity extends AppCompatActivity {
         setVideoPlayer(videoPath);
     }
 
+    private void setResult(){
+        Intent result = new Intent();
+        result.putExtra(EditTaskActivity.NEW_STEP, step);
+        setResult(RESULT_OK, result);
+    }
+
     private void persistStep(){
         if (isEmpty(stepTitleInput)) {
             stepTitleInput.setError(getString(R.string.empty_step_title));
@@ -169,7 +176,6 @@ public class EditVideoStepActivity extends AppCompatActivity {
             stepTitleInput.setText(step.getTitle());
 
             if (step.getVideoPath() != null && !step.getVideoPath().isEmpty()) {
-                Log.e(TAG, "VIDEO EXISTS! " + step.getVideoPath());
                 noVideoWarning.setVisibility(View.GONE);
                 showVideo(step.getVideoPath());
             } else {

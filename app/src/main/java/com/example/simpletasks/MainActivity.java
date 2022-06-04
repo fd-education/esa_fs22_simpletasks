@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     // Keys for the intent extras
     public static final String TASK_INTENT_EXTRA = "task_intent_extra";
     public static final String CURRENT_TASK_STEP_INTENT_EXTRA = "current_task_step_intent_extra";
+    public static final String SHARED_PREF_KEY = "SIMPLE_TASK_SHARED_PREF";
 
     private static final String TAG = "MainActivity";
     private static List<TaskWithSteps> tasks;
