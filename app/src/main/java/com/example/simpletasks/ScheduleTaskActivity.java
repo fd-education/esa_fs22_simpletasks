@@ -1,17 +1,21 @@
 package com.example.simpletasks;
 
+import static com.example.simpletasks.EditTaskActivity.SHARED_PREF_TASK_ID;
+
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.simpletasks.data.entities.Task;
 import com.example.simpletasks.data.entities.TaskWithSteps;
 import com.example.simpletasks.data.viewmodels.TaskViewModel;
 import com.example.simpletasks.listener.DateTimePickerListener;
@@ -24,7 +28,7 @@ import java.util.Locale;
 public class ScheduleTaskActivity extends AppCompatActivity {
     private static final String TAG = "ScheduleTaskActivity";
 
-    private TaskWithSteps task;
+    private Task task;
     private Calendar calendar;
     private DateTimePickerListener dateTimePickerNextExecution;
     private DateTimePickerListener dateTimePickerLastExecution;
@@ -39,14 +43,7 @@ public class ScheduleTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_task);
 
-        // Remove the action bar at the top of the screen
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
-
-        task = getTask();
-        fillUiElements();
+        getTask();
     }
 
     /**
@@ -82,14 +79,14 @@ public class ScheduleTaskActivity extends AppCompatActivity {
         //save the new end date
         if (dateTimePickerLastExecution != null) {
             Date newEndDate = dateTimePickerLastExecution.getUpdatedCalendar().getTime();
-            task.getTask().setEndDate(newEndDate);
+            task.setEndDate(newEndDate);
         }
 
         //save the new start date if not after end date
         if (dateTimePickerNextExecution != null) {
             Date newNextStartDate = dateTimePickerNextExecution.getUpdatedCalendar().getTime();
-            if (newNextStartDate.before(task.getTask().getEndDate())) {
-                task.getTask().setNextStartDate(newNextStartDate);
+            if (newNextStartDate.before(task.getEndDate())) {
+                task.setNextStartDate(newNextStartDate);
             }
         }
 
@@ -122,9 +119,16 @@ public class ScheduleTaskActivity extends AppCompatActivity {
 
 
     //gets the task with steps object from the intent
-    private TaskWithSteps getTask() {
-        //TODO change to fetch directly from database
-        return (TaskWithSteps) getIntent().getSerializableExtra(MainActivity.TASK_INTENT_EXTRA);
+    private void getTask() {
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREF_KEY, Context.MODE_PRIVATE);
+        String taskId = sharedPreferences.getString(SHARED_PREF_TASK_ID, "default");
+
+        TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
+        taskViewModel.getTaskById(taskId).observe(this, fetchedTask -> {
+            task = fetchedTask;
+            Log.d(TAG, "successfully fetched the task");
+            fillUiElements();
+        });
     }
 
     //fills the ui elements with the data
@@ -132,9 +136,9 @@ public class ScheduleTaskActivity extends AppCompatActivity {
         //use this suppress because we really want this specific date time format to appear
         @SuppressLint("SimpleDateFormat")
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(getString(R.string.date_time_format), Locale.GERMANY);
-        String currentNextExecutionDate = simpleDateFormat.format(task.getTask().getNextStartDate());
-        String currentLastExecutionDate = simpleDateFormat.format(task.getTask().getEndDate());
-        long currentIntervalLong = task.getTask().getInterval();
+        String currentNextExecutionDate = simpleDateFormat.format(task.getNextStartDate());
+        String currentLastExecutionDate = simpleDateFormat.format(task.getEndDate());
+        long currentIntervalLong = task.getInterval();
         int currentIntervalDays = (int) (currentIntervalLong / TaskWithSteps.ONE_DAY_INTERVAL);
         currentIntervalLong = currentIntervalLong - currentIntervalDays * TaskWithSteps.ONE_DAY_INTERVAL;
         int currentIntervalHours = (int) (currentIntervalLong / TaskWithSteps.ONE_HOUR_INTERVAL);
@@ -176,7 +180,7 @@ public class ScheduleTaskActivity extends AppCompatActivity {
         //calculate the new long
         long newInterval = newDaysInterval * TaskWithSteps.ONE_DAY_INTERVAL + newHoursInterval * TaskWithSteps.ONE_HOUR_INTERVAL + newMinutesInterval * TaskWithSteps.ONE_MINUTE_INTERVAL;
         //set the calculated value as interval
-        task.getTask().setInterval(newInterval);
+        task.setInterval(newInterval);
     }
 
 }

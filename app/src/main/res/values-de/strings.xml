@@ -34,8 +34,6 @@
     <string name="task_notification_title">Taskerinnerung</string>
     <string name="task_notification_description">Du hast einen offenen Task. Erledige ihn jetzt.</string>
 
-
-    <string name="placeholder">Platzhalter</string>
     <string name="pin">Pin</string>
     <string name="login">Login</string>
     <string name="login_error">Falsche Pin! %1$d Versuche verbleibend.</string>
@@ -59,6 +57,20 @@
     <string name="title_remove_pin">PIN entfernen</string>
     <string name="remove_pin_hint">PIN</string>
     <string name="remove_pin_intro_warning_last_pin">Achtung: Das ist der letzte PIN. Wird dieser PIN entfernt, können alle Tasks und Einstellungen ohne Schutz bearbeitet werden.</string>
+    <string name="edit_step">Step bearbeiten</string>
+    <string name="change_image">Bild ändern</string>
+    <string name="step_title">Step Titel</string>
+    <string name="step_description">Step Beschreibung</string>
+    <string name="new_recording">Neue Aufnahme</string>
+    <string name="delete_recording">Aufnahme löschen</string>
+    <string name="step_title_image">Step Titelbild</string>
+    <string name="empty_step_title">Step Titel darf nicht leer sein!</string>
+    <string name="empty_step_description">Step Beschreibung darf nicht leer sein!</string>
+    <string name="play">Abspielen</string>
+    <string name="pause">Pausieren</string>
+    <string name="stop">Abbrechen</string>
+    <string name="no_video">Keine Aufnahme vorhanden.</string>
+    <string name="no_audio">Keine Aufnahme vorhanden.</string>
     <string name="invalid_pin">Ungültiger PIN</string>
     <string name="pin_not_found">Dieser PIN existiert nicht</string>
     <string name="unknown_error_msg">Etwas hat nicht funktioniert. Bitte später nochmals versuchen.</string>

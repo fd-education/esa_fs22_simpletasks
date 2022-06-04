@@ -36,9 +36,17 @@ public class TasksListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_list, container, false);
+        return view;
+    }
+
+    /**
+     * gets called each time the fragment gets back to focus
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
         setAdapterWithTasks();
         Log.d(TAG, "finished initialisation");
-        return view;
     }
 
     // Get the tasks from the database and set the adapter for the view

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".fragments.VideoPlayerFragment">
+
+    <VideoView
+        android:id="@+id/vv_videoplayer_video"
+        android:layout_width="wrap_content"
+        android:layout_height="400dp" />
+
+    <LinearLayout
+        android:id="@+id/ll_videoplayer_controls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_videoplayer_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:clickable="true"
+            android:contentDescription="@string/play"
+            android:focusable="true"
+            app:backgroundTint="@color/accent_blue"
+            app:fabCustomSize="48dp"
+            app:srcCompat="@drawable/ic_baseline_play_arrow_24" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_videoplayer_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:clickable="true"
+            android:contentDescription="@string/pause"
+            android:focusable="true"
+            android:visibility="gone"
+            app:backgroundTint="?attr/colorPrimary"
+            app:fabCustomSize="48dp"
+            app:srcCompat="@drawable/ic_baseline_pause_24" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_videoplayer_stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:clickable="true"
+            android:contentDescription="@string/stop"
+            android:focusable="true"
+            app:backgroundTint="?attr/colorPrimary"
+            app:fabCustomSize="48dp"
+            app:srcCompat="@drawable/ic_baseline_stop_24" />
+    </LinearLayout>
+</LinearLayout>

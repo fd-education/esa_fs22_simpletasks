@@ -3,9 +3,7 @@ package com.example.simpletasks.data;
 import android.util.Log;
 
 import com.example.simpletasks.data.types.TaskStepTypes;
-import com.example.simpletasks.data.entities.Task;
-import com.example.simpletasks.data.entities.TaskStep;
-import com.example.simpletasks.data.entities.TaskWithSteps;
+import com.example.simpletasks.data.entities.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,8 +35,9 @@ public class Seeder {
         Date today = new Date();
 
         for (int i = 0; i < quantity; i++) {
-            String title = "Task Title " + i;
-            String description = "Task Description " + i;
+            String title = "Seed Task Title " + i;
+            String titleImagePath = "";
+            String description = "Seed Task Description " + i;
             // date always incremented by the current number of iterations
             Date nextStart = new Date(today.getYear(), today.getMonth(), today.getDate() + i, today.getHours(), today.getMinutes());
             // three days
@@ -48,8 +47,8 @@ public class Seeder {
             // ends after 7 days
             Date endDate = new Date(today.getYear(), today.getMonth(), today.getDate() + i + 7, today.getHours(), today.getMinutes());
 
-            Task task = new Task(title, description, nextStart, interval, notificationDelta, endDate);
-            addSteps(task);
+            Task task = new Task(title, titleImagePath, description, nextStart, interval, notificationDelta, endDate);
+            addSteps(task, i);
             tasks.add(new TaskWithSteps(task, task.getSteps()));
         }
 
@@ -59,26 +58,20 @@ public class Seeder {
     }
 
     //Add a random amount of steps to the task passed as an argument
-    private void addSteps(Task task) {
+    private void addSteps(Task task, int index) {
         Log.d(TAG, "Add steps to " + task.getTitle() + ".");
 
         List<TaskStep> steps = new ArrayList<>();
 
-        String taskId = task.getId();
-
         int nbrOfSteps = (int) (Math.random() * 5 + 5);
-        Log.d(TAG, taskId + ": " + nbrOfSteps + " steps.");
+        Log.d(TAG, "Seed Task " + index + ": " + nbrOfSteps + " steps.");
 
-        String i = task.getTitle();
         for (int j = 0; j < nbrOfSteps; j++) {
             TaskStepTypes type = TaskStepTypes.values()[(int) (Math.random() * 3)];
-            String title = String.format("Step Title %s.%s", i, j);
-            String imageUri = String.format("Step Image URI %s.%s", i, j);
-            String description = String.format("Step Description %s.%s", i, j);
-            String videoUri = String.format("Step Video URI %s.%s", i, j);
-            String audioUri = String.format("Step Audio URI %s.%s", i, j);
+            String title = String.format("Seed Step Title %s.%s", index, j);
+            String description = String.format("Seed Step Description %s.%s", index, j);
 
-            steps.add(j, new TaskStep(taskId, type, j, title, imageUri, description, videoUri, audioUri));
+            steps.add(j, new TaskStep(task.getId(), type, j, title, null, description, "", ""));
         }
 
         task.setSteps(steps);

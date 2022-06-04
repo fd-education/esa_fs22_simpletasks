@@ -8,6 +8,7 @@ import android.content.Intent;
 
 import androidx.core.app.NotificationCompat;
 
+import com.example.simpletasks.MainActivity;
 import com.example.simpletasks.R;
 import com.example.simpletasks.TaskGuideActivity;
 
@@ -37,9 +38,8 @@ public class NotificationManager {
      */
     public void scheduleNotification(long notificationTimeMillis, String taskId) {
         Intent intentOnClick = new Intent(context, TaskGuideActivity.class);
-        //TODO change to the constant in edit task guide
-        intentOnClick.putExtra("task id", taskId);
-        PendingIntent pendingIntentOnClick = PendingIntent.getActivity(context, 0, intentOnClick, 0);
+        intentOnClick.putExtra(MainActivity.TASK_ID_INTENT_EXTRA, taskId);
+        PendingIntent pendingIntentOnClick = PendingIntent.getActivity(context, 0, intentOnClick, PendingIntent.FLAG_UPDATE_CURRENT);
         //get the notification
         Notification notification = getNotification(pendingIntentOnClick);
 
@@ -52,20 +52,7 @@ public class NotificationManager {
         //set notification in alarm manager
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         assert alarmManager != null;
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, notificationTimeMillis, pendingIntent);
-    }
-
-    /**
-     * schedules the notification at the given time
-     */
-    public void cancelNotification() {
-        //create intent with notification
-        Intent notificationIntent = new Intent(context, NotificationPublisher.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-        //cancel notification in alarm manager
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(pendingIntent);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, notificationTimeMillis, pendingIntent);
     }
 
     //builds a notification with the given properties

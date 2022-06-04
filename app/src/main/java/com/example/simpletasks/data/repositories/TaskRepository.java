@@ -1,7 +1,6 @@
 package com.example.simpletasks.data.repositories;
 
 import android.content.Context;
-import android.os.SystemClock;
 
 import androidx.lifecycle.LiveData;
 
@@ -88,11 +87,34 @@ public class TaskRepository {
     }
 
     /**
+     * fetch the task object by the id
+     *
+     * @param id the id of the task object
+     * @return observable with the task
+     */
+    public LiveData<Task> getTaskById(final String id) {
+        return taskDao.getById(id);
+    }
+
+    /**
+     * fetch the task with steps object by the id
+     *
+     * @param id the id of the task with steps object
+     * @return observable with the task with steps
+     */
+    public LiveData<TaskWithSteps> getTaskWithStepsById(final String id) {
+        return taskDao.getByIdWithSteps(id);
+    }
+
+    /**
      * Insert a list of tasks into the tasks table.
      *
      * @param tasks the tasks to insert
      */
     public void insertTasks(final List<Task> tasks) {
+        for (Task task : tasks) {
+            scheduleTaskNotification(task);
+        }
         AppDatabase.databaseWriteExecutor.execute(() -> taskDao.insertTasks(tasks));
     }
 
@@ -108,8 +130,7 @@ public class TaskRepository {
         for (TaskWithSteps task : tasksWithSteps) {
             taskList.add(task.getTask());
             stepList.addAll(task.getSteps());
-            //getNotificationManager(task).scheduleNotification(task.getTask().getNextStartDate().getTime(), task.getTask().getId());
-            getNotificationManager(task).scheduleNotification(SystemClock.elapsedRealtime() + 5000, task.getTask().getId());
+            scheduleTaskNotification(task.getTask());
         }
 
         AppDatabase.databaseWriteExecutor.execute(() -> {
@@ -127,8 +148,7 @@ public class TaskRepository {
         List<Task> tasks = new ArrayList<>();
         for (TaskWithSteps task : tasksWithSteps) {
             tasks.add(task.getTask());
-            //getNotificationManager(task).scheduleNotification(task.getTask().getNextStartDate().getTime(), task.getTask().getId());
-            getNotificationManager(task).scheduleNotification(SystemClock.elapsedRealtime() + 5000, task.getTask().getId());
+            scheduleTaskNotification(task.getTask());
         }
 
         AppDatabase.databaseWriteExecutor.execute(() -> taskDao.updateTasks(tasks));
@@ -136,6 +156,15 @@ public class TaskRepository {
         for (TaskWithSteps task : tasksWithSteps) {
             AppDatabase.databaseWriteExecutor.execute(() -> taskStepDao.updateTaskSteps(task.getSteps()));
         }
+    }
+
+
+    public void updateTasks(final List<Task> tasks) {
+        for (Task task : tasks) {
+            scheduleTaskNotification(task);
+        }
+
+        AppDatabase.databaseWriteExecutor.execute(() -> taskDao.updateTasks(tasks));
     }
 
     /**
@@ -147,7 +176,6 @@ public class TaskRepository {
         List<Task> tasks = new ArrayList<>();
         for (TaskWithSteps task : tasksWithSteps) {
             tasks.add(task.getTask());
-            getNotificationManager(task).cancelNotification();
         }
 
         AppDatabase.databaseWriteExecutor.execute(() -> taskDao.deleteTasks(tasks));
@@ -157,7 +185,14 @@ public class TaskRepository {
         }
     }
 
-    private NotificationManager getNotificationManager(TaskWithSteps task) {
+    //creates a new notification manager in the current context with the correct text
+    private NotificationManager getNotificationManager() {
         return new NotificationManager(context, context.getString(R.string.task_notification_title), context.getString(R.string.task_notification_description));
+    }
+
+    //schedules a task notification
+    private void scheduleTaskNotification(Task task) {
+        long nextStartDateLong = task.getNextStartDate().getTime();
+        getNotificationManager().scheduleNotification(nextStartDateLong, task.getId());
     }
 }

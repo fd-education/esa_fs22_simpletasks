@@ -37,7 +37,7 @@ public class TaskWithSteps implements Serializable {
     public TaskWithSteps() {
         Date today = new Date();
         Date todayInAWeek = new Date(today.getTime() + ONE_WEEK_INTERVAL);
-        this.task = new Task("", "", today, ONE_DAY_INTERVAL, 3 * ONE_HOUR_INTERVAL, todayInAWeek);
+        this.task = new Task("", "", "", today, ONE_DAY_INTERVAL, 3 * ONE_HOUR_INTERVAL, todayInAWeek);
         this.taskSteps = new ArrayList<>();
     }
 

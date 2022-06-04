@@ -1,21 +1,22 @@
 package com.example.simpletasks;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.simpletasks.domain.login.*;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.simpletasks.domain.login.Login;
+import com.example.simpletasks.domain.login.LoginController;
+import com.example.simpletasks.domain.login.User;
 
 /**
  * LoginActivity handles lifecycle and business calls for the caretaker login screen.
  */
 public class LoginActivity extends AppCompatActivity {
-    String TAG = "LoginActivity";
+    final String TAG = "LoginActivity";
 
     Login login;
 
@@ -28,12 +29,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        // Remove the action bar at the top of the screen
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
 
         // Initialize the login controller
         login = new LoginController(this.getApplication());
