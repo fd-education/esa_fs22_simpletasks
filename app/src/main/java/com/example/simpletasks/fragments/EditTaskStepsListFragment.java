@@ -168,21 +168,21 @@ public class EditTaskStepsListFragment extends Fragment {
 
             @Override
             public void onItemRangeRemoved(int positionStart, int itemCount) {
-                super.onItemRangeRemoved(positionStart, itemCount);
-
-                TaskStep taskStep = taskSteps.get(positionStart);
+                TaskStep taskStep = taskSteps.remove(positionStart);
 
                 List<TaskStep> steps = new ArrayList<>();
                 steps.add(taskStep);
 
                 taskStepViewModel.deleteTaskSteps(steps);
 
+                super.onItemRangeRemoved(positionStart, itemCount);
                 super.onItemRangeChanged(positionStart, itemCount);
             }
 
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);
+                super.onItemRangeChanged(positionStart, itemCount);
             }
 
             @Override

@@ -117,7 +117,7 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
             });
 
             holder.deleteButton.setOnClickListener(v -> {
-                // TODO implement deletion of step
+                notifyItemRemoved(holder.getAdapterPosition());
             });
         } else {
             // Handle the case of data not being ready yet
