@@ -60,4 +60,6 @@
     <string name="stop">Stop</string>
     <string name="no_video">No Video recorded yet.</string>
     <string name="no_audio">No Audio recorded yet.</string>
+    <string name="start_recording">Start Recording</string>
+    <string name="stop_recording">Stop Recording</string>
 </resources>
