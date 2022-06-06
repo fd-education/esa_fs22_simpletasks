@@ -186,7 +186,6 @@ public class ImageCaptureActivity extends AppCompatActivity {
                     .setDataAndType(FileProvider.getUriForFile(this, FileSystemConstants.FILEPROVIDER_AUTHORITY, photoFile), "image/*")
                     .putExtra("crop", "true")
                     .putExtra("aspectX", 1).putExtra("aspectY", 1)
-                    .putExtra("outputX", 256).putExtra("outputY", 256)
                     .putExtra("return-data", true)
                     .putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(this, FileSystemConstants.FILEPROVIDER_AUTHORITY, photoFile))
                     .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION).addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
