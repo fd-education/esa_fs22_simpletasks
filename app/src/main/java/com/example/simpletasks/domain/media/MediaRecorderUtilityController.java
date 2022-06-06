@@ -1,6 +1,8 @@
 package com.example.simpletasks.domain.media;
 
+import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
+import android.view.Surface;
 
 import java.io.File;
 
@@ -23,9 +25,13 @@ public class MediaRecorderUtilityController implements MediaRecorderUtility{
         String outputFileUri = outputFile.getAbsolutePath();
 
         MediaRecorder videoRecorder = new MediaRecorder();
+
         videoRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+        videoRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         videoRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
         videoRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+        videoRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+        videoRecorder.setOrientationHint(Surface.ROTATION_0);
         videoRecorder.setOutputFile(outputFileUri);
 
         return videoRecorder;

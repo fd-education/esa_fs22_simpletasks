@@ -18,7 +18,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageCapture;
 import androidx.camera.core.Preview;
+import androidx.camera.core.UseCaseGroup;
 import androidx.camera.core.VideoCapture;
+import androidx.camera.core.ViewPort;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.app.ActivityCompat;
@@ -47,6 +49,7 @@ public class VideoCaptureActivity extends AppCompatActivity {
     private ImageButton backButton;
     private VideoView showView;
     private PreviewView previewView;
+    private ViewPort viewPort;
     private FloatingActionButton fabStartRecording, fabStopRecording, fabPlay, fabPause, fabStop;
     private Button save;
     private FileSystemUtility fsUtils;
@@ -64,11 +67,11 @@ public class VideoCaptureActivity extends AppCompatActivity {
         requestPermissions();
 
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
-        cameraProviderFuture.addListener(()->{
-            try{
+        cameraProviderFuture.addListener(() -> {
+            try {
                 ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
                 startCameraX(cameraProvider);
-            } catch(ExecutionException | InterruptedException e){
+            } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
         }, getExecutor());
@@ -88,11 +91,12 @@ public class VideoCaptureActivity extends AppCompatActivity {
 
         videoControls = new ArrayList<>();
         recordingControls = new ArrayList<>();
+        viewPort = previewView.getViewPort();
 
         Collections.addAll(videoControls, fabPlay, fabPause, fabStop);
         Collections.addAll(recordingControls, fabStartRecording, fabStopRecording);
 
-        if(videoFile == null){
+        if (videoFile == null) {
             ButtonUtils.disableFABs(videoControls);
             ButtonUtils.disableButton(save);
         }
@@ -114,8 +118,8 @@ public class VideoCaptureActivity extends AppCompatActivity {
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    private void handleBackClick(){
-        if(videoFile != null && videoFile.exists()) {
+    private void handleBackClick() {
+        if (videoFile != null && videoFile.exists()) {
             videoFile.delete();
         }
 
@@ -125,7 +129,7 @@ public class VideoCaptureActivity extends AppCompatActivity {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private void handleStartRecording() {
         // Remove previous recording from this session
-        if(videoFile != null && videoFile.exists()) {
+        if (videoFile != null && videoFile.exists()) {
             videoFile.delete();
         }
 
@@ -151,12 +155,12 @@ public class VideoCaptureActivity extends AppCompatActivity {
     }
 
     private void startPlaying() {
-        if(showView.getCurrentPosition() > 0) {
+        if (showView.getCurrentPosition() > 0) {
             showView.start();
             return;
         }
 
-        if(videoFile != null && videoFile.exists()) {
+        if (videoFile != null && videoFile.exists()) {
             ButtonUtils.enableFABs(videoControls);
             showView.setVisibility(View.VISIBLE);
             previewView.setVisibility(View.GONE);
@@ -180,7 +184,7 @@ public class VideoCaptureActivity extends AppCompatActivity {
     }
 
     private void pausePlaying() {
-        if(showView.canPause()){
+        if (showView.canPause()) {
             showView.pause();
 
             fabPause.setVisibility(View.GONE);
@@ -192,7 +196,7 @@ public class VideoCaptureActivity extends AppCompatActivity {
     }
 
     private void stopPlaying() {
-        if(showView.canPause()){
+        if (showView.canPause()) {
             showView.pause();
             showView.seekTo(0);
         }
@@ -200,7 +204,7 @@ public class VideoCaptureActivity extends AppCompatActivity {
 
     private void saveRecording() {
         Intent result = new Intent();
-        if(videoFile != null && videoFile.exists()){
+        if (videoFile != null && videoFile.exists()) {
             result.putExtra(RESULT_KEY, videoFile.getAbsolutePath());
             setResult(RESULT_OK, result);
         } else {
@@ -215,12 +219,12 @@ public class VideoCaptureActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, 1);
     }
 
-    private Executor getExecutor(){
+    private Executor getExecutor() {
         return ContextCompat.getMainExecutor(this);
     }
 
     @SuppressLint("RestrictedApi")
-    private void startCameraX(ProcessCameraProvider cameraProvider){
+    private void startCameraX(ProcessCameraProvider cameraProvider) {
         cameraProvider.unbindAll();
 
         CameraSelector cameraSelector = new CameraSelector.Builder()
@@ -235,22 +239,29 @@ public class VideoCaptureActivity extends AppCompatActivity {
                 .setVideoFrameRate(30)
                 .build();
 
-        cameraProvider.bindToLifecycle(this, cameraSelector, preview, videoCapture);
+        // Create use case group to set the viewport for the video
+        UseCaseGroup useCaseGroup = new UseCaseGroup.Builder()
+                .addUseCase(videoCapture)
+                .addUseCase(preview)
+                .setViewPort(viewPort)
+                .build();
+
+        cameraProvider.bindToLifecycle(this, cameraSelector, useCaseGroup);
     }
 
     @SuppressLint("RestrictedApi")
-    private void recordVideo(){
-        if(videoCapture != null){
-            try{
+    private void recordVideo() {
+        if (videoCapture != null) {
+            try {
                 videoFile = fsUtils.createVideoFile(getExternalFilesDir(FileSystemConstants.VIDEO_DIR));
-            } catch(IOException e){
+            } catch (IOException e) {
                 String message = "Could not create video file.";
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();
                 Log.e(TAG, e.toString());
                 return;
             }
 
-            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED){
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
                 ButtonUtils.disableFABs(recordingControls);
                 String message = "Permission for audio must be granted in order to capture a video.";
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();
