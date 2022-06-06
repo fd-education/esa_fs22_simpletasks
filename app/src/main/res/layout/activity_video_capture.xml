@@ -15,7 +15,8 @@
     <androidx.camera.view.PreviewView
         android:id="@+id/vv_videocapture_preview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:scaleType="fillCenter" />
 
     <ImageButton
         android:id="@+id/ib_videocapture_backbutton"

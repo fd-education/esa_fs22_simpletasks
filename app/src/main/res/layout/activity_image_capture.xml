@@ -19,8 +19,8 @@
         app:srcCompat="@drawable/arrow_back_black_24dp"
         app:tint="?colorOnBackground" />
 
-    <ImageView
-        android:id="@+id/iv_imagecapture_preview"
+    <androidx.camera.view.PreviewView
+        android:id="@+id/vv_imagecapture_preview"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_marginStart="40dp"
@@ -29,12 +29,30 @@
         android:layout_marginBottom="100dp"
         android:contentDescription="@string/step_title_image"
         android:scaleType="fitCenter"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.393" />
+        app:scaleType="fillCenter">
+
+    </androidx.camera.view.PreviewView>
+
+    <ImageView
+        android:id="@+id/iv_imagecapture_show"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="100dp"
+        android:contentDescription="@string/step_title_image"
+        android:scaleType="fitCenter"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/ib_imagecapture_capture"
@@ -82,5 +100,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_imagecapture_redo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:clickable="true"
+        android:contentDescription="@string/redo_image"
+        android:focusable="true"
+        android:visibility="gone"
+        app:backgroundTint="@color/accent_blue"
+        app:fabCustomSize="48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_imagecapture_show"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_baseline_redo_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -231,15 +231,11 @@ public class VideoCaptureActivity extends AppCompatActivity {
 
         preview.setSurfaceProvider(previewView.getSurfaceProvider());
 
-        ImageCapture imageCapture = new ImageCapture.Builder()
-                .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
-                .build();
-
         videoCapture = new VideoCapture.Builder()
                 .setVideoFrameRate(30)
                 .build();
 
-        cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture, videoCapture);
+        cameraProvider.bindToLifecycle(this, cameraSelector, preview, videoCapture);
     }
 
     @SuppressLint("RestrictedApi")

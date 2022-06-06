@@ -62,4 +62,5 @@
     <string name="no_audio">Keine Aufnahme vorhanden.</string>
     <string name="start_recording">Aufnahme starten</string>
     <string name="stop_recording">Aufnahme stoppen</string>
+    <string name="redo_image">Neues Foto</string>
 </resources>
