@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.simpletasks.MainActivity;
 import com.example.simpletasks.R;
 import com.example.simpletasks.data.entities.TaskStep;
+import com.example.simpletasks.data.types.TaskStepTypes;
 import com.example.simpletasks.domain.dragdrop.ItemTouchHelperAdapter;
 import com.example.simpletasks.domain.editSteps.EditStepsUtility;
 import com.example.simpletasks.domain.editSteps.EditStepsUtilityController;
@@ -103,7 +104,9 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
             holder.titleTaskStep.setText(currentTaskStep.getTitle());
             holder.taskStepType.setText(context.getString(R.string.type, currentTaskStep.getType()));
 
-            if(taskSteps.get(position).getImagePath() != null && !taskSteps.get(position).getImagePath().isEmpty()){
+            if(taskSteps.get(position).getTypeAsTaskStepType() == TaskStepTypes.VIDEO){
+                holder.taskImage.setImageResource(R.drawable.ic_baseline_video_library_48);
+            } else if(taskSteps.get(position).getImagePath() != null && !taskSteps.get(position).getImagePath().isEmpty()){
                 holder.taskImage.setImageURI(Uri.parse(taskSteps.get(position).getImagePath()));
             } else {
                 holder.taskImage.setImageResource(R.drawable.image_placeholder);
