@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -263,7 +264,7 @@ public class AudioCaptureActivity extends AppCompatActivity {
         Intent result = new Intent();
 
         if (audioFile != null && audioFile.exists()) {
-            result.putExtra(RESULT_KEY, audioFile.getAbsolutePath());
+            result.putExtra(RESULT_KEY, Uri.fromFile(audioFile));
             setResult(RESULT_OK, result);
         } else {
             result.putExtra(RESULT_KEY, "");

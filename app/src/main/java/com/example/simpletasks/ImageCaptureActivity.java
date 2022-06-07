@@ -81,8 +81,6 @@ public class ImageCaptureActivity extends AppCompatActivity {
         initializeUi();
         requestPermissions();
 
-        showImage.setImageResource(R.drawable.image_placeholder);
-
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
         cameraProviderFuture.addListener(() -> {
             try {
@@ -304,7 +302,7 @@ public class ImageCaptureActivity extends AppCompatActivity {
         Intent result = new Intent();
 
         if (photoFile != null && photoFile.exists()) {
-            result.putExtra(RESULT_KEY, photoFile.getAbsolutePath());
+            result.putExtra(RESULT_KEY, Uri.fromFile(photoFile));
             setResult(RESULT_OK, result);
         }else {
             result.putExtra(RESULT_KEY, "");

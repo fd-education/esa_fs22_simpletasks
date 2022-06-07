@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraSelector;
-import androidx.camera.core.ImageCapture;
 import androidx.camera.core.Preview;
 import androidx.camera.core.UseCaseGroup;
 import androidx.camera.core.VideoCapture;
@@ -26,7 +26,9 @@ import androidx.camera.view.PreviewView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.simpletasks.domain.fileSystem.*;
+import com.example.simpletasks.domain.fileSystem.FileSystemConstants;
+import com.example.simpletasks.domain.fileSystem.FileSystemUtility;
+import com.example.simpletasks.domain.fileSystem.FileSystemUtilityController;
 import com.example.simpletasks.domain.ui.ButtonUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -205,7 +207,7 @@ public class VideoCaptureActivity extends AppCompatActivity {
     private void saveRecording() {
         Intent result = new Intent();
         if (videoFile != null && videoFile.exists()) {
-            result.putExtra(RESULT_KEY, videoFile.getAbsolutePath());
+            result.putExtra(RESULT_KEY, Uri.fromFile(videoFile));
             setResult(RESULT_OK, result);
         } else {
             result.putExtra(RESULT_KEY, "");
