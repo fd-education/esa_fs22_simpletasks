@@ -24,7 +24,7 @@ public class DialogBuilder implements IDialogBuilder {
      *
      * @param cancelBtnTextId Text of the left Button
      * @param actionBtnTextId Text of the right Button
-     * @return
+     * @return returns the text for the buttons to build them
      */
     @Override
     public IDialogBuilder setTwoButtonLayout(int cancelBtnTextId, int actionBtnTextId) {
@@ -38,7 +38,7 @@ public class DialogBuilder implements IDialogBuilder {
      * This method sets the layout of a single button popup
      *
      * @param btnTextId sets the text of the button
-     * @return
+     * @return the text for the button to build
      */
     @Override
     public IDialogBuilder setCenterButtonLayout(int btnTextId) {
@@ -47,7 +47,12 @@ public class DialogBuilder implements IDialogBuilder {
         return this;
     }
 
-
+    /**
+     * This method sets the text for the singleButton Layout
+     *
+     * @param textId the text id to fill in
+     * @return the text which needs to be filled by the Builder
+     */
     @Override
     public IDialogBuilder setDescriptionText(int textId) {
         this.descriptionId = textId;
@@ -55,18 +60,36 @@ public class DialogBuilder implements IDialogBuilder {
 
     }
 
+    /**
+     * This Method returns all of the context need via the interface
+     *
+     * @param context the context which is provided by the Builder Interface
+     * @return the context to be returned for the build
+     */
     @Override
     public IDialogBuilder setContext(Context context) {
         this.context = context;
         return this;
     }
 
+    /**
+     * sets the action which needs to be executed
+     *
+     * @param action sets the content which action should be executed
+     * @return the action to provide it for the builder
+     */
     @Override
     public IDialogBuilder setAction(Runnable action) {
         this.action = action;
         return this;
     }
 
+    /**
+     * The build method which builds the popups in the app and provides the buttons and
+     * Textfield with the text
+     *
+     * @return the dialog which fills the popups with text
+     */
     @Override
     public Dialog build() {
         Dialog dialog = new Dialog(context);
