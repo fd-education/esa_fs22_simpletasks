@@ -25,6 +25,9 @@
             android:name=".VideoCaptureActivity"
             android:exported="false" />
         <activity
+            android:name=".AudioCaptureActivity"
+            android:exported="false" />
+        <activity
             android:name=".ChoseFormatActivity"
             android:exported="false" />
         <activity

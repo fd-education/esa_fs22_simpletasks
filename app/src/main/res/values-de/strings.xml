@@ -63,4 +63,6 @@
     <string name="start_recording">Aufnahme starten</string>
     <string name="stop_recording">Aufnahme stoppen</string>
     <string name="redo_image">Neues Foto</string>
+    <string name="recording_in_progress">Aufnahme läuft</string>
+    <string name="playing_in_progress">Aufnahme wird abgespielt</string>
 </resources>

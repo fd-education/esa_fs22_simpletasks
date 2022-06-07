@@ -23,6 +23,7 @@
         android:id="@+id/ll_audiocapture_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/b_audiocapture_save"
@@ -31,10 +32,10 @@
         app:layout_constraintTop_toBottomOf="@+id/ib_audiocapture_backbutton">
 
         <SeekBar
-            android:id="@+id/seekBar"
+            android:id="@+id/sb_audiocapture_progress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp" />
+            android:thumbTint="?attr/colorPrimary" />
 
         <LinearLayout
             android:id="@+id/ll_audiocapture_controls"
@@ -52,11 +53,11 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 android:clickable="true"
-                android:focusable="true"
                 android:contentDescription="@string/start_recording"
+                android:focusable="true"
+                android:src="@drawable/ic_baseline_mic_24"
                 app:backgroundTint="@color/accent_blue"
-                app:fabCustomSize="48dp"
-                android:src="@drawable/ic_baseline_mic_24" />
+                app:fabCustomSize="48dp" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_audiocapture_stop_recording"
@@ -83,11 +84,11 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 android:clickable="true"
-                android:focusable="true"
                 android:contentDescription="@string/play"
+                android:focusable="true"
+                android:src="@drawable/ic_baseline_play_arrow_24"
                 app:backgroundTint="@color/accent_blue"
-                app:fabCustomSize="48dp"
-                android:src="@drawable/ic_baseline_play_arrow_24" />
+                app:fabCustomSize="48dp" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_audiocapture_pause"
@@ -114,11 +115,11 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 android:clickable="true"
-                android:focusable="true"
                 android:contentDescription="@string/stop"
+                android:focusable="true"
+                android:src="@drawable/ic_baseline_stop_24"
                 app:backgroundTint="@color/accent_blue"
-                app:fabCustomSize="48dp"
-                android:src="@drawable/ic_baseline_stop_24" />
+                app:fabCustomSize="48dp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -133,5 +134,31 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_audiocapture_mic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/ll_audiocapture_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_baseline_mic_96"
+        android:contentDescription="@string/recording_in_progress" />
+
+    <ImageView
+        android:id="@+id/iv_audiocapture_note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/ll_audiocapture_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_baseline_audiotrack_96"
+        android:contentDescription="@string/playing_in_progress" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

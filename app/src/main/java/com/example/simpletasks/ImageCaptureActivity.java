@@ -5,7 +5,6 @@ import static android.view.Surface.ROTATION_0;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -52,12 +51,10 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 
 public class ImageCaptureActivity extends AppCompatActivity {
-    public static String RESULT_KEY = "IMAGE_CAPTURE_RESULT";
+    public static final String RESULT_KEY = "IMAGE_CAPTURE_RESULT";
 
     private final String TAG = "ImageCaptureActivity";
     private final String[] REQUIRED_PERMISSIONS = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
-    private final Context context = this;
 
     private File photoFile;
     private FileSystemUtility fsUtils;
@@ -69,7 +66,7 @@ public class ImageCaptureActivity extends AppCompatActivity {
     private Button saveImage;
 
     private PreviewView previewView;
-    private ImageView titleImageView;
+    private ImageView showImage;
     private ImageCapture imageCapture;
 
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
@@ -84,7 +81,7 @@ public class ImageCaptureActivity extends AppCompatActivity {
         initializeUi();
         requestPermissions();
 
-        titleImageView.setImageResource(R.drawable.image_placeholder);
+        showImage.setImageResource(R.drawable.image_placeholder);
 
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
         cameraProviderFuture.addListener(() -> {
@@ -99,7 +96,7 @@ public class ImageCaptureActivity extends AppCompatActivity {
 
     private void initializeFields() {
         fsUtils = new FileSystemUtilityController();
-        titleImageView = findViewById(R.id.iv_imagecapture_show);
+        showImage = findViewById(R.id.iv_imagecapture_show);
         previewView = findViewById(R.id.vv_imagecapture_preview);
         backButton = findViewById(R.id.ib_imagecapture_back_button);
         fabRedo = findViewById(R.id.fab_imagecapture_redo);
@@ -110,7 +107,7 @@ public class ImageCaptureActivity extends AppCompatActivity {
 
     private void initializeUi() {
         ButtonUtils.disableButton(saveImage);
-        titleImageView.setVisibility(View.GONE);
+        showImage.setVisibility(View.GONE);
         previewView.setVisibility(View.VISIBLE);
 
         backButton.setOnClickListener(view -> handleBackPressed());
@@ -132,7 +129,7 @@ public class ImageCaptureActivity extends AppCompatActivity {
     }
 
     private void redoImageCapture() {
-        titleImageView.setVisibility(View.GONE);
+        showImage.setVisibility(View.GONE);
         previewView.setVisibility(View.VISIBLE);
         fabRedo.setVisibility(View.GONE);
         ButtonUtils.enableImageButton(fabCaptureImage);
@@ -203,7 +200,7 @@ public class ImageCaptureActivity extends AppCompatActivity {
                     showImage();
                 } else {
                     // TODO
-                    Toast.makeText(context, "Image must be rectangular", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ImageCaptureActivity.this, "Image must be rectangular", Toast.LENGTH_LONG).show();
                 }
             });
 
@@ -294,13 +291,13 @@ public class ImageCaptureActivity extends AppCompatActivity {
         Log.d(TAG, "Showing photo: " + photoFile.getAbsolutePath());
 
         previewView.setVisibility(View.INVISIBLE);
-        titleImageView.setVisibility(View.VISIBLE);
+        showImage.setVisibility(View.VISIBLE);
         fabRedo.setVisibility(View.VISIBLE);
 
         ButtonUtils.disableImageButton(fabCaptureImage);
         ButtonUtils.enableButton(saveImage);
 
-        titleImageView.setImageURI(Uri.fromFile(photoFile));
+        showImage.setImageURI(Uri.fromFile(photoFile));
     }
 
     private void returnImage() {

@@ -251,6 +251,13 @@ public class VideoCaptureActivity extends AppCompatActivity {
 
     @SuppressLint("RestrictedApi")
     private void recordVideo() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            ButtonUtils.disableFABs(recordingControls);
+            String message = "Permission for audio must be granted in order to capture a video.";
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            return;
+        }
+
         if (videoCapture != null) {
             try {
                 videoFile = fsUtils.createVideoFile(getExternalFilesDir(FileSystemConstants.VIDEO_DIR));
@@ -261,12 +268,7 @@ public class VideoCaptureActivity extends AppCompatActivity {
                 return;
             }
 
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-                ButtonUtils.disableFABs(recordingControls);
-                String message = "Permission for audio must be granted in order to capture a video.";
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-                return;
-            }
+            ButtonUtils.enableFABs(recordingControls);
 
             videoCapture.startRecording(
                     new VideoCapture.OutputFileOptions.Builder(videoFile).build(),
