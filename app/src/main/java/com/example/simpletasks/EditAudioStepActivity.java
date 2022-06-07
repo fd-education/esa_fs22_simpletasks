@@ -1,10 +1,8 @@
 package com.example.simpletasks;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,32 +10,22 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentContainerView;
 
 import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.viewmodels.TaskStepViewModel;
-import com.example.simpletasks.domain.fileSystem.FileSystemConstants;
-import com.example.simpletasks.domain.fileSystem.FileSystemUtility;
-import com.example.simpletasks.domain.fileSystem.FileSystemUtilityController;
 import com.example.simpletasks.fragments.AudioPlayerFragment;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class EditAudioStepActivity extends AppCompatActivity {
     final String TAG = "EditAudioStepActivity";
-
-    private Context context;
-    private FileSystemUtility fileSystemUtility;
 
     private TaskStepViewModel taskStepViewModel;
 
@@ -51,8 +39,6 @@ public class EditAudioStepActivity extends AppCompatActivity {
     private ImageButton captureTitleImage;
     private Button recordAudio;
     private Button saveStep;
-
-    private Uri audioPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +57,6 @@ public class EditAudioStepActivity extends AppCompatActivity {
     }
 
     private void initializeFields(){
-        fileSystemUtility = new FileSystemUtilityController();
         taskStepViewModel = new TaskStepViewModel(this.getApplication());
 
         stepTitleInput = findViewById(R.id.et_editaudiostep_title);
@@ -84,8 +69,6 @@ public class EditAudioStepActivity extends AppCompatActivity {
         noAudioWarning = findViewById(R.id.tv_editaudiostep_no_recording);
         recordAudio = findViewById(R.id.b_editaudiostep_record_audio);
         saveStep = findViewById(R.id.b_editaudiostep_save);
-
-        context = this;
     }
 
     private void initializeUi(){
@@ -103,54 +86,31 @@ public class EditAudioStepActivity extends AppCompatActivity {
     }
 
     private void recordAudio(){
-        Intent captureAudioIntent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
-
-        if(captureAudioIntent.resolveActivity(context.getPackageManager()) != null){
-            File audioFile;
-
-            try{
-                audioFile = fileSystemUtility.createAudioFile(getExternalFilesDir(FileSystemConstants.AUDIO_DIR));
-            } catch (IOException e) {
-                String message = "Unable to record audio.";
-                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-                Log.e(TAG, e.toString());
-                return;
-            }
-
-            if(audioFile != null){
-                Log.d(TAG, "Launching intent to capture audio.");
-                audioPath = FileProvider.getUriForFile(context, FileSystemConstants.FILEPROVIDER_AUTHORITY, audioFile);
-                captureAudioIntent.putExtra(MediaStore.EXTRA_OUTPUT, audioPath);
-                captureAudio.launch(captureAudioIntent);
-            }
-        } else{
-            String message = "Your device does not support audio capture.";
-            recordAudio.setEnabled(false);
-            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-        }
+        Intent captureAudioIntent = new Intent(this, AudioCaptureActivity.class);
+        captureAudio.launch(captureAudioIntent);
     }
 
     final ActivityResultLauncher<Intent> captureAudio = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    if(result.getResultCode() == RESULT_OK){
+                    if(result.getResultCode() == RESULT_OK && result.getData() != null){
+                        Uri uri = (Uri) result.getData().getExtras().get(AudioCaptureActivity.RESULT_KEY);
                         noAudioWarning.setVisibility(View.GONE);
                         audioPlayer.setVisibility(View.VISIBLE);
-                        step.setAudioPath(audioPath.toString());
-                        setAudioPlayer(audioPath.toString());
+                        step.setAudioPath(uri.getPath());
+                        setAudioPlayer(uri.getPath());
                     }
                 }
             });
 
     private void setAudioPlayer(String audioPath){
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.frag_showaudiostep_audioplayer, AudioPlayerFragment.getNewInstance(audioPath)).commit();
+                .add(R.id.frag_editaudiostep_audioplayer, AudioPlayerFragment.getNewInstance(audioPath)).commit();
     }
 
     private void setTitleImage(){
         Intent intent = new Intent(this, ImageCaptureActivity.class);
-        intent.putExtra("image_path", step.getImagePath());
         chooseTitleImage.launch(intent);
     }
 
@@ -159,7 +119,7 @@ public class EditAudioStepActivity extends AppCompatActivity {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        Uri uri = result.getData().getData();
+                        Uri uri = (Uri) result.getData().getExtras().get(ImageCaptureActivity.RESULT_KEY);
                         step.setImagePath(uri.getPath());
                         stepImageView.setImageURI(uri);
                     }

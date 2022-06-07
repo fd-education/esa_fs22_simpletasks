@@ -120,7 +120,6 @@ public class EditTaskActivity extends AppCompatActivity {
 
     public void onTitleImageClicked(View v) {
         Intent intent = new Intent(this, ImageCaptureActivity.class);
-        intent.putExtra("image_path", currentEditTask.getTitleImagePath());
         chooseTitleImage.launch(intent);
     }
 
@@ -129,7 +128,7 @@ public class EditTaskActivity extends AppCompatActivity {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        Uri uri = result.getData().getData();
+                        Uri uri = (Uri) result.getData().getExtras().get(ImageCaptureActivity.RESULT_KEY);
                         currentEditTask.setTitleImagePath(uri.getPath());
                         taskImageView.setImageURI(uri);
                     }

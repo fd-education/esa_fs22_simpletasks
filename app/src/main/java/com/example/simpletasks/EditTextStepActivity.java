@@ -13,7 +13,6 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.simpletasks.data.entities.TaskStep;
@@ -68,7 +67,6 @@ public class EditTextStepActivity extends AppCompatActivity {
 
         captureImage.setOnClickListener(view -> {
             Intent intent = new Intent(this, ImageCaptureActivity.class);
-            intent.putExtra("image_path", step.getImagePath());
             chooseTitleImage.launch(intent);
         });
 
@@ -118,7 +116,7 @@ public class EditTextStepActivity extends AppCompatActivity {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        Uri uri = result.getData().getData();
+                        Uri uri = (Uri) result.getData().getExtras().get(ImageCaptureActivity.RESULT_KEY);
                         step.setImagePath(uri.getPath());
                         stepImageView.setImageURI(uri);
                     }
