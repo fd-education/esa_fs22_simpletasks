@@ -8,17 +8,13 @@
 
     <ImageButton
         android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/Theme.SimpleTasks.BackButton"
         android:layout_marginStart="@dimen/sidesPadding"
         android:layout_marginTop="@dimen/sidesPadding"
-        android:backgroundTint="?backgroundColor"
         android:contentDescription="@string/back"
         android:onClick="onBackClicked"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="?colorOnBackground"
-        app:srcCompat="@drawable/arrow_back_black_24dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/title"

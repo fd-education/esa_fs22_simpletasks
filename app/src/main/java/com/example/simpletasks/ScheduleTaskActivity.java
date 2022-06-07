@@ -113,8 +113,11 @@ public class ScheduleTaskActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //todo ask user if he wants to discard changes
-        super.onBackPressed();
+        new DialogBuilder()
+                .setDescriptionText(R.string.discard_changes_text)
+                .setContext(this)
+                .setTwoButtonLayout(R.string.cancel_popup, R.string.discard_changes_button)
+                .setAction(super::onBackPressed).build().show();
     }
 
 

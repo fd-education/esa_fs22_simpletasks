@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.simpletasks.DialogBuilder;
 import com.example.simpletasks.EditTaskActivity;
 import com.example.simpletasks.MainActivity;
 import com.example.simpletasks.R;
@@ -34,8 +35,8 @@ import java.util.List;
 public class ManageTaskListAdapter extends RecyclerView.Adapter<ManageTaskListAdapter.TaskListViewHolder> {
 
     /**
-     * TaskListViewHolder acts as a layer between code and xml layout.
-     * Fetches View elements to set them in the adapter.
+     * TaskListViewHolder acts as a layer between code and xml layout. Fetches View elements to set
+     * them in the adapter.
      */
     static class TaskListViewHolder extends RecyclerView.ViewHolder {
         private final TextView titleTask;
@@ -45,8 +46,7 @@ public class ManageTaskListAdapter extends RecyclerView.Adapter<ManageTaskListAd
         private final ImageButton deleteButton;
 
         /**
-         * Constructor for TaskListViewHolder
-         * Sets all View elements for the adapter.
+         * Constructor for TaskListViewHolder Sets all View elements for the adapter.
          *
          * @param itemView the View from which to get the elements
          */
@@ -75,9 +75,8 @@ public class ManageTaskListAdapter extends RecyclerView.Adapter<ManageTaskListAd
     /**
      * Triggered when the RecyclerView needs a new ViewHolder to display a task.
      *
-     * @param parent ViewGroup to add the new View to
+     * @param parent   ViewGroup to add the new View to
      * @param viewType type of the view that is created
-     *
      * @return the new ViewHolder
      */
     @NonNull
@@ -89,10 +88,10 @@ public class ManageTaskListAdapter extends RecyclerView.Adapter<ManageTaskListAd
     }
 
     /**
-     * Replace tasks on the screen by recycling views.
-     * Update the tasks whilst the user is scrolling through them.
+     * Replace tasks on the screen by recycling views. Update the tasks whilst the user is scrolling
+     * through them.
      *
-     * @param holder the element the data gets bound on
+     * @param holder   the element the data gets bound on
      * @param position the global position of the view
      */
     @Override
@@ -123,11 +122,19 @@ public class ManageTaskListAdapter extends RecyclerView.Adapter<ManageTaskListAd
                 Intent intent = new Intent(context, EditTaskActivity.class);
                 context.startActivity(intent);
             });
-            holder.deleteButton.setOnClickListener(v -> {
-                TaskViewModel taskViewModel = new ViewModelProvider(fragment).get(TaskViewModel.class);
-                taskViewModel.deleteTask(currentTaskWithSteps);
-                Log.d(TAG, "deleted task '" + currentTask.getTitle() + "' finished");
-            });
+            holder.deleteButton.setOnClickListener(v ->
+                //create a dialog asking the user if he wants to delete the task
+                new DialogBuilder()
+                        .setDescriptionText(R.string.delete_task_popup_text)
+                        .setContext(context)
+                        .setTwoButtonLayout(R.string.cancel_popup, R.string.delete_task_popup_button)
+                        .setAction(() -> {
+                            //delete task
+                            TaskViewModel taskViewModel = new ViewModelProvider(fragment).get(TaskViewModel.class);
+                            taskViewModel.deleteTask(currentTaskWithSteps);
+                            Log.d(TAG, "deleted task '" + currentTask.getTitle() + "' finished");
+                        }).build().show()
+            );
         } else {
             // Covers the case of data not being ready yet.
             holder.titleTask.setText(R.string.placeholder);
