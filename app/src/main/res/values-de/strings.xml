@@ -51,7 +51,7 @@
     <string name="login">Login</string>
     <string name="login_error">Falsche Pin! %1$d Versuche verbleibend.</string>
     <string name="title_activity_settings">Einstellungen</string>
-    <string name="caretaker_settings">Einstellungen für Betreuende</string>
+    <string name="pin_settings">PIN-Einstellungen</string>
     <string name="add_pin">PIN erstellen</string>
     <string name="remove_pin">PIN entfernen</string>
     <string name="display_settings">Anzeige-Einstellungen</string>

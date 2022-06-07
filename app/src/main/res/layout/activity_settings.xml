@@ -37,7 +37,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/sidesPadding"
-        android:text="@string/caretaker_settings"
+        android:text="@string/pin_settings"
         android:textAlignment="center"
         android:textColor="?colorOnBackground"
         android:textSize="@dimen/p"
