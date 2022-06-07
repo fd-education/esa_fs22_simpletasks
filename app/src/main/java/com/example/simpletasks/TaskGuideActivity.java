@@ -95,7 +95,7 @@ public class TaskGuideActivity extends AppCompatActivity {
                         task.setNextStartDate(nextStartDate);
                         //save the changes in the database
                         TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
-                        taskViewModel.updateTask(taskWithSteps);
+                        taskViewModel.updateTaskWithSteps(taskWithSteps);
                         Log.d(TAG, "finished steps");
                         //go back to the home screen (not local back because this would go to the last step)
                         super.onBackPressed();
@@ -129,12 +129,23 @@ public class TaskGuideActivity extends AppCompatActivity {
             TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
             taskViewModel.getTaskWithStepsById(taskId).observe(this, fetchedTaskWithSteps -> {
                 taskWithSteps = fetchedTaskWithSteps;
-                finishInitialisation();
+
+                // if task has no steps, go back to the last activity
+                if (taskSteps == null || taskSteps.size() == 0) {
+                    new DialogBuilder().setDescriptionText(R.string.no_steps_set)
+                            .setCenterButtonLayout(R.string.accept_info_popup)
+                            .setContext(this)
+                            .setAction(super::onBackPressed)
+                            .build().show();
+                } else {
+                    //otherwise finish the initialization
+                    finishInitialisation();
+                }
             });
         }
     }
 
-    //after the task is set, we can safely run the rest of the intialization
+    //after the task is set, we can safely run the rest of the initialization
     private void finishInitialisation() {
         task = taskWithSteps.getTask();
         taskSteps = taskWithSteps.getSteps();
@@ -144,17 +155,6 @@ public class TaskGuideActivity extends AppCompatActivity {
         progressScroll = findViewById(R.id.sv_task_progress_container);
 
         currentStep = 0;
-
-        //TODO change to work after merge with feature/edit-steps!!
-
-        // if task has no steps, go back to the last activity and throw an error
-        if (taskSteps == null || taskSteps.size() == 0) {
-            super.onBackPressed();
-            new DialogBuilder().setDescriptionText(R.string.no_steps_set)
-                    .setCenterButtonLayout(R.string.accept_info_popup)
-                    .setContext(this)
-                    .build().show();
-        }
 
         setProgressBar();
         setFragment();

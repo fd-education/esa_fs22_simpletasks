@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -21,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.simpletasks.data.entities.Task;
 import com.example.simpletasks.data.entities.TaskStep;
+import com.example.simpletasks.data.entities.TaskWithSteps;
 import com.example.simpletasks.data.types.TaskStepTypes;
 import com.example.simpletasks.data.viewmodels.TaskViewModel;
 import com.example.simpletasks.fragments.EditTaskStepsListFragment;
@@ -158,14 +158,22 @@ public class EditTaskActivity extends AppCompatActivity {
     // Get the task from the intent
     private void fetchCurrentEditTask() {
         SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREF_KEY, Context.MODE_PRIVATE);
-        String taskId = sharedPreferences.getString(SHARED_PREF_TASK_ID, "");
+        String taskId = sharedPreferences.getString(SHARED_PREF_TASK_ID, null);
+
 
         TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
         taskViewModel.getTaskById(taskId).observe(this, fetchedTask -> {
-            currentEditTask = fetchedTask;
+            //if the task id was a flag to create a new task
+            if (taskId.equals(ManageTasksActivity.CREATE_NEW_TASK)) {
+                currentEditTask = new TaskWithSteps().getTask();
+            } else if (fetchedTask != null) {
+                //if a valid task could be fetched
+                currentEditTask = fetchedTask;
+            }
             //initialize the edit task activity
             initializeEditTaskActivity();
         });
+
     }
 
     //initializes the edit task activity
