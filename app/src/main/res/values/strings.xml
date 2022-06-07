@@ -12,7 +12,7 @@
     <string name="have_problem">I have a problem</string>
     <string name="back">Back</string>
     <string name="next">Next step</string>
-    <string name="popup">Do you want to skip this task?</string>
+    <string name="popup_skip_text">Do you want to skip this task?</string>
     <string name="delete_task">Delete Task</string>
     <string name="edit_task">Edit Task</string>
     <string name="add_task">Add task</string>
@@ -67,4 +67,7 @@
     <string name="language_settings">Language settings</string>
     <string name="no_pin_set_explanation">Currently no PIN set!</string>
     <string name="not_logged_in_explanation">You are currently not logged in!</string>
+    <string name="cancel_popup">Cancel</string>
+    <string name="skip_task_popup">Skip Task</string>
+    <string name="accept_info_popup">Okay</string>
 </resources>

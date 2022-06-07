@@ -14,28 +14,15 @@
         android:textSize="24sp" />
 
     <Button
-        android:id="@+id/cancelBTN"
-        android:layout_width="wrap_content"
+        android:id="@+id/acceptBTN"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/actionBTN"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="@dimen/fab_margin"
-        android:layout_marginEnd="@dimen/elementPadding"
-        android:layout_toStartOf="@+id/actionBTN"
-        android:backgroundTint="@color/accent_blue"
-        android:text="@string/cancel_popup" />
-
-    <Button
-        android:id="@+id/actionBTN"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="@dimen/fab_margin"
-        android:layout_marginEnd="@dimen/elementPadding"
         android:layout_marginBottom="@dimen/sidesPadding"
-        android:backgroundTint="@color/red"
-        android:text="@string/delete_task" />
+        android:backgroundTint="@color/accent_blue" />
 
 
 </RelativeLayout>

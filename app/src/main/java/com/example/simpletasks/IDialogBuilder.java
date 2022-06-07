@@ -5,15 +5,17 @@ import android.content.Context;
 
 public interface IDialogBuilder {
 
-    IDialogBuilder setTwoButtonLayout(String leftBtnText, String rightBtnText);
+    IDialogBuilder setTwoButtonLayout(int leftBtnText, int rightBtnText);
 
-    IDialogBuilder setCenterButtonLayout(String btnText);
+    IDialogBuilder setCenterButtonLayout(int btnText);
 
     IDialogBuilder setDescriptionText(int textId);
 
     void getResult();
 
     IDialogBuilder setContext(Context context);
+
+    IDialogBuilder setAction(Runnable action);
 
     Dialog build();
 }

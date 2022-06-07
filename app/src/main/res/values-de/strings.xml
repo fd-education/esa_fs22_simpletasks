@@ -8,7 +8,7 @@
     <string name="have_problem">Ich habe ein Problem</string>
     <string name="back">Zurück</string>
     <string name="next">Nächster Schritt</string>
-    <string name="popup">Wollen Sie diesen Task überspringen?</string>
+    <string name="popup_skip_text">Wollen Sie diesen Task überspringen?</string>
     <string name="delete_task">Task löschen</string>
     <string name="edit_task">Task bearbeiten</string>
     <string name="add_task">Task hinzufügen</string>
@@ -65,4 +65,7 @@
     <string name="language_settings">Spracheinstellungen</string>
     <string name="no_pin_set_explanation">Momentan keine PINs gesetzt!</string>
     <string name="not_logged_in_explanation">Nicht eingelogged!</string>
+    <string name="cancel_popup">Abbrechen</string>
+    <string name="skip_task_popup">Task überspringen</string>
+    <string name="accept_info_popup">Okay</string>
 </resources>
