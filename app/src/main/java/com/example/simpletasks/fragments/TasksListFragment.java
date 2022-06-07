@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.simpletasks.MainActivity;
 import com.example.simpletasks.R;
 import com.example.simpletasks.adapters.TaskListAdapter;
 import com.example.simpletasks.data.viewmodels.TaskViewModel;
@@ -52,7 +51,7 @@ public class TasksListFragment extends Fragment {
     // Get the tasks from the database and set the adapter for the view
     private void setAdapterWithTasks() {
         final RecyclerView recyclerView = view.findViewById(R.id.tasks_list);
-        TaskListAdapter adapter = new TaskListAdapter(getContext());
+        TaskListAdapter adapter = new TaskListAdapter(getContext(), this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -61,7 +60,6 @@ public class TasksListFragment extends Fragment {
             Log.d(TAG, "today's Tasks successfully fetched from db");
 
             adapter.setTasks(tasks);
-            MainActivity.setTasks(tasks);
         });
     }
 }

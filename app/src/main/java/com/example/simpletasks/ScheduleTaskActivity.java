@@ -1,11 +1,7 @@
 package com.example.simpletasks;
 
-import static com.example.simpletasks.EditTaskActivity.SHARED_PREF_TASK_ID;
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -123,15 +119,9 @@ public class ScheduleTaskActivity extends AppCompatActivity {
 
     //gets the task with steps object from the intent
     private void getTask() {
-        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREF_KEY, Context.MODE_PRIVATE);
-        String taskId = sharedPreferences.getString(SHARED_PREF_TASK_ID, "default");
-
-        TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
-        taskViewModel.getTaskById(taskId).observe(this, fetchedTask -> {
-            task = fetchedTask;
-            Log.d(TAG, "successfully fetched the task");
-            fillUiElements();
-        });
+        task = (Task) getIntent().getSerializableExtra(MainActivity.TASK_INTENT_EXTRA);
+        Log.d(TAG, "successfully fetched the task");
+        fillUiElements();
     }
 
     //fills the ui elements with the data

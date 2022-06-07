@@ -79,7 +79,7 @@ public class EditTaskActivity extends AppCompatActivity {
             // Save the data into the database
             TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
             // using insert rather than update, so new and updated tasks will be saved
-            taskViewModel.updateTask(currentEditTask);
+            taskViewModel.insertTask(currentEditTask);
             Log.d(TAG, "inserting or updating task finished");
             // Go back to the last screen
             super.onBackPressed();
@@ -166,6 +166,7 @@ public class EditTaskActivity extends AppCompatActivity {
             //if the task id was a flag to create a new task
             if (taskId.equals(ManageTasksActivity.CREATE_NEW_TASK)) {
                 currentEditTask = new TaskWithSteps().getTask();
+                sharedPreferences.edit().putString(SHARED_PREF_TASK_ID, currentEditTask.getId()).apply();
             } else if (fetchedTask != null) {
                 //if a valid task could be fetched
                 currentEditTask = fetchedTask;
