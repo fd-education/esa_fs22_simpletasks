@@ -8,8 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 /**
- * Builds a custom dialog
- * Use like new DialogBuilder().setContext(context).build().show();
+ * Builds a custom dialog Use like new DialogBuilder().setContext(context).build().show();
  */
 public class DialogBuilder implements IDialogBuilder {
     private Context context;
@@ -20,12 +19,9 @@ public class DialogBuilder implements IDialogBuilder {
     private Runnable action;
     private boolean isTwoButtonLayout;
 
-    public DialogBuilder() {
-
-    }
-
     /**
      * This method sets the layout of a 2 button popup.
+     *
      * @param cancelBtnTextId Text of the left Button
      * @param actionBtnTextId Text of the right Button
      * @return
@@ -40,6 +36,7 @@ public class DialogBuilder implements IDialogBuilder {
 
     /**
      * This method sets the layout of a single button popup
+     *
      * @param btnTextId sets the text of the button
      * @return
      */
@@ -55,11 +52,6 @@ public class DialogBuilder implements IDialogBuilder {
     public IDialogBuilder setDescriptionText(int textId) {
         this.descriptionId = textId;
         return this;
-
-    }
-
-    @Override
-    public void getResult() {
 
     }
 
@@ -80,7 +72,7 @@ public class DialogBuilder implements IDialogBuilder {
         Dialog dialog = new Dialog(context);
 
         if (isTwoButtonLayout) {
-            dialog.setContentView(R.layout.popup);
+            dialog.setContentView(R.layout.popup_two_button);
         } else {
             dialog.setContentView(R.layout.popup_one_button);
         }
@@ -89,19 +81,17 @@ public class DialogBuilder implements IDialogBuilder {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         if (isTwoButtonLayout) {
             Button cancelButton = dialog.findViewById(R.id.cancelBTN);
-            cancelButton.setOnClickListener((v)->{
-                dialog.dismiss();
-            });
+            cancelButton.setOnClickListener(view -> dialog.dismiss());
             cancelButton.setText(cancelBtnTextId);
             Button actionButton = dialog.findViewById(R.id.actionBTN);
-            actionButton.setOnClickListener((v)->{
+            actionButton.setOnClickListener(view -> {
                 action.run();
                 dialog.dismiss();
             });
             actionButton.setText(actionBtnTextId);
         } else {
             Button acceptButton = dialog.findViewById(R.id.acceptBTN);
-            acceptButton.setOnClickListener((v)->{
+            acceptButton.setOnClickListener(view -> {
                 if (action != null) {
                     action.run();
                 }

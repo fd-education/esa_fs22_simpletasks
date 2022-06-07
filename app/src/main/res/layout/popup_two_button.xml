@@ -20,20 +20,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/acceptBTN"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginStart="@dimen/sidesPadding"
         android:layout_marginEnd="@dimen/sidesPadding"
         android:layout_marginBottom="@dimen/sidesPadding"
-        android:backgroundTint="@color/accent_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
 
+        <Button
+            android:id="@+id/cancelBTN"
+            style="@style/Theme.SimpleTasks.PrimaryButton"
+            android:layout_marginEnd="@dimen/elementPadding"
+            android:layout_toStartOf="@+id/actionBTN"
+            android:text="@string/cancel_popup"
+            app:layout_constraintEnd_toStartOf="@+id/actionBTN"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/actionBTN"
+            style="@style/Theme.SimpleTasks.ErrorButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
