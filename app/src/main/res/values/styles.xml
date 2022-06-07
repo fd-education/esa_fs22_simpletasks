@@ -11,7 +11,8 @@
     </style>
     <style name="Theme.SimpleTasks.InvertedPrimaryButton" parent="Theme.SimpleTasks.PrimaryButton">
         <item name="android:textColor">?colorPrimary</item>
-        <item name="backgroundTint">?colorOnPrimary</item>
+        <item name="backgroundTint">@null</item>
+        <item name="android:background">@drawable/rounded_corner_border_background</item>
     </style>
     <style name="Theme.SimpleTasks.ErrorButton" parent="Theme.SimpleTasks.PrimaryButton">
         <item name="android:textColor">?colorOnPrimary</item>

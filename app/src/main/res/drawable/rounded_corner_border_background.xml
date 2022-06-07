@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Border -->
+    <item>
+        <shape>
+            <corners android:radius="@dimen/radius" />
+            <solid android:color="?colorPrimary" />
+        </shape>
+    </item>
+    <!-- Body -->
+    <item
+        android:bottom="@dimen/buttonBorderWidth"
+        android:left="@dimen/buttonBorderWidth"
+        android:right="@dimen/buttonBorderWidth"
+        android:top="@dimen/buttonBorderWidth">
+        <shape>
+            <corners android:radius="@dimen/radius" />
+            <solid android:color="?colorOnPrimary" />
+        </shape>
+    </item>
+</layer-list>

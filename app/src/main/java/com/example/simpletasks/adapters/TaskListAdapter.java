@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.simpletasks.DialogBuilder;
 import com.example.simpletasks.MainActivity;
 import com.example.simpletasks.R;
 import com.example.simpletasks.TaskGuideActivity;
@@ -63,9 +64,8 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
     /**
      * Triggered when the RecyclerView needs a new ViewHolder to display a task.
      *
-     * @param parent ViewGroup to add the new View to
+     * @param parent   ViewGroup to add the new View to
      * @param viewType type of the view that is created
-     *
      * @return the new ViewHolder
      */
     @NonNull
@@ -80,7 +80,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
      * Replace tasks on the screen by recycling views.
      * Update the tasks whilst the user is scrolling through them.
      *
-     * @param holder the element the data gets bound on
+     * @param holder   the element the data gets bound on
      * @param position the global position of the view
      */
     @Override
@@ -99,11 +99,16 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
                 context.startActivity(intent);
             });
             holder.skipTaskButton.setOnClickListener(v -> {
-                //TODO add dialog asking if skipping is okey
-                long newStartLong = currentTask.getNextStartDate().getTime() + currentTask.getInterval();
-                Date newStartDate = new Date(newStartLong);
-                currentTask.setNextStartDate(newStartDate);
-                MainActivity.updateTasksInDatabase(tasks);
+                new DialogBuilder()
+                        .setDescriptionText(R.string.popup_skip_text)
+                        .setContext(context)
+                        .setTwoButtonLayout(R.string.cancel_popup, R.string.skip_task_popup)
+                        .setAction(() -> {
+                            long newStartLong = currentTask.getNextStartDate().getTime() + currentTask.getInterval();
+                            Date newStartDate = new Date(newStartLong);
+                            currentTask.setNextStartDate(newStartDate);
+                            MainActivity.updateTasksInDatabase(tasks);
+                        }).build().show();
             });
         } else {
             // Covers the case of data not being ready yet.

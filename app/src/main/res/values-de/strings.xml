@@ -8,6 +8,7 @@
     <string name="have_problem">Ich habe ein Problem</string>
     <string name="back">Zurück</string>
     <string name="next">Nächster Schritt</string>
+    <string name="popup_skip_text">Wollen Sie diesen Task überspringen?</string>
     <string name="delete_task">Task löschen</string>
     <string name="edit_task">Task bearbeiten</string>
     <string name="add_task">Task hinzufügen</string>
@@ -31,7 +32,19 @@
     <string name="days">Tage</string>
     <string name="hours">Stunden</string>
     <string name="minutes">Minuten</string>
-
+    <string name="error_title_empty">Der Titel eines Tasks darf nicht leer sein</string>
+    <string name="correct">Korrigieren</string>
+    <string name="discard_changes_text">Wollen Sie die Änderungen wirklich verwerfen?</string>
+    <string name="discard_changes_button">Verwerfen</string>
+    <string name="finish_task_text">Sie sind daran, den Task abzuschliessen. Haben Sie alle Schritte erledigt?</string>
+    <string name="finish_task_button">Abschliessen</string>
+    <string name="abort_task_text">Wollen Sie den Task wirklich abbrechen und ins Hauptmenu gehen?</string>
+    <string name="abort_task_button">Zum Hauptmenü</string>
+    <string name="logout_popup_text">Wollen Sie sich wirklich ausloggen?</string>
+    <string name="logout_popup_button">Ausloggen</string>
+    <string name="delete_task_popup_text">Wollen Sie den Task wirklich löschen?</string>
+    <string name="delete_task_popup_button">Löschen</string>
+    <string name="no_steps_set">Es wurden keine Schritte für diesen Task definiert. Sie können ihn nicht erledigen.</string>
 
     <string name="placeholder">Platzhalter</string>
     <string name="pin">Pin</string>
@@ -64,4 +77,7 @@
     <string name="language_settings">Spracheinstellungen</string>
     <string name="no_pin_set_explanation">Momentan keine PINs gesetzt!</string>
     <string name="not_logged_in_explanation">Nicht eingelogged!</string>
+    <string name="cancel_popup">Abbrechen</string>
+    <string name="skip_task_popup">Überspringen</string>
+    <string name="accept_info_popup">Okay</string>
 </resources>
