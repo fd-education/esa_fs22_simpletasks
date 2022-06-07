@@ -39,7 +39,12 @@ public class NotificationManager {
     public void scheduleNotification(long notificationTimeMillis, String taskId) {
         Intent intentOnClick = new Intent(context, TaskGuideActivity.class);
         intentOnClick.putExtra(MainActivity.TASK_ID_INTENT_EXTRA, taskId);
-        PendingIntent pendingIntentOnClick = PendingIntent.getActivity(context, 0, intentOnClick, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntentOnClick;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            pendingIntentOnClick = PendingIntent.getActivity(context, 0, intentOnClick, PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE);
+        } else {
+            pendingIntentOnClick = PendingIntent.getActivity(context, 0, intentOnClick, PendingIntent.FLAG_UPDATE_CURRENT);
+        }
         //get the notification
         Notification notification = getNotification(pendingIntentOnClick);
 
@@ -47,7 +52,12 @@ public class NotificationManager {
         Intent notificationIntent = new Intent(context, NotificationPublisher.class);
         notificationIntent.putExtra(NOTIFICATION, notification);
         notificationIntent.putExtra(NOTIFICATION_ID, 1);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE);
+        } else {
+            pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        }
 
         //set notification in alarm manager
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);

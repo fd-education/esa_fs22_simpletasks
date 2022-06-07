@@ -73,6 +73,12 @@ public class AddPinActivityUiTest {
         // initialize Espresso Intents capturing
         Intents.init();
 
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         context = InstrumentationRegistry.getInstrumentation().getContext();
         final AppDatabase db = AppDatabase.getAppDb(context);
         db.pinDao().deleteAll();
@@ -173,6 +179,12 @@ public class AddPinActivityUiTest {
                                 5),
                         isDisplayed()));
         materialButton2.perform(click());
+
+        try {
+            Thread.sleep(700);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         int newPinCount = pinController.getPinCount().get();
 
