@@ -101,7 +101,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
             });
             holder.skipTaskButton.setOnClickListener(v -> {
                 //
-                new DialogBuilder().setContext(context).build().show();
+                new DialogBuilder().setDescriptionText(R.string.popup).setContext(context).build().show();
                 long newStartLong = currentTask.getNextStartDate().getTime() + currentTask.getInterval();
                 Date newStartDate = new Date(newStartLong);
                 currentTask.setNextStartDate(newStartDate);

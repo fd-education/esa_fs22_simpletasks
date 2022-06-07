@@ -12,7 +12,7 @@
     <string name="have_problem">I have a problem</string>
     <string name="back">Back</string>
     <string name="next">Next step</string>
-    <string name="popup">Popup</string>
+    <string name="popup">Do you want to skip this task?</string>
     <string name="delete_task">Delete Task</string>
     <string name="edit_task">Edit Task</string>
     <string name="add_task">Add task</string>

@@ -8,6 +8,7 @@
     <string name="have_problem">Ich habe ein Problem</string>
     <string name="back">Zurück</string>
     <string name="next">Nächster Schritt</string>
+    <string name="popup">Wollen Sie diesen Task überspringen?</string>
     <string name="delete_task">Task löschen</string>
     <string name="edit_task">Task bearbeiten</string>
     <string name="add_task">Task hinzufügen</string>

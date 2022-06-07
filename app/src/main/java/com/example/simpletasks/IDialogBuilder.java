@@ -9,7 +9,7 @@ public interface IDialogBuilder {
 
     IDialogBuilder setCenterButtonLayout(String btnText);
 
-    IDialogBuilder setDescriptionText(String text);
+    IDialogBuilder setDescriptionText(int textId);
 
     void getResult();
 
