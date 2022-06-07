@@ -47,7 +47,7 @@ public class AddPinActivityUiTest {
 
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityTestRule = new ActivityScenarioRule<>(MainActivity.class);
-    private Context context;
+    private PinController pinController;
 
     private static Matcher<View> childAtPosition(
             final Matcher<View> parentMatcher, final int position) {
@@ -73,9 +73,10 @@ public class AddPinActivityUiTest {
         // initialize Espresso Intents capturing
         Intents.init();
 
-        context = InstrumentationRegistry.getInstrumentation().getContext();
+        Context context = InstrumentationRegistry.getInstrumentation().getContext();
         final AppDatabase db = AppDatabase.getAppDb(context);
         db.pinDao().deleteAll();
+        pinController = new PinController(context);
     }
 
     @After
@@ -94,8 +95,6 @@ public class AddPinActivityUiTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        final PinController pinController = new PinController(context);
 
         int initialPinCount = pinController.getPinCount().get();
 
@@ -174,6 +173,17 @@ public class AddPinActivityUiTest {
                         isDisplayed()));
         materialButton2.perform(click());
 
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        ViewInteraction acknowledgeButton = onView(
+                allOf(withId(R.id.acceptBTN), withText(R.string.accept_info_popup),
+                        isDisplayed()));
+        acknowledgeButton.perform(click());
+
         int newPinCount = pinController.getPinCount().get();
 
         assertEquals("the new pin count should be one higher than the initial count",
@@ -181,7 +191,7 @@ public class AddPinActivityUiTest {
     }
 
     @Test
-    public void addLocalPin() {
+    public void addLocalPin() throws ExecutionException, InterruptedException {
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
@@ -190,6 +200,7 @@ public class AddPinActivityUiTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        int initialPinCount = pinController.getPinCount().get();
 
         ViewInteraction appCompatImageButton = onView(
                 allOf(withId(R.id.imageButton), withContentDescription(R.string.open_settings),
@@ -248,11 +259,15 @@ public class AddPinActivityUiTest {
             e.printStackTrace();
         }
 
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.titleSettings), withText(R.string.title_activity_settings),
-                        withParent(withParent(withId(android.R.id.content))),
+        ViewInteraction confirmButton = onView(
+                allOf(withId(R.id.actionBTN), withText(R.string.accept_info_popup),
                         isDisplayed()));
-        textView.check(matches(withText(R.string.title_activity_settings)));
+        confirmButton.perform(click());
+
+        int newPinCount = pinController.getPinCount().get();
+
+        assertEquals("the new pin count should be one higher than the initial count",
+                initialPinCount + 1, newPinCount);
     }
 
 }

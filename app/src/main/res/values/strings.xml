@@ -83,4 +83,8 @@
     <string name="cancel_popup">Cancel</string>
     <string name="skip_task_popup">Skip Task</string>
     <string name="accept_info_popup">Okay</string>
+    <string name="show_pin_popup">Do you want to add %1$s as a new PIN?</string>
+    <string name="pin_sent_popup">A new PIN was successfully sent to %1$s!</string>
+    <string name="confirm_delete_pin_popup">Are you sure that you want to delete this PIN?</string>
+    <string name="pin_deletion_confirmation">The PIN was deleted!</string>
 </resources>
