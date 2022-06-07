@@ -77,9 +77,14 @@ public class TaskGuideActivity extends AppCompatActivity {
             replaceFragment();
             Log.d(TAG, "moved back a step");
         } else if (currentStep == 0) {
-            //TODO: user should confirm exit
-            Log.d(TAG, "going back to previous screen");
-            super.onBackPressed();
+            new DialogBuilder()
+                .setDescriptionText(R.string.abort_task_text)
+                .setContext(this)
+                .setTwoButtonLayout(R.string.cancel_popup, R.string.abort_task_button)
+                .setAction(() -> {
+                    Log.d(TAG, "going back to previous screen");
+                    super.onBackPressed();
+                }).build().show();
         }
     }
 
@@ -98,16 +103,22 @@ public class TaskGuideActivity extends AppCompatActivity {
             replaceFragment();
             Log.d(TAG, "moved a step forward");
         } else if (currentStep == taskSteps.size() - 1) {
-            //TODO dialog which asks if user really wants to finish the task
-            //calculate new nextStartDate
-            Date nextStartDate = new Date(task.getNextStartDate().getTime() + task.getInterval());
-            task.setNextStartDate(nextStartDate);
-            //save the changes in the database
-            TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
-            taskViewModel.updateTask(taskWithSteps);
-            Log.d(TAG, "finished steps");
-            //go back to the home screen (not local back because this would go to the last step)
-            super.onBackPressed();
+            //asks if user really wants to finish the task
+            new DialogBuilder()
+                    .setDescriptionText(R.string.finish_task_text)
+                    .setContext(this)
+                    .setTwoButtonLayout(R.string.cancel_popup, R.string.finish_task_button)
+                    .setAction(() -> {
+                        //calculate new nextStartDate
+                        Date nextStartDate = new Date(task.getNextStartDate().getTime() + task.getInterval());
+                        task.setNextStartDate(nextStartDate);
+                        //save the changes in the database
+                        TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
+                        taskViewModel.updateTask(taskWithSteps);
+                        Log.d(TAG, "finished steps");
+                        //go back to the home screen (not local back because this would go to the last step)
+                        super.onBackPressed();
+                    }).build().show();
         }
     }
 
@@ -130,10 +141,15 @@ public class TaskGuideActivity extends AppCompatActivity {
 
         currentStep = 0;
 
+        //TODO change to work after merge with feature/edit-steps!!
+
         // if task has no steps, go back to the last activity and throw an error
-        if (taskSteps.size() == 0) {
+        if (taskSteps == null || taskSteps.size() == 0) {
             super.onBackPressed();
-            //todo implement dialog error message
+            new DialogBuilder().setDescriptionText(R.string.no_steps_set)
+                    .setCenterButtonLayout(R.string.accept_info_popup)
+                    .setContext(this)
+                    .build().show();
         }
     }
 

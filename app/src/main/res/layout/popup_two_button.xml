@@ -32,17 +32,18 @@
 
         <Button
             android:id="@+id/cancelBTN"
-            style="@style/Theme.SimpleTasks.PrimaryButton"
+            style="@style/Theme.SimpleTasks.InvertedPrimaryButton"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/elementPadding"
             android:layout_toStartOf="@+id/actionBTN"
             android:text="@string/cancel_popup"
             app:layout_constraintEnd_toStartOf="@+id/actionBTN"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/actionBTN"
-            style="@style/Theme.SimpleTasks.ErrorButton"
+            style="@style/Theme.SimpleTasks.PrimaryButton"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

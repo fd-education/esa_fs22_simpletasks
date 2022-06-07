@@ -36,6 +36,19 @@
     <string name="days">Days</string>
     <string name="hours">Hours</string>
     <string name="minutes">Minutes</string>
+    <string name="error_title_empty">The title must not be empty</string>
+    <string name="correct">Correct</string>
+    <string name="discard_changes_text">Do you really want to discard your changes?</string>
+    <string name="discard_changes_button">Discard</string>
+    <string name="finish_task_text">You are about to finish the task. Have you completed all steps?</string>
+    <string name="finish_task_button">Finish</string>
+    <string name="abort_task_text">Do you really want to abort the task?</string>
+    <string name="abort_task_button">Abort</string>
+    <string name="logout_popup_text">Do you really want to log out?</string>
+    <string name="logout_popup_button">Logout</string>
+    <string name="delete_task_popup_text">Do you really want to delete the task?</string>
+    <string name="delete_task_popup_button">Delete</string>
+    <string name="no_steps_set">No steps were set for this task. You cannot run and finish it.</string>
 
     <string name="placeholder">Placeholder</string>
     <string name="pin">Pin</string>

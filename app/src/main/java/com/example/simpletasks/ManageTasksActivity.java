@@ -11,8 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.simpletasks.data.entities.TaskWithSteps;
 import com.example.simpletasks.domain.login.User;
 
-import java.util.Date;
-
 public class ManageTasksActivity extends AppCompatActivity {
     private static final String TAG = "ManageTaskActivity";
     private User user;
@@ -40,14 +38,31 @@ public class ManageTasksActivity extends AppCompatActivity {
     }
 
     /**
-     * Log the user out and go back to the main view.
+     * handles the click event when the user wants to log out.
      *
      * @param view the view whose click event was triggered
      */
     public void onLogoutClicked(View view) {
-        user.logOut();
-        Log.d(TAG, "Logout clicked. User Login State: " + user.isLoggedIn());
-        super.onBackPressed();
+        onBackPressed();
+    }
+
+    /**
+     * Log the user out and go back to the main view.
+     */
+    @Override
+    public void onBackPressed() {
+        //asks if user really wants to logout
+        new DialogBuilder()
+                .setDescriptionText(R.string.logout_popup_text)
+                .setContext(this)
+                .setTwoButtonLayout(R.string.cancel_popup, R.string.logout_popup_button)
+                .setAction(() -> {
+                    //log user out
+                    user.logOut();
+                    Log.d(TAG, "Logout clicked. User Login State: " + user.isLoggedIn());
+                    super.onBackPressed();
+                }).build().show();
+
     }
 
     /**

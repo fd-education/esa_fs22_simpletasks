@@ -68,10 +68,12 @@ public class EditTaskActivity extends AppCompatActivity {
             taskViewModel.insertTask(currentEditTask);
             Log.d(TAG, "inserting or updating task finished");
             // Go back to the last screen
-            onBackPressed();
+            super.onBackPressed();
         } else {
-            //TODO implement error message
-            Toast.makeText(this, "Error when validating the data - check again", Toast.LENGTH_SHORT).show();
+            new DialogBuilder().setDescriptionText(R.string.error_title_empty)
+                    .setCenterButtonLayout(R.string.correct)
+                    .setContext(this)
+                    .build().show();
         }
     }
 
@@ -100,8 +102,11 @@ public class EditTaskActivity extends AppCompatActivity {
      */
     @Override
     public void onBackPressed() {
-        //todo ask the user if he really wants to discard his changes
-        super.onBackPressed();
+        new DialogBuilder()
+                .setDescriptionText(R.string.discard_changes_text)
+                .setContext(this)
+                .setTwoButtonLayout(R.string.cancel_popup, R.string.discard_changes_button)
+                .setAction(super::onBackPressed).build().show();
     }
 
     public void onPlanTaskClicked(View view) {
@@ -140,9 +145,6 @@ public class EditTaskActivity extends AppCompatActivity {
     private boolean validateData() {
         boolean isValid = true;
         if (taskTitle.getText().length() <= 1) {
-            isValid = false;
-        }
-        if (currentEditTask.getSteps().size() == 0) {
             isValid = false;
         }
         //more validating could be inserted here
