@@ -31,6 +31,8 @@ public abstract class AppDatabase extends RoomDatabase {
     // Single instance of the app database
     private static volatile AppDatabase APP_DB;
 
+    private static final int NUMBER_OF_SEEDED_TASKS = 1;
+
     private static final int NUMBER_OF_THREADS = 4;
 
     public static final ExecutorService databaseWriteExecutor =
@@ -111,7 +113,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 TaskDao taskDao = APP_DB.taskDao();
                 TaskStepDao taskStepDao = APP_DB.taskStepDao();
 
-                List<TaskWithSteps> tasksWithSteps = Seeder.createSeed(5);
+                List<TaskWithSteps> tasksWithSteps = Seeder.createSeed(NUMBER_OF_SEEDED_TASKS);
 
                 List<Task> tasks = new ArrayList<>();
 
