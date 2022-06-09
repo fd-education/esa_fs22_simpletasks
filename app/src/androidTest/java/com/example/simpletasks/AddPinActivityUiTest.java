@@ -181,7 +181,7 @@ public class AddPinActivityUiTest {
         materialButton2.perform(click());
 
         try {
-            Thread.sleep(700);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
