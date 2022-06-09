@@ -185,9 +185,4 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
 
         notifyItemMoved(fromPosition, toPosition);
     }
-
-    @Override
-    public void onItemClear() {
-        Log.d(TAG, "DROPPED: Updating item in DB.");
-    }
 }

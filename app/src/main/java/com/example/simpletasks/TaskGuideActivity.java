@@ -26,7 +26,6 @@ import java.util.List;
  */
 public class TaskGuideActivity extends AppCompatActivity {
     private static final String TAG = "TaskGuideActivity";
-    private TaskWithSteps taskWithSteps;
     private Task task;
     private List<TaskStep> taskSteps;
     private int currentStep;
@@ -96,7 +95,8 @@ public class TaskGuideActivity extends AppCompatActivity {
 
     // Sets the instance variables
     private void setInstanceVariables() {
-        taskWithSteps = getTask();
+        TaskWithSteps taskWithSteps = getTask();
+
         task = taskWithSteps.getTask();
         taskSteps = taskWithSteps.getSteps();
         setTaskTitleOnUi();

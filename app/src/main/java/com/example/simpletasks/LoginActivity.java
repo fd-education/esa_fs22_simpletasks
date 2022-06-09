@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onLoginClicked(View v){
         // Access the required views
         String pin = ((TextView) findViewById(R.id.pinPasswordInput)).getText().toString();
-        TextView errorText = ((TextView) findViewById(R.id.loginError));
+        TextView errorText = findViewById(R.id.loginError);
 
         // Check if the entered pin is valid
         boolean validLogin = login.isValidPin(pin);
