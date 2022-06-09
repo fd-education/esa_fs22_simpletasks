@@ -25,8 +25,8 @@ public class ManageTasksListFragment extends Fragment {
     /**
      * Inflate the fragments layout and set the adapter for the task list.
      *
-     * @param inflater layout inflater to inflate the views in the fragment
-     * @param container parent view of the fragments ui
+     * @param inflater           layout inflater to inflate the views in the fragment
+     * @param container          parent view of the fragments ui
      * @param savedInstanceState reconstruction of a previous state
      * @return View for the fragments ui
      */
@@ -35,9 +35,14 @@ public class ManageTasksListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_list, container, false);
-        setAdapterWithTasks();
         Log.d(TAG, "finished initialisation");
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setAdapterWithTasks();
     }
 
     // Get the tasks from the database and set the adapter for the view

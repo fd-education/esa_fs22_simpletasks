@@ -92,6 +92,26 @@ public class TaskViewModel extends AndroidViewModel {
     }
 
     /**
+     * fetches the task by the id
+     *
+     * @param id id of the task object
+     * @return observable with the specified task
+     */
+    public LiveData<Task> getTaskById(String id) {
+        return taskRepo.getTaskById(id);
+    }
+
+    /**
+     * fetches the task with steps by the id
+     *
+     * @param id id of the task with steps object
+     * @return observable with the specified task with steps
+     */
+    public LiveData<TaskWithSteps> getTaskWithStepsById(String id) {
+        return taskRepo.getTaskWithStepsById(id);
+    }
+
+    /**
      * Fetch all task step entities of a tasks ordered by their index
      *
      * @param task the task to lookup
@@ -109,7 +129,7 @@ public class TaskViewModel extends AndroidViewModel {
     public void insertTask(final TaskWithSteps taskWithSteps) {
         List<TaskWithSteps> list = new ArrayList<>();
         list.add(taskWithSteps);
-        insertTasks(list);
+        insertTasksWithSteps(list);
     }
 
     /**
@@ -117,19 +137,20 @@ public class TaskViewModel extends AndroidViewModel {
      *
      * @param tasksWithSteps the tasks with their steps to insert
      */
-    public void insertTasks(final List<TaskWithSteps> tasksWithSteps) {
+    public void insertTasksWithSteps(final List<TaskWithSteps> tasksWithSteps) {
         taskRepo.insertTaskWithSteps(tasksWithSteps);
     }
 
     /**
-     * Update a task with the task steps into the tasks and taskSteps table.
+     * Insert a list of tasks with their steps into the tasks and taskSteps table.
      *
-     * @param taskWithSteps the task with the steps to update
+     * @param task the tasks with their steps to insert
      */
-    public void updateTask(final TaskWithSteps taskWithSteps) {
-        List<TaskWithSteps> list = new ArrayList<>();
-        list.add(taskWithSteps);
-        updateTasks(list);
+    public void insertTask(final Task task) {
+        List<Task> tasks = new ArrayList<>();
+        tasks.add(task);
+
+        taskRepo.insertTasks(tasks);
     }
 
     /**
@@ -137,8 +158,31 @@ public class TaskViewModel extends AndroidViewModel {
      *
      * @param tasksWithSteps the tasks with their steps to update
      */
-    public void updateTasks(final List<TaskWithSteps> tasksWithSteps) {
+    public void updateTasksWithSteps(final List<TaskWithSteps> tasksWithSteps) {
         taskRepo.updateTasksWithSteps(tasksWithSteps);
+    }
+
+    /**
+     * Update a task with the task steps into the tasks and taskSteps table.
+     *
+     * @param taskWithSteps the task with the steps to update
+     */
+    public void updateTaskWithSteps(final TaskWithSteps taskWithSteps) {
+        List<TaskWithSteps> list = new ArrayList<>();
+        list.add(taskWithSteps);
+        updateTasksWithSteps(list);
+    }
+
+    /**
+     * Update a task in the tasks table.
+     *
+     * @param task the task to update
+     */
+    public void updateTask(final Task task) {
+        List<Task> tasks = new ArrayList<>();
+        tasks.add(task);
+
+        taskRepo.updateTasks(tasks);
     }
 
     /**

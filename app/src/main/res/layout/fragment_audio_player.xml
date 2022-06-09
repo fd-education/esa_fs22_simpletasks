@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:visibility="visible"
+    tools:context=".fragments.AudioPlayerFragment">
+
+    <SeekBar
+        android:id="@+id/sb_audioplayer_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:thumbTint="?attr/colorPrimary" />
+
+    <LinearLayout
+        android:id="@+id/ll_audioplayer_controls_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_audioplayer_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:clickable="true"
+            android:contentDescription="@string/play"
+            android:focusable="true"
+            app:backgroundTint="?attr/colorPrimary"
+            app:fabCustomSize="48dp"
+            app:srcCompat="@drawable/ic_baseline_play_arrow_24" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_audioplayer_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:clickable="true"
+            android:contentDescription="@string/pause"
+            android:focusable="true"
+            app:backgroundTint="?attr/colorPrimary"
+            app:fabCustomSize="48dp"
+            app:srcCompat="@drawable/ic_baseline_pause_24" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_audioplayer_stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:clickable="true"
+            android:contentDescription="@string/stop"
+            android:focusable="true"
+            app:backgroundTint="?attr/colorPrimary"
+            app:fabCustomSize="48dp"
+            app:srcCompat="@drawable/ic_baseline_stop_24" />
+    </LinearLayout>
+
+</LinearLayout>

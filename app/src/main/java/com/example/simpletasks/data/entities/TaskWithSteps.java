@@ -1,6 +1,7 @@
 package com.example.simpletasks.data.entities;
 
 import androidx.room.Embedded;
+import androidx.room.Ignore;
 import androidx.room.Relation;
 
 import java.io.Serializable;
@@ -31,10 +32,13 @@ public class TaskWithSteps implements Serializable {
     /**
      * constructor for a new task with steps object, which has to be filled with data yet
      */
+    //ignore the no arg constructor for room
+    @Ignore
     public TaskWithSteps() {
         Date today = new Date();
+        Date todayInAnHour = new Date(today.getTime() + ONE_HOUR_INTERVAL);
         Date todayInAWeek = new Date(today.getTime() + ONE_WEEK_INTERVAL);
-        this.task = new Task("", "", today, ONE_DAY_INTERVAL, 3 * ONE_HOUR_INTERVAL, todayInAWeek);
+        this.task = new Task("", "", "", todayInAnHour, ONE_DAY_INTERVAL, 3 * ONE_HOUR_INTERVAL, todayInAWeek);
         this.taskSteps = new ArrayList<>();
     }
 

@@ -1,5 +1,7 @@
 package com.example.simpletasks.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,14 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.simpletasks.EditTaskActivity;
 import com.example.simpletasks.MainActivity;
+import com.example.simpletasks.ManageTasksActivity;
 import com.example.simpletasks.R;
 import com.example.simpletasks.adapters.EditTaskStepsListAdapter;
 import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.entities.TaskWithSteps;
+import com.example.simpletasks.data.viewmodels.TaskStepViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +33,7 @@ import java.util.List;
 public class EditTaskStepsListFragment extends Fragment {
     private static final String TAG = "EditTaskListFragment";
     private View view;
-    private List<TaskStep> taskSteps;
+    private TaskStepViewModel taskStepViewModel;
 
     /**
      * Inflate the fragments layout and set the adapter for the task steps list.
@@ -41,30 +49,54 @@ public class EditTaskStepsListFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_list, container, false);
 
-        setAdapterWithTaskSteps();
-
         Log.d(TAG, "finished initialisation");
         return view;
     }
 
-    // Set the task steps from the arguments in the bundle
-    private List<TaskStep> getTaskStepsFromArguments() {
-        if (getArguments() != null) {
-            Log.d(TAG, "successfully loaded task steps from fragment start");
-            TaskWithSteps task = (TaskWithSteps) getArguments().getSerializable(MainActivity.TASK_INTENT_EXTRA);
-            return task.getSteps();
+    /**
+     * gets called each time the fragment is getting back to focus
+     */
+    @Override
+    public void onResume() {
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(MainActivity.SHARED_PREF_KEY, Context.MODE_PRIVATE);
+        String taskId = sharedPreferences.getString(EditTaskActivity.SHARED_PREF_TASK_ID, null);
+
+        if(taskId.equals(ManageTasksActivity.CREATE_NEW_TASK)) {
+            setAdapterWithTaskSteps(new TaskWithSteps().getSteps());
+        } else {
+            taskStepViewModel = new ViewModelProvider(this).get(TaskStepViewModel.class);
+            LiveData<List<TaskStep>> taskSteps = taskStepViewModel.getStepsOfTaskById(taskId);
+            final Observer<List<TaskStep>> taskStepsObserver = this::setAdapterWithTaskSteps;
+            taskSteps.observe(getActivity(), taskStepsObserver);
         }
-        return new ArrayList<>();
+
+        super.onResume();
     }
 
     // Get the task steps from the database and set the adapter for the view
-    private void setAdapterWithTaskSteps() {
+    private void setAdapterWithTaskSteps(List<TaskStep> taskSteps) {
         final RecyclerView recyclerView = view.findViewById(R.id.tasks_list);
         EditTaskStepsListAdapter adapter = new EditTaskStepsListAdapter(getContext());
+
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver(){
+            @Override
+            public void onItemRangeRemoved(int positionStart, int itemCount) {
+                super.onItemRangeRemoved(positionStart, itemCount);
+
+                TaskStep taskStep = taskSteps.get(positionStart);
+
+                List<TaskStep> steps = new ArrayList<>();
+                steps.add(taskStep);
+
+                taskStepViewModel.deleteTaskSteps(steps);
+
+                super.onItemRangeChanged(positionStart, itemCount);
+            }
+        });
+
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        taskSteps = getTaskStepsFromArguments();
         adapter.setTaskSteps(taskSteps);
         Log.d(TAG, "set task steps");
     }

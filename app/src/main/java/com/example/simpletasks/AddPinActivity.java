@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.simpletasks.data.entities.Pin;
@@ -41,12 +40,6 @@ public class AddPinActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_pin);
-
-        // Remove the action bar at the top of the screen
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
 
         // Set listener to handle when the focus changes
         EditText phoneInputView = findViewById(R.id.phoneNumberInput);

@@ -45,6 +45,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         executorService = Executors.newSingleThreadExecutor();
 
+
         Log.d(TAG, "finished initialisation");
     }
 

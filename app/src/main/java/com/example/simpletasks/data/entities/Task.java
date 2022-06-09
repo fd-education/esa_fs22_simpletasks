@@ -26,6 +26,9 @@ public class Task implements Serializable {
     private String title;
 
     @NonNull
+    private String titleImagePath;
+
+    @NonNull
     private String description;
 
     // The Date of the next occurrence.
@@ -50,9 +53,10 @@ public class Task implements Serializable {
     @Ignore
     private List<TaskStep> steps;
 
-    public Task(@NonNull String title, @NonNull String description, @NonNull Date nextStartDate, @NonNull Long interval, @NonNull Long notificationDelta, @NonNull Date endDate) {
+    public Task(@NonNull String title, @NonNull String titleImagePath, @NonNull String description, @NonNull Date nextStartDate, @NonNull Long interval, @NonNull Long notificationDelta, @NonNull Date endDate) {
         this.id = UUID.randomUUID().toString();
         this.title = title;
+        this.titleImagePath = titleImagePath;
         this.description = description;
         this.nextStartDate = nextStartDate;
         this.interval = interval;
@@ -96,6 +100,25 @@ public class Task implements Serializable {
      */
     public void setTitle(@NonNull String title) {
         this.title = title;
+    }
+
+    /**
+     * Get the title image path of the task
+     *
+     * @return the title image path of the task
+     */
+    @NonNull
+    public String getTitleImagePath() {
+        return titleImagePath;
+    }
+
+    /**
+     * Set the title image path for the task.
+     *
+     * @param titleImagePath the title to set
+     */
+    public void setTitleImagePath(@NonNull String titleImagePath) {
+        this.titleImagePath = titleImagePath;
     }
 
     /**

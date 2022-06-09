@@ -33,7 +33,7 @@ public class TaskStepRepositoryTest {
 
     @Before
     public void setUp() {
-        task = new Task("Task", "test task", new Date(2000, 1, 1), 100L, 10L, new Date(2000, 1, 1));
+        task = new Task("Task", "", "test task", new Date(2000, 1, 1), 100L, 10L, new Date(2000, 1, 1));
         textTaskStep = new TaskStep(task.getId(), TaskStepTypes.TEXT, 0, "title", "imageUri", "description", "videoUri", "audioUri");
         Context context = ApplicationProvider.getApplicationContext();
         repository = new TaskStepRepository(context);

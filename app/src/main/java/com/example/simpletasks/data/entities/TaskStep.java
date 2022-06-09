@@ -125,6 +125,15 @@ public class TaskStep implements Serializable {
     }
 
     /**
+     * Get the type of this task step as a TaskStepType.
+     *
+     * @return the type of this task step object as a TaskStepType.
+     */
+    public TaskStepTypes getTypeAsTaskStepType(){
+        return TaskStepTypes.valueOf(type);
+    }
+
+    /**
      * Set the type of this step
      *
      * @param type the type of this step
