@@ -18,6 +18,7 @@ import java.util.List;
  */
 @Dao
 public interface TaskStepDao {
+
     /**
      * Fetch all task step entities of a tasks specified by its id ordered by their index
      *
@@ -53,6 +54,9 @@ public interface TaskStepDao {
     @Update
     void updateTaskSteps(List<TaskStep> taskSteps);
 
+
+    @Delete
+    void deleteTaskStep(TaskStep taskStep);
 
     /**
      * Delete a list of task steps from the taskSteps table.

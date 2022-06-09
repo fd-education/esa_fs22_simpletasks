@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 

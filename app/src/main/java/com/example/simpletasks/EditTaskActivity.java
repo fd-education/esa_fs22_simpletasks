@@ -22,14 +22,8 @@ import com.example.simpletasks.data.entities.Task;
 import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.entities.TaskWithSteps;
 import com.example.simpletasks.data.types.TaskStepTypes;
-import com.example.simpletasks.data.viewmodels.TaskStepViewModel;
 import com.example.simpletasks.data.viewmodels.TaskViewModel;
 import com.example.simpletasks.fragments.EditTaskStepsListFragment;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Activity for the edit tasks screen.
@@ -41,17 +35,12 @@ public class EditTaskActivity extends AppCompatActivity {
     public static final String NEW_STEP = "NEW_STEP";
 
     private Task currentEditTask;
-    private List<TaskStep> currentEditTaskSteps;
 
     private EditTaskStepsListFragment taskStepsListFragment;
 
     // UI element to read from/ write to
     private EditText taskTitle;
     private ImageView taskImageView;
-
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
-    private TaskStepViewModel taskStepViewModel;
 
 
     /**
@@ -74,13 +63,12 @@ public class EditTaskActivity extends AppCompatActivity {
             taskImageView.setImageURI(Uri.parse(currentEditTask.getTitleImagePath()));
         }
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-
-        taskStepViewModel = new ViewModelProvider(this).get(TaskStepViewModel.class);
-
-        editor = sharedPreferences.edit();
-
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(SHARED_PREF_TASK_ID, currentEditTask.getId()).apply();
+
+//        taskStepViewModel = new ViewModelProvider(this).get(TaskStepViewModel.class);
+
 
         // Set the fragments in the activity
         fillValuesOnUi();
@@ -106,13 +94,8 @@ public class EditTaskActivity extends AppCompatActivity {
         // Save the data into the database
         TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
 
-        //todo add in data layer another method for singular task update so i don't have to create a list
         taskViewModel.updateTask(currentEditTask);
-        persistTaskStepChanges();
-
-        Log.d(TAG, "updating task finished");
-
-//        editor.remove(SHARED_PREF_STEP_IDS);
+        taskStepsListFragment.updateTaskSteps();
 
         // Go back to the last screen
         onBackPressed();
@@ -166,112 +149,45 @@ public class EditTaskActivity extends AppCompatActivity {
     private void handleTaskIntent() {
         TaskWithSteps taskWithSteps = (TaskWithSteps) getIntent().getExtras().getSerializable(MainActivity.TASK_INTENT_EXTRA);
         this.currentEditTask = taskWithSteps.getTask();
-        this.currentEditTaskSteps = taskWithSteps.getSteps();
     }
 
     private AlertDialog getChoseFormatDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle("Step Types");
+        return builder.setTitle("Step Types")
+                .setItems(new CharSequence[]
+                                {"TEXT STEP", "AUDIO STEP", "VIDEO STEP", "CANCEL"},
+                        (dialog, which) -> {
+                            switch (which) {
+                                case 0:
+                                    TaskStep textStep = new TaskStep(currentEditTask.getId(), TaskStepTypes.TEXT, -1, "", "", "", "", "");
 
-        builder.setItems(new CharSequence[]
-                {"TEXT STEP", "AUDIO STEP", "VIDEO STEP", "CANCEL"},
-                (dialog, which) -> {
-                    switch(which){
-                        case 0:
-                            TaskStep newTextStep = new TaskStep(currentEditTask.getId(), TaskStepTypes.TEXT, currentEditTaskSteps.size() + 1, "", "", "", "", "");
+                                    Intent textIntent = new Intent(getBaseContext(), EditTextStepActivity.class);
+                                    textIntent.putExtra(MainActivity.TASK_INTENT_EXTRA, textStep);
+                                    startActivity(textIntent);
 
-                            Intent textIntent = new Intent(getBaseContext(), EditTextStepActivity.class);
-                            textIntent.putExtra(MainActivity.TASK_INTENT_EXTRA, newTextStep);
-                            createNewStep.launch(textIntent);
+                                    break;
+                                case 1:
+                                    TaskStep audioStep = new TaskStep(currentEditTask.getId(), TaskStepTypes.AUDIO, -1, "", "", "", "", "");
 
-                            break;
-                        case 1:
-                            TaskStep audioStep = new TaskStep(currentEditTask.getId(), TaskStepTypes.TEXT, currentEditTaskSteps.size() + 1, "", "", "", "", "");
+                                    Intent audioIntent = new Intent(getBaseContext(), EditAudioStepActivity.class);
+                                    audioIntent.putExtra(MainActivity.TASK_INTENT_EXTRA, audioStep);
+                                    startActivity(audioIntent);
 
-                            Intent audioIntent = new Intent(getBaseContext(), EditAudioStepActivity.class);
-                            audioIntent.putExtra(MainActivity.TASK_INTENT_EXTRA, audioStep);
-                            createNewStep.launch(audioIntent);
+                                    break;
+                                case 2:
+                                    TaskStep videoStep = new TaskStep(currentEditTask.getId(), TaskStepTypes.VIDEO, -1, "", "", "", "", "");
 
-                            break;
-                        case 2:
-                            TaskStep videoStep = new TaskStep(currentEditTask.getId(), TaskStepTypes.TEXT, currentEditTaskSteps.size() + 1, "", "", "", "", "");
+                                    Intent videoIntent = new Intent(getBaseContext(), EditVideoStepActivity.class);
+                                    videoIntent.putExtra(MainActivity.TASK_INTENT_EXTRA, videoStep);
+                                    startActivity(videoIntent);
 
-                            Intent videoIntent = new Intent(getBaseContext(), EditVideoStepActivity.class);
-                            videoIntent.putExtra(MainActivity.TASK_INTENT_EXTRA, videoStep);
-                            createNewStep.launch(videoIntent);
-
-                            break;
-                        case 3:
-                            Log.d(TAG, "CANCEL");
-                            break;
-                    }
-                });
-
-        return builder.create();
-    }
-
-    final ActivityResultLauncher<Intent> createNewStep = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        TaskStep taskStep = (TaskStep) result.getData().getExtras().getSerializable(NEW_STEP);
-                        taskStepsListFragment.addTaskStep(taskStep);
-                    }
-                }
-            });
-
-    private void persistTaskStepChanges(){
-        Log.e(TAG, "Persisting Changes");
-
-        List<TaskStep> originalStepList = currentEditTaskSteps;
-        List<TaskStep> updatedStepList = taskStepsListFragment.getTaskSteps();
-
-        List<TaskStep> updateSteps = new ArrayList<>();
-        List<TaskStep> insertSteps;
-        List<TaskStep> deleteSteps;
-
-        if(updatedStepList == null || updatedStepList.isEmpty()){
-            deleteSteps = originalStepList;
-
-        } else {
-            for(TaskStep updStep: updatedStepList){
-                for(TaskStep origStep: originalStepList){
-                    if(origStep.getId().equals(updStep.getId())){
-                        updateSteps.add(updStep);
-                        originalStepList.remove(origStep);
-                        break;
-                    }
-                }
-            }
-
-            updatedStepList.removeAll(updateSteps);
-//            insertSteps = updatedStepList;
-//            deleteSteps = originalStepList;
-//
-//            taskStepViewModel.insertTaskSteps(insertSteps);
-            taskStepViewModel.updateTaskSteps(updateSteps);
-        }
-
-//        taskStepViewModel.deleteTaskSteps(deleteSteps);
-    }
-
-    private List<String> getUpdatedTaskStepList(){
-        if(!sharedPreferences.contains(SHARED_PREF_STEP_IDS)){
-            Log.e(TAG, "ERROR: SHARED PREFERENCES BROKEN.");
-        }
-
-        String listOfSortedTaskStepIdsJson = sharedPreferences.getString(SHARED_PREF_STEP_IDS, "");
-
-        if (!listOfSortedTaskStepIdsJson.isEmpty()) {
-            Log.e(TAG, "Returning updated task step list.");
-            Gson gson = new Gson();
-            return gson.fromJson(listOfSortedTaskStepIdsJson, new TypeToken<List<String>>() {
-            }.getType());
-        }
-
-        Log.e(TAG, "Updated task step list.");
-        return null;
+                                    break;
+                                case 3:
+                                    Log.d(TAG, "CANCEL");
+                                    break;
+                            }
+                        })
+                .create();
     }
 }

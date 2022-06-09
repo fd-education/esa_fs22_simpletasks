@@ -1,6 +1,5 @@
 package com.example.simpletasks.domain.ui;
 
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 

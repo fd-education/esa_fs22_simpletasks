@@ -76,11 +76,6 @@ public class AudioPlayerFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
     private void initializeFields(View view){
         seekbar = view.findViewById(R.id.sb_audioplayer_progress);
         fabPlay = view.findViewById(R.id.fab_audioplayer_play);

@@ -65,6 +65,10 @@ public class TaskStepViewModel extends AndroidViewModel {
         taskStepRepo.updateTaskSteps(taskSteps);
     }
 
+    public void deleteTaskStep(TaskStep taskStep){
+        taskStepRepo.deleteTaskStep(taskStep);
+    }
+
     /**
      * Delete a list of task steps from the taskSteps table.
      *

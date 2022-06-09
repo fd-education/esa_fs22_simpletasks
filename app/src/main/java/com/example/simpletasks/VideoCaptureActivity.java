@@ -42,7 +42,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 
 public class VideoCaptureActivity extends AppCompatActivity {
-    public static String RESULT_KEY = "VIDEO_CAPTURE_RESULT";
+    public static final String RESULT_KEY = "VIDEO_CAPTURE_RESULT";
 
     private final String TAG = "VideoCaptureActivity";
     private final String[] REQUIRED_PERMISSIONS = {Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE};

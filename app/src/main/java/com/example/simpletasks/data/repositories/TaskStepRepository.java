@@ -28,6 +28,7 @@ public class TaskStepRepository {
         taskStepDao = db.taskStepDao();
     }
 
+
     /**
      * Fetch all task step entities of a tasks specified by its id ordered by their index
      *
@@ -58,6 +59,10 @@ public class TaskStepRepository {
      */
     public void updateTaskSteps(final List<TaskStep> taskSteps){
         AppDatabase.databaseWriteExecutor.execute(() -> taskStepDao.updateTaskSteps(taskSteps));
+    }
+
+    public void deleteTaskStep(final TaskStep taskStep){
+        AppDatabase.databaseWriteExecutor.execute(() -> taskStepDao.deleteTaskStep(taskStep));
     }
 
     /**

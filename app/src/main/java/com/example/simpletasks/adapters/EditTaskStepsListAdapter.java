@@ -1,10 +1,12 @@
 package com.example.simpletasks.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -12,13 +14,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.simpletasks.MainActivity;
 import com.example.simpletasks.R;
 import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.types.TaskStepTypes;
-import com.example.simpletasks.domain.dragdrop.ItemTouchHelperAdapter;
+import com.example.simpletasks.data.viewmodels.TaskStepViewModel;
+import com.example.simpletasks.domain.dragdrop.TaskStepsDrag;
 import com.example.simpletasks.domain.editSteps.EditStepsUtility;
 import com.example.simpletasks.domain.editSteps.EditStepsUtilityController;
 
@@ -27,13 +32,13 @@ import java.util.List;
 /**
  * Adapter to handle the display of task steps for the editing screen.
  */
-public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskStepsListAdapter.TaskStepListViewHolder> implements ItemTouchHelperAdapter {
+public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskStepsListAdapter.TaskStepListViewHolder> implements TaskStepsDrag.CallbackContract {
 
     /**
      * TaskListViewHolder acts as a layer between code and xml layout.
      * Fetches View elements to set them in the adapter.
      */
-    static class TaskStepListViewHolder extends RecyclerView.ViewHolder {
+    public static class TaskStepListViewHolder extends RecyclerView.ViewHolder {
         private final ImageButton dragTaskStepButton;
         private final TextView titleTaskStep;
         private final TextView taskStepType;
@@ -61,12 +66,21 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
     private static final String TAG = "EditTaskStepsListAdap";
     private final LayoutInflater mInflater;
     private Context context;
+    private final Fragment fragment;
+    private final TaskStepsDrag.DragHandleCallback dragHandle;
     private List<TaskStep> taskSteps;
     private final EditStepsUtility editStepsUtility;
 
-    public EditTaskStepsListAdapter(Context context) {
+    public EditTaskStepsListAdapter(Context context, Fragment fragment) {
         mInflater = LayoutInflater.from(context);
         this.context = context;
+        this.fragment = fragment;
+
+        if (fragment instanceof TaskStepsDrag.DragHandleCallback) {
+            dragHandle = (TaskStepsDrag.DragHandleCallback) fragment;
+        } else {
+            dragHandle = null;
+        }
 
         editStepsUtility = new EditStepsUtilityController(context);
     }
@@ -74,9 +88,8 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
     /**
      * Triggered when the RecyclerView needs a new ViewHolder to display a task step.
      *
-     * @param parent ViewGroup to add the new View to
+     * @param parent   ViewGroup to add the new View to
      * @param viewType type of the view that is created
-     *
      * @return the new ViewHolder
      */
     @NonNull
@@ -91,22 +104,33 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
      * Replace task steps on the screen by recycling views.
      * Update the tasks steps whilst the user is scrolling through them.
      *
-     * @param holder the element the data gets bound on
+     * @param holder   the element the data gets bound on
      * @param position the global position of the view
      */
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onBindViewHolder(@NonNull TaskStepListViewHolder holder, int position) {
 
         if (taskSteps != null) {
             TaskStep currentTaskStep = taskSteps.get(position);
-            // TODO Probably remove drag button or leave as hint?
+
+            holder.dragTaskStepButton.setOnTouchListener((view, event) -> {
+                view.performClick();
+
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    dragHandle.requestDrag(holder);
+                    return true;
+                }
+
+                return false;
+            });
 
             holder.titleTaskStep.setText(currentTaskStep.getTitle());
             holder.taskStepType.setText(context.getString(R.string.type, currentTaskStep.getType()));
 
-            if(taskSteps.get(position).getTypeAsTaskStepType() == TaskStepTypes.VIDEO){
+            if (taskSteps.get(position).getTypeAsTaskStepType() == TaskStepTypes.VIDEO) {
                 holder.taskImage.setImageResource(R.drawable.ic_baseline_video_library_48);
-            } else if(taskSteps.get(position).getImagePath() != null && !taskSteps.get(position).getImagePath().isEmpty()){
+            } else if (taskSteps.get(position).getImagePath() != null && !taskSteps.get(position).getImagePath().isEmpty()) {
                 holder.taskImage.setImageURI(Uri.parse(taskSteps.get(position).getImagePath()));
             } else {
                 holder.taskImage.setImageResource(R.drawable.image_placeholder);
@@ -120,8 +144,10 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
             });
 
             holder.deleteButton.setOnClickListener(v -> {
-                notifyItemRemoved(holder.getAdapterPosition());
-            });
+                        TaskStepViewModel viewModel = new ViewModelProvider(fragment).get(TaskStepViewModel.class);
+                        viewModel.deleteTaskStep(currentTaskStep);
+                    }
+            );
         } else {
             // Handle the case of data not being ready yet
             holder.titleTaskStep.setText(R.string.placeholder);
@@ -135,6 +161,7 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
      *
      * @param taskSteps the task steps to set
      */
+    @SuppressLint("NotifyDataSetChanged")
     public void setTaskSteps(final List<TaskStep> taskSteps) {
         Log.d(TAG, "Setting task steps: " + taskSteps.toString());
 
@@ -149,15 +176,18 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
      */
     @Override
     public int getItemCount() {
-        return taskSteps != null? taskSteps.size() : 0;
+        return taskSteps != null ? taskSteps.size() : 0;
     }
 
     @Override
-    public boolean onItemMove(int fromPosition, int toPosition) {
+    public void onItemMove(int fromPosition, int toPosition) {
         Log.d(TAG, String.format("DRAGGING: Moving %s from %d to %d", taskSteps.get(toPosition).getTitle(), fromPosition, toPosition));
 
         notifyItemMoved(fromPosition, toPosition);
+    }
 
-        return true;
+    @Override
+    public void onItemClear() {
+        Log.d(TAG, "DROPPED: Updating item in DB.");
     }
 }

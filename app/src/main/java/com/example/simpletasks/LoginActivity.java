@@ -1,15 +1,16 @@
 package com.example.simpletasks;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.simpletasks.domain.login.*;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.simpletasks.domain.login.Login;
+import com.example.simpletasks.domain.login.LoginController;
+import com.example.simpletasks.domain.login.User;
 
 /**
  * LoginActivity handles lifecycle and business calls for the caretaker login screen.
