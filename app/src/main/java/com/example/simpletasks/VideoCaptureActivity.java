@@ -27,8 +27,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.simpletasks.domain.fileSystem.FileSystemConstants;
-import com.example.simpletasks.domain.fileSystem.FileSystemUtility;
-import com.example.simpletasks.domain.fileSystem.FileSystemUtilityController;
+import com.example.simpletasks.domain.fileSystem.FileSystemUtils;
+import com.example.simpletasks.domain.fileSystem.FileSystemUtilsController;
 import com.example.simpletasks.domain.ui.ButtonUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -54,7 +54,7 @@ public class VideoCaptureActivity extends AppCompatActivity {
     private ViewPort viewPort;
     private FloatingActionButton fabStartRecording, fabStopRecording, fabPlay, fabPause, fabStop;
     private Button save;
-    private FileSystemUtility fsUtils;
+    private FileSystemUtils fsUtils;
     private File videoFile;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private List<FloatingActionButton> videoControls, recordingControls;
@@ -80,6 +80,7 @@ public class VideoCaptureActivity extends AppCompatActivity {
 
     }
 
+    // Initialize the fields of the edit audio step activity
     private void initializeFields() {
         backButton = findViewById(R.id.ib_videocapture_backbutton);
         showView = findViewById(R.id.vv_videocapture_show);
@@ -103,9 +104,10 @@ public class VideoCaptureActivity extends AppCompatActivity {
             ButtonUtils.disableButton(save);
         }
 
-        fsUtils = new FileSystemUtilityController();
+        fsUtils = new FileSystemUtilsController();
     }
 
+    // Initialize the state of the edit audio step activity
     private void initializeUi() {
         backButton.setOnClickListener(view -> handleBackClick());
 
@@ -119,6 +121,38 @@ public class VideoCaptureActivity extends AppCompatActivity {
         save.setOnClickListener(view -> saveRecording());
     }
 
+    // Start and configure cameraX
+    @SuppressLint("RestrictedApi")
+    private void startCameraX(ProcessCameraProvider cameraProvider) {
+        // Unbind all previously bound use cases
+        cameraProvider.unbindAll();
+
+        // Require the back facing camera
+        CameraSelector cameraSelector = new CameraSelector.Builder()
+                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+                .build();
+
+        // Build the preview use case and bind it to the preview view in the layout
+        Preview preview = new Preview.Builder().build();
+        preview.setSurfaceProvider(previewView.getSurfaceProvider());
+
+        // Build the video capture use case with a frame rate of 30 fps
+        videoCapture = new VideoCapture.Builder()
+                .setVideoFrameRate(30)
+                .build();
+
+        // Create use case group to set the viewport for the video
+        UseCaseGroup useCaseGroup = new UseCaseGroup.Builder()
+                .addUseCase(videoCapture)
+                .addUseCase(preview)
+                .setViewPort(viewPort)
+                .build();
+
+        // Bind the camera to the lifecycle and set the use cases
+        cameraProvider.bindToLifecycle(this, cameraSelector, useCaseGroup);
+    }
+
+    // Handle the back click and remove the file with the recorded video
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private void handleBackClick() {
         if (videoFile != null && videoFile.exists()) {
@@ -128,9 +162,10 @@ public class VideoCaptureActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
+    // Handle the start of the recording
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private void handleStartRecording() {
-        // Remove previous recording from this session
+        // Remove previous recording from this session if exists
         if (videoFile != null && videoFile.exists()) {
             videoFile.delete();
         }
@@ -145,6 +180,7 @@ public class VideoCaptureActivity extends AppCompatActivity {
         recordVideo();
     }
 
+    // Handle the stopping of the recording
     @SuppressLint("RestrictedApi")
     private void handleStopRecording() {
         fabStartRecording.setVisibility(View.VISIBLE);
@@ -156,6 +192,7 @@ public class VideoCaptureActivity extends AppCompatActivity {
         videoCapture.stopRecording();
     }
 
+    // Handle the starting of the video recording
     private void startPlaying() {
         if (showView.getCurrentPosition() > 0) {
             showView.start();
@@ -185,6 +222,7 @@ public class VideoCaptureActivity extends AppCompatActivity {
         }
     }
 
+    // Handle the pausing of the video recording
     private void pausePlaying() {
         if (showView.canPause()) {
             showView.pause();
@@ -197,6 +235,7 @@ public class VideoCaptureActivity extends AppCompatActivity {
         }
     }
 
+    // Handle the stopping of the play
     private void stopPlaying() {
         if (showView.canPause()) {
             showView.pause();
@@ -204,6 +243,7 @@ public class VideoCaptureActivity extends AppCompatActivity {
         }
     }
 
+    // Save the captured video, release bound resources and finish the activity.
     private void saveRecording() {
         Intent result = new Intent();
         if (videoFile != null && videoFile.exists()) {
@@ -217,50 +257,29 @@ public class VideoCaptureActivity extends AppCompatActivity {
         finish();
     }
 
+    // Request the required permissions
     private void requestPermissions() {
         ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, 1);
     }
 
+    // Get the executor for this activity
     private Executor getExecutor() {
         return ContextCompat.getMainExecutor(this);
     }
 
     @SuppressLint("RestrictedApi")
-    private void startCameraX(ProcessCameraProvider cameraProvider) {
-        cameraProvider.unbindAll();
-
-        CameraSelector cameraSelector = new CameraSelector.Builder()
-                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
-                .build();
-
-        Preview preview = new Preview.Builder().build();
-
-        preview.setSurfaceProvider(previewView.getSurfaceProvider());
-
-        videoCapture = new VideoCapture.Builder()
-                .setVideoFrameRate(30)
-                .build();
-
-        // Create use case group to set the viewport for the video
-        UseCaseGroup useCaseGroup = new UseCaseGroup.Builder()
-                .addUseCase(videoCapture)
-                .addUseCase(preview)
-                .setViewPort(viewPort)
-                .build();
-
-        cameraProvider.bindToLifecycle(this, cameraSelector, useCaseGroup);
-    }
-
-    @SuppressLint("RestrictedApi")
     private void recordVideo() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            // Inform the user about required permissions
             ButtonUtils.disableFABs(recordingControls);
-            String message = "Permission for audio must be granted in order to capture a video.";
+            String message = "Permission for audio and camera must be granted in order to capture a video.";
             Toast.makeText(this, message, Toast.LENGTH_LONG).show();
             return;
         }
 
+        // If video capture was initialized successfully
         if (videoCapture != null) {
+            // Create the file to store the video
             try {
                 videoFile = fsUtils.createVideoFile(getExternalFilesDir(FileSystemConstants.VIDEO_DIR));
             } catch (IOException e) {
@@ -270,8 +289,10 @@ public class VideoCaptureActivity extends AppCompatActivity {
                 return;
             }
 
+            // Enable the buttons to control the recording
             ButtonUtils.enableFABs(recordingControls);
 
+            // Start the recording and handle callbacks
             videoCapture.startRecording(
                     new VideoCapture.OutputFileOptions.Builder(videoFile).build(),
                     getExecutor(),

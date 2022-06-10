@@ -37,8 +37,8 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import com.example.simpletasks.domain.fileSystem.FileSystemConstants;
-import com.example.simpletasks.domain.fileSystem.FileSystemUtility;
-import com.example.simpletasks.domain.fileSystem.FileSystemUtilityController;
+import com.example.simpletasks.domain.fileSystem.FileSystemUtils;
+import com.example.simpletasks.domain.fileSystem.FileSystemUtilsController;
 import com.example.simpletasks.domain.ui.ButtonUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -57,7 +57,7 @@ public class ImageCaptureActivity extends AppCompatActivity {
     private final String[] REQUIRED_PERMISSIONS = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     private File photoFile;
-    private FileSystemUtility fsUtils;
+    private FileSystemUtils fsUtils;
 
     private ImageButton backButton;
     private FloatingActionButton fabCaptureImage;
@@ -93,7 +93,7 @@ public class ImageCaptureActivity extends AppCompatActivity {
     }
 
     private void initializeFields() {
-        fsUtils = new FileSystemUtilityController();
+        fsUtils = new FileSystemUtilsController();
         showImage = findViewById(R.id.iv_imagecapture_show);
         previewView = findViewById(R.id.vv_imagecapture_preview);
         backButton = findViewById(R.id.ib_imagecapture_back_button);

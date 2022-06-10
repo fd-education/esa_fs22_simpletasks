@@ -57,6 +57,8 @@
         android:contentDescription="@string/change_image"
         android:minWidth="48dp"
         android:minHeight="48dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         app:layout_constraintBottom_toBottomOf="@+id/iv_editaudiostep_image"
         app:layout_constraintStart_toEndOf="@+id/iv_editaudiostep_image"
         app:layout_constraintTop_toTopOf="@+id/iv_editaudiostep_image"
@@ -110,6 +112,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="88dp"
         android:text="@string/new_recording"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         app:layout_constraintBottom_toTopOf="@+id/b_editaudiostep_save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

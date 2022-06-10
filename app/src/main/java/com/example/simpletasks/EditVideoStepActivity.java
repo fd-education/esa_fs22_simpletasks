@@ -34,6 +34,7 @@ public class EditVideoStepActivity extends AppCompatActivity {
     private ImageButton backButton;
     private Button recordVideo;
     private Button saveStep;
+    private ActivityResultLauncher<Intent> captureVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class EditVideoStepActivity extends AppCompatActivity {
         }
     }
 
+    // Initialize the fields of the edit audio step activity
     private void initializeFields() {
         taskStepViewModel = new TaskStepViewModel(this.getApplication());
 
@@ -59,8 +61,19 @@ public class EditVideoStepActivity extends AppCompatActivity {
         backButton = findViewById(R.id.ib_editvideostep_back_button);
         recordVideo = findViewById(R.id.b_editvideostep_start_recording);
         saveStep = findViewById(R.id.b_editvideostep_save_step);
+
+        // Listener for the result of the video capture activity
+        captureVideo = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        Uri uri = (Uri) result.getData().getExtras().get(VideoCaptureActivity.RESULT_KEY);
+                        step.setVideoPath(uri.getPath());
+                        showVideo(uri.getPath());
+                    }
+                });
     }
 
+    // Initialize the state of the edit audio step activity
     private void initializeUi(){
         backButton.setOnClickListener(view -> {
             //TODO ask the user if he really wants to discard his changes
@@ -70,64 +83,69 @@ public class EditVideoStepActivity extends AppCompatActivity {
         recordVideo.setOnClickListener(view -> captureVideo());
 
         saveStep.setOnClickListener(view -> {
-            persistStep();
+            if(!persistStep()){
+                return;
+            }
+
             setResult();
             finish();
         });
     }
 
+    // Launch the video capture activity
     private void captureVideo(){
         Intent captureVideoIntent = new Intent(this, VideoCaptureActivity.class);
         captureVideo.launch(captureVideoIntent);
     }
 
-    final ActivityResultLauncher<Intent> captureVideo = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        Uri uri = (Uri) result.getData().getExtras().get(VideoCaptureActivity.RESULT_KEY);
-                        step.setVideoPath(uri.getPath());
-                        showVideo(uri.getPath());
-                    }
-                }
-            });
-
-    private void setVideoPlayer(String videoPath){
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.frag_editvideostep_videoplayer, VideoPlayerFragment.getNewInstance(videoPath)).commit();
-    }
-
+    // Show the video in the player
     private void showVideo(String videoPath) {
         noVideoWarning.setVisibility(View.GONE);
         videoPlayer.setVisibility(View.VISIBLE);
         setVideoPlayer(videoPath);
     }
 
+    // Set the video player fragment
+    private void setVideoPlayer(String videoPath){
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.frag_editvideostep_videoplayer, VideoPlayerFragment.getNewInstance(videoPath)).commit();
+    }
+
+    // Set the activity result
     private void setResult(){
         Intent result = new Intent();
         result.putExtra(EditTaskActivity.NEW_STEP, step);
         setResult(RESULT_OK, result);
     }
 
-    private void persistStep(){
+    // Persist the changes to the step
+    private boolean persistStep(){
         if (isEmpty(stepTitleInput)) {
             stepTitleInput.setError(getString(R.string.empty_step_title));
-            return;
+            return false;
+        }
+
+        // No user created steps with no recording allowed
+        if(step.getVideoPath() == null || step.getVideoPath().isEmpty()){
+            recordVideo.setError(getString(R.string.no_video));
+            return false;
         }
 
         step.setTitle(stepTitleInput.getText().toString().trim());
 
         ArrayList<TaskStep> steps = new ArrayList<>();
         steps.add(step);
-
         taskStepViewModel.updateTaskSteps(steps);
+
+        return true;
     }
 
+    // Check if an edit test input is empty
     private boolean isEmpty(EditText editText) {
         return editText.getText().toString().trim().length() == 0;
     }
 
+    // Unpack the taskstep from the extras bundle
     private void handleTaskStepExtras(Bundle bundle) {
         if (bundle.containsKey(MainActivity.TASK_INTENT_EXTRA)) {
             step = (TaskStep) bundle.get(MainActivity.TASK_INTENT_EXTRA);

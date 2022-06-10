@@ -32,6 +32,7 @@ public class EditTextStepActivity extends AppCompatActivity {
     private ImageView stepImageView;
     private ImageButton captureImage;
     private Button saveStep;
+    private ActivityResultLauncher<Intent> chooseTitleImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class EditTextStepActivity extends AppCompatActivity {
         Log.d(TAG, "Created edit text step activity.");
     }
 
+    // Initialize the fields of the edit audio step activity
     private void initializeFields(){
         taskStepViewModel = new TaskStepViewModel(this.getApplication());
 
@@ -57,8 +59,19 @@ public class EditTextStepActivity extends AppCompatActivity {
         stepImageView = findViewById(R.id.iv_edittextstep_image);
         captureImage = findViewById(R.id.ib_edittextstep_capture_image);
         saveStep = findViewById(R.id.b_edittextstep_save);
+
+        // Listener for the result of the capture image activity
+        chooseTitleImage = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        Uri uri = (Uri) result.getData().getExtras().get(ImageCaptureActivity.RESULT_KEY);
+                        step.setImagePath(uri.getPath());
+                        stepImageView.setImageURI(uri);
+                    }
+                });
     }
 
+    // Initialize the state of the edit text step activity
     private void initializeUi(){
         backButton.setOnClickListener(view -> {
             //todo ask the user if he really wants to discard his changes
@@ -71,12 +84,16 @@ public class EditTextStepActivity extends AppCompatActivity {
         });
 
         saveStep.setOnClickListener(view -> {
-            persistStep();
+            if(!persistStep()){
+                return;
+            }
+
             setResult();
             finish();
         });
     }
 
+    // Unpack the taskstep from the extras bundle
     private void handleIntent(Bundle bundle){
         if(!bundle.isEmpty() && bundle.containsKey(MainActivity.TASK_INTENT_EXTRA)){
             step = (TaskStep) bundle.get(MainActivity.TASK_INTENT_EXTRA);
@@ -91,15 +108,16 @@ public class EditTextStepActivity extends AppCompatActivity {
         }
     }
 
-    private void persistStep(){
+    // Persist the changes to the step
+    private boolean persistStep(){
         if(isEmpty(stepTitleInput)){
             stepTitleInput.setError(getString(R.string.empty_step_title));
-            return;
+            return false;
         }
 
         if(isEmpty(stepDescriptionInput)){
             stepDescriptionInput.setError(getString(R.string.empty_step_description));
-            return;
+            return false;
         }
 
         step.setTitle(stepTitleInput.getText().toString().trim());
@@ -107,28 +125,19 @@ public class EditTextStepActivity extends AppCompatActivity {
 
         ArrayList<TaskStep> steps = new ArrayList<>();
         steps.add(step);
-
         taskStepViewModel.insertTaskSteps(steps);
+
+        return true;
     }
 
-    final ActivityResultLauncher<Intent> chooseTitleImage = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        Uri uri = (Uri) result.getData().getExtras().get(ImageCaptureActivity.RESULT_KEY);
-                        step.setImagePath(uri.getPath());
-                        stepImageView.setImageURI(uri);
-                    }
-                }
-            });
-
+    // Set the activity result
     private void setResult(){
         Intent result = new Intent();
         result.putExtra(EditTaskActivity.NEW_STEP, step);
         setResult(RESULT_OK, result);
     }
 
+    // Check if an edit test input is empty
     private boolean isEmpty(EditText editText){
         return editText.getText().toString().trim().length() == 0;
     }

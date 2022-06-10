@@ -24,8 +24,8 @@ import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.types.TaskStepTypes;
 import com.example.simpletasks.data.viewmodels.TaskStepViewModel;
 import com.example.simpletasks.domain.dragdrop.TaskStepsDrag;
-import com.example.simpletasks.domain.editSteps.EditStepsUtility;
-import com.example.simpletasks.domain.editSteps.EditStepsUtilityController;
+import com.example.simpletasks.domain.editSteps.EditStepsUtils;
+import com.example.simpletasks.domain.editSteps.EditStepsUtilsController;
 
 import java.util.List;
 
@@ -67,9 +67,9 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
     private final LayoutInflater mInflater;
     private Context context;
     private final Fragment fragment;
-    private final TaskStepsDrag.DragHandleCallback dragHandle;
+    private TaskStepsDrag.DragHandleCallback dragHandle;
     private List<TaskStep> taskSteps;
-    private final EditStepsUtility editStepsUtility;
+    private final EditStepsUtils editStepsUtility;
 
     public EditTaskStepsListAdapter(Context context, Fragment fragment) {
         mInflater = LayoutInflater.from(context);
@@ -78,11 +78,9 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
 
         if (fragment instanceof TaskStepsDrag.DragHandleCallback) {
             dragHandle = (TaskStepsDrag.DragHandleCallback) fragment;
-        } else {
-            dragHandle = null;
         }
 
-        editStepsUtility = new EditStepsUtilityController(context);
+        editStepsUtility = new EditStepsUtilsController(context);
     }
 
     /**
@@ -115,8 +113,10 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
             TaskStep currentTaskStep = taskSteps.get(position);
 
             holder.dragTaskStepButton.setOnTouchListener((view, event) -> {
+                // make click sound at touch
                 view.performClick();
 
+                // request the drag if the event is a long touch on the drag button
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     dragHandle.requestDrag(holder);
                     return true;
@@ -128,6 +128,7 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
             holder.titleTaskStep.setText(currentTaskStep.getTitle());
             holder.taskStepType.setText(context.getString(R.string.type, currentTaskStep.getType()));
 
+            // set the preview image in the task view
             if (taskSteps.get(position).getTypeAsTaskStepType() == TaskStepTypes.VIDEO) {
                 holder.taskImage.setImageResource(R.drawable.ic_baseline_video_library_48);
             } else if (taskSteps.get(position).getImagePath() != null && !taskSteps.get(position).getImagePath().isEmpty()) {
@@ -136,7 +137,7 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
                 holder.taskImage.setImageResource(R.drawable.image_placeholder);
             }
 
-            // Go to the edit screen corresponding to the current step format
+            // go to the edit screen for the current step format
             holder.editButton.setOnClickListener(v -> {
                 Intent intent = editStepsUtility.getHandlerIntent(currentTaskStep.getTypeAsTaskStepType());
                 intent.putExtra(MainActivity.TASK_INTENT_EXTRA, currentTaskStep);
@@ -179,6 +180,13 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
         return taskSteps != null ? taskSteps.size() : 0;
     }
 
+    /**
+     * Trigger the notification to tell the adapter, that the item is moving,
+     * when the user drags it.
+     *
+     * @param fromPosition initial position
+     * @param toPosition target position
+     */
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
         Log.d(TAG, String.format("DRAGGING: Moving %s from %d to %d", taskSteps.get(toPosition).getTitle(), fromPosition, toPosition));

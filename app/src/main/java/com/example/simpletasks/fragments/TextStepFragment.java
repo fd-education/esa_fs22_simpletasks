@@ -90,12 +90,14 @@ public class TextStepFragment extends Fragment {
         return view;
     }
 
+    // Initialize the fields of the text step fragment
     private void initializeFields(View view){
         title = view.findViewById(R.id.tv_showtextstep_title);
         imageView = view.findViewById(R.id.iv_showtextstep_image);
         description = view.findViewById(R.id.tv_showtextstep_description);
     }
 
+    // Initialize the state of the text step fragment
     private void initializeUi(){
         title.setText(stepTitle);
 

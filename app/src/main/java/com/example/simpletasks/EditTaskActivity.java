@@ -10,8 +10,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
@@ -41,6 +39,7 @@ public class EditTaskActivity extends AppCompatActivity {
     // UI element to read from/ write to
     private EditText taskTitle;
     private ImageView taskImageView;
+    private ActivityResultLauncher<Intent> chooseTitleImage;
 
 
     /**
@@ -55,8 +54,8 @@ public class EditTaskActivity extends AppCompatActivity {
 
         // Get the task from the intent
         handleTaskIntent();
+        initializeFields();
 
-        taskImageView = findViewById(R.id.imageView_taskImage);
         if (currentEditTask.getTitleImagePath().isEmpty()) {
             taskImageView.setImageResource(R.drawable.image_placeholder);
         } else {
@@ -67,9 +66,6 @@ public class EditTaskActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(SHARED_PREF_TASK_ID, currentEditTask.getId()).apply();
 
-//        taskStepViewModel = new ViewModelProvider(this).get(TaskStepViewModel.class);
-
-
         // Set the fragments in the activity
         fillValuesOnUi();
         setFragment();
@@ -77,7 +73,28 @@ public class EditTaskActivity extends AppCompatActivity {
         Log.d(TAG, "finished initialisation");
     }
 
+    private void initializeFields(){
+        taskImageView = findViewById(R.id.imageView_taskImage);
+        taskTitle = findViewById(R.id.taskTitle_editTask);
+
+        chooseTitleImage = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        Uri uri = (Uri) result.getData().getExtras().get(ImageCaptureActivity.RESULT_KEY);
+                        currentEditTask.setTitleImagePath(uri.getPath());
+                        taskImageView.setImageURI(uri);
+                    }
+                });
+    }
+
+    /**
+     * Handle click events on the add task step button
+     * Ask the user, which kind of a task they want to create
+     *
+     * @param view ignored, not needed by the handler
+     */
     public void onAddTaskStepClicked(View view) {
+        // TODO Create the correct pop-up
         getChoseFormatDialog().show();
     }
 
@@ -101,22 +118,14 @@ public class EditTaskActivity extends AppCompatActivity {
         onBackPressed();
     }
 
+    /**
+     * Launch the activity to capture the title image
+     * @param v ignored because not required for the handler
+     */
     public void onTitleImageClicked(View v) {
         Intent intent = new Intent(this, ImageCaptureActivity.class);
         chooseTitleImage.launch(intent);
     }
-
-    final ActivityResultLauncher<Intent> chooseTitleImage = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        Uri uri = (Uri) result.getData().getExtras().get(ImageCaptureActivity.RESULT_KEY);
-                        currentEditTask.setTitleImagePath(uri.getPath());
-                        taskImageView.setImageURI(uri);
-                    }
-                }
-            });
 
     /**
      * Handle click events on the back button
@@ -141,7 +150,7 @@ public class EditTaskActivity extends AppCompatActivity {
 
     // Set the task title in the UI
     private void fillValuesOnUi() {
-        taskTitle = findViewById(R.id.taskTitle_editTask);
+
         taskTitle.setText(currentEditTask.getTitle());
     }
 
@@ -151,6 +160,7 @@ public class EditTaskActivity extends AppCompatActivity {
         this.currentEditTask = taskWithSteps.getTask();
     }
 
+    // TODO Replace with correct dialog pop-up
     private AlertDialog getChoseFormatDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 

@@ -110,6 +110,11 @@ public class TaskViewModel extends AndroidViewModel {
         taskRepo.insertTaskWithSteps(tasksWithSteps);
     }
 
+    /**
+     * Insert a task into the tasks table
+     *
+     * @param task the task to insert into the tasks table
+     */
     public void insertTask(final Task task){
         List<Task> tasks = new ArrayList<>();
         tasks.add(task);

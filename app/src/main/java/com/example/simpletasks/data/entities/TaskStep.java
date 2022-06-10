@@ -275,6 +275,11 @@ public class TaskStep implements Serializable {
         return Objects.hash(id, index, type, title, imagePath, description, videoPath, audioPath, taskId);
     }
 
+    /**
+     * Get a String representation of the task step
+     *
+     * @return String representation of the task step
+     */
     @NonNull
     @Override
     public String toString(){

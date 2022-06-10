@@ -65,4 +65,5 @@
     <string name="redo_image">Neues Foto</string>
     <string name="recording_in_progress">Aufnahme läuft</string>
     <string name="playing_in_progress">Aufnahme wird abgespielt</string>
+    <string name="no_image">Kein Titelbild.</string>
 </resources>

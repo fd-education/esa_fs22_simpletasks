@@ -1,10 +1,20 @@
-package com.example.simpletasks.domain.animation;
+package com.example.simpletasks.domain.ui;
 
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 
-public class AnimationUtil {
+/**
+ * Utility class that contains animations for the SimpleTasks UI
+ */
+public class AnimationUtils {
+
+    /**
+     * Get an animation that makes the desired view blink by setting its alpha value to 0 or 1 respectively.
+     * Values between 0 and 1 are interpolated.
+     *
+     * @return animation
+     */
     public static Animation getBlinkingAnimation(){
         int durationInMillis = 750;
         int fullyVisible = 1;

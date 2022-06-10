@@ -150,6 +150,7 @@ public class TaskGuideActivity extends AppCompatActivity {
         }
     }
 
+    // Change the progressbar to be at the current step and handle the scrolling in the progress bar accordingly
     private void setActiveStep(int currentStep){
         int stepIndex = currentStep + 1;
         if(stepIndex > 1){
@@ -176,12 +177,14 @@ public class TaskGuideActivity extends AppCompatActivity {
         }
     }
 
+    // Set the progressbar to display as many steps as there are in the task
     private void setProgressBar(){
         for(int i = 1; i <= taskSteps.size(); i++){
             progressBar.addView(getProgressStep(i));
         }
     }
 
+    // Get the progressbar step with the number of a step
     private TextView getProgressStep(int stepNumber){
         TextView textView;
 

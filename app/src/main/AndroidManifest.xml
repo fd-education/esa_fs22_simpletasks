@@ -28,9 +28,6 @@
             android:name=".AudioCaptureActivity"
             android:exported="false" />
         <activity
-            android:name=".ChoseFormatActivity"
-            android:exported="false" />
-        <activity
             android:name=".ImageCaptureActivity"
             android:exported="false">
             <intent-filter>
@@ -41,7 +38,7 @@
         </activity>
         <activity
             android:name=".EditAudioStepActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".EditVideoStepActivity"
             android:exported="false">

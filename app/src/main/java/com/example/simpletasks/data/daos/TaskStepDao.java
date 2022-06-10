@@ -54,7 +54,10 @@ public interface TaskStepDao {
     @Update
     void updateTaskSteps(List<TaskStep> taskSteps);
 
-
+    /**
+     * Delete one task step from the taskSteps table.
+     * @param taskStep the task step to delete
+     */
     @Delete
     void deleteTaskStep(TaskStep taskStep);
 

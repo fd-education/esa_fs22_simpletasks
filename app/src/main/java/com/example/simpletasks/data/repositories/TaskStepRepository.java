@@ -39,6 +39,11 @@ public class TaskStepRepository {
         return taskStepDao.getByTaskId(taskId);
     }
 
+    /**
+     * Insert a task step into the task step table
+     *
+     * @param taskStep the taskStep to insert
+     */
     public void insertTaskStep(final TaskStep taskStep){
         AppDatabase.databaseWriteExecutor.execute(() -> taskStepDao.insertTaskStep(taskStep));
     }

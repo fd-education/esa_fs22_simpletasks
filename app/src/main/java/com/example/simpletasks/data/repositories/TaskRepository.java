@@ -134,6 +134,11 @@ public class TaskRepository {
         }
     }
 
+    /**
+     * Update a list of tasks in the tasks table
+     *
+     * @param tasks the list of tasks to update
+     */
     public void updateTasks(final List<Task> tasks){
         AppDatabase.databaseWriteExecutor.execute(() -> taskDao.updateTasks(tasks));
     }

@@ -74,16 +74,19 @@ public class VideoStepFragment extends Fragment {
         return view;
     }
 
+    // Initialize the fields of the video step fragment
     private void initializeFields(View view){
         title = view.findViewById(R.id.tv_showvideostep_title);
     }
 
+    // Initialize the state of the video step fragment
     private void initializeUi(){
         title.setText(stepTitle);
 
         setVideoPlayer();
     }
 
+    // Set the video player fragment
     private void setVideoPlayer(){
         getChildFragmentManager().beginTransaction()
                 .add(R.id.frag_showvideostep_videoplayer, VideoPlayerFragment.getNewInstance(videoPath)).commit();

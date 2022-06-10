@@ -11,7 +11,11 @@ import android.view.ViewGroup;
 import android.widget.VideoView;
 
 import com.example.simpletasks.R;
+import com.example.simpletasks.domain.ui.ButtonUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +36,7 @@ public class VideoPlayerFragment extends Fragment {
     private FloatingActionButton fabPlay;
     private FloatingActionButton fabPause;
     private FloatingActionButton fabStop;
+    private List<FloatingActionButton> fabControls;
 
 
     public VideoPlayerFragment() {
@@ -75,29 +80,34 @@ public class VideoPlayerFragment extends Fragment {
         return view;
     }
 
+    // Initialize the fields of the video player
     private void initializeFields(View view) {
         video = view.findViewById(R.id.vv_videoplayer_video);
         fabPlay = view.findViewById(R.id.fab_videoplayer_play);
         fabPause = view.findViewById(R.id.fab_videoplayer_pause);
         fabPause.setVisibility(View.GONE);
         fabStop = view.findViewById(R.id.fab_videoplayer_stop);
+
+        Collections.addAll(fabControls, fabPlay, fabStop, fabPause);
     }
 
+    // Initialize the state of the video player
     private void initializeUi() {
         if (videoPath != null && !videoPath.isEmpty()) {
-            setControlsEnabled(true);
+            ButtonUtils.enableFABs(fabControls);
             controlVideo();
             Log.d(TAG, "Video Controls enabled and initialized.");
         } else {
-            setControlsEnabled(false);
+            ButtonUtils.disableFABs(fabControls);
             Log.d(TAG, "Video Controls disabled.");
         }
     }
 
+    // Set the click listeners for all video control components
     private void controlVideo() {
         video.setVideoPath(videoPath);
         // to make the first frame appear instead of a black view
-        video.seekTo(1);
+        video.seekTo(0);
 
         fabPlay.setOnClickListener(view -> {
             video.start();
@@ -125,23 +135,5 @@ public class VideoPlayerFragment extends Fragment {
             fabPause.setVisibility(View.GONE);
             fabPlay.setVisibility(View.VISIBLE);
         });
-    }
-
-    private void setControlsEnabled(Boolean enabled){
-        fabPlay.setEnabled(enabled);
-        fabPause.setEnabled(enabled);
-        fabStop.setEnabled(enabled);
-
-        if(enabled){
-            setFabAlpha(1f);
-        } else {
-            setFabAlpha(.5f);
-        }
-    }
-
-    private void setFabAlpha(float alpha){
-        fabPlay.setAlpha(alpha);
-        fabPause.setAlpha(alpha);
-        fabStop.setAlpha(alpha);
     }
 }
