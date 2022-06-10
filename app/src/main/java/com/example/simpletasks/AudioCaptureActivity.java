@@ -33,6 +33,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Activity for capturing audio recordings.
+ */
 public class AudioCaptureActivity extends AppCompatActivity {
     public static final String RESULT_KEY = "AUDIO_CAPTURE_RESULT";
 

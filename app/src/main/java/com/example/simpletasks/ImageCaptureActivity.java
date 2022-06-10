@@ -18,8 +18,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -50,6 +48,9 @@ import java.io.InputStream;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 
+/**
+ * Activity for capturing images.
+ */
 public class ImageCaptureActivity extends AppCompatActivity {
     public static final String RESULT_KEY = "IMAGE_CAPTURE_RESULT";
 
@@ -70,6 +71,8 @@ public class ImageCaptureActivity extends AppCompatActivity {
     private ImageCapture imageCapture;
 
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
+    private ActivityResultLauncher<Intent> cropImage;
+    private ActivityResultLauncher<Intent> pickFromGallery;
 
 
     @Override
@@ -92,6 +95,7 @@ public class ImageCaptureActivity extends AppCompatActivity {
         }, getExecutor());
     }
 
+    // Initialize the fields of the image capture activity
     private void initializeFields() {
         fsUtils = new FileSystemUtilsController();
         showImage = findViewById(R.id.iv_imagecapture_show);
@@ -101,48 +105,10 @@ public class ImageCaptureActivity extends AppCompatActivity {
         fabCaptureImage = findViewById(R.id.fab_imagecapture_capture);
         fabPickImage = findViewById(R.id.fab_imagecapture_gallery);
         saveImage = findViewById(R.id.b_imagecapture_save);
-    }
 
-    private void initializeUi() {
-        ButtonUtils.disableButton(saveImage);
-        showImage.setVisibility(View.GONE);
-        previewView.setVisibility(View.VISIBLE);
-
-        backButton.setOnClickListener(view -> handleBackPressed());
-
-        fabRedo.setOnClickListener(view -> redoImageCapture());
-        fabCaptureImage.setOnClickListener(view -> capturePhoto());
-        fabPickImage.setOnClickListener(view -> pickImageFromGallery());
-
-        saveImage.setOnClickListener(view -> returnImage());
-    }
-
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    private void handleBackPressed() {
-        if (photoFile != null && photoFile.exists()) {
-            photoFile.delete();
-        }
-
-        super.onBackPressed();
-    }
-
-    private void redoImageCapture() {
-        showImage.setVisibility(View.GONE);
-        previewView.setVisibility(View.VISIBLE);
-        fabRedo.setVisibility(View.GONE);
-        ButtonUtils.enableImageButton(fabCaptureImage);
-        ButtonUtils.disableButton(saveImage);
-    }
-
-    private void pickImageFromGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        pickFromGallery.launch(intent);
-    }
-
-    final ActivityResultLauncher<Intent> pickFromGallery = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
+        // Listener for the gallery pick result
+        pickFromGallery = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
                     Intent data = result.getData();
 
                     if (result.getResultCode() == RESULT_OK && data != null) {
@@ -165,15 +131,65 @@ public class ImageCaptureActivity extends AppCompatActivity {
                         } catch (Exception e) {
                             Log.e(TAG, e.toString());
                             return;
-                            // TODO
                         }
 
                         photoFile = newPhotoFile;
                         performCrop();
                     }
-                }
-            });
+                });
 
+        // Listener for the crop image result
+        cropImage = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        showImage();
+                    } else {
+                        Toast.makeText(ImageCaptureActivity.this, "Image must be rectangular", Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+    // Initialize the state of the image capture activity
+    private void initializeUi() {
+        ButtonUtils.disableButton(saveImage);
+        showImage.setVisibility(View.GONE);
+        previewView.setVisibility(View.VISIBLE);
+
+        backButton.setOnClickListener(view -> handleBackPressed());
+
+        fabRedo.setOnClickListener(view -> redoImageCapture());
+        fabCaptureImage.setOnClickListener(view -> capturePhoto());
+        fabPickImage.setOnClickListener(view -> pickImageFromGallery());
+
+        saveImage.setOnClickListener(view -> setResult());
+    }
+
+    // Handle the back click and remove the file with the captured image
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private void handleBackPressed() {
+        if (photoFile != null && photoFile.exists()) {
+            photoFile.delete();
+        }
+
+        super.onBackPressed();
+    }
+
+    // Handle the ui changes if the user wants to redo the image
+    private void redoImageCapture() {
+        showImage.setVisibility(View.GONE);
+        previewView.setVisibility(View.VISIBLE);
+        fabRedo.setVisibility(View.GONE);
+        ButtonUtils.enableImageButton(fabCaptureImage);
+        ButtonUtils.disableButton(saveImage);
+    }
+
+    // Launch intent to pick an image from the gallery
+    private void pickImageFromGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        pickFromGallery.launch(intent);
+    }
+
+    // Launch intent to crop the image picked from the gallery
     private void performCrop() {
         try {
             Intent cropIntent = new Intent("com.android.camera.action.CROP");
@@ -192,36 +208,32 @@ public class ImageCaptureActivity extends AppCompatActivity {
         }
     }
 
-    final ActivityResultLauncher<Intent> cropImage = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == RESULT_OK) {
-                    showImage();
-                } else {
-                    // TODO
-                    Toast.makeText(ImageCaptureActivity.this, "Image must be rectangular", Toast.LENGTH_LONG).show();
-                }
-            });
-
+    // Request the required permissions to take an image
     private void requestPermissions() {
         ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, 1);
     }
 
+    // Get the executor for the current activity
     private Executor getExecutor() {
         return ContextCompat.getMainExecutor(this);
     }
 
+    // Start and configure cameraX
     @SuppressLint("RestrictedApi")
     private void startCameraX(ProcessCameraProvider cameraProvider) {
+        // Unbind all previously bound use cases
         cameraProvider.unbindAll();
 
+        // Require the back facing camera
         CameraSelector cameraSelector = new CameraSelector.Builder()
                 .requireLensFacing(CameraSelector.LENS_FACING_BACK)
                 .build();
 
+        // Build the preview use case and bind it to the preview view in the layout
         Preview preview = new Preview.Builder().build();
-
         preview.setSurfaceProvider(previewView.getSurfaceProvider());
 
+        // Build the video capture use case with a frame rate of 30 fps
         imageCapture = new ImageCapture.Builder()
                 .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
                 .setTargetRotation(ROTATION_0)
@@ -239,11 +251,24 @@ public class ImageCaptureActivity extends AppCompatActivity {
                 .setViewPort(viewPort)
                 .build();
 
+        // Bind the camera to the lifecycle and set the use cases
         cameraProvider.bindToLifecycle(this, cameraSelector, useCaseGroup);
     }
 
+    // Capture the photo
     private void capturePhoto() {
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            // Inform the user about required permissions
+            ButtonUtils.disableImageButton(fabCaptureImage);
+            String message = "Permission for the camera must be granted in order to capture a photo.";
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        // If image capture was initialized successfully ...
         if (imageCapture != null) {
+            // ... create the file to store the image
             try {
                 photoFile = fsUtils.createImageFile(getExternalFilesDir(FileSystemConstants.IMAGE_DIR));
             } catch (IOException e) {
@@ -253,13 +278,7 @@ public class ImageCaptureActivity extends AppCompatActivity {
                 return;
             }
 
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                ButtonUtils.disableImageButton(fabCaptureImage);
-                String message = "Permission for the camera must be granted in order to capture a photo.";
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-                return;
-            }
-
+            // Start the capturing and handle callbacks
             imageCapture.takePicture(
                     new ImageCapture.OutputFileOptions.Builder(photoFile).build(),
                     getExecutor(),
@@ -281,6 +300,7 @@ public class ImageCaptureActivity extends AppCompatActivity {
         }
     }
 
+    // Show the captured image to the user and allow controls to redo the image
     private void showImage() {
         if (photoFile == null) {
             Log.e(TAG, "No image to load. Return from showImage()");
@@ -298,13 +318,14 @@ public class ImageCaptureActivity extends AppCompatActivity {
         showImage.setImageURI(Uri.fromFile(photoFile));
     }
 
-    private void returnImage() {
+    // Set the result of the activity
+    private void setResult() {
         Intent result = new Intent();
 
         if (photoFile != null && photoFile.exists()) {
             result.putExtra(RESULT_KEY, Uri.fromFile(photoFile));
             setResult(RESULT_OK, result);
-        }else {
+        } else {
             result.putExtra(RESULT_KEY, "");
             setResult(RESULT_CANCELED, result);
         }

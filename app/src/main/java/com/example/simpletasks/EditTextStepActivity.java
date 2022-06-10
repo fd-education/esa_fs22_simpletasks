@@ -20,6 +20,9 @@ import com.example.simpletasks.data.viewmodels.TaskStepViewModel;
 
 import java.util.ArrayList;
 
+/**
+ * Activity to edit text steps.
+ */
 public class EditTextStepActivity extends AppCompatActivity {
     private final String TAG = "EditTextStepActivity";
 

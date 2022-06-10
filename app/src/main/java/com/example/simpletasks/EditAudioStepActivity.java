@@ -22,6 +22,9 @@ import com.example.simpletasks.fragments.AudioPlayerFragment;
 
 import java.util.ArrayList;
 
+/**
+ * Activity for editing audio steps.
+ */
 public class EditAudioStepActivity extends AppCompatActivity {
     final String TAG = "EditAudioStepActivity";
 

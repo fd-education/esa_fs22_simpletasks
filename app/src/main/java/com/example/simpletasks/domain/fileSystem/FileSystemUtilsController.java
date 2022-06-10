@@ -9,6 +9,9 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Class implementing file system utility methods
+ */
 public class FileSystemUtilsController implements FileSystemUtils {
     /**
      * Get the file object to store an image to.

@@ -22,6 +22,9 @@ import com.example.simpletasks.fragments.VideoPlayerFragment;
 
 import java.util.ArrayList;
 
+/**
+ * Activity to edit video steps.
+ */
 public class EditVideoStepActivity extends AppCompatActivity {
     final String TAG = "EditVideoStepActivity";
 

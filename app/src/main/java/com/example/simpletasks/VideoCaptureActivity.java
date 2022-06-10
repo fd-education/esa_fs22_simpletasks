@@ -41,6 +41,9 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 
+/**
+ * Activity to capture videos.
+ */
 public class VideoCaptureActivity extends AppCompatActivity {
     public static final String RESULT_KEY = "VIDEO_CAPTURE_RESULT";
 
@@ -121,6 +124,16 @@ public class VideoCaptureActivity extends AppCompatActivity {
         save.setOnClickListener(view -> saveRecording());
     }
 
+    // Handle the back click and remove the file with the recorded video
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private void handleBackClick() {
+        if (videoFile != null && videoFile.exists()) {
+            videoFile.delete();
+        }
+
+        super.onBackPressed();
+    }
+
     // Start and configure cameraX
     @SuppressLint("RestrictedApi")
     private void startCameraX(ProcessCameraProvider cameraProvider) {
@@ -150,16 +163,6 @@ public class VideoCaptureActivity extends AppCompatActivity {
 
         // Bind the camera to the lifecycle and set the use cases
         cameraProvider.bindToLifecycle(this, cameraSelector, useCaseGroup);
-    }
-
-    // Handle the back click and remove the file with the recorded video
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    private void handleBackClick() {
-        if (videoFile != null && videoFile.exists()) {
-            videoFile.delete();
-        }
-
-        super.onBackPressed();
     }
 
     // Handle the start of the recording
@@ -267,6 +270,7 @@ public class VideoCaptureActivity extends AppCompatActivity {
         return ContextCompat.getMainExecutor(this);
     }
 
+    // Make a video recording
     @SuppressLint("RestrictedApi")
     private void recordVideo() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {

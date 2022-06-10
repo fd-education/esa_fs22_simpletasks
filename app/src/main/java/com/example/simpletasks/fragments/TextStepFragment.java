@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.example.simpletasks.R;
 
 /**
- * Fragment for the task guide screens.
+ * Fragment for the text task guide screens.
  */
 public class TextStepFragment extends Fragment {
     // the fragment initialization parameters
