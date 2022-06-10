@@ -3,14 +3,13 @@ package com.example.simpletasks;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
@@ -55,6 +54,7 @@ public class EditVideoStepActivity extends AppCompatActivity {
 
     // Initialize the fields of the edit audio step activity
     private void initializeFields() {
+        Log.d(TAG, "Initializing fields");
         taskStepViewModel = new TaskStepViewModel(this.getApplication());
 
         stepTitleInput = findViewById(R.id.et_editvideostep_step_title);
@@ -78,6 +78,7 @@ public class EditVideoStepActivity extends AppCompatActivity {
 
     // Initialize the state of the edit audio step activity
     private void initializeUi(){
+        Log.d(TAG, "Initializing UI.");
         backButton.setOnClickListener(view -> {
             //TODO ask the user if he really wants to discard his changes
             super.onBackPressed();
@@ -97,12 +98,16 @@ public class EditVideoStepActivity extends AppCompatActivity {
 
     // Launch the video capture activity
     private void captureVideo(){
+        Log.d(TAG, "Launch video capture intent.");
+
         Intent captureVideoIntent = new Intent(this, VideoCaptureActivity.class);
         captureVideo.launch(captureVideoIntent);
     }
 
     // Show the video in the player
     private void showVideo(String videoPath) {
+        Log.d(TAG, "Showing video.");
+
         noVideoWarning.setVisibility(View.GONE);
         videoPlayer.setVisibility(View.VISIBLE);
         setVideoPlayer(videoPath);
@@ -123,14 +128,20 @@ public class EditVideoStepActivity extends AppCompatActivity {
 
     // Persist the changes to the step
     private boolean persistStep(){
+        Log.d(TAG, "Persisting step.");
+
         if (isEmpty(stepTitleInput)) {
             stepTitleInput.setError(getString(R.string.empty_step_title));
+            Log.e(TAG, "No title set.");
+
             return false;
         }
 
         // No user created steps with no recording allowed
         if(step.getVideoPath() == null || step.getVideoPath().isEmpty()){
             recordVideo.setError(getString(R.string.no_video));
+            Log.e(TAG, "No video recording set.");
+
             return false;
         }
 

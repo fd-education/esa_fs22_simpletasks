@@ -9,8 +9,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
@@ -54,6 +52,7 @@ public class EditTextStepActivity extends AppCompatActivity {
 
     // Initialize the fields of the edit audio step activity
     private void initializeFields(){
+        Log.d(TAG, "Initializing fields");
         taskStepViewModel = new TaskStepViewModel(this.getApplication());
 
         backButton = findViewById(R.id.ib_edittextstep_back_button);
@@ -76,6 +75,8 @@ public class EditTextStepActivity extends AppCompatActivity {
 
     // Initialize the state of the edit text step activity
     private void initializeUi(){
+        Log.d(TAG, "Initializing UI");
+
         backButton.setOnClickListener(view -> {
             //todo ask the user if he really wants to discard his changes
             super.onBackPressed();
@@ -98,6 +99,8 @@ public class EditTextStepActivity extends AppCompatActivity {
 
     // Unpack the taskstep from the extras bundle
     private void handleIntent(Bundle bundle){
+        Log.d(TAG, "Unpacking intent bundle");
+
         if(!bundle.isEmpty() && bundle.containsKey(MainActivity.TASK_INTENT_EXTRA)){
             step = (TaskStep) bundle.get(MainActivity.TASK_INTENT_EXTRA);
 
@@ -113,13 +116,17 @@ public class EditTextStepActivity extends AppCompatActivity {
 
     // Persist the changes to the step
     private boolean persistStep(){
+        Log.d(TAG, "Persisting step changes");
+
         if(isEmpty(stepTitleInput)){
             stepTitleInput.setError(getString(R.string.empty_step_title));
+            Log.e(TAG, "No title image set.");
             return false;
         }
 
         if(isEmpty(stepDescriptionInput)){
             stepDescriptionInput.setError(getString(R.string.empty_step_description));
+            Log.e(TAG, "No step description set.");
             return false;
         }
 
