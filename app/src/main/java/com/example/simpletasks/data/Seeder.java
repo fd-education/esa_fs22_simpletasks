@@ -14,7 +14,7 @@ import java.util.List;
  */
 @SuppressWarnings("deprecation")
 public class Seeder {
-    final String TAG = "Seeder";
+    private static final String TAG = "Seeder";
 
     private Seeder(){}
 
@@ -39,11 +39,11 @@ public class Seeder {
             String titleImagePath = "";
             String description = "Seed Task Description " + i;
             // date always incremented by the current number of iterations
-            Date nextStart = new Date(today.getYear(), today.getMonth(), today.getDate() + i, today.getHours() + 1, today.getMinutes());
+            Date nextStart = new Date(today.getYear(), today.getMonth(), today.getDate() + i, today.getHours(), today.getMinutes());
             // three days
-            Long interval = 3 * 24 * 60 * 60 * 1000L;
+            Long interval = 3 * TaskWithSteps.ONE_DAY_INTERVAL;
             // three hours
-            Long notificationDelta = 3 * 60 * 60 * 1000L;
+            Long notificationDelta = 3 * TaskWithSteps.ONE_HOUR_INTERVAL;
             // ends after 7 days
             Date endDate = new Date(today.getYear(), today.getMonth(), today.getDate() + i + 7, today.getHours(), today.getMinutes());
 

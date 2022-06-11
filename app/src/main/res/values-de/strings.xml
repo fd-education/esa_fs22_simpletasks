@@ -8,21 +8,47 @@
     <string name="have_problem">Ich habe ein Problem</string>
     <string name="back">Zurück</string>
     <string name="next">Nächster Schritt</string>
+    <string name="popup_skip_text">Wollen Sie diesen Task überspringen?</string>
     <string name="delete_task">Task löschen</string>
     <string name="edit_task">Task bearbeiten</string>
     <string name="add_task">Task hinzufügen</string>
     <string name="run_task">Task durchführen</string>
     <string name="skip_task">Task überspringen</string>
-    <string name="task_image">Taskbild</string>
+    <string name="schedule_task">Task planen</string>
+    <string name="task_image">Bild von Task</string>
+    <string name="task_step_image">Bild von Taskschritt</string>
+    <string name="add_task_step">Taskschritt hinzufügen</string>
     <string name="caretaker_login_hint">Logge dich ein, um Tasks bearbeiten zu können</string>
     <string name="open_settings">Einstellungen öffnen</string>
-    <string name="plan_task">Task planen</string>
-    <string name="save">SPEICHERN</string>
+    <string name="save">Speichern</string>
     <string name="task_title_hint">Titel des Tasks</string>
     <string name="type">Typ: %1$s</string>
     <string name="drag_task">Bewege Task</string>
 
 
+    <string name="plan_next_execution">Nächste Ausführung planen</string>
+    <string name="current_next_execution">Nächste Ausführung: %1$s</string>
+    <string name="plan_last_execution">Letzte Ausführung planen</string>
+    <string name="current_last_execution">Letzte Ausführung: %1$s</string>
+    <string name="current_interval">Intervall: %1$d Tage, %2$d Stunden, %3$d Minuten</string>
+    <string name="days">Tage</string>
+    <string name="hours">Stunden</string>
+    <string name="minutes">Minuten</string>
+    <string name="error_title_empty">Der Titel eines Tasks darf nicht leer sein</string>
+    <string name="correct">Korrigieren</string>
+    <string name="discard_changes_text">Wollen Sie die Änderungen wirklich verwerfen?</string>
+    <string name="discard_changes_button">Verwerfen</string>
+    <string name="finish_task_text">Sie sind daran, den Task abzuschliessen. Haben Sie alle Schritte erledigt?</string>
+    <string name="finish_task_button">Abschliessen</string>
+    <string name="abort_task_text">Wollen Sie den Task wirklich abbrechen und ins Hauptmenu gehen?</string>
+    <string name="abort_task_button">Zum Hauptmenü</string>
+    <string name="logout_popup_text">Wollen Sie sich wirklich ausloggen?</string>
+    <string name="logout_popup_button">Ausloggen</string>
+    <string name="delete_task_popup_text">Wollen Sie den Task wirklich löschen?</string>
+    <string name="delete_task_popup_button">Löschen</string>
+    <string name="no_steps_set">Es wurden keine Schritte für diesen Task definiert. Sie können ihn nicht erledigen.</string>
+
+    <string name="placeholder">Platzhalter</string>
     <string name="pin">Pin</string>
     <string name="login">Login</string>
     <string name="login_error">Falsche Pin! %1$d Versuche verbleibend.</string>
@@ -66,4 +92,14 @@
     <string name="recording_in_progress">Aufnahme läuft</string>
     <string name="playing_in_progress">Aufnahme wird abgespielt</string>
     <string name="no_image">Kein Titelbild.</string>
+    <string name="invalid_pin">Ungültiger PIN</string>
+    <string name="pin_not_found">Dieser PIN existiert nicht</string>
+    <string name="unknown_error_msg">Etwas hat nicht funktioniert. Bitte später nochmals versuchen.</string>
+    <string name="change_language_settings">Sprache ändern</string>
+    <string name="language_settings">Spracheinstellungen</string>
+    <string name="no_pin_set_explanation">Momentan keine PINs gesetzt!</string>
+    <string name="not_logged_in_explanation">Nicht eingelogged!</string>
+    <string name="cancel_popup">Abbrechen</string>
+    <string name="skip_task_popup">Überspringen</string>
+    <string name="accept_info_popup">Okay</string>
 </resources>

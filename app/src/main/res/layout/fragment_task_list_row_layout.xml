@@ -6,6 +6,7 @@
     android:layout_height="100dp"
     android:layout_marginVertical="@dimen/halfElementPadding"
     android:background="@drawable/rounded_corner_background"
+    android:backgroundTint="?colorPrimary"
     android:padding="@dimen/elementPadding">
 
     <ImageView
@@ -29,6 +30,7 @@
         android:textSize="@dimen/h2"
         android:textStyle="bold"
         android:typeface="sans"
+        android:singleLine="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/taskImage_taskList"
         app:layout_constraintTop_toTopOf="@+id/taskImage_taskList" />
@@ -49,17 +51,12 @@
 
     <ImageButton
         android:id="@+id/skipTaskButton_taskList"
-        android:layout_width="@dimen/buttonHeight"
-        android:layout_height="@dimen/buttonHeight"
-        android:backgroundTint="?colorSecondary"
+        style="@style/Theme.SimpleTasks.IconButtonSecondary"
         android:contentDescription="@string/skip_task"
-        android:scaleType="center"
-        android:background="@drawable/rounded_corner_background"
         app:layout_constraintBottom_toBottomOf="@+id/taskImage_taskList"
         app:layout_constraintEnd_toEndOf="@+id/titleTask_taskList"
         app:layout_constraintTop_toTopOf="@+id/countStepsIndicator_taskList"
-        app:srcCompat="@drawable/ic_baseline_skip_next_24"
-        app:tint="?colorOnSecondary" />
+        app:srcCompat="@drawable/ic_baseline_skip_next_24" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

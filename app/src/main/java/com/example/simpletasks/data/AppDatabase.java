@@ -23,7 +23,7 @@ import java.util.concurrent.Executors;
 /**
  * The Room database for Simple Tasks
  */
-@Database(entities = {Task.class, TaskStep.class, Pin.class}, version = 2, exportSchema = false)
+@Database(entities = {Task.class, TaskStep.class, Pin.class}, version = 3, exportSchema = false)
 @TypeConverters(DateConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -150,7 +150,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 pinDao.deleteAll();
 
                 pinDao.insertPin(pin1);
-                pinDao.insertPin(pin2);
+                // pinDao.insertPin(pin2);
                 Log.d(TAG, "finished seeding pins");
             });
         }

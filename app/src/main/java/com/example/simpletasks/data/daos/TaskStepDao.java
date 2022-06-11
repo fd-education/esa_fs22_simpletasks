@@ -47,9 +47,9 @@ public interface TaskStepDao {
     void insertTaskSteps(List<TaskStep> taskSteps);
 
     /**
-     * Delete a list of task steps from the taskSteps table.
+     * Update a list of task steps in the taskSteps table.
      *
-     * @param taskSteps the tasks to delete
+     * @param taskSteps the tasks to update
      */
     @Update
     void updateTaskSteps(List<TaskStep> taskSteps);
@@ -71,9 +71,6 @@ public interface TaskStepDao {
 
     /**
      * Delete all data from the taskSteps database.
-     *
-     * Currently only used for the seeding process to avoid huge amounts of data
-     * through constant seeding at application start-up.
      */
     @Query("DELETE FROM taskSteps")
     void deleteAll();

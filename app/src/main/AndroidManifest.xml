@@ -28,6 +28,9 @@
             android:name=".AudioCaptureActivity"
             android:exported="false" />
         <activity
+            android:name=".ScheduleTaskActivity"
+            android:exported="false" />
+        <activity
             android:name=".ImageCaptureActivity"
             android:exported="false">
             <intent-filter>

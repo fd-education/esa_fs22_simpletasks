@@ -7,19 +7,15 @@
     tools:context=".MainActivity">
 
     <ImageButton
+        style="@style/Theme.SimpleTasks.IconButtonPrimary"
         android:id="@+id/imageButton"
-        android:layout_width="@dimen/buttonHeight"
-        android:layout_height="@dimen/buttonHeight"
         android:layout_marginBottom="@dimen/sidesPadding"
-        android:background="@drawable/rounded_corner_background"
         android:onClick="onSettingsClicked"
-        android:padding="@dimen/elementPadding"
         android:contentDescription="@string/open_settings"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/caretakerLoginButton"
-        app:srcCompat="@drawable/ic_baseline_settings_24"
-        app:tint="?attr/colorOnPrimary" />
+        app:srcCompat="@drawable/ic_baseline_settings_24" />
 
     <TextView
         android:id="@+id/titleHome"
@@ -59,17 +55,13 @@
         app:layout_constraintBottom_toTopOf="@+id/loginHint"
         app:layout_constraintEnd_toEndOf="@+id/editTasksTitle"
         app:layout_constraintStart_toStartOf="@+id/editTasksTitle"
-        app:layout_constraintTop_toBottomOf="@+id/editTasksTitle"/>
+        app:layout_constraintTop_toBottomOf="@+id/editTasksTitle" />
 
     <Button
+        style="@style/Theme.SimpleTasks.PrimaryButton"
         android:id="@+id/caretakerLoginButton"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:background="@drawable/rounded_corner_background"
-        android:backgroundTint="?colorPrimary"
         android:onClick="onLoginClicked"
         android:text="@string/caretaker_login"
-        android:textSize="@dimen/p"
         app:layout_constraintBottom_toBottomOf="@+id/imageButton"
         app:layout_constraintEnd_toEndOf="@+id/fragmentContainerTaskList"
         app:layout_constraintStart_toStartOf="@+id/fragmentContainerTaskList"

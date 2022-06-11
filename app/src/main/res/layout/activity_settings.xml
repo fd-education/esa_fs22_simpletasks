@@ -8,29 +8,26 @@
 
     <ImageButton
         android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/Theme.SimpleTasks.BackButton"
         android:layout_marginStart="@dimen/sidesPadding"
         android:layout_marginTop="@dimen/sidesPadding"
-        android:backgroundTint="#00000000"
         android:contentDescription="@string/back"
         android:onClick="onBackClicked"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/arrow_back_black_24dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/titleSettings"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/sidesPadding"
-        android:layout_marginTop="@dimen/sidesPadding"
         android:layout_marginEnd="@dimen/sidesPadding"
         android:text="@string/title_activity_settings"
         android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="@dimen/h1"
+        android:textColor="?colorOnBackground"
+        android:textSize="@dimen/h2"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/backButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/backButton" />
@@ -39,11 +36,11 @@
         android:id="@+id/titleCaretakerSettings"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/elementPadding"
+        android:layout_marginTop="@dimen/sidesPadding"
         android:text="@string/caretaker_settings"
         android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="@dimen/h2"
+        android:textColor="?colorOnBackground"
+        android:textSize="@dimen/p"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,13 +48,14 @@
 
 
     <Button
-        android:id="@+id/setPinButton"
+        android:id="@+id/addPinButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/elementPadding"
-        android:backgroundTint="@color/accent_blue"
+        android:backgroundTint="?colorPrimary"
         android:onClick="onAddPinClicked"
         android:text="@string/add_pin"
+        android:textColor="?colorOnPrimary"
         android:textSize="@dimen/p"
         app:layout_constraintEnd_toStartOf="@id/removePinButton"
         app:layout_constraintHorizontal_chainStyle="spread"
@@ -68,54 +66,107 @@
         android:id="@+id/removePinButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/accent_blue"
         android:layout_marginTop="@dimen/elementPadding"
+        android:backgroundTint="?colorPrimary"
         android:onClick="onRemovePinClicked"
         android:text="@string/remove_pin"
+        android:textColor="?colorOnPrimary"
         android:textSize="@dimen/p"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/setPinButton"
+        app:layout_constraintStart_toEndOf="@+id/addPinButton"
         app:layout_constraintTop_toBottomOf="@id/titleCaretakerSettings" />
 
     <TextView
         android:id="@+id/titleInterfaceSettings"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/elementPadding"
+        android:layout_marginTop="@dimen/sidesPadding"
         android:text="@string/display_settings"
         android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="@dimen/h2"
+        android:textColor="?colorOnBackground"
+        android:textSize="@dimen/p"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/setPinButton" />
+        app:layout_constraintTop_toBottomOf="@+id/pinRemoveButtonDeactivatedText" />
 
     <Button
         android:id="@+id/displayFontSizeSettingsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/accent_blue"
         android:layout_marginTop="@dimen/elementPadding"
+        android:backgroundTint="?colorPrimary"
         android:onClick="onOpenDisplaySettingsClicked"
         android:text="@string/display_font_size_settings"
+        android:textColor="?colorOnPrimary"
         android:textSize="@dimen/p"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleInterfaceSettings" />
+
+    <TextView
+        android:id="@+id/titleLanguageSettings"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sidesPadding"
+        android:text="@string/language_settings"
+        android:textAlignment="center"
+        android:textColor="?colorOnBackground"
+        android:textSize="@dimen/p"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/displayFontSizeSettingsButton" />
+
+    <Button
+        android:id="@+id/languageSettingsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/elementPadding"
+        android:backgroundTint="?colorPrimary"
+        android:onClick="onOpenLanguageSettingsButton"
+        android:text="@string/change_language_settings"
+        android:textColor="?colorOnPrimary"
+        android:textSize="@dimen/p"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleLanguageSettings" />
 
     <Button
         android:id="@+id/logoutButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/sidesPadding"
-        android:backgroundTint="@color/red"
+        android:backgroundTint="?colorError"
         android:onClick="onLogoutClicked"
         android:text="@string/logout"
+        android:textColor="?colorOnPrimary"
         android:textSize="@dimen/p"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/pinRemoveButtonDeactivatedText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_pin_set_explanation"
+        android:textColor="?hintTextColor"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/removePinButton"
+        app:layout_constraintStart_toStartOf="@+id/removePinButton"
+        app:layout_constraintTop_toBottomOf="@+id/removePinButton" />
+
+    <TextView
+        android:id="@+id/buttonsDeactivatedText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/not_logged_in_explanation"
+        android:textColor="?hintTextColor"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/removePinButton"
+        app:layout_constraintStart_toStartOf="@+id/addPinButton"
+        app:layout_constraintTop_toBottomOf="@+id/addPinButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

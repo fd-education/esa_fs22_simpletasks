@@ -1,20 +1,17 @@
 package com.example.simpletasks;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.simpletasks.data.entities.TaskWithSteps;
 import com.example.simpletasks.domain.login.User;
 
-import java.util.List;
-
 public class ManageTasksActivity extends AppCompatActivity {
     private static final String TAG = "ManageTaskActivity";
-    private static List<TaskWithSteps> tasks;
     private User user;
 
     /**
@@ -34,23 +31,31 @@ public class ManageTasksActivity extends AppCompatActivity {
     }
 
     /**
-     * Set the tasks of the manage task list view.
-     *
-     * @param tasks all tasks to be listed in the fragment
-     */
-    public static void setTasks(List<TaskWithSteps> tasks) {
-        ManageTasksActivity.tasks = tasks;
-    }
-
-    /**
-     * Log the user out and go back to the main view.
+     * handles the click event when the user wants to log out.
      *
      * @param view the view whose click event was triggered
      */
     public void onLogoutClicked(View view) {
-        user.logOut();
-        Log.d(TAG, "Logout clicked. User Login State: " + user.isLoggedIn());
-        super.onBackPressed();
+        onBackPressed();
+    }
+
+    /**
+     * Log the user out and go back to the main view.
+     */
+    @Override
+    public void onBackPressed() {
+        //asks if user really wants to logout
+        new DialogBuilder()
+                .setDescriptionText(R.string.logout_popup_text)
+                .setContext(this)
+                .setTwoButtonLayout(R.string.cancel_popup, R.string.logout_popup_button)
+                .setAction(() -> {
+                    //log user out
+                    user.logOut();
+                    Log.d(TAG, "Logout clicked. User Login State: " + user.isLoggedIn());
+                    super.onBackPressed();
+                }).build().show();
+
     }
 
     /**
@@ -59,8 +64,9 @@ public class ManageTasksActivity extends AppCompatActivity {
      * @param view the view that triggered the event
      */
     public void onAddTaskClicked(View view) {
-        //TODO
-        Toast.makeText(this, "clicked on add task", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, EditTaskActivity.class);
+        intent.putExtra(MainActivity.TASK_INTENT_EXTRA, new TaskWithSteps());
+        startActivity(intent);
     }
 
     /**
@@ -69,7 +75,8 @@ public class ManageTasksActivity extends AppCompatActivity {
      * @param view the view that triggered the event
      */
     public void onSettingsClicked(View view) {
-        //TODO
-        Toast.makeText(this, "on settings button clicked", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "on settings button clicked, launching settings activity");
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 }

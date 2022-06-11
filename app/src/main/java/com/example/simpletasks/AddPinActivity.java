@@ -7,14 +7,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.simpletasks.data.entities.Pin;
-import com.example.simpletasks.data.viewmodels.PinViewModel;
-import com.example.simpletasks.domain.settings.AddPinController;
+import com.example.simpletasks.domain.settings.PinController;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.functions.FirebaseFunctions;
@@ -31,6 +30,7 @@ public class AddPinActivity extends AppCompatActivity {
     private static final String TAG = "AddPinActivity";
     private static final String regionCode = "CH";
     private static TextWatcher watcher = null;
+    private PinController pinController;
 
     /**
      * Set and adjust the view and initialize firebase.
@@ -55,11 +55,13 @@ public class AddPinActivity extends AppCompatActivity {
 
         // Initialize Firebase
         FirebaseApp.initializeApp(this);
+        pinController = new PinController(this.getApplication());
         Log.d(TAG, "finished initialisation");
     }
 
     /**
-     * Handle click events the generate pin button.
+     * Handle click events for the generate pin button.
+     * Sends or only shows the pin depending on the user's selection
      *
      * @param view the view whose click event was triggered
      */
@@ -84,6 +86,7 @@ public class AddPinActivity extends AppCompatActivity {
 
     /**
      * Handle change of the radio button choice for sending pins.
+     * Shows the phone number input if sending the pin is selected
      *
      * @param view the view whose click event was triggered
      */
@@ -105,14 +108,11 @@ public class AddPinActivity extends AppCompatActivity {
     // Show the pin on the screen
     // TODO: Finish when pop-ups are ready
     private void showPin(Pin pin) {
-        savePin(pin);
+        // TODO: When popup are ready
+        Toast.makeText(this, pin.getPin(), Toast.LENGTH_LONG).show();
+        pinController.addPin(pin);
         Log.d(TAG, "showed pin locally");
-    }
-
-    // Save the pin to the database through the view model
-    private void savePin(Pin pin) {
-        PinViewModel pinViewModel = new ViewModelProvider(this).get(PinViewModel.class);
-        pinViewModel.insertPin(pin);
+        finish();
     }
 
     // Use firebase to send the pin to the user
@@ -134,7 +134,7 @@ public class AddPinActivity extends AppCompatActivity {
         View sendErrorView = findViewById(R.id.sendPinError);
         sendErrorView.setVisibility(View.GONE);
         FirebaseFunctions firebaseFunctions = FirebaseFunctions.getInstance();
-        Task<String> responseTask = AddPinController.sendPin(pin, phoneNumber, firebaseFunctions);
+        Task<String> responseTask = pinController.sendPin(pin, phoneNumber, firebaseFunctions);
         Log.d(TAG, "sent pin, waiting for response");
         View progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
@@ -149,7 +149,7 @@ public class AddPinActivity extends AppCompatActivity {
         responseTask.addOnSuccessListener((s) -> {
             // TODO: Show when popup is ready
             Log.d(TAG, "response successful");
-            savePin(pin);
+            pinController.addPin(pin);
             Log.d(TAG, "pin saved");
             finish();
         });

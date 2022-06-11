@@ -10,13 +10,13 @@
         android:layout_width="@dimen/buttonHeight"
         android:layout_height="@dimen/buttonHeight"
         android:layout_marginStart="@dimen/elementPadding"
-        android:background="?colorOnPrimary"
+        android:background="@null"
         android:contentDescription="@string/drag_task"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_drag_handle_48"
-        app:tint="?colorPrimary" />
+        app:tint="?colorOnBackground" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/imageTask"
@@ -25,6 +25,7 @@
         android:layout_marginVertical="@dimen/halfElementPadding"
         android:layout_marginStart="@dimen/elementPadding"
         android:background="@drawable/rounded_corner_background"
+        android:backgroundTint="?colorPrimary"
         android:padding="@dimen/elementPadding"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,6 +57,7 @@
             android:textSize="@dimen/h2"
             android:textStyle="bold"
             android:typeface="sans"
+            android:singleLine="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -73,30 +75,22 @@
             app:layout_constraintTop_toTopOf="@+id/taskStepImage_editTask" />
 
         <ImageButton
+            style="@style/Theme.SimpleTasks.IconButtonSecondary"
             android:id="@+id/editTaskStepButton_editTask"
-            android:layout_width="@dimen/buttonHeight"
-            android:layout_height="0dp"
-            android:background="@drawable/rounded_corner_background"
-            android:backgroundTint="?colorSecondary"
             android:contentDescription="@string/edit_task"
             app:layout_constraintBottom_toBottomOf="@+id/deleteTaskStepButton_editTask"
             app:layout_constraintEnd_toEndOf="@+id/taskStepTitle_editTask"
             app:layout_constraintTop_toTopOf="@+id/deleteTaskStepButton_editTask"
-            app:srcCompat="@drawable/ic_outline_edit_24"
-            app:tint="?colorOnPrimary" />
+            app:srcCompat="@drawable/ic_outline_edit_24" />
 
         <ImageButton
+            style="@style/Theme.SimpleTasks.IconButtonSecondary"
             android:id="@+id/deleteTaskStepButton_editTask"
-            android:layout_width="@dimen/buttonHeight"
-            android:layout_height="@dimen/buttonHeight"
             android:layout_marginEnd="@dimen/elementPadding"
-            android:background="@drawable/rounded_corner_background"
-            android:backgroundTint="?colorSecondary"
             android:contentDescription="@string/delete_task"
             app:layout_constraintBottom_toBottomOf="@+id/taskStepImage_editTask"
             app:layout_constraintEnd_toStartOf="@+id/editTaskStepButton_editTask"
-            app:srcCompat="@drawable/ic_outline_delete_outline_24"
-            app:tint="?colorOnPrimary" />
+            app:srcCompat="@drawable/ic_outline_delete_outline_24" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

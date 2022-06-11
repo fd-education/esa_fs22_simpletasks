@@ -1,6 +1,6 @@
 package com.example.simpletasks.data.repositories;
 
-import android.app.Application;
+import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
@@ -22,24 +22,19 @@ import java.util.List;
 public class TaskRepository {
     private final TaskDao taskDao;
     private final TaskStepDao taskStepDao;
-    private final LiveData<List<Task>> allTasks;
-    private final LiveData<List<TaskWithSteps>> allTasksWithSteps;
 
     /**
-     * Initialize the repository using the application context.
+     * Initialize the repository using a context.
      * Initialize the observable lists for all tasks and all tasks with their steps.
      *
-     * @param application the context
+     * @param context the context
      */
-    public TaskRepository(Application application) {
+    public TaskRepository(Context context) {
         // TODO Uncomment for final submission and delete seed version
         // AppDatabase db = AppDatabase.getAppDb(application);
-        AppDatabase db = AppDatabase.getSeededAppDb(application, true, true);
+        AppDatabase db = AppDatabase.getSeededAppDb(context, true, true);
         taskDao = db.taskDao();
         taskStepDao = db.taskStepDao();
-
-        allTasks = taskDao.getAll();
-        allTasksWithSteps = taskDao.getAllWithSteps();
     }
 
     /**
@@ -48,7 +43,7 @@ public class TaskRepository {
      * @return LiveData<List<Task>> observable with all task entities
      */
     public LiveData<List<Task>> getAllTasks() {
-        return allTasks;
+        return taskDao.getAll();
     }
 
     /**
@@ -57,7 +52,7 @@ public class TaskRepository {
      * @return LiveData<List<TaskWithSteps>> observable with all task entities and their steps
      */
     public LiveData<List<TaskWithSteps>> getAllTasksWithSteps() {
-        return allTasksWithSteps;
+        return taskDao.getAllWithSteps();
     }
 
     /**

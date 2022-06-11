@@ -27,13 +27,13 @@ public class TaskViewModel extends AndroidViewModel {
     private LiveData<List<TaskWithSteps>> tasksTodayWithSteps;
 
     /**
-     * Initialize the repository using the application context.
-     * Initialize the observable lists for all tasks and all tasks with their steps,
-     * as well as todays tasks and todays tasks with their steps.
+     * Initialize the repository using the application context. Initialize the observable lists for
+     * all tasks and all tasks with their steps, as well as todays tasks and todays tasks with their
+     * steps.
      *
      * @param application the context
      */
-    public TaskViewModel(Application application){
+    public TaskViewModel(Application application) {
         super(application);
         taskRepo = new TaskRepository(application);
         taskStepRepo = new TaskStepRepository(application);
@@ -42,10 +42,10 @@ public class TaskViewModel extends AndroidViewModel {
     /**
      * Fetch all task entities from the tasks table
      *
-     * @return LiveData<List<Task>> observable with all task entities
+     * @return LiveData<List < Task>> observable with all task entities
      */
-    public LiveData<List<Task>> getAllTasks(){
-        if(allTasks == null){
+    public LiveData<List<Task>> getAllTasks() {
+        if (allTasks == null) {
             allTasks = taskRepo.getAllTasks();
         }
 
@@ -55,10 +55,10 @@ public class TaskViewModel extends AndroidViewModel {
     /**
      * Fetch all task entities with their steps from the tasks table
      *
-     * @return LiveData<List<TaskWithSteps>> observable with all task entities and their steps
+     * @return LiveData<List < TaskWithSteps>> observable with all task entities and their steps
      */
-    public LiveData<List<TaskWithSteps>> getAllTasksWithSteps(){
-        if(allTasksWithSteps == null){
+    public LiveData<List<TaskWithSteps>> getAllTasksWithSteps() {
+        if (allTasksWithSteps == null) {
             allTasksWithSteps = taskRepo.getAllTasksWithSteps();
         }
 
@@ -68,10 +68,10 @@ public class TaskViewModel extends AndroidViewModel {
     /**
      * Fetch all task entities of today.
      *
-     * @return LiveData<List<Task>> observable with all task entities of today
+     * @return LiveData<List < Task>> observable with all task entities of today
      */
-    public LiveData<List<Task>> getTodaysTasks(){
-        if(tasksToday == null){
+    public LiveData<List<Task>> getTodaysTasks() {
+        if (tasksToday == null) {
             tasksToday = taskRepo.getTasksByDate(Calendar.getInstance().getTime());
         }
 
@@ -81,10 +81,10 @@ public class TaskViewModel extends AndroidViewModel {
     /**
      * Fetch all task entities with their steps of today.
      *
-     * @return LiveData<List<Task>> observable with all task entities of today
+     * @return LiveData<List < Task>> observable with all task entities of today
      */
-    public LiveData<List<TaskWithSteps>> getTodaysTasksWithSteps(){
-        if(tasksTodayWithSteps == null){
+    public LiveData<List<TaskWithSteps>> getTodaysTasksWithSteps() {
+        if (tasksTodayWithSteps == null) {
             tasksTodayWithSteps = taskRepo.getTasksByDateWithSteps(Calendar.getInstance().getTime());
         }
 
@@ -95,10 +95,21 @@ public class TaskViewModel extends AndroidViewModel {
      * Fetch all task step entities of a tasks ordered by their index
      *
      * @param task the task to lookup
-     * @return LiveData<List<TaskStep>> observable with all task step entities of a task
+     * @return LiveData<List < TaskStep>> observable with all task step entities of a task
      */
-    public LiveData<List<TaskStep>>  getStepsOfTask(final Task task){
+    public LiveData<List<TaskStep>> getStepsOfTask(final Task task) {
         return taskStepRepo.getByTaskId(task.getId());
+    }
+
+    /**
+     * Insert a tasks with the task steps into the tasks and taskSteps table.
+     *
+     * @param taskWithSteps the task with the steps to insert
+     */
+    public void insertTask(final TaskWithSteps taskWithSteps) {
+        List<TaskWithSteps> list = new ArrayList<>();
+        list.add(taskWithSteps);
+        insertTasks(list);
     }
 
     /**
@@ -106,8 +117,19 @@ public class TaskViewModel extends AndroidViewModel {
      *
      * @param tasksWithSteps the tasks with their steps to insert
      */
-    public void insertTasksWithSteps(final List<TaskWithSteps> tasksWithSteps){
+    public void insertTasks(final List<TaskWithSteps> tasksWithSteps) {
         taskRepo.insertTaskWithSteps(tasksWithSteps);
+    }
+
+    /**
+     * Update a task with the task steps into the tasks and taskSteps table.
+     *
+     * @param taskWithSteps the task with the steps to update
+     */
+    public void updateTask(final TaskWithSteps taskWithSteps) {
+        List<TaskWithSteps> list = new ArrayList<>();
+        list.add(taskWithSteps);
+        updateTasks(list);
     }
 
     /**
@@ -159,7 +181,7 @@ public class TaskViewModel extends AndroidViewModel {
      *
      * @param tasks the tasks with their steps to delete
      */
-    public void deleteTasks(final List<TaskWithSteps> tasks){
+    public void deleteTasks(final List<TaskWithSteps> tasks) {
         taskRepo.deleteTasks(tasks);
     }
 }

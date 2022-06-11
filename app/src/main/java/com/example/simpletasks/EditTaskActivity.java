@@ -3,12 +3,14 @@ package com.example.simpletasks;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -99,8 +101,7 @@ public class EditTaskActivity extends AppCompatActivity {
     }
 
     /**
-     * Handle click events on the save button.
-     * Save the current task to the database.
+     * Handle click events on the save button. Save the current task to the database.
      *
      * @param view the view that triggered the event
      */
@@ -108,14 +109,22 @@ public class EditTaskActivity extends AppCompatActivity {
         // Fetch data from the ui
         currentEditTask.setTitle(taskTitle.getText().toString());
 
-        // Save the data into the database
-        TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
+        boolean isValid = validateData();
 
-        taskViewModel.updateTask(currentEditTask);
-        taskStepsListFragment.updateTaskSteps();
-
-        // Go back to the last screen
-        onBackPressed();
+        if (isValid) {
+            // Save the data into the database
+            TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
+            // using insert rather than update, so new and updated tasks will be saved
+            taskViewModel.insertTask(currentEditTask);
+            Log.d(TAG, "inserting or updating task finished");
+            // Go back to the last screen
+            super.onBackPressed();
+        } else {
+            new DialogBuilder().setDescriptionText(R.string.error_title_empty)
+                    .setCenterButtonLayout(R.string.correct)
+                    .setContext(this)
+                    .build().show();
+        }
     }
 
     /**
@@ -133,10 +142,25 @@ public class EditTaskActivity extends AppCompatActivity {
      * @param view the view that triggered the event
      */
     public void onBackClicked(View view) {
-        //todo ask the user if he really wants to discard his changes
-//        editor.remove(SHARED_PREF_STEP_IDS);
+        onBackPressed();
+    }
 
-        super.onBackPressed();
+    /**
+     * Handle click events on the back button with a dialog
+     */
+    @Override
+    public void onBackPressed() {
+        new DialogBuilder()
+                .setDescriptionText(R.string.discard_changes_text)
+                .setContext(this)
+                .setTwoButtonLayout(R.string.cancel_popup, R.string.discard_changes_button)
+                .setAction(super::onBackPressed).build().show();
+    }
+
+    public void onPlanTaskClicked(View view) {
+        Intent intent = new Intent(this, ScheduleTaskActivity.class);
+        intent.putExtra(MainActivity.TASK_INTENT_EXTRA, currentEditTask);
+        startActivity(intent);
     }
 
     // Set the fragment that displays the step details
@@ -155,9 +179,18 @@ public class EditTaskActivity extends AppCompatActivity {
     }
 
     // Get the task from the intent
-    private void handleTaskIntent() {
-        TaskWithSteps taskWithSteps = (TaskWithSteps) getIntent().getExtras().getSerializable(MainActivity.TASK_INTENT_EXTRA);
-        this.currentEditTask = taskWithSteps.getTask();
+    private TaskWithSteps getTask() {
+        currentEditTask = (TaskWithSteps) getIntent().getSerializableExtra(MainActivity.TASK_INTENT_EXTRA);
+    }
+
+    //validates the data of the ui, which was not validated before.
+    private boolean validateData() {
+        boolean isValid = true;
+        if (taskTitle.getText().length() <= 1) {
+            isValid = false;
+        }
+        //more validating could be inserted here
+        return isValid;
     }
 
     // TODO Replace with correct dialog pop-up
@@ -199,5 +232,15 @@ public class EditTaskActivity extends AppCompatActivity {
                             }
                         })
                 .create();
+    }
+
+    //validates the data of the ui, which was not validated before.
+    private boolean validateData() {
+        boolean isValid = true;
+        if (taskTitle.getText().length() <= 1) {
+            isValid = false;
+        }
+        //more validating could be inserted here
+        return isValid;
     }
 }
