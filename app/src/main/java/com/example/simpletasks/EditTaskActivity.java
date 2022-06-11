@@ -27,9 +27,11 @@ import com.example.simpletasks.fragments.EditTaskStepsListFragment;
  */
 public class EditTaskActivity extends AppCompatActivity {
     private static final String TAG = "EditTaskActivity";
+    private static final String TASK_TITLE = "TASK_TITLE";
     public static final String SHARED_PREF_TASK_ID = "TaskId";
     public static final String SHARED_PREF_STEP_IDS = "STEP_IDS";
     public static final String NEW_STEP = "NEW_STEP";
+
 
     private Task currentEditTask;
 
@@ -40,6 +42,8 @@ public class EditTaskActivity extends AppCompatActivity {
     private TaskWithSteps currentEditTaskWithSteps;
 
     private TaskViewModel taskViewModel;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
 
     /**
@@ -73,15 +77,28 @@ public class EditTaskActivity extends AppCompatActivity {
             taskImageView.setImageURI(Uri.parse(currentEditTask.getTitleImagePath()));
         }
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        editor = sharedPreferences.edit();
         editor.putString(SHARED_PREF_TASK_ID, currentEditTask.getId()).apply();
+
+        if(sharedPreferences.contains(TASK_TITLE)){
+            taskTitle.setText(sharedPreferences.getString(TASK_TITLE, ""));
+        }
 
         // Set the fragments in the activity
         fillValuesOnUi();
         setFragment();
 
         Log.d(TAG, "finished initialisation");
+    }
+
+    @Override
+    protected void onPause(){
+        if(taskTitle != null && taskTitle.getText().toString().trim().length() > 0){
+            editor.putString(TASK_TITLE, taskTitle.getText().toString());
+        }
+
+        super.onPause();
     }
 
     private void initializeFields() {
@@ -162,8 +179,6 @@ public class EditTaskActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        taskViewModel.deleteTask(currentEditTaskWithSteps);
-
         super.onBackPressed();
     }
 

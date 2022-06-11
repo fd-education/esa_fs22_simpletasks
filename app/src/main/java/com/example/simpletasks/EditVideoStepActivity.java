@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentContainerView;
 
 import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.viewmodels.TaskStepViewModel;
+import com.example.simpletasks.domain.popups.DialogBuilder;
 import com.example.simpletasks.fragments.VideoPlayerFragment;
 
 import java.util.ArrayList;
@@ -79,10 +80,11 @@ public class EditVideoStepActivity extends AppCompatActivity {
     // Initialize the state of the edit audio step activity
     private void initializeUi(){
         Log.d(TAG, "Initializing UI.");
-        backButton.setOnClickListener(view -> {
-            //TODO ask the user if he really wants to discard his changes
-            super.onBackPressed();
-        });
+        backButton.setOnClickListener(view -> new DialogBuilder()
+                .setDescriptionText(R.string.discard_changes_text)
+                .setContext(this)
+                .setTwoButtonLayout(R.string.cancel_popup, R.string.discard_changes_button)
+                .setAction(this::onBackPressed).build().show());
 
         recordVideo.setOnClickListener(view -> captureVideo());
 
