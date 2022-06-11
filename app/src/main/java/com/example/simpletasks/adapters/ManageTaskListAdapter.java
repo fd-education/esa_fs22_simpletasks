@@ -3,7 +3,6 @@ package com.example.simpletasks.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +17,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.simpletasks.domain.popups.DialogBuilder;
 import com.example.simpletasks.EditTaskActivity;
 import com.example.simpletasks.MainActivity;
 import com.example.simpletasks.R;
@@ -27,6 +25,7 @@ import com.example.simpletasks.data.entities.Task;
 import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.entities.TaskWithSteps;
 import com.example.simpletasks.data.viewmodels.TaskViewModel;
+import com.example.simpletasks.domain.popups.DialogBuilder;
 
 import java.util.List;
 

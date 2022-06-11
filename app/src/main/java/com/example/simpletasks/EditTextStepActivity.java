@@ -78,13 +78,11 @@ public class EditTextStepActivity extends AppCompatActivity {
     private void initializeUi(){
         Log.d(TAG, "Initializing UI");
 
-        backButton.setOnClickListener(view -> {
-            new DialogBuilder()
-                    .setDescriptionText(R.string.discard_changes_text)
-                    .setContext(this)
-                    .setTwoButtonLayout(R.string.cancel_popup, R.string.discard_changes_button)
-                    .setAction(this::onBackPressed).build().show();
-        });
+        backButton.setOnClickListener(view -> new DialogBuilder()
+                .setDescriptionText(R.string.discard_changes_text)
+                .setContext(this)
+                .setTwoButtonLayout(R.string.cancel_popup, R.string.discard_changes_button)
+                .setAction(this::onBackPressed).build().show());
 
         captureImage.setOnClickListener(view -> {
             Intent intent = new Intent(this, ImageCaptureActivity.class);

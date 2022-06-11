@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.simpletasks.R;
-import com.example.simpletasks.domain.popups.IDialogBuilder;
 
 /**
  * Builds a custom dialog Use like new DialogBuilder().setContext(context).build().show();

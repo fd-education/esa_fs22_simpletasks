@@ -1,6 +1,7 @@
 package com.example.simpletasks.domain.login;
 
 import android.app.Application;
+
 import com.example.simpletasks.data.repositories.PinRepository;
 
 /**

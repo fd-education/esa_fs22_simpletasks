@@ -63,7 +63,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
     private final LayoutInflater mInflater;
     private Context context;
     private List<TaskWithSteps> tasks;
-    private ViewModelStoreOwner owner;
+    private final ViewModelStoreOwner owner;
 
     public TaskListAdapter(Context context, ViewModelStoreOwner owner) {
         mInflater = LayoutInflater.from(context);

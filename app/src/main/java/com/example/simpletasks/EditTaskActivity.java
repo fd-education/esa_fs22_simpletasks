@@ -1,6 +1,5 @@
 package com.example.simpletasks;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -13,14 +12,11 @@ import android.widget.ImageView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.simpletasks.data.entities.Task;
-import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.entities.TaskWithSteps;
-import com.example.simpletasks.data.types.TaskStepTypes;
 import com.example.simpletasks.data.viewmodels.TaskViewModel;
 import com.example.simpletasks.domain.popups.ChooseTypeDialog;
 import com.example.simpletasks.domain.popups.DialogBuilder;
@@ -205,12 +201,6 @@ public class EditTaskActivity extends AppCompatActivity {
             taskViewModel.insertTask(currentEditTask);
         }
     }
-
-//    // Get the task from the intent
-//    private Task getTask() {
-//        TaskWithSteps taskWithSteps = (TaskWithSteps) getIntent().getExtras().getSerializable(MainActivity.TASK_INTENT_EXTRA);
-//        return taskWithSteps.getTask();
-//    }
 
 
     private TaskWithSteps getTask() {
