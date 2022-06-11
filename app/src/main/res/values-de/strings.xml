@@ -109,4 +109,5 @@
     <string name="pin_sent_popup">Ein neuer PIN wurde an %1$s geschickt!</string>
     <string name="confirm_delete_pin_popup">Sind Sie sicher, dass Sie diesen PIN löschen wollen?</string>
     <string name="pin_deletion_confirmation">Der PIN wurde gelöscht!</string>
+    <string name="request_type">Welche Art von Task Step möchten Sie erstellen?</string>
 </resources>

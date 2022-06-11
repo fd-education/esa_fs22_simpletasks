@@ -22,6 +22,7 @@ import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.entities.TaskWithSteps;
 import com.example.simpletasks.data.types.TaskStepTypes;
 import com.example.simpletasks.data.viewmodels.TaskViewModel;
+import com.example.simpletasks.domain.popups.ChooseTypeDialog;
 import com.example.simpletasks.domain.popups.DialogBuilder;
 import com.example.simpletasks.fragments.EditTaskStepsListFragment;
 
@@ -54,6 +55,8 @@ public class EditTaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_task);
+
+        initializeFields();
     }
 
     /**
@@ -67,7 +70,6 @@ public class EditTaskActivity extends AppCompatActivity {
 
         // Get the task from the intent
         handleTaskIntent();
-        initializeFields();
 
         if (currentEditTask.getTitleImagePath().isEmpty()) {
             taskImageView.setImageResource(R.drawable.image_placeholder);
@@ -107,8 +109,9 @@ public class EditTaskActivity extends AppCompatActivity {
      * @param view ignored, not needed by the handler
      */
     public void onAddTaskStepClicked(View view) {
-        // TODO Create the correct pop-up
-        getChoseFormatDialog().show();
+        String stepId = currentEditTask.getId();
+        int index = currentEditTask.getSteps().size() + 1;
+        new ChooseTypeDialog(this).showDialog(stepId, index);
     }
 
     /**
@@ -203,52 +206,13 @@ public class EditTaskActivity extends AppCompatActivity {
         }
     }
 
-    // Get the task from the intent
-<<<<<<<<< Temporary merge branch 1
-    private Task getTask() {
-        TaskWithSteps taskWithSteps = (TaskWithSteps) getIntent().getExtras().getSerializable(MainActivity.TASK_INTENT_EXTRA);
-        return taskWithSteps.getTask();
-    }
+//    // Get the task from the intent
+//    private Task getTask() {
+//        TaskWithSteps taskWithSteps = (TaskWithSteps) getIntent().getExtras().getSerializable(MainActivity.TASK_INTENT_EXTRA);
+//        return taskWithSteps.getTask();
+//    }
 
-    // TODO Replace with correct dialog pop-up
-    private AlertDialog getChoseFormatDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle("Step Types")
-                .setItems(new CharSequence[]
-                    {"TEXT STEP", "AUDIO STEP", "VIDEO STEP", "CANCEL"},
-                    (dialog, which) -> {
-                    switch(which){
-                        case 0:
-                            TaskStep newTextStep = new TaskStep(currentEditTask.getId(), TaskStepTypes.TEXT, currentEditTask.getSteps().size() + 1, "", "", "", "", "");
-
-                            Intent textIntent = new Intent(getBaseContext(), EditTextStepActivity.class);
-                            textIntent.putExtra(MainActivity.TASK_INTENT_EXTRA, newTextStep);
-                            startActivity(textIntent);
-                            break;
-                        case 1:
-                            TaskStep audioStep = new TaskStep(currentEditTask.getId(), TaskStepTypes.AUDIO, currentEditTask.getSteps().size() + 1, "", "", "", "", "");
-
-                            Intent audioIntent = new Intent(getBaseContext(), EditAudioStepActivity.class);
-                            audioIntent.putExtra(MainActivity.TASK_INTENT_EXTRA, audioStep);
-                            startActivity(audioIntent);
-                            break;
-                        case 2:
-                            TaskStep videoStep = new TaskStep(currentEditTask.getId(), TaskStepTypes.VIDEO, currentEditTask.getSteps().size() + 1, "", "", "", "", "");
-
-                            Intent videoIntent = new Intent(getBaseContext(), EditVideoStepActivity.class);
-                            videoIntent.putExtra(MainActivity.TASK_INTENT_EXTRA, videoStep);
-                            startActivity(videoIntent);
-                            Log.d(TAG, "VIDEO STEP");
-                            break;
-                        case 3:
-                            Log.d(TAG, "CANCEL");
-                            break;
-                    }
-                });
-
-        return builder.create();
-=========
     private TaskWithSteps getTask() {
         return (TaskWithSteps) getIntent().getSerializableExtra(MainActivity.TASK_INTENT_EXTRA);
     }

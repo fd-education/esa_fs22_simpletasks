@@ -6,6 +6,13 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
+
+import com.example.simpletasks.data.entities.TaskWithSteps;
+import com.example.simpletasks.data.viewmodels.TaskViewModel;
+
+import java.util.List;
 
 /**
  * Activity for the main screen
@@ -19,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private static List<TaskWithSteps> tasks;
+    private static ViewModelStoreOwner owner;
 
     /**
      * Set and adjust the view
@@ -29,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        owner = this;
 
         Log.d(TAG, "finished initialisation");
     }
@@ -70,8 +80,8 @@ public class MainActivity extends AppCompatActivity {
      */
     public static void updateTasksInDatabase(List<TaskWithSteps> tasks) {
         Log.d(TAG, "updating tasks");
-        TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
-        taskViewModel.updateTasks(tasks);
+        TaskViewModel taskViewModel = new ViewModelProvider(MainActivity.owner).get(TaskViewModel.class);
+        taskViewModel.updateTasksWithSteps(tasks);
         Log.d(TAG, "updating tasks finished");
     }
 }

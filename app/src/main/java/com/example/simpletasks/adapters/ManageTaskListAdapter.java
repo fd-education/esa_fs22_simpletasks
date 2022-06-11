@@ -105,7 +105,7 @@ public class ManageTaskListAdapter extends RecyclerView.Adapter<ManageTaskListAd
             holder.countStepsIndicator.setText(context.getString(R.string.total_steps, currentSteps.size()));
 
             if (currentTask.getTitleImagePath().isEmpty()) {
-                holder.taskImage.setImageResource(R.drawable.image_placeholder/*TODO change */);
+                holder.taskImage.setImageResource(R.drawable.image_placeholder);
             } else {
                 holder.taskImage.setImageURI(Uri.parse(currentTask.getTitleImagePath()));
             }
@@ -117,9 +117,8 @@ public class ManageTaskListAdapter extends RecyclerView.Adapter<ManageTaskListAd
                 context.startActivity(intent);
             });
             holder.editButton.setOnClickListener(v -> {
-                SharedPreferences sharedPreferences = context.getSharedPreferences(MainActivity.SHARED_PREF_KEY, Context.MODE_PRIVATE);
-                sharedPreferences.edit().putString(EditTaskActivity.SHARED_PREF_TASK_ID, currentTask.getId()).apply();
                 Intent intent = new Intent(context, EditTaskActivity.class);
+                intent.putExtra(MainActivity.TASK_INTENT_EXTRA, currentTaskWithSteps);
                 context.startActivity(intent);
             });
             holder.deleteButton.setOnClickListener(v ->

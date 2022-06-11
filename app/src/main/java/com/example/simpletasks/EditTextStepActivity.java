@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.viewmodels.TaskStepViewModel;
+import com.example.simpletasks.domain.popups.DialogBuilder;
 
 import java.util.ArrayList;
 
@@ -78,8 +79,11 @@ public class EditTextStepActivity extends AppCompatActivity {
         Log.d(TAG, "Initializing UI");
 
         backButton.setOnClickListener(view -> {
-            //todo ask the user if he really wants to discard his changes
-            super.onBackPressed();
+            new DialogBuilder()
+                    .setDescriptionText(R.string.discard_changes_text)
+                    .setContext(this)
+                    .setTwoButtonLayout(R.string.cancel_popup, R.string.discard_changes_button)
+                    .setAction(this::onBackPressed).build().show();
         });
 
         captureImage.setOnClickListener(view -> {

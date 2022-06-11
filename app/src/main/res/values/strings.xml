@@ -110,4 +110,8 @@
     <string name="pin_sent_popup">A new PIN was successfully sent to %1$s!</string>
     <string name="confirm_delete_pin_popup">Are you sure that you want to delete this PIN?</string>
     <string name="pin_deletion_confirmation">The PIN was deleted!</string>
+    <string name="video" translatable="false">Video</string>
+    <string name="audio" translatable="false">Audio</string>
+    <string name="text" translatable="false">Text</string>
+    <string name="request_type">What type of task step do you want to create?</string>
 </resources>

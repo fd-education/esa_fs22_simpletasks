@@ -251,6 +251,20 @@ public class TaskStep implements Serializable {
         this.taskId = taskId;
     }
 
+
+    public static TaskStep getEmptyStep(String taskId, TaskStepTypes type, int stepIndex){
+        return new TaskStep(
+                taskId,
+                type,
+                stepIndex,
+                "",
+                "",
+                "",
+                "",
+                ""
+        );
+    }
+
     /**
      * Compare two tasks for equality.
      *

@@ -1,6 +1,5 @@
 package com.example.simpletasks;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.simpletasks.data.entities.Pin;
+import com.example.simpletasks.domain.popups.DialogBuilder;
+import com.example.simpletasks.domain.popups.IDialogBuilder;
 import com.example.simpletasks.domain.settings.PinController;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;

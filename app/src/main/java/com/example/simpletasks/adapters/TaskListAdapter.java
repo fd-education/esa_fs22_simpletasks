@@ -104,7 +104,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
             if (!currentTask.getTitleImagePath().isEmpty()) {
                 holder.taskImage.setImageURI(Uri.parse(currentTask.getTitleImagePath()));
             } else {
-                holder.taskImage.setImageResource(R.drawable.image_placeholder/*TODO change */);
+                holder.taskImage.setImageResource(R.drawable.image_placeholder);
             }
 
             holder.itemView.setOnClickListener(v -> {
