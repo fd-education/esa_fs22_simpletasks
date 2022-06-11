@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tasks_today">Heutige Tasks</string>
-    <string name="edit_tasks">Bearbeite Tasks</string>
-    <string name="caretaker_login">Login für Betreeunde</string>
+    <string name="edit_tasks">Tasks bearbeiten</string>
+    <string name="login_title">Login</string>
     <string name="logout">Ausloggen</string>
     <string name="total_steps">%1$d Schritte</string>
     <string name="have_problem">Ich habe ein Problem</string>
@@ -18,7 +18,7 @@
     <string name="task_image">Bild von Task</string>
     <string name="task_step_image">Bild von Taskschritt</string>
     <string name="add_task_step">Taskschritt hinzufügen</string>
-    <string name="caretaker_login_hint">Logge dich ein, um Tasks bearbeiten zu können</string>
+    <string name="login_hint">Loggen Sie sich ein, um Tasks bearbeiten zu können</string>
     <string name="open_settings">Einstellungen öffnen</string>
     <string name="save">Speichern</string>
     <string name="task_title_hint">Titel des Tasks</string>
@@ -115,5 +115,6 @@
     <string name="report_problem_abort">Zurück zum Task</string>
     <string name="no_problem_stated">Bitte zuerst das Problem beschreiben!</string>
     <string name="problem_statement_additional_information">Zusätzliche Informationen:\nTasktitel: %1$s\nSchritttitel: %2$s\nSchrittindex: %3$d</string>
+    <string name="no_pin_set_tip">Möchten Sie das Verwalten der Tasks mit einem PIN schützen?</string>
     <string name="request_type">Welche Art von Task Step möchten Sie erstellen?</string>
 </resources>

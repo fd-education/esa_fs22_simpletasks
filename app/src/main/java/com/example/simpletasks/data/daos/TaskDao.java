@@ -100,7 +100,7 @@ public interface TaskDao {
      * @param tasks the tasks to insert
      */
     @Insert(onConflict = REPLACE)
-    void insertTasks(List<Task> tasks);
+    ListenableFuture<List<Long>> insertTasks(List<Task> tasks);
 
     /**
      * Delete a list of tasks from the tasks table.

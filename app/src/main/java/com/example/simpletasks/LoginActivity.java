@@ -13,7 +13,7 @@ import com.example.simpletasks.domain.login.LoginController;
 import com.example.simpletasks.domain.login.User;
 
 /**
- * LoginActivity handles lifecycle and business calls for the caretaker login screen.
+ * LoginActivity handles lifecycle and business calls for the login screen.
  */
 public class LoginActivity extends AppCompatActivity {
     final String TAG = "LoginActivity";

@@ -5,7 +5,7 @@
 
     <string name="tasks_today">Tasks Today</string>
     <string name="edit_tasks">Edit Tasks</string>
-    <string name="caretaker_login">Caretaker Login</string>
+    <string name="login_title">Login</string>
     <string name="login">Login</string>
     <string name="logout">Logout</string>
     <string name="total_steps">%1$d Steps</string>
@@ -22,7 +22,7 @@
     <string name="task_image">Task Image</string>
     <string name="task_step_image">Task Step Image</string>
     <string name="add_task_step">Add Task Step</string>
-    <string name="caretaker_login_hint">Log in to gain access to edit tasks</string>
+    <string name="login_hint">Log in to gain access to edit tasks</string>
     <string name="open_settings">Open settings</string>
     <string name="save">Save</string>
     <string name="task_title_hint">Task title</string>
@@ -120,4 +120,5 @@
     <string name="audio" translatable="false">Audio</string>
     <string name="text" translatable="false">Text</string>
     <string name="request_type">What type of task step do you want to create?</string>
+    <string name="no_pin_set_tip">Would you like to protect the task management with a PIN?</string>
 </resources>

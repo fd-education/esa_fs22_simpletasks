@@ -128,15 +128,15 @@ public abstract class AppDatabase extends RoomDatabase {
                 try {
                     taskDao.deleteAll().get();
                     taskStepDao.deleteAll().get();
+                    for (TaskWithSteps task : tasksWithSteps) {
+                        tasks.add(task.getTask());
+                    }
+
+                    taskDao.insertTasks(tasks).get();
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
 
-                for (TaskWithSteps task : tasksWithSteps) {
-                    tasks.add(task.getTask());
-                }
-
-                taskDao.insertTasks(tasks);
 
                 for (TaskWithSteps task : tasksWithSteps) {
                     taskStepDao.insertTaskSteps(task.getSteps());
@@ -161,7 +161,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
                 pinDao.deleteAll();
 
-                pinDao.insertPin(pin1);
+                // pinDao.insertPin(pin1);
                 pinDao.insertPin(pin2);
                 Log.d(TAG, "finished seeding pins");
             });

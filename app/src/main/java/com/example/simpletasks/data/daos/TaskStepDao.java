@@ -37,7 +37,7 @@ public interface TaskStepDao {
      * @param taskStep the taskSteps to insert
      */
     @Insert(onConflict = REPLACE)
-    void insertTaskStep(TaskStep taskStep);
+    ListenableFuture<Long> insertTaskStep(TaskStep taskStep);
 
     /**
      * Insert a list of taskSteps into the taskSteps table.
@@ -45,7 +45,7 @@ public interface TaskStepDao {
      * @param taskSteps the taskSteps to insert
      */
     @Insert(onConflict = REPLACE)
-    void insertTaskSteps(List<TaskStep> taskSteps);
+    ListenableFuture<List<Long>> insertTaskSteps(List<TaskStep> taskSteps);
 
     /**
      * Update a list of task steps in the taskSteps table.
