@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -50,7 +51,8 @@ public class ScheduleTaskActivity extends AppCompatActivity {
      */
     public void onPlanNextExecutionClicked(View view) {
         calendar = Calendar.getInstance();
-        dateTimePickerNextExecution = new DateTimePickerListener(calendar);
+        calendar.setTime(task.getNextStartDate());
+        dateTimePickerNextExecution = new DateTimePickerListener(calendar, this::onNextExecutionDateUpdated);
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, dateTimePickerNextExecution, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
     }
@@ -62,9 +64,22 @@ public class ScheduleTaskActivity extends AppCompatActivity {
      */
     public void onPlanLastExecutionClicked(View view) {
         calendar = Calendar.getInstance();
-        dateTimePickerLastExecution = new DateTimePickerListener(calendar);
+        calendar.setTime(task.getEndDate());
+        dateTimePickerLastExecution = new DateTimePickerListener(calendar, this::onLastExecutionDateUpdated);
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, dateTimePickerLastExecution, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
+    }
+
+    private void onLastExecutionDateUpdated() {
+        if (dateTimePickerLastExecution != null) {
+            updateLastExecutionDateText(dateTimePickerLastExecution.getUpdatedCalendar().getTime());
+        }
+    }
+
+    private void onNextExecutionDateUpdated() {
+        if (dateTimePickerNextExecution != null) {
+            updateNextExecutionDateText(dateTimePickerNextExecution.getUpdatedCalendar().getTime());
+        }
     }
 
     /**
@@ -127,11 +142,8 @@ public class ScheduleTaskActivity extends AppCompatActivity {
 
     //fills the ui elements with the data
     private void fillUiElements() {
-        //use this suppress because we really want this specific date time format to appear
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(getString(R.string.date_time_format), Locale.GERMANY);
-        String currentNextExecutionDate = simpleDateFormat.format(task.getNextStartDate());
-        String currentLastExecutionDate = simpleDateFormat.format(task.getEndDate());
+        updateNextExecutionDateText(task.getNextStartDate());
+        updateLastExecutionDateText(task.getEndDate());
         long currentIntervalLong = task.getInterval();
         int currentIntervalDays = (int) (currentIntervalLong / TaskWithSteps.ONE_DAY_INTERVAL);
         currentIntervalLong = currentIntervalLong - currentIntervalDays * TaskWithSteps.ONE_DAY_INTERVAL;
@@ -140,11 +152,8 @@ public class ScheduleTaskActivity extends AppCompatActivity {
         int currentIntervalMinutes = (int) (currentIntervalLong / TaskWithSteps.ONE_MINUTE_INTERVAL);
 
         //text views
-        TextView textView = findViewById(R.id.nextExecutionTextView_scheduleTask);
-        textView.setText(getString(R.string.current_next_execution, currentNextExecutionDate));
-        textView = findViewById(R.id.lastExecutionTextView_scheduleTask);
-        textView.setText(getString(R.string.current_last_execution, currentLastExecutionDate));
-        textView = findViewById(R.id.intervalTextView_scheduleTask);
+
+        TextView textView = findViewById(R.id.intervalTextView_scheduleTask);
         textView.setText(getString(R.string.current_interval, currentIntervalDays, currentIntervalHours, currentIntervalMinutes));
 
         //edit text values for the interval
@@ -154,6 +163,24 @@ public class ScheduleTaskActivity extends AppCompatActivity {
         editText.setText(String.valueOf(currentIntervalHours));
         editText = findViewById(R.id.minutesDecimalInput_ScheduleTask);
         editText.setText(String.valueOf(currentIntervalMinutes));
+    }
+
+    private void updateNextExecutionDateText(Date date) {
+        //use this suppress because we really want this specific date time format to appear
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(getString(R.string.date_time_format), Locale.GERMANY);
+        String formattedDate = simpleDateFormat.format(date);
+        TextView textView = findViewById(R.id.nextExecutionTextView_scheduleTask);
+        textView.setText(getString(R.string.current_next_execution, formattedDate));
+    }
+
+    private void updateLastExecutionDateText(Date date) {
+        //use this suppress because we really want this specific date time format to appear
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(getString(R.string.date_time_format), Locale.GERMANY);
+        String formattedDate = simpleDateFormat.format(date);
+        TextView textView = findViewById(R.id.lastExecutionTextView_scheduleTask);
+        textView.setText(getString(R.string.current_last_execution, formattedDate));
     }
 
     //sets the new interval in the task
