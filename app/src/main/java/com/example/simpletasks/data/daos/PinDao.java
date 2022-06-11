@@ -50,7 +50,7 @@ public interface PinDao {
      * through constant seeding at application start-up.
      */
     @Query("DELETE FROM pins")
-    void deleteAll();
+    ListenableFuture<Integer> deleteAll();
 
     /**
      * Returns all pins that match the given hash

@@ -56,6 +56,12 @@ public class SkipTaskUiTest {
                         isDisplayed()));
         appCompatImageButton.perform(click());
 
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         ViewInteraction button = onView(
                 allOf(withId(R.id.cancelBTN),
                         withParent(withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class))),

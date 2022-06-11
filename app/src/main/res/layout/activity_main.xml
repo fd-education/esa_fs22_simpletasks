@@ -14,7 +14,7 @@
         android:contentDescription="@string/open_settings"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/caretakerLoginButton"
+        app:layout_constraintStart_toEndOf="@id/loginButton"
         app:srcCompat="@drawable/ic_baseline_settings_24" />
 
     <TextView
@@ -52,31 +52,20 @@
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/elementPadding"
         android:layout_marginBottom="@dimen/elementPadding"
-        app:layout_constraintBottom_toTopOf="@+id/loginHint"
+        app:layout_constraintBottom_toTopOf="@+id/loginButton"
         app:layout_constraintEnd_toEndOf="@+id/editTasksTitle"
         app:layout_constraintStart_toStartOf="@+id/editTasksTitle"
         app:layout_constraintTop_toBottomOf="@+id/editTasksTitle" />
 
     <Button
+        android:id="@+id/loginButton"
         style="@style/Theme.SimpleTasks.PrimaryButton"
-        android:id="@+id/caretakerLoginButton"
         android:onClick="onLoginClicked"
-        android:text="@string/caretaker_login"
+        android:text="@string/edit_tasks"
         app:layout_constraintBottom_toBottomOf="@+id/imageButton"
         app:layout_constraintEnd_toEndOf="@+id/fragmentContainerTaskList"
         app:layout_constraintStart_toStartOf="@+id/fragmentContainerTaskList"
         app:layout_constraintTop_toTopOf="@+id/imageButton"
         app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
-        android:id="@+id/loginHint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/elementPadding"
-        android:text="@string/caretaker_login_hint"
-        android:textColor="?attr/hintTextColor"
-        app:layout_constraintBottom_toTopOf="@+id/caretakerLoginButton"
-        app:layout_constraintEnd_toEndOf="@+id/fragmentContainerTaskList"
-        app:layout_constraintStart_toStartOf="@+id/fragmentContainerTaskList" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

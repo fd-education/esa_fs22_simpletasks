@@ -174,7 +174,7 @@ public class EditTaskActivity extends AppCompatActivity {
      */
     public void onPlanTaskClicked(View view) {
         Intent intent = new Intent(this, ScheduleTaskActivity.class);
-        intent.putExtra(MainActivity.TASK_INTENT_EXTRA, currentEditTaskWithSteps);
+        intent.putExtra(MainActivity.TASK_INTENT_EXTRA, currentEditTask);
         startActivity(intent);
     }
 

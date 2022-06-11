@@ -12,9 +12,11 @@ import java.util.Calendar;
 public class DateTimePickerListener implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     private int newYear, newMonth, newDay, newHour, newMinute;
     private final Calendar calendar;
+    private final Runnable additionalCallback;
 
-    public DateTimePickerListener(Calendar calendar) {
+    public DateTimePickerListener(Calendar calendar, Runnable additionalCallback) {
         this.calendar = calendar;
+        this.additionalCallback = additionalCallback;
     }
 
     /**
@@ -46,6 +48,7 @@ public class DateTimePickerListener implements DatePickerDialog.OnDateSetListene
     public void onTimeSet(TimePicker timePicker, int hour, int minute) {
         newHour = hour;
         newMinute = minute;
+        additionalCallback.run();
     }
 
     /**

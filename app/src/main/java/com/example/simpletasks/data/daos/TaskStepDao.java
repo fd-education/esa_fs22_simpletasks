@@ -10,6 +10,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.simpletasks.data.entities.TaskStep;
+import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.List;
 
@@ -36,7 +37,7 @@ public interface TaskStepDao {
      * @param taskStep the taskSteps to insert
      */
     @Insert(onConflict = REPLACE)
-    void insertTaskStep(TaskStep taskStep);
+    ListenableFuture<Long> insertTaskStep(TaskStep taskStep);
 
     /**
      * Insert a list of taskSteps into the taskSteps table.
@@ -44,7 +45,7 @@ public interface TaskStepDao {
      * @param taskSteps the taskSteps to insert
      */
     @Insert(onConflict = REPLACE)
-    void insertTaskSteps(List<TaskStep> taskSteps);
+    ListenableFuture<List<Long>> insertTaskSteps(List<TaskStep> taskSteps);
 
     /**
      * Update a list of task steps in the taskSteps table.
@@ -74,5 +75,5 @@ public interface TaskStepDao {
      * Delete all data from the taskSteps database.
      */
     @Query("DELETE FROM taskSteps")
-    void deleteAll();
+    ListenableFuture<Integer> deleteAll();
 }

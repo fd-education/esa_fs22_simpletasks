@@ -5,7 +5,7 @@
 
     <string name="tasks_today">Tasks Today</string>
     <string name="edit_tasks">Edit Tasks</string>
-    <string name="caretaker_login">Caretaker Login</string>
+    <string name="login_title">Login</string>
     <string name="login">Login</string>
     <string name="logout">Logout</string>
     <string name="total_steps">%1$d Steps</string>
@@ -22,7 +22,7 @@
     <string name="task_image">Task Image</string>
     <string name="task_step_image">Task Step Image</string>
     <string name="add_task_step">Add Task Step</string>
-    <string name="caretaker_login_hint">Log in to gain access to edit tasks</string>
+    <string name="login_hint">Log in to gain access to edit tasks</string>
     <string name="open_settings">Open settings</string>
     <string name="save">Save</string>
     <string name="task_title_hint">Task title</string>
@@ -103,6 +103,12 @@
     <string name="language_settings">Language settings</string>
     <string name="no_pin_set_explanation">Currently no PIN set!</string>
     <string name="not_logged_in_explanation">You are currently not logged in!</string>
+    <string name="title_report_problem">Report your problem</string>
+    <string name="report_problem_explanation">You have encountered a problem and are stuck? No worries, you can write your problem here and use the button below to send it!</string>
+    <string name="report_problem_send_button">Send problem</string>
+    <string name="report_problem_abort">Back to task</string>
+    <string name="no_problem_stated">Please describe your problem first!</string>
+    <string name="problem_statement_additional_information">Additional Information on the task:\nTask title: %1$s\nStep title: %2$s\nStep index: %3$d</string>
     <string name="cancel_popup">Cancel</string>
     <string name="skip_task_popup">Skip Task</string>
     <string name="accept_info_popup">Okay</string>
@@ -114,4 +120,5 @@
     <string name="audio" translatable="false">Audio</string>
     <string name="text" translatable="false">Text</string>
     <string name="request_type">What type of task step do you want to create?</string>
+    <string name="no_pin_set_tip">Would you like to protect the task management with a PIN?</string>
 </resources>
