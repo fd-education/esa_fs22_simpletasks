@@ -80,10 +80,9 @@ public class EditStepsUtilsController implements EditStepsUtils {
             }
         }
 
-        // append ordered steps to the list of remaining unordered steps
-        taskSteps.addAll(steps);
+        steps.addAll(taskSteps);
 
-        return taskSteps;
+        return steps;
     }
 
     /**

@@ -1,6 +1,5 @@
 package com.example.simpletasks.fragments;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -17,12 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.simpletasks.EditTaskActivity;
-import com.example.simpletasks.MainActivity;
-import com.example.simpletasks.ManageTasksActivity;
 import com.example.simpletasks.R;
 import com.example.simpletasks.adapters.EditTaskStepsListAdapter;
 import com.example.simpletasks.data.entities.TaskStep;
-import com.example.simpletasks.data.entities.TaskWithSteps;
 import com.example.simpletasks.data.viewmodels.TaskStepViewModel;
 import com.example.simpletasks.domain.dragdrop.TaskStepsDrag;
 import com.example.simpletasks.domain.editSteps.EditStepsUtilsController;
@@ -146,7 +142,7 @@ public class EditTaskStepsListFragment extends Fragment implements TaskStepsDrag
             this.taskSteps = EditStepsUtilsController.getSortedTaskSteps(order, taskSteps);
             updateStepIndeces();
 
-            adapter.setTaskSteps(taskSteps);
+            adapter.setTaskSteps(this.taskSteps);
             adapter.registerAdapterDataObserver(getDataObserver());
         });
     }

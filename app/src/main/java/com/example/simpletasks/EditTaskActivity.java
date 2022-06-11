@@ -109,8 +109,8 @@ public class EditTaskActivity extends AppCompatActivity {
      * @param view ignored, not needed by the handler
      */
     public void onAddTaskStepClicked(View view) {
-        String stepId = currentEditTask.getId();
-        int index = currentEditTask.getSteps().size() + 1;
+        String stepId = currentEditTaskWithSteps.getTask().getId();
+        int index = currentEditTaskWithSteps.getSteps().size() + 1;
         new ChooseTypeDialog(this).showDialog(stepId, index);
     }
 
@@ -186,7 +186,7 @@ public class EditTaskActivity extends AppCompatActivity {
     private void setFragment() {
         EditTaskStepsListFragment taskStepsListFragment = new EditTaskStepsListFragment();
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragmentContainerTaskStepList_editTask, taskStepsListFragment).commit();
+                .replace(R.id.fragmentContainerTaskStepList_editTask, taskStepsListFragment).commit();
 
         Log.d(TAG, "TaskStepList Fragment set.");
     }
