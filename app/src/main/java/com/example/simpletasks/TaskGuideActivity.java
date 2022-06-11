@@ -136,9 +136,7 @@ public class TaskGuideActivity extends AppCompatActivity {
 
         currentStep = 0;
 
-        //TODO change to work after merge with feature/edit-steps!!
-
-        // if task has no steps, go back to the last activity and throw an error
+        // if task has no steps, go back to the last activity
         if (taskSteps == null || taskSteps.size() == 0) {
             super.onBackPressed();
             new DialogBuilder().setDescriptionText(R.string.no_steps_set)
@@ -225,7 +223,6 @@ public class TaskGuideActivity extends AppCompatActivity {
         }
     }
 
-    // Get the progressbar step with the number of a step
     private TextView getProgressStep(int stepNumber){
         TextView textView;
 

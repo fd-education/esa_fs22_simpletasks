@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -106,13 +105,17 @@ public class AddPinActivity extends AppCompatActivity {
     }
 
     // Show the pin on the screen
-    // TODO: Finish when pop-ups are ready
     private void showPin(Pin pin) {
-        // TODO: When popup are ready
-        Toast.makeText(this, pin.getPin(), Toast.LENGTH_LONG).show();
-        pinController.addPin(pin);
-        Log.d(TAG, "showed pin locally");
-        finish();
+        new DialogBuilder()
+                .setDescriptionText(R.string.show_pin_popup, pin.getPin())
+                .setContext(this)
+                .setTwoButtonLayout(R.string.cancel_popup, R.string.accept_info_popup)
+                .setAction(() -> {
+                    pinController.addPin(pin);
+                    Log.d(TAG, "showed pin locally");
+                    finish();
+                })
+                .build().show();
     }
 
     // Use firebase to send the pin to the user
@@ -133,6 +136,7 @@ public class AddPinActivity extends AppCompatActivity {
 
         View sendErrorView = findViewById(R.id.sendPinError);
         sendErrorView.setVisibility(View.GONE);
+
         FirebaseFunctions firebaseFunctions = FirebaseFunctions.getInstance();
         Task<String> responseTask = pinController.sendPin(pin, phoneNumber, firebaseFunctions);
         Log.d(TAG, "sent pin, waiting for response");
@@ -147,11 +151,12 @@ public class AddPinActivity extends AppCompatActivity {
 
         // Handle success when sending pins in firebase
         responseTask.addOnSuccessListener((s) -> {
-            // TODO: Show when popup is ready
             Log.d(TAG, "response successful");
             pinController.addPin(pin);
             Log.d(TAG, "pin saved");
-            finish();
+            Log.d(TAG, "showing confirmation popup");
+            final String formattedPhoneNumber = phoneNumberUtil.formatInOriginalFormat(phoneNumber, regionCode);
+            showPinSentPopup(formattedPhoneNumber);
         });
 
         // Handle errors when sending pins in firebase
@@ -168,6 +173,19 @@ public class AddPinActivity extends AppCompatActivity {
                 Log.e(TAG, e.getMessage());
             }
         });
+    }
+
+    // shows a popup confirming that the pin has been sent to the given phone number
+    private void showPinSentPopup(String formattedPhoneNumber) {
+        new DialogBuilder()
+                .setDescriptionText(R.string.pin_sent_popup, formattedPhoneNumber)
+                .setContext(this)
+                .setCenterButtonLayout(R.string.accept_info_popup)
+                .setAction(() -> {
+                    Log.d(TAG, "user closed popup");
+                    finish();
+                })
+                .build().show();
     }
 
     // Create TextWatcher to validate the users entered phone number

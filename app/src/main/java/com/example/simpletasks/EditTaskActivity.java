@@ -1,5 +1,6 @@
 package com.example.simpletasks;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -53,6 +54,14 @@ public class EditTaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_task);
+    }
+
+    /**
+     * gets called each time the activity gets back to focus
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
 
@@ -159,6 +168,11 @@ public class EditTaskActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
+    /**
+     * gets called when the plan task button is clicked
+     *
+     * @param view the view that triggered the call
+     */
     public void onPlanTaskClicked(View view) {
         Intent intent = new Intent(this, ScheduleTaskActivity.class);
         intent.putExtra(MainActivity.TASK_INTENT_EXTRA, currentEditTaskWithSteps);
@@ -179,7 +193,6 @@ public class EditTaskActivity extends AppCompatActivity {
         taskTitle.setText(currentEditTask.getTitle());
     }
 
-    // Get the task from the intent
     private void handleTaskIntent() {
         currentEditTaskWithSteps = (TaskWithSteps) getIntent().getSerializableExtra(MainActivity.TASK_INTENT_EXTRA);
 
@@ -190,45 +203,54 @@ public class EditTaskActivity extends AppCompatActivity {
         }
     }
 
+    // Get the task from the intent
+<<<<<<<<< Temporary merge branch 1
+    private Task getTask() {
+        TaskWithSteps taskWithSteps = (TaskWithSteps) getIntent().getExtras().getSerializable(MainActivity.TASK_INTENT_EXTRA);
+        return taskWithSteps.getTask();
+    }
+
     // TODO Replace with correct dialog pop-up
     private AlertDialog getChoseFormatDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        return builder.setTitle("Step Types")
+        builder.setTitle("Step Types")
                 .setItems(new CharSequence[]
-                                {"TEXT STEP", "AUDIO STEP", "VIDEO STEP", "CANCEL"},
-                        (dialog, which) -> {
-                            switch (which) {
-                                case 0:
-                                    TaskStep textStep = new TaskStep(currentEditTask.getId(), TaskStepTypes.TEXT, -1, "", "", "", "", "");
+                    {"TEXT STEP", "AUDIO STEP", "VIDEO STEP", "CANCEL"},
+                    (dialog, which) -> {
+                    switch(which){
+                        case 0:
+                            TaskStep newTextStep = new TaskStep(currentEditTask.getId(), TaskStepTypes.TEXT, currentEditTask.getSteps().size() + 1, "", "", "", "", "");
 
-                                    Intent textIntent = new Intent(getBaseContext(), EditTextStepActivity.class);
-                                    textIntent.putExtra(MainActivity.TASK_INTENT_EXTRA, textStep);
-                                    startActivity(textIntent);
+                            Intent textIntent = new Intent(getBaseContext(), EditTextStepActivity.class);
+                            textIntent.putExtra(MainActivity.TASK_INTENT_EXTRA, newTextStep);
+                            startActivity(textIntent);
+                            break;
+                        case 1:
+                            TaskStep audioStep = new TaskStep(currentEditTask.getId(), TaskStepTypes.AUDIO, currentEditTask.getSteps().size() + 1, "", "", "", "", "");
 
-                                    break;
-                                case 1:
-                                    TaskStep audioStep = new TaskStep(currentEditTask.getId(), TaskStepTypes.AUDIO, -1, "", "", "", "", "");
+                            Intent audioIntent = new Intent(getBaseContext(), EditAudioStepActivity.class);
+                            audioIntent.putExtra(MainActivity.TASK_INTENT_EXTRA, audioStep);
+                            startActivity(audioIntent);
+                            break;
+                        case 2:
+                            TaskStep videoStep = new TaskStep(currentEditTask.getId(), TaskStepTypes.VIDEO, currentEditTask.getSteps().size() + 1, "", "", "", "", "");
 
-                                    Intent audioIntent = new Intent(getBaseContext(), EditAudioStepActivity.class);
-                                    audioIntent.putExtra(MainActivity.TASK_INTENT_EXTRA, audioStep);
-                                    startActivity(audioIntent);
+                            Intent videoIntent = new Intent(getBaseContext(), EditVideoStepActivity.class);
+                            videoIntent.putExtra(MainActivity.TASK_INTENT_EXTRA, videoStep);
+                            startActivity(videoIntent);
+                            Log.d(TAG, "VIDEO STEP");
+                            break;
+                        case 3:
+                            Log.d(TAG, "CANCEL");
+                            break;
+                    }
+                });
 
-                                    break;
-                                case 2:
-                                    TaskStep videoStep = new TaskStep(currentEditTask.getId(), TaskStepTypes.VIDEO, -1, "", "", "", "", "");
-
-                                    Intent videoIntent = new Intent(getBaseContext(), EditVideoStepActivity.class);
-                                    videoIntent.putExtra(MainActivity.TASK_INTENT_EXTRA, videoStep);
-                                    startActivity(videoIntent);
-
-                                    break;
-                                case 3:
-                                    Log.d(TAG, "CANCEL");
-                                    break;
-                            }
-                        })
-                .create();
+        return builder.create();
+=========
+    private TaskWithSteps getTask() {
+        return (TaskWithSteps) getIntent().getSerializableExtra(MainActivity.TASK_INTENT_EXTRA);
     }
 
     //validates the data of the ui, which was not validated before.

@@ -36,7 +36,7 @@ public class TaskRepositoryTest {
 
     @Before
     public void setUp() {
-        task = new Task("Task", "test task", new Date(2000, 1, 1), 100L, 10L, new Date(2000, 1, 1));
+        task = new Task("Task", "", "test task", new Date(2000, 1, 1), 100L, 10L, new Date(2000, 1, 1));
         textTaskStep = new TaskStep(task.getId(), TaskStepTypes.TEXT, 0, "title", "imageUri", "description", "videoUri", "audioUri");
         taskWithSteps = new TaskWithSteps(task, Collections.singletonList(textTaskStep));
 
@@ -166,7 +166,7 @@ public class TaskRepositoryTest {
     private List<TaskWithSteps> getTaskWithSteps() {
         final LiveData<List<TaskWithSteps>> allWithSteps = taskDao.getAllWithSteps();
         observeTaskWithSteps(allWithSteps);
-        sleep(100);
+        sleep(500);
         return allWithSteps.getValue();
     }
 

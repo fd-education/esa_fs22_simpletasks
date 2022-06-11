@@ -1,18 +1,19 @@
 package com.example.simpletasks;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.simpletasks.data.entities.TaskWithSteps;
 import com.example.simpletasks.domain.login.User;
 import com.example.simpletasks.domain.popups.DialogBuilder;
 
 public class ManageTasksActivity extends AppCompatActivity {
     private static final String TAG = "ManageTaskActivity";
+    public static final String CREATE_NEW_TASK = "create new task";
     private User user;
 
     /**
@@ -65,8 +66,10 @@ public class ManageTasksActivity extends AppCompatActivity {
      * @param view the view that triggered the event
      */
     public void onAddTaskClicked(View view) {
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREF_KEY, MODE_PRIVATE);
+        sharedPreferences.edit().putString(EditTaskActivity.SHARED_PREF_TASK_ID, CREATE_NEW_TASK).apply();
+
         Intent intent = new Intent(this, EditTaskActivity.class);
-        intent.putExtra(MainActivity.TASK_INTENT_EXTRA, new TaskWithSteps());
         startActivity(intent);
     }
 

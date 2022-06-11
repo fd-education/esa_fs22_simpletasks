@@ -10,12 +10,10 @@
         android:id="@+id/tv_showaudiostep_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:text="@string/placeholder"
         android:textColor="?colorOnBackground"
         android:textSize="@dimen/h2"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/iv_showaudiostep_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,13 +23,13 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginStart="@dimen/sidesPadding"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="@dimen/sidesPadding"
         android:layout_marginEnd="@dimen/sidesPadding"
+        android:contentDescription="@string/step_title_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/image_placeholder"
-        android:contentDescription="@string/step_title_image" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_showaudiostep_title"
+        tools:src="@drawable/image_placeholder" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/frag_showaudiostep_audioplayer"

@@ -1,5 +1,6 @@
 package com.example.simpletasks.fragments;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -16,9 +17,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.simpletasks.EditTaskActivity;
+import com.example.simpletasks.MainActivity;
+import com.example.simpletasks.ManageTasksActivity;
 import com.example.simpletasks.R;
 import com.example.simpletasks.adapters.EditTaskStepsListAdapter;
 import com.example.simpletasks.data.entities.TaskStep;
+import com.example.simpletasks.data.entities.TaskWithSteps;
 import com.example.simpletasks.data.viewmodels.TaskStepViewModel;
 import com.example.simpletasks.domain.dragdrop.TaskStepsDrag;
 import com.example.simpletasks.domain.editSteps.EditStepsUtilsController;
@@ -31,7 +35,6 @@ import java.util.List;
  */
 public class EditTaskStepsListFragment extends Fragment implements TaskStepsDrag.DragHandleCallback {
     private static final String TAG = "EditTaskListFragment";
-
     private View view;
     private TaskStepViewModel taskStepViewModel;
 
@@ -92,6 +95,26 @@ public class EditTaskStepsListFragment extends Fragment implements TaskStepsDrag
     public void updateTaskSteps(){
         taskStepViewModel.updateTaskSteps(taskSteps);
     }
+
+    /**
+     * gets called each time the fragment is getting back to focus
+     */
+//    @Override
+//    public void onResume() {
+//        SharedPreferences sharedPreferences = getContext().getSharedPreferences(MainActivity.SHARED_PREF_KEY, Context.MODE_PRIVATE);
+//        String taskId = sharedPreferences.getString(EditTaskActivity.SHARED_PREF_TASK_ID, null);
+//
+//        if(taskId.equals(ManageTasksActivity.CREATE_NEW_TASK)) {
+//            setAdapterWithTaskSteps(new TaskWithSteps().getSteps());
+//        } else {
+//            taskStepViewModel = new ViewModelProvider(this).get(TaskStepViewModel.class);
+//            LiveData<List<TaskStep>> taskSteps = taskStepViewModel.getStepsOfTaskById(taskId);
+//            final Observer<List<TaskStep>> taskStepsObserver = this::setAdapterWithTaskSteps;
+//            taskSteps.observe(getActivity(), taskStepsObserver);
+//        }
+//
+//        super.onResume();
+//    }
 
     // Set the task steps to the adapter
     private void setAdapterWithTaskSteps() {

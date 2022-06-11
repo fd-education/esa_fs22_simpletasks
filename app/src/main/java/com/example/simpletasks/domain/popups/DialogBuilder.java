@@ -18,9 +18,10 @@ public class DialogBuilder implements IDialogBuilder {
     private int cancelBtnTextId;
     private int actionBtnTextId;
     private int btnTextId;
-    private int descriptionId;
+    private int descriptionText;
     private Runnable action;
     private boolean isTwoButtonLayout;
+    private Object[] descriptionFormatArgs;
 
     /**
      * This method sets the layout of a 2 button popup.
@@ -51,16 +52,29 @@ public class DialogBuilder implements IDialogBuilder {
     }
 
     /**
-     * This method sets the text for the singleButton Layout
+     * This method sets the text for the description
      *
      * @param textId the text id to fill in
      * @return the text which needs to be filled by the Builder
      */
     @Override
     public IDialogBuilder setDescriptionText(int textId) {
-        this.descriptionId = textId;
+        this.descriptionText = textId;
         return this;
 
+    }
+
+    /**
+     * This method sets the text for the description and also accepts formatting arguments for the string
+     *
+     * @param textId the text id to fill in
+     * @return the text which needs to be filled by the Builder
+     */
+    @Override
+    public IDialogBuilder setDescriptionText(int textId, Object... formatArgs) {
+        this.descriptionText = textId;
+        this.descriptionFormatArgs = formatArgs;
+        return this;
     }
 
     /**
@@ -103,7 +117,11 @@ public class DialogBuilder implements IDialogBuilder {
             dialog.setContentView(R.layout.popup_one_button);
         }
         TextView descriptionView = dialog.findViewById(R.id.popupText);
-        descriptionView.setText(descriptionId);
+        if (descriptionFormatArgs == null) {
+            descriptionView.setText(descriptionText);
+        } else {
+            descriptionView.setText(context.getString(descriptionText, descriptionFormatArgs));
+        }
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         if (isTwoButtonLayout) {
             Button cancelButton = dialog.findViewById(R.id.cancelBTN);

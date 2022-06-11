@@ -100,13 +100,13 @@ public class Pin {
     }
 
     /**
-     * Creates a random Pin with a value ranging from 0 through 9999
+     * Creates a random Pin with a value ranging from 0 through 99999
      *
      * @return a Pin object
      */
     static public Pin random() {
         Random random = new Random();
-        int randomInt = random.nextInt(10_000);
+        int randomInt = random.nextInt(100_000);
         return Pin.fromInt(randomInt);
     }
 

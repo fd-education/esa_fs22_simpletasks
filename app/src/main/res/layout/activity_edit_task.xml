@@ -38,12 +38,11 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addTaskStep_editTask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/Theme.SimpleTasks.IconButtonPrimary"
         android:layout_marginEnd="@dimen/sidesPadding"
         android:backgroundTint="?colorPrimary"
         android:clickable="true"
-        android:contentDescription="@string/add_task"
+        android:contentDescription="@string/add_task_step"
         android:focusable="true"
         android:onClick="onAddTaskStepClicked"
         app:layout_constraintBottom_toBottomOf="@+id/saveTaskButton_editTask"

@@ -1,5 +1,7 @@
 package com.example.simpletasks;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,13 +23,8 @@ import java.util.concurrent.Executors;
 public class RemovePinActivity extends AppCompatActivity {
 
     private static final String TAG = "RemovePinActivity";
-    private final PinController pinController;
-    private final ExecutorService executorService;
-
-    public RemovePinActivity() {
-        pinController = new PinController(this.getApplication());
-        executorService = Executors.newSingleThreadExecutor();
-    }
+    private PinController pinController;
+    private ExecutorService executorService;
 
     /**
      * Set and adjust the view and the controllers
@@ -36,6 +33,8 @@ public class RemovePinActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        pinController = new PinController(this.getApplication());
+        executorService = Executors.newSingleThreadExecutor();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remove_pin);
 
@@ -94,18 +93,53 @@ public class RemovePinActivity extends AppCompatActivity {
         Log.d(TAG, "pin was valid");
 
         Log.d(TAG, "checking if pin exists");
-        final FutureCallback<Boolean> deletePinCallback = new FutureCallback<Boolean>() {
+        final ListenableFuture<Boolean> future = pinController.doesPinExist(pin);
+        Futures.addCallback(future, getDoesPinExistCallback(pin), executorService);
+    }
+
+    @NonNull
+    // returns a future callback that, if the pin exists, asks the user if they want to delete the pin
+    private FutureCallback<Boolean> getDoesPinExistCallback(Pin pin) {
+        return new FutureCallback<Boolean>() {
             @Override
-            public void onSuccess(Boolean pinWasDeleted) {
-                if (Boolean.TRUE.equals(pinWasDeleted)) {
-                    Log.d(TAG, "pin existed and was deleted");
-                    Log.d(TAG, "pin deleted");
-                    finish();
-                    // TODO: Add popup
+            public void onSuccess(Boolean doesExist) {
+                if (Boolean.TRUE.equals(doesExist)) {
+                    Log.d(TAG, "pin exists; asking if pin should be deleted");
+                    showConfirmationPopup(pin);
                 } else {
                     Log.d(TAG, "pin does not exist");
                     runOnUiThread(() -> showPinError(getString(R.string.pin_not_found)));
                 }
+            }
+
+            @Override
+            public void onFailure(@NonNull Throwable t) {
+                Log.e(TAG, "checking if pin exists failed with error:");
+                Log.e(TAG, t.getMessage());
+                runOnUiThread(() -> showPinError(getString(R.string.unknown_error_msg)));
+            }
+        };
+    }
+
+    // asks the user if they want to delete the pin and deletes it on confirmation
+    private void showConfirmationPopup(Pin pin) {
+        final Context context = this;
+        final IDialogBuilder dialogBuilder = new DialogBuilder()
+                .setDescriptionText(R.string.confirm_delete_pin_popup)
+                .setContext(context)
+                .setTwoButtonLayout(R.string.cancel_popup, R.string.accept_info_popup)
+                .setAction(() -> Futures.addCallback(pinController.deletePin(pin), getDeletePinCallback(), executorService));
+        runOnUiThread(() -> dialogBuilder.build().show());
+    }
+
+    @NonNull
+    // confirms to the user that the pin was deleted or informs them otherwise
+    private FutureCallback<Boolean> getDeletePinCallback() {
+        return new FutureCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean result) {
+                Log.d(TAG, "pin deleted");
+                showPinDeletedPopup();
             }
 
             @Override
@@ -115,9 +149,20 @@ public class RemovePinActivity extends AppCompatActivity {
                 runOnUiThread(() -> showPinError(getString(R.string.unknown_error_msg)));
             }
         };
+    }
 
-        final ListenableFuture<Boolean> doesPinExistFuture = pinController.deletePin(pin);
-        Futures.addCallback(doesPinExistFuture, deletePinCallback, executorService);
+    // confirms to the user that the pin was deleted
+    private void showPinDeletedPopup() {
+        final Context context = this;
+        final IDialogBuilder dialogBuilder = new DialogBuilder()
+                .setDescriptionText(R.string.pin_deletion_confirmation)
+                .setContext(context)
+                .setCenterButtonLayout(R.string.accept_info_popup)
+                .setAction(() -> {
+                    Log.d(TAG, "user acknowledged confirmation");
+                    finish();
+                });
+        runOnUiThread(() -> dialogBuilder.build().show());
     }
 
     // hide the error message for the pin input

@@ -11,6 +11,8 @@ public interface IDialogBuilder {
 
     IDialogBuilder setDescriptionText(int textId);
 
+    IDialogBuilder setDescriptionText(int textId, Object... formatArgs);
+
     IDialogBuilder setContext(Context context);
 
     IDialogBuilder setAction(Runnable action);

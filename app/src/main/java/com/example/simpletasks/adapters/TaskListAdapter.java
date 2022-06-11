@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.simpletasks.domain.popups.DialogBuilder;
@@ -21,6 +24,7 @@ import com.example.simpletasks.TaskGuideActivity;
 import com.example.simpletasks.data.entities.Task;
 import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.entities.TaskWithSteps;
+import com.example.simpletasks.data.viewmodels.TaskViewModel;
 
 import java.util.Date;
 import java.util.List;
@@ -41,7 +45,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
         private final ImageButton skipTaskButton;
 
         /**
-         * Constructor for TaskListAdapter
+         * Constructor for TaskListAdapter.
          * Sets all View elements for the adapter.
          *
          * @param itemView the View from which to get the elements
@@ -55,12 +59,15 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
         }
     }
 
+    private static final String TAG = "TaskListAdapter";
     private final LayoutInflater mInflater;
     private Context context;
     private List<TaskWithSteps> tasks;
+    private ViewModelStoreOwner owner;
 
-    public TaskListAdapter(Context context) {
+    public TaskListAdapter(Context context, ViewModelStoreOwner owner) {
         mInflater = LayoutInflater.from(context);
+        this.owner = owner;
     }
 
     /**
@@ -106,16 +113,23 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
                 intent.putExtra(MainActivity.TASK_INTENT_EXTRA, taskWithSteps);
                 context.startActivity(intent);
             });
-            holder.skipTaskButton.setOnClickListener(v -> new DialogBuilder()
-                    .setDescriptionText(R.string.popup_skip_text)
-                    .setContext(context)
-                    .setTwoButtonLayout(R.string.cancel_popup, R.string.skip_task_popup)
-                    .setAction(() -> {
-                        long newStartLong = currentTask.getNextStartDate().getTime() + currentTask.getInterval();
-                        Date newStartDate = new Date(newStartLong);
-                        currentTask.setNextStartDate(newStartDate);
-                        MainActivity.updateTasksInDatabase(tasks);
-                    }).build().show());
+            holder.skipTaskButton.setOnClickListener(v ->
+                    new DialogBuilder()
+                            .setDescriptionText(R.string.popup_skip_text)
+                            .setContext(context)
+                            .setTwoButtonLayout(R.string.cancel_popup, R.string.skip_task_popup)
+                            .setAction(() -> {
+                                //calculate and set new next start date
+                                long newStartLong = currentTask.getNextStartDate().getTime() + currentTask.getInterval();
+                                Date newStartDate = new Date(newStartLong);
+                                currentTask.setNextStartDate(newStartDate);
+
+                                //update the task in the database
+                                TaskViewModel taskViewModel = new ViewModelProvider(owner).get(TaskViewModel.class);
+                                taskViewModel.updateTask(currentTask);
+                                Log.d(TAG, "updating task finished");
+                            }).build().show()
+            );
         } else {
             // Covers the case of data not being ready yet.
             holder.titleTask.setText(R.string.placeholder);

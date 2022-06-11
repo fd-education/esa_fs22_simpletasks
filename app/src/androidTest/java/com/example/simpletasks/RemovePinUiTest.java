@@ -172,6 +172,22 @@ public class RemovePinUiTest {
         pin_input.perform(pressImeActionButton());
         materialButton2.perform(click());
 
+        ViewInteraction confirmButton = onView(
+                allOf(withId(R.id.actionBTN), withText(R.string.accept_info_popup),
+                        isDisplayed()));
+        confirmButton.perform(click());
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        ViewInteraction acknowledgeButton = onView(
+                allOf(withId(R.id.acceptBTN), withText(R.string.accept_info_popup),
+                        isDisplayed()));
+        acknowledgeButton.perform(click());
+
         final Boolean doesPinStillExist = pinController.doesPinExist(new Pin(pin)).get();
 
         assertFalse("the added pin should be removed now", doesPinStillExist);
