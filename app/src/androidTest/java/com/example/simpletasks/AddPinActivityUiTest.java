@@ -69,7 +69,7 @@ public class AddPinActivityUiTest {
     }
 
     @Before
-    public void intentsInit() {
+    public void intentsInit() throws ExecutionException, InterruptedException {
         // initialize Espresso Intents capturing
         Intents.init();
 
@@ -81,7 +81,7 @@ public class AddPinActivityUiTest {
         }
 
         final AppDatabase db = AppDatabase.getAppDb(context);
-        db.pinDao().deleteAll();
+        db.pinDao().deleteAll().get();
         pinController = new PinController(context);
     }
 

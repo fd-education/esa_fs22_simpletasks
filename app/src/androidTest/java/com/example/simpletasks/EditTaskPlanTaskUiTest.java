@@ -11,25 +11,45 @@ import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static com.example.simpletasks.MainActivity.SHOW_ADD_PIN_TIP;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
+import androidx.test.platform.app.InstrumentationRegistry;
+
+import com.example.simpletasks.data.AppDatabase;
+import com.example.simpletasks.data.daos.PinDao;
+import com.example.simpletasks.data.daos.TaskDao;
+import com.example.simpletasks.data.daos.TaskStepDao;
+import com.example.simpletasks.data.entities.Task;
+import com.example.simpletasks.data.entities.TaskStep;
+import com.example.simpletasks.data.types.TaskStepTypes;
+import com.example.simpletasks.domain.settings.PinController;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.hamcrest.core.IsInstanceOf;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -38,11 +58,45 @@ public class EditTaskPlanTaskUiTest {
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
+    private Date today;
+
+    @Before
+    public void setup() throws ExecutionException, InterruptedException {
+        final Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        SharedPreferences sharedPreferences = context.getSharedPreferences(MainActivity.SHARED_PREF_KEY, Context.MODE_PRIVATE);
+        sharedPreferences.edit().putBoolean(SHOW_ADD_PIN_TIP, false).commit();
+
+
+        today = new Date();
+        Task task = new Task("Task", "", today, 1L, 10L, new Date(today.getYear(), today.getMonth(), today.getDate() + 3));
+        Task task2 = new Task("Task2", "", today, 1L, 10L, new Date(today.getYear(), today.getMonth(), today.getDate() + 3));
+        TaskStep textTaskStep = new TaskStep(task.getId(), TaskStepTypes.TEXT, 0, "title", "imageUri", "description", "videoUri", "audioUri");
+        TaskStep textTaskStep2 = new TaskStep(task2.getId(), TaskStepTypes.TEXT, 0, "title", "imageUri", "description", "videoUri", "audioUri");
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        final AppDatabase appDb = AppDatabase.getAppDb(context);
+        final TaskDao taskDao = appDb.taskDao();
+        final TaskStepDao taskStepDao = appDb.taskStepDao();
+        final PinDao pinDao = appDb.pinDao();
+
+        pinDao.deleteAll().get();
+        taskDao.deleteAll().get();
+        taskStepDao.deleteAll().get();
+        taskDao.insertTasks(Collections.singletonList(task)).get();
+        taskDao.insertTasks(Collections.singletonList(task2)).get();
+        taskStepDao.insertTaskStep(textTaskStep).get();
+        taskStepDao.insertTaskStep(textTaskStep2).get();
+    }
 
     @Test
     public void editTaskPlanTaskUiTest() {
         ViewInteraction materialButton = onView(
-                allOf(withId(R.id.caretakerLoginButton),
+                allOf(withId(R.id.loginButton),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -50,6 +104,12 @@ public class EditTaskPlanTaskUiTest {
                                 4),
                         isDisplayed()));
         materialButton.perform(click());
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         ViewInteraction imageButton = onView(
                 allOf(withId(R.id.deleteTaskButton_editTasks),
@@ -136,10 +196,10 @@ public class EditTaskPlanTaskUiTest {
         materialButton3.perform(click());
 
         ViewInteraction editText2 = onView(
-                allOf(withId(R.id.daysDecimalInput_ScheduleTask), withText("3"),
+                allOf(withId(R.id.daysDecimalInput_ScheduleTask), withText("0"),
                         withParent(withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class))),
                         isDisplayed()));
-        editText2.check(matches(withText("3")));
+        editText2.check(matches(withText("0")));
 
         ViewInteraction editText3 = onView(
                 allOf(withId(R.id.hoursDecimalInput_ScheduleTask), withText("0"),
@@ -154,7 +214,7 @@ public class EditTaskPlanTaskUiTest {
         editText4.check(matches(withText("0")));
 
         ViewInteraction appCompatEditText = onView(
-                allOf(withId(R.id.daysDecimalInput_ScheduleTask), withText("3"),
+                allOf(withId(R.id.daysDecimalInput_ScheduleTask), withText("0"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
@@ -222,63 +282,6 @@ public class EditTaskPlanTaskUiTest {
                                 7),
                         isDisplayed()));
         materialButton4.perform(click());
-
-
-        ViewInteraction materialButton5 = onView(
-                allOf(withId(R.id.planTaskButton_editTask),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                7),
-                        isDisplayed()));
-        materialButton5.perform(click());
-
-        ViewInteraction editText5 = onView(
-                allOf(withId(R.id.daysDecimalInput_ScheduleTask), withText("2"),
-                        withParent(withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class))),
-                        isDisplayed()));
-        editText5.check(matches(withText("2")));
-
-        ViewInteraction editText6 = onView(
-                allOf(withId(R.id.hoursDecimalInput_ScheduleTask), withText("1"),
-                        withParent(withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class))),
-                        isDisplayed()));
-        editText6.check(matches(withText("1")));
-
-        ViewInteraction editText7 = onView(
-                allOf(withId(R.id.minutesDecimalInput_ScheduleTask), withText("15"),
-                        withParent(withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class))),
-                        isDisplayed()));
-        editText7.check(matches(withText("15")));
-
-        ViewInteraction appCompatImageButton3 = onView(
-                allOf(withId(R.id.backButton_scheduleTasks),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                0),
-                        isDisplayed()));
-        appCompatImageButton3.perform(click());
-
-        ViewInteraction viewGroup2 = onView(
-                allOf(withParent(allOf(withId(android.R.id.content),
-                                withParent(IsInstanceOf.instanceOf(android.widget.FrameLayout.class)))),
-                        isDisplayed()));
-        viewGroup2.check(matches(isDisplayed()));
-
-        ViewInteraction materialButton8 = onView(
-                allOf(withId(R.id.actionBTN),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-                                        1),
-                                1),
-                        isDisplayed()));
-        materialButton8.perform(click());
-
-
     }
 
     private static Matcher<View> childAtPosition(

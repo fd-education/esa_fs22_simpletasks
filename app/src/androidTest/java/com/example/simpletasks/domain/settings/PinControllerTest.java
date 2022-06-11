@@ -71,7 +71,7 @@ public class PinControllerTest {
     public void testDoesPinExist() throws ExecutionException, InterruptedException {
         final Pin existingPin = Pin.fromInt(123);
         final Pin notExistingPin = Pin.fromInt(1234);
-        pinDao.insertPin(existingPin);
+        pinDao.insertPin(existingPin).get();
 
         final ListenableFuture<Boolean> existingPinFuture = pinController.doesPinExist(existingPin);
         final ListenableFuture<Boolean> notExistingPinFuture = pinController.doesPinExist(notExistingPin);

@@ -122,12 +122,7 @@ public class ReportProblemActivityUiTest {
         recyclerView.perform(actionOnItemAtPosition(0, click()));
 
         ViewInteraction materialButton = onView(
-                allOf(withId(R.id.haveProblemButton), withText(R.string.have_problem),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                1),
+                allOf(withId(R.id.b_taskstep_problem), withText(R.string.have_problem),
                         isDisplayed()));
         materialButton.perform(click());
         try {

@@ -22,6 +22,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @SuppressWarnings("deprecation")
 public class TaskStepRepositoryTest {
@@ -33,7 +34,7 @@ public class TaskStepRepositoryTest {
 
     @Before
     public void setUp() {
-        task = new Task("Task", "", "test task", new Date(2000, 1, 1), 100L, 10L, new Date(2000, 1, 1));
+        task = new Task("Task", "", new Date(2000, 1, 1), 100L, 10L, new Date(2000, 1, 1));
         textTaskStep = new TaskStep(task.getId(), TaskStepTypes.TEXT, 0, "title", "imageUri", "description", "videoUri", "audioUri");
         Context context = ApplicationProvider.getApplicationContext();
         repository = new TaskStepRepository(context);
@@ -46,7 +47,7 @@ public class TaskStepRepositoryTest {
     }
 
     @Test
-    public void testGetTaskById() {
+    public void testGetTaskById() throws ExecutionException, InterruptedException {
         insertTask();
         insertTaskStep();
 
@@ -62,7 +63,7 @@ public class TaskStepRepositoryTest {
     }
 
     @Test
-    public void testInsertTaskSteps() {
+    public void testInsertTaskSteps() throws ExecutionException, InterruptedException {
         insertTask();
 
         List<TaskStep> taskSteps = new ArrayList<>();
@@ -74,7 +75,7 @@ public class TaskStepRepositoryTest {
     }
 
     @Test
-    public void testUpdateTaskSteps() {
+    public void testUpdateTaskSteps() throws ExecutionException, InterruptedException {
         insertTask();
         insertTaskStep();
 
@@ -91,7 +92,7 @@ public class TaskStepRepositoryTest {
     }
 
     @Test
-    public void testDeleteTaskSteps() {
+    public void testDeleteTaskSteps() throws ExecutionException, InterruptedException {
         insertTask();
         insertTaskStep();
 
@@ -111,21 +112,21 @@ public class TaskStepRepositoryTest {
     private List<TaskStep> getTaskSteps() {
         final LiveData<List<TaskStep>> taskStepsLD = taskStepDao.getByTaskId(task.getId());
         observe(taskStepsLD);
-        sleep(500);
+        sleep(1000);
         return taskStepsLD.getValue();
     }
 
 
-    private void insertTaskStep() {
+    private void insertTaskStep() throws ExecutionException, InterruptedException {
         List<TaskStep> taskSteps = new ArrayList<>();
         taskSteps.add(textTaskStep);
-        taskStepDao.insertTaskSteps(taskSteps);
+        taskStepDao.insertTaskSteps(taskSteps).get();
     }
 
-    private void insertTask() {
+    private void insertTask() throws ExecutionException, InterruptedException {
         List<Task> tasks = new ArrayList<>();
         tasks.add(task);
-        taskDao.insertTasks(tasks);
+        taskDao.insertTasks(tasks).get();
     }
 
     private void sleep(int millis) {
