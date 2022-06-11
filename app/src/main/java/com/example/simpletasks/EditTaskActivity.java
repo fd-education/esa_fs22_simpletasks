@@ -21,6 +21,7 @@ import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.entities.TaskWithSteps;
 import com.example.simpletasks.data.types.TaskStepTypes;
 import com.example.simpletasks.data.viewmodels.TaskViewModel;
+import com.example.simpletasks.domain.popups.DialogBuilder;
 import com.example.simpletasks.fragments.EditTaskStepsListFragment;
 
 /**

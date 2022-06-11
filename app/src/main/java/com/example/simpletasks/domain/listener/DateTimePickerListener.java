@@ -1,4 +1,4 @@
-package com.example.simpletasks.listener;
+package com.example.simpletasks.domain.listener;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
