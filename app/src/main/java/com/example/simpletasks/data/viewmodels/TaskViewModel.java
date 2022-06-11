@@ -137,7 +137,7 @@ public class TaskViewModel extends AndroidViewModel {
      *
      * @param task the task to insert into the tasks table
      */
-    public void insertTask(final Task task){
+    public void insertTask(final Task task) {
         List<Task> tasks = new ArrayList<>();
         tasks.add(task);
 
@@ -149,7 +149,7 @@ public class TaskViewModel extends AndroidViewModel {
      *
      * @param tasksWithSteps the tasks with their steps to update
      */
-    public void updateTasksWithSteps(final List<TaskWithSteps> tasksWithSteps){
+    public void updateTasks(final List<TaskWithSteps> tasksWithSteps) {
         taskRepo.updateTasksWithSteps(tasksWithSteps);
     }
 
@@ -158,7 +158,7 @@ public class TaskViewModel extends AndroidViewModel {
      *
      * @param task the task to update
      */
-    public void updateTask(final Task task){
+    public void updateTask(final Task task) {
         List<Task> tasks = new ArrayList<>();
         tasks.add(task);
 

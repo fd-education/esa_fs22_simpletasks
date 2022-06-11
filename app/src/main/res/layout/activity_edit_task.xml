@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".EditTaskActivity">
 
-
     <ImageView
         android:id="@+id/imageView_taskImage"
         android:layout_width="105dp"
@@ -39,7 +38,8 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addTaskStep_editTask"
-        style="@style/Theme.SimpleTasks.IconButtonPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/sidesPadding"
         android:backgroundTint="?colorPrimary"
         android:clickable="true"
@@ -50,6 +50,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/saveTaskButton_editTask"
         app:srcCompat="@android:drawable/ic_input_add" />
+
 
     <ImageButton
         android:id="@+id/backButton_EditTasks"

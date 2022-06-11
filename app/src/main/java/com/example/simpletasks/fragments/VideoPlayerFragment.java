@@ -14,6 +14,7 @@ import com.example.simpletasks.R;
 import com.example.simpletasks.domain.ui.ButtonUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -87,6 +88,7 @@ public class VideoPlayerFragment extends Fragment {
         fabPause = view.findViewById(R.id.fab_videoplayer_pause);
         fabPause.setVisibility(View.GONE);
         fabStop = view.findViewById(R.id.fab_videoplayer_stop);
+        fabControls = new ArrayList<>();
 
         Collections.addAll(fabControls, fabPlay, fabStop, fabPause);
     }

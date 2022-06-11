@@ -19,8 +19,9 @@ public class TaskStepsDrag extends ItemTouchHelper.Callback {
     /**
      * Interface must be implemented by the fragment
      */
-    public interface DragHandleCallback{
+    public interface DragHandleCallback {
         void requestDrag(RecyclerView.ViewHolder viewHolder);
+
         void updateTaskSteps();
     }
 
@@ -54,7 +55,7 @@ public class TaskStepsDrag extends ItemTouchHelper.Callback {
      * Set the required movement flags fpr the drag
      *
      * @param recyclerView the fragment that acts as a container for all views
-     * @param viewHolder the view holders/ list items that become "draggable"
+     * @param viewHolder   the view holders/ list items that become "draggable"
      * @return movement flags for the item touch helper
      */
     @Override
@@ -69,8 +70,8 @@ public class TaskStepsDrag extends ItemTouchHelper.Callback {
      * Triggers the onItemMove method from the contract.
      *
      * @param recyclerView the fragment that contains the view holders
-     * @param viewHolder the view holder/ list item that is being moved
-     * @param target the target that the view is being moved to
+     * @param viewHolder   the view holder/ list item that is being moved
+     * @param target       the target that the view is being moved to
      * @return true to indicate success
      */
     @Override
@@ -84,7 +85,7 @@ public class TaskStepsDrag extends ItemTouchHelper.Callback {
      * Left empty as there is no such functionality intended so far.
      *
      * @param viewHolder the view holder that was swiped
-     * @param direction the direction of the swipe
+     * @param direction  the direction of the swipe
      */
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {

@@ -45,7 +45,7 @@ public interface PinDao {
 
     /**
      * Delete all data from the pins database.
-     *
+     * <p>
      * Currently only used for the seeding process to avoid huge amounts of data
      * through constant seeding at application start-up.
      */

@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     public static void updateTasksInDatabase(List<TaskWithSteps> tasks) {
         Log.d(TAG, "updating tasks");
         TaskViewModel taskViewModel = new ViewModelProvider(owner).get(TaskViewModel.class);
-        taskViewModel.updateTasksWithSteps(tasks);
+        taskViewModel.updateTasks(tasks);
         Log.d(TAG, "updating tasks finished");
     }
 }

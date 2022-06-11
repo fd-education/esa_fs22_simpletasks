@@ -43,7 +43,9 @@ public abstract class AppDatabase extends RoomDatabase {
 
     // The daos of each table
     public abstract PinDao pinDao();
+
     public abstract TaskDao taskDao();
+
     public abstract TaskStepDao taskStepDao();
 
     /**
@@ -74,12 +76,12 @@ public abstract class AppDatabase extends RoomDatabase {
     /**
      * Get a singleton instance of the app database with mock data.
      *
-     * @param context the app context
+     * @param context     the app context
      * @param doSeedTasks true if the tasks and steps must be seeded, false otherwise
-     * @param doSeedPins true if the pins must be seeded, false otherwise
+     * @param doSeedPins  true if the pins must be seeded, false otherwise
      * @return singleton instance of the app database.
      */
-    public static AppDatabase getSeededAppDb(final Context context, boolean doSeedTasks, boolean doSeedPins){
+    public static AppDatabase getSeededAppDb(final Context context, boolean doSeedTasks, boolean doSeedPins) {
         AppDatabase result = APP_DB;
 
         if (result == null) {
@@ -89,9 +91,9 @@ public abstract class AppDatabase extends RoomDatabase {
                     Log.d(TAG, "seeded database does not exist yet - creating");
                     Builder<AppDatabase> bld = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, DB_NAME).fallbackToDestructiveMigration();
 
-                    if(doSeedTasks) bld.addCallback(seedTasks);
+                    if (doSeedTasks) bld.addCallback(seedTasks);
 
-                    if(doSeedPins) bld.addCallback(seedPins);
+                    if (doSeedPins) bld.addCallback(seedPins);
 
                     APP_DB = result = bld.build();
                     Log.d(TAG, "seeded database was created");
@@ -150,7 +152,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 pinDao.deleteAll();
 
                 pinDao.insertPin(pin1);
-                // pinDao.insertPin(pin2);
+                pinDao.insertPin(pin2);
                 Log.d(TAG, "finished seeding pins");
             });
         }

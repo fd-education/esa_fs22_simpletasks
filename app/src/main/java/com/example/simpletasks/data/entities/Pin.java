@@ -42,7 +42,7 @@ public class Pin {
 
     /**
      * Get the id of the Pin object.
-     * 
+     *
      * @return the id of the Pin object.
      */
     @NonNull
@@ -55,7 +55,7 @@ public class Pin {
      *
      * @param id the id to set
      */
-    public void setId(@NonNull String id){
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 
@@ -113,8 +113,8 @@ public class Pin {
     // Validate pin values against a regex that checks for five or more digits
     private void validatePin(final String pin) {
         Objects.requireNonNull(pin, "PIN must not be null");
-        if (!pin.matches("^\\d{5,}$")){
-            throw new IllegalArgumentException(pin+" is not a valid PIN; must consist of at least 5 digits");
+        if (!pin.matches("^\\d{5,}$")) {
+            throw new IllegalArgumentException(pin + " is not a valid PIN; must consist of at least 5 digits");
         }
     }
 }

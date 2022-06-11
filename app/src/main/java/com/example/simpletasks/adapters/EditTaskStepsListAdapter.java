@@ -185,7 +185,7 @@ public class EditTaskStepsListAdapter extends RecyclerView.Adapter<EditTaskSteps
      * when the user drags it.
      *
      * @param fromPosition initial position
-     * @param toPosition target position
+     * @param toPosition   target position
      */
     @Override
     public void onItemMove(int fromPosition, int toPosition) {

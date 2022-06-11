@@ -3,14 +3,12 @@ package com.example.simpletasks;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -36,12 +34,13 @@ public class EditTaskActivity extends AppCompatActivity {
 
     private Task currentEditTask;
 
-    private EditTaskStepsListFragment taskStepsListFragment;
-
     // UI element to read from/ write to
     private EditText taskTitle;
     private ImageView taskImageView;
     private ActivityResultLauncher<Intent> chooseTitleImage;
+    private TaskWithSteps currentEditTaskWithSteps;
+
+    private TaskViewModel taskViewModel;
 
 
     /**
@@ -53,6 +52,8 @@ public class EditTaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_task);
+
+        taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
 
         // Get the task from the intent
         handleTaskIntent();
@@ -75,7 +76,7 @@ public class EditTaskActivity extends AppCompatActivity {
         Log.d(TAG, "finished initialisation");
     }
 
-    private void initializeFields(){
+    private void initializeFields() {
         taskImageView = findViewById(R.id.imageView_taskImage);
         taskTitle = findViewById(R.id.taskTitle_editTask);
 
@@ -115,7 +116,7 @@ public class EditTaskActivity extends AppCompatActivity {
             // Save the data into the database
             TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
             // using insert rather than update, so new and updated tasks will be saved
-            taskViewModel.insertTask(currentEditTask);
+            taskViewModel.updateTask(currentEditTask);
             Log.d(TAG, "inserting or updating task finished");
             // Go back to the last screen
             super.onBackPressed();
@@ -129,6 +130,7 @@ public class EditTaskActivity extends AppCompatActivity {
 
     /**
      * Launch the activity to capture the title image
+     *
      * @param v ignored because not required for the handler
      */
     public void onTitleImageClicked(View v) {
@@ -142,30 +144,29 @@ public class EditTaskActivity extends AppCompatActivity {
      * @param view the view that triggered the event
      */
     public void onBackClicked(View view) {
-        onBackPressed();
-    }
-
-    /**
-     * Handle click events on the back button with a dialog
-     */
-    @Override
-    public void onBackPressed() {
         new DialogBuilder()
                 .setDescriptionText(R.string.discard_changes_text)
                 .setContext(this)
                 .setTwoButtonLayout(R.string.cancel_popup, R.string.discard_changes_button)
-                .setAction(super::onBackPressed).build().show();
+                .setAction(this::onBackPressed).build().show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        taskViewModel.deleteTask(currentEditTaskWithSteps);
+
+        super.onBackPressed();
     }
 
     public void onPlanTaskClicked(View view) {
         Intent intent = new Intent(this, ScheduleTaskActivity.class);
-        intent.putExtra(MainActivity.TASK_INTENT_EXTRA, currentEditTask);
+        intent.putExtra(MainActivity.TASK_INTENT_EXTRA, currentEditTaskWithSteps);
         startActivity(intent);
     }
 
     // Set the fragment that displays the step details
     private void setFragment() {
-        taskStepsListFragment = new EditTaskStepsListFragment();
+        EditTaskStepsListFragment taskStepsListFragment = new EditTaskStepsListFragment();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragmentContainerTaskStepList_editTask, taskStepsListFragment).commit();
 
@@ -174,23 +175,18 @@ public class EditTaskActivity extends AppCompatActivity {
 
     // Set the task title in the UI
     private void fillValuesOnUi() {
-
         taskTitle.setText(currentEditTask.getTitle());
     }
 
     // Get the task from the intent
-    private TaskWithSteps getTask() {
-        currentEditTask = (TaskWithSteps) getIntent().getSerializableExtra(MainActivity.TASK_INTENT_EXTRA);
-    }
+    private void handleTaskIntent() {
+        currentEditTaskWithSteps = (TaskWithSteps) getIntent().getSerializableExtra(MainActivity.TASK_INTENT_EXTRA);
 
-    //validates the data of the ui, which was not validated before.
-    private boolean validateData() {
-        boolean isValid = true;
-        if (taskTitle.getText().length() <= 1) {
-            isValid = false;
+        currentEditTask = currentEditTaskWithSteps.getTask();
+
+        if(currentEditTask.getTitle().isEmpty()){
+            taskViewModel.insertTask(currentEditTask);
         }
-        //more validating could be inserted here
-        return isValid;
     }
 
     // TODO Replace with correct dialog pop-up

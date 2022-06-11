@@ -1,5 +1,6 @@
 package com.example.simpletasks.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -102,8 +103,7 @@ public class ManageTaskListAdapter extends RecyclerView.Adapter<ManageTaskListAd
             holder.titleTask.setText(currentTask.getTitle());
             holder.countStepsIndicator.setText(context.getString(R.string.total_steps, currentSteps.size()));
 
-
-            if(currentTask.getTitleImagePath().isEmpty()){
+            if (currentTask.getTitleImagePath().isEmpty()) {
                 holder.taskImage.setImageResource(R.drawable.image_placeholder/*TODO change */);
             } else {
                 holder.taskImage.setImageURI(Uri.parse(currentTask.getTitleImagePath()));
@@ -121,17 +121,17 @@ public class ManageTaskListAdapter extends RecyclerView.Adapter<ManageTaskListAd
                 context.startActivity(intent);
             });
             holder.deleteButton.setOnClickListener(v ->
-                //create a dialog asking the user if he wants to delete the task
-                new DialogBuilder()
-                        .setDescriptionText(R.string.delete_task_popup_text)
-                        .setContext(context)
-                        .setTwoButtonLayout(R.string.cancel_popup, R.string.delete_task_popup_button)
-                        .setAction(() -> {
-                            //delete task
-                            TaskViewModel taskViewModel = new ViewModelProvider(fragment).get(TaskViewModel.class);
-                            taskViewModel.deleteTask(currentTaskWithSteps);
-                            Log.d(TAG, "deleted task '" + currentTask.getTitle() + "' finished");
-                        }).build().show()
+                    //create a dialog asking the user if he wants to delete the task
+                    new DialogBuilder()
+                            .setDescriptionText(R.string.delete_task_popup_text)
+                            .setContext(context)
+                            .setTwoButtonLayout(R.string.cancel_popup, R.string.delete_task_popup_button)
+                            .setAction(() -> {
+                                //delete task
+                                TaskViewModel taskViewModel = new ViewModelProvider(fragment).get(TaskViewModel.class);
+                                taskViewModel.deleteTask(currentTaskWithSteps);
+                                Log.d(TAG, "deleted task '" + currentTask.getTitle() + "' finished");
+                            }).build().show()
             );
         } else {
             // Covers the case of data not being ready yet.
@@ -147,6 +147,7 @@ public class ManageTaskListAdapter extends RecyclerView.Adapter<ManageTaskListAd
      *
      * @param tasks the task steps to set
      */
+    @SuppressLint("NotifyDataSetChanged")
     public void setTasks(final List<TaskWithSteps> tasks) {
         this.tasks = tasks;
         notifyDataSetChanged();

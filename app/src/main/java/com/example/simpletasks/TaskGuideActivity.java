@@ -2,11 +2,8 @@ package com.example.simpletasks;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.HorizontalScrollView;
-import android.widget.LinearLayout;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,12 +16,10 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.simpletasks.data.entities.Task;
 import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.entities.TaskWithSteps;
+import com.example.simpletasks.data.viewmodels.TaskViewModel;
 import com.example.simpletasks.fragments.AudioStepFragment;
 import com.example.simpletasks.fragments.TextStepFragment;
 import com.example.simpletasks.fragments.VideoStepFragment;
-import com.example.simpletasks.data.entities.TaskWithSteps;
-import com.example.simpletasks.data.viewmodels.TaskViewModel;
-import com.example.simpletasks.fragments.TaskGuideFragment;
 
 import java.util.Date;
 import java.util.List;
@@ -74,10 +69,6 @@ public class TaskGuideActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (currentStep > 0) {
             currentStep--;
-            //update the next item to make it undone
-            updateProgressBarAtIndex(currentStep + 1);
-            //update the current item to make it current
-            updateProgressBarAtIndex(currentStep);
             replaceFragment();
             Log.d(TAG, "moved back a step");
         } else if (currentStep == 0) {
@@ -100,10 +91,6 @@ public class TaskGuideActivity extends AppCompatActivity {
     public void onNextClicked(View view) {
         if (currentStep < taskSteps.size() - 1) {
             currentStep++;
-            //update the last item to make it finished
-            updateProgressBarAtIndex(currentStep - 1);
-            //update the current item to make it current
-            updateProgressBarAtIndex(currentStep);
             replaceFragment();
             Log.d(TAG, "moved a step forward");
         } else if (currentStep == taskSteps.size() - 1) {
@@ -118,7 +105,7 @@ public class TaskGuideActivity extends AppCompatActivity {
                         task.setNextStartDate(nextStartDate);
                         //save the changes in the database
                         TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
-                        taskViewModel.updateTask(taskWithSteps);
+                        taskViewModel.updateTask(task);
                         Log.d(TAG, "finished steps");
                         //go back to the home screen (not local back because this would go to the last step)
                         super.onBackPressed();
@@ -169,46 +156,6 @@ public class TaskGuideActivity extends AppCompatActivity {
     private void setTaskTitleOnUi() {
         TextView taskTitle = findViewById(R.id.tv_taskstep_tasktitle);
         taskTitle.setText(task.getTitle());
-    }
-
-    // updates the progress bar item at the given index
-    private void updateProgressBarAtIndex(int i) {
-        //get the text view
-        TextView newTextView = getTextView(i);
-
-        //get container
-        LinearLayout customProgressBarContainer = findViewById(R.id.progressBarContainer);
-        //delete old view
-        customProgressBarContainer.removeViewAt(i);
-        //add new view
-        customProgressBarContainer.addView(newTextView, i);
-    }
-
-    @NonNull
-    //returns a text view with the correct text and style attribute
-    private TextView getTextView(int i) {
-        //set the style attribute
-        ContextThemeWrapper contextThemeWrapper;
-
-        if (i < currentStep) {
-            contextThemeWrapper = new ContextThemeWrapper(this, R.style.Theme_SimpleTasks_CustomProgressBarFinished);
-        } else if (i == currentStep) {
-            contextThemeWrapper = new ContextThemeWrapper(this, R.style.Theme_SimpleTasks_CustomProgressBarCurrent);
-        } else {
-            contextThemeWrapper = new ContextThemeWrapper(this, R.style.Theme_SimpleTasks_CustomProgressBarUndone);
-        }
-
-        //create the layout parameters object
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        int margin = (int) getResources().getDimension(R.dimen.halfElementPadding);
-        layoutParams.setMargins(margin, 0, margin, 0);
-
-        //create new text view
-        TextView newTextView = new TextView(contextThemeWrapper);
-        newTextView.setLayoutParams(layoutParams);
-        //set the number
-        newTextView.setText(String.valueOf(i + 1));
-        return newTextView;
     }
 
     // Add the fragment which displays the step details

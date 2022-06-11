@@ -1,5 +1,6 @@
 package com.example.simpletasks.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -93,7 +94,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
             holder.titleTask.setText(currentTask.getTitle());
             holder.countStepsIndicator.setText(context.getString(R.string.total_steps, currentSteps.size()));
 
-            if(!currentTask.getTitleImagePath().isEmpty()){
+            if (!currentTask.getTitleImagePath().isEmpty()) {
                 holder.taskImage.setImageURI(Uri.parse(currentTask.getTitleImagePath()));
             } else {
                 holder.taskImage.setImageResource(R.drawable.image_placeholder/*TODO change */);
@@ -105,18 +106,16 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
                 intent.putExtra(MainActivity.TASK_INTENT_EXTRA, taskWithSteps);
                 context.startActivity(intent);
             });
-            holder.skipTaskButton.setOnClickListener(v -> {
-                new DialogBuilder()
-                        .setDescriptionText(R.string.popup_skip_text)
-                        .setContext(context)
-                        .setTwoButtonLayout(R.string.cancel_popup, R.string.skip_task_popup)
-                        .setAction(() -> {
-                            long newStartLong = currentTask.getNextStartDate().getTime() + currentTask.getInterval();
-                            Date newStartDate = new Date(newStartLong);
-                            currentTask.setNextStartDate(newStartDate);
-                            MainActivity.updateTasksInDatabase(tasks);
-                        }).build().show();
-            });
+            holder.skipTaskButton.setOnClickListener(v -> new DialogBuilder()
+                    .setDescriptionText(R.string.popup_skip_text)
+                    .setContext(context)
+                    .setTwoButtonLayout(R.string.cancel_popup, R.string.skip_task_popup)
+                    .setAction(() -> {
+                        long newStartLong = currentTask.getNextStartDate().getTime() + currentTask.getInterval();
+                        Date newStartDate = new Date(newStartLong);
+                        currentTask.setNextStartDate(newStartDate);
+                        MainActivity.updateTasksInDatabase(tasks);
+                    }).build().show());
         } else {
             // Covers the case of data not being ready yet.
             holder.titleTask.setText(R.string.placeholder);
@@ -131,6 +130,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
      *
      * @param tasks the task steps to set
      */
+    @SuppressLint("NotifyDataSetChanged")
     public void setTasks(final List<TaskWithSteps> tasks) {
         this.tasks = tasks;
         notifyDataSetChanged();
