@@ -14,7 +14,6 @@ import java.util.concurrent.ExecutionException;
  * Handles all the interactions with the pin table through its DAO.
  */
 public class PinRepository {
-    private static final String TAG = "PinRepository";
     private final PinDao pinDao;
 
     /**
@@ -65,9 +64,9 @@ public class PinRepository {
      * @return true if the hash exists, false otherwise
      */
     public Boolean isValidPin(int pinHash) {
-        try{
+        try {
             return pinDao.isExists(pinHash).get();
-        } catch(ExecutionException | InterruptedException e){
+        } catch (ExecutionException | InterruptedException e) {
             return false;
         }
     }

@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.simpletasks.data.entities.Pin;
+import com.example.simpletasks.domain.popups.DialogBuilder;
 import com.example.simpletasks.domain.settings.PinController;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;

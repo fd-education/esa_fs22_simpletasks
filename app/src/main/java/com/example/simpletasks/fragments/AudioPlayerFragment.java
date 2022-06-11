@@ -4,6 +4,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,7 @@ import com.example.simpletasks.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
- * A simple {@link Fragment} subclass.
+ * AudioPlayerFragment contains control buttons and a seekbar to control audio play.
  * Use the {@link AudioPlayerFragment#getNewInstance} factory method to
  * create an instance of this fragment.
  */
@@ -42,13 +43,11 @@ public class AudioPlayerFragment extends Fragment {
     }
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
+     * Get an instance of the audio player fragment.
      *
-     * @param audioPath Parameter 2.
-     * @return A new instance of fragment AudioStepFragment.
+     * @param audioPath the path to the file containing the audio to play.
+     * @return instance of fragment AudioStepFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static AudioPlayerFragment getNewInstance(String audioPath) {
         AudioPlayerFragment fragment = new AudioPlayerFragment();
         Bundle bundle = new Bundle();
@@ -65,6 +64,15 @@ public class AudioPlayerFragment extends Fragment {
         }
     }
 
+    /**
+     * Inflate the fragments layout in the containing view group
+     * and setup the controls
+     *
+     * @param inflater for the layout
+     * @param container of the layout
+     * @param savedInstanceState state of the instance if saved
+     * @return view containing the fragment
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -76,20 +84,17 @@ public class AudioPlayerFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
+    // Initialize the fields of the audio player
     private void initializeFields(View view){
         seekbar = view.findViewById(R.id.sb_audioplayer_progress);
         fabPlay = view.findViewById(R.id.fab_audioplayer_play);
         fabPause = view.findViewById(R.id.fab_audioplayer_pause);
         fabStop = view.findViewById(R.id.fab_audioplayer_stop);
+        Log.d(TAG, "Fragment fields initialized.");
     }
 
+    // Initialize the state of the audio player
     private void initializeUi(){
-
         if(audioPath != null && !audioPath.isEmpty()){
             controlAudio();
         } else {
@@ -97,9 +102,14 @@ public class AudioPlayerFragment extends Fragment {
             fabPause.setEnabled(false);
             fabStop.setEnabled(false);
         }
+
+        Log.d(TAG, "Fragment state initialized.");
     }
 
+    // Set the click listeners for all audio control components
     private void controlAudio(){
+        Log.d(TAG, "Setting audio controls.");
+
         fabPlay.setOnClickListener(view -> {
             if(mediaPlayer == null){
                 mediaPlayer = MediaPlayer.create(getContext(), Uri.parse(audioPath));
@@ -143,6 +153,7 @@ public class AudioPlayerFragment extends Fragment {
         });
     }
 
+    // Setup the seekbar and its progress
     private void initializeSeekbar(){
         seekbar.setMax(mediaPlayer.getDuration());
 

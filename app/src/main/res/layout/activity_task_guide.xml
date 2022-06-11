@@ -29,10 +29,10 @@
         android:layout_marginLeft="@dimen/sidesPadding"
         android:layout_marginRight="@dimen/sidesPadding"
         android:fillViewport="true"
-        app:layout_constraintBottom_toTopOf="@+id/scrollableFragmentContainerTaskStep_taskGuide"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_taskstep_tasktitle">
+        app:layout_constraintTop_toBottomOf="@+id/tv_taskstep_tasktitle"
+        app:layout_constraintBottom_toTopOf="@+id/fragmentContainerTaskStep_taskGuide">
 
         <LinearLayout
             android:id="@+id/ll_task_progress"
@@ -42,6 +42,18 @@
             android:orientation="horizontal" />
 
     </HorizontalScrollView>
+
+    <FrameLayout
+        android:id="@+id/fragmentContainerTaskStep_taskGuide"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/sidesPadding"
+        android:layout_marginEnd="@dimen/sidesPadding"
+        android:layout_marginBottom="@dimen/elementPadding"
+        app:layout_constraintBottom_toTopOf="@+id/b_taskstep_problem"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sv_task_progress_container" />
 
     <Button
         android:id="@+id/b_taskstep_problem"
@@ -59,34 +71,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ScrollView
-        android:id="@+id/scrollableFragmentContainerTaskStep_taskGuide"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/sidesPadding"
-        android:layout_marginTop="@dimen/sidesPadding"
-        android:layout_marginEnd="@dimen/sidesPadding"
-        android:layout_marginBottom="@dimen/elementPadding"
-        android:background="?backgroundColor"
-        app:layout_constraintBottom_toTopOf="@+id/b_taskstep_problem"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sv_task_progress_container">
-
-        <FrameLayout
-            android:id="@+id/fragmentContainerTaskStep_taskGuide"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/sidesPadding"
-            android:layout_marginEnd="@dimen/sidesPadding"
-            android:layout_marginBottom="@dimen/elementPadding"
-            app:layout_constraintBottom_toTopOf="@+id/b_taskstep_problem"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sv_task_progress_container" />
-
-    </ScrollView>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ll_taskstep_buttongroup"
         android:layout_width="0dp"
@@ -102,14 +86,11 @@
 
         <Button
             android:id="@+id/ib_taskstep_backbutton"
+            style="@style/Theme.SimpleTasks.NeutralButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/elementPadding"
-            android:background="@drawable/rounded_corner_background"
             android:onClick="onBackClicked"
             android:text="@string/back"
-            android:textSize="@dimen/p"
-            app:backgroundTint="?buttonBarNeutralButtonStyle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/ib_taskstep_nextbutton"
             app:layout_constraintStart_toStartOf="parent"
@@ -118,15 +99,12 @@
 
         <Button
             android:id="@+id/ib_taskstep_nextbutton"
+            style="@style/Theme.SimpleTasks.PositiveButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/elementPadding"
-            android:background="@drawable/rounded_corner_background"
             android:onClick="onNextClicked"
             android:text="@string/next"
-            android:textSize="@dimen/p"
-
-            app:backgroundTint="?buttonBarPositiveButtonStyle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ib_taskstep_backbutton"

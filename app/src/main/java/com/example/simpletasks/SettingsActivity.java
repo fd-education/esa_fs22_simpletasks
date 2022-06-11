@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.simpletasks.domain.login.User;
@@ -37,14 +36,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        // Remove the action bar at the top of the screen
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
-
         executorService = Executors.newSingleThreadExecutor();
-
 
         Log.d(TAG, "finished initialisation");
     }

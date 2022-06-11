@@ -2,10 +2,11 @@ package com.example.simpletasks.domain.fileSystem;
 
 import com.example.simpletasks.BuildConfig;
 
+/**
+ * Container for constant values required to work with the file system.
+ */
 public final class FileSystemConstants {
-    private FileSystemConstants(){
-
-    }
+    private FileSystemConstants(){ }
 
     // File names must correlate with the paths defined in file_paths.xml!!!
     public static final String IMAGE_DIR = "simpletasks_images";

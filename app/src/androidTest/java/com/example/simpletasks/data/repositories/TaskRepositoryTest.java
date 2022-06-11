@@ -154,23 +154,6 @@ public class TaskRepositoryTest {
         assertEquals(task, actualTask);
     }
 
-    @Test
-    public void testUpdateTasksWithSteps() {
-        insertTaskWithSteps();
-
-
-        final String expectedDescription = "new description";
-        task.setDescription(expectedDescription);
-        repository.updateTasksWithSteps(Collections.singletonList(taskWithSteps));
-
-        final List<TaskWithSteps> allTasks = getTaskWithSteps();
-        assert allTasks != null;
-        assertEquals(1, allTasks.size());
-        final TaskWithSteps taskWithSteps = allTasks.get(0);
-        assertEquals(expectedDescription, taskWithSteps.getTask().getDescription());
-    }
-
-
     @Nullable
     private List<Task> getTasks() {
         final LiveData<List<Task>> all = taskDao.getAll();

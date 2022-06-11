@@ -19,11 +19,12 @@ import java.util.List;
  */
 @Dao
 public interface TaskStepDao {
+
     /**
      * Fetch all task step entities of a tasks specified by its id ordered by their index
      *
      * @param taskId the taskId to lookup
-     * @return LiveData<List<TaskStep>> observable with all task step entities of a task
+     * @return LiveData<List < TaskStep>> observable with all task step entities of a task
      */
     @Query("SELECT * FROM TaskSteps " +
             "WHERE fk_task_id = :taskId " +
@@ -54,6 +55,13 @@ public interface TaskStepDao {
     @Update
     void updateTaskSteps(List<TaskStep> taskSteps);
 
+    /**
+     * Delete one task step from the taskSteps table.
+     *
+     * @param taskStep the task step to delete
+     */
+    @Delete
+    void deleteTaskStep(TaskStep taskStep);
 
     /**
      * Delete a list of task steps from the taskSteps table.

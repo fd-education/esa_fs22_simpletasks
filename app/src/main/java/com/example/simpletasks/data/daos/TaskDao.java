@@ -26,7 +26,7 @@ public interface TaskDao {
     /**
      * Fetch all task entities from the tasks table
      *
-     * @return LiveData<List<Task>> observable with all task entities
+     * @return LiveData<List < Task>> observable with all task entities
      */
     @Query("SELECT * FROM tasks " +
             "ORDER BY next_start_date ASC")
@@ -35,7 +35,7 @@ public interface TaskDao {
     /**
      * Fetch all task entities with their steps from the tasks table
      *
-     * @return LiveData<List<TaskWithSteps>> observable with all task entities and their steps
+     * @return LiveData<List < TaskWithSteps>> observable with all task entities and their steps
      */
     @Transaction
     @Query("SELECT * FROM tasks " +
@@ -46,8 +46,8 @@ public interface TaskDao {
      * Fetch all task entities in a given date span.
      *
      * @param dayStart starting date of the date span (incl.)
-     * @param dayEnd ending date of the date span (excl.)
-     * @return LiveData<List<Task>> observable with all task entities in that date span
+     * @param dayEnd   ending date of the date span (excl.)
+     * @return LiveData<List < Task>> observable with all task entities in that date span
      */
     @Query("SELECT * FROM tasks " +
             "WHERE next_start_date >= :dayStart AND next_start_date < :dayEnd " +
@@ -58,7 +58,7 @@ public interface TaskDao {
      * Fetch all task entities with their task steps in a given date span
      *
      * @param dayStart starting date of the date span (incl.)
-     * @param dayEnd ending date of the date span (excl.)
+     * @param dayEnd   ending date of the date span (excl.)
      * @return @return LiveData<List<TaskWithSteps>> observable with all task entities and their steps
      */
     @Transaction

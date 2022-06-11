@@ -1,5 +1,6 @@
 package com.example.simpletasks.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,7 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.simpletasks.DialogBuilder;
+import com.example.simpletasks.domain.popups.DialogBuilder;
 import com.example.simpletasks.EditTaskActivity;
 import com.example.simpletasks.MainActivity;
 import com.example.simpletasks.R;
@@ -103,9 +104,8 @@ public class ManageTaskListAdapter extends RecyclerView.Adapter<ManageTaskListAd
             holder.titleTask.setText(currentTask.getTitle());
             holder.countStepsIndicator.setText(context.getString(R.string.total_steps, currentSteps.size()));
 
-
-            if(currentTask.getTitleImagePath().isEmpty()){
-                holder.taskImage.setImageResource(R.drawable.image_placeholder/*TODO change */);
+            if (currentTask.getTitleImagePath().isEmpty()) {
+                holder.taskImage.setImageResource(R.drawable.image_placeholder);
             } else {
                 holder.taskImage.setImageURI(Uri.parse(currentTask.getTitleImagePath()));
             }
@@ -117,23 +117,22 @@ public class ManageTaskListAdapter extends RecyclerView.Adapter<ManageTaskListAd
                 context.startActivity(intent);
             });
             holder.editButton.setOnClickListener(v -> {
-                SharedPreferences sharedPreferences = context.getSharedPreferences(MainActivity.SHARED_PREF_KEY, Context.MODE_PRIVATE);
-                sharedPreferences.edit().putString(EditTaskActivity.SHARED_PREF_TASK_ID, currentTask.getId()).apply();
                 Intent intent = new Intent(context, EditTaskActivity.class);
+                intent.putExtra(MainActivity.TASK_INTENT_EXTRA, currentTaskWithSteps);
                 context.startActivity(intent);
             });
             holder.deleteButton.setOnClickListener(v ->
-                //create a dialog asking the user if he wants to delete the task
-                new DialogBuilder()
-                        .setDescriptionText(R.string.delete_task_popup_text)
-                        .setContext(context)
-                        .setTwoButtonLayout(R.string.cancel_popup, R.string.delete_task_popup_button)
-                        .setAction(() -> {
-                            //delete task
-                            TaskViewModel taskViewModel = new ViewModelProvider(fragment).get(TaskViewModel.class);
-                            taskViewModel.deleteTask(currentTaskWithSteps);
-                            Log.d(TAG, "deleted task '" + currentTask.getTitle() + "' finished");
-                        }).build().show()
+                    //create a dialog asking the user if he wants to delete the task
+                    new DialogBuilder()
+                            .setDescriptionText(R.string.delete_task_popup_text)
+                            .setContext(context)
+                            .setTwoButtonLayout(R.string.cancel_popup, R.string.delete_task_popup_button)
+                            .setAction(() -> {
+                                //delete task
+                                TaskViewModel taskViewModel = new ViewModelProvider(fragment).get(TaskViewModel.class);
+                                taskViewModel.deleteTask(currentTaskWithSteps);
+                                Log.d(TAG, "deleted task '" + currentTask.getTitle() + "' finished");
+                            }).build().show()
             );
         } else {
             // Covers the case of data not being ready yet.
@@ -149,6 +148,7 @@ public class ManageTaskListAdapter extends RecyclerView.Adapter<ManageTaskListAd
      *
      * @param tasks the task steps to set
      */
+    @SuppressLint("NotifyDataSetChanged")
     public void setTasks(final List<TaskWithSteps> tasks) {
         this.tasks = tasks;
         notifyDataSetChanged();

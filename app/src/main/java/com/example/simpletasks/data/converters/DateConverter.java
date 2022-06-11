@@ -20,9 +20,9 @@ public class DateConverter {
      * @return the long value for a date
      */
     @TypeConverter
-    public Long dateToLong(final Date date){
+    public Long dateToLong(final Date date) {
         Log.d(DEBUG_TAG, String.format("Date %s converted to Long", date));
-        return date == null? null : date.getTime();
+        return date == null ? null : date.getTime();
     }
 
     /**
@@ -32,8 +32,8 @@ public class DateConverter {
      * @return the date for the long value
      */
     @TypeConverter
-    public Date longToDate(final Long stamp){
+    public Date longToDate(final Long stamp) {
         Log.d(DEBUG_TAG, String.format("Long %s converted to Date", stamp));
-        return stamp == null? null : new Date(stamp);
+        return stamp == null ? null : new Date(stamp);
     }
 }

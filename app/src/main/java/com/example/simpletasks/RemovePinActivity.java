@@ -1,6 +1,5 @@
 package com.example.simpletasks;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,10 +8,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.simpletasks.data.entities.Pin;
+import com.example.simpletasks.domain.popups.DialogBuilder;
+import com.example.simpletasks.domain.popups.IDialogBuilder;
 import com.example.simpletasks.domain.settings.PinController;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
@@ -38,12 +38,6 @@ public class RemovePinActivity extends AppCompatActivity {
         executorService = Executors.newSingleThreadExecutor();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remove_pin);
-
-        // Remove the action bar at the top of the screen
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
 
         final TextView introWarningView = findViewById(R.id.delete_pin_intro_warning);
         Futures.addCallback(pinController.getPinCount(), new FutureCallback<Integer>() {

@@ -1,4 +1,4 @@
-package com.example.simpletasks;
+package com.example.simpletasks.domain.popups;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -6,6 +6,9 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.simpletasks.R;
+import com.example.simpletasks.domain.popups.IDialogBuilder;
 
 /**
  * Builds a custom dialog Use like new DialogBuilder().setContext(context).build().show();

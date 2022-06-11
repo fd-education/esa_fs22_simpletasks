@@ -20,9 +20,10 @@ public class TaskStepViewModel extends AndroidViewModel {
 
     /**
      * Initialize the view model and the taskStep repository using the app context.
+     *
      * @param application the app context
      */
-    public TaskStepViewModel(Application application){
+    public TaskStepViewModel(Application application) {
         super(application);
         taskStepRepo = new TaskStepRepository(application);
     }
@@ -31,9 +32,9 @@ public class TaskStepViewModel extends AndroidViewModel {
      * Fetch all task step entities of a task ordered by their index
      *
      * @param task the task to lookup
-     * @return LiveData<List<TaskStep>> observable with all task step entities of a task
+     * @return LiveData<List < TaskStep>> observable with all task step entities of a task
      */
-    public LiveData<List<TaskStep>>  getStepsOfTask(final Task task){
+    public LiveData<List<TaskStep>> getStepsOfTask(final Task task) {
         return taskStepRepo.getByTaskId(task.getId());
     }
 
@@ -41,9 +42,9 @@ public class TaskStepViewModel extends AndroidViewModel {
      * Fetch all task step entities of a task specified by its id ordered by their index
      *
      * @param taskId the task id to lookup
-     * @return LiveData<List<TaskStep>> observable with all task step entities of a task
+     * @return LiveData<List < TaskStep>> observable with all task step entities of a task
      */
-    public LiveData<List<TaskStep>>  getStepsOfTaskById(final String taskId){
+    public LiveData<List<TaskStep>> getStepsOfTaskById(final String taskId) {
         return taskStepRepo.getByTaskId(taskId);
     }
 
@@ -52,7 +53,7 @@ public class TaskStepViewModel extends AndroidViewModel {
      *
      * @param taskSteps the taskSteps to insert
      */
-    public void insertTaskSteps(final List<TaskStep> taskSteps){
+    public void insertTaskSteps(final List<TaskStep> taskSteps) {
         taskStepRepo.insertTaskSteps(taskSteps);
     }
 
@@ -61,8 +62,17 @@ public class TaskStepViewModel extends AndroidViewModel {
      *
      * @param taskSteps the tasks to delete
      */
-    public void updateTaskSteps(final List<TaskStep> taskSteps){
+    public void updateTaskSteps(final List<TaskStep> taskSteps) {
         taskStepRepo.updateTaskSteps(taskSteps);
+    }
+
+    /**
+     * Delete a taskStep from the taskSteps table.
+     *
+     * @param taskStep the taskStep to delete
+     */
+    public void deleteTaskStep(TaskStep taskStep) {
+        taskStepRepo.deleteTaskStep(taskStep);
     }
 
     /**
@@ -70,7 +80,7 @@ public class TaskStepViewModel extends AndroidViewModel {
      *
      * @param taskSteps the tasks to delete
      */
-    public void deleteTaskSteps(final List<TaskStep> taskSteps){
+    public void deleteTaskSteps(final List<TaskStep> taskSteps) {
         taskStepRepo.deleteTaskSteps(taskSteps);
     }
 }

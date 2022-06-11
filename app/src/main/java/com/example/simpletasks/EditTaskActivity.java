@@ -5,13 +5,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
@@ -23,6 +22,8 @@ import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.entities.TaskWithSteps;
 import com.example.simpletasks.data.types.TaskStepTypes;
 import com.example.simpletasks.data.viewmodels.TaskViewModel;
+import com.example.simpletasks.domain.popups.ChooseTypeDialog;
+import com.example.simpletasks.domain.popups.DialogBuilder;
 import com.example.simpletasks.fragments.EditTaskStepsListFragment;
 
 /**
@@ -31,12 +32,19 @@ import com.example.simpletasks.fragments.EditTaskStepsListFragment;
 public class EditTaskActivity extends AppCompatActivity {
     private static final String TAG = "EditTaskActivity";
     public static final String SHARED_PREF_TASK_ID = "TaskId";
+    public static final String SHARED_PREF_STEP_IDS = "STEP_IDS";
+    public static final String NEW_STEP = "NEW_STEP";
 
     private Task currentEditTask;
 
     // UI element to read from/ write to
     private EditText taskTitle;
     private ImageView taskImageView;
+    private ActivityResultLauncher<Intent> chooseTitleImage;
+    private TaskWithSteps currentEditTaskWithSteps;
+
+    private TaskViewModel taskViewModel;
+
 
     /**
      * Set and adjust the view and set fragments.
@@ -47,6 +55,8 @@ public class EditTaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_task);
+
+        initializeFields();
     }
 
     /**
@@ -56,12 +66,52 @@ public class EditTaskActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
+
         // Get the task from the intent
-        fetchCurrentEditTask();
+        handleTaskIntent();
+
+        if (currentEditTask.getTitleImagePath().isEmpty()) {
+            taskImageView.setImageResource(R.drawable.image_placeholder);
+        } else {
+            taskImageView.setImageURI(Uri.parse(currentEditTask.getTitleImagePath()));
+        }
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SHARED_PREF_TASK_ID, currentEditTask.getId()).apply();
+
+        // Set the fragments in the activity
+        fillValuesOnUi();
+        setFragment();
+
+        Log.d(TAG, "finished initialisation");
     }
 
+    private void initializeFields() {
+        taskImageView = findViewById(R.id.imageView_taskImage);
+        taskTitle = findViewById(R.id.taskTitle_editTask);
+
+        chooseTitleImage = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        Uri uri = (Uri) result.getData().getExtras().get(ImageCaptureActivity.RESULT_KEY);
+                        currentEditTask.setTitleImagePath(uri.getPath());
+                        taskImageView.setImageURI(uri);
+                    }
+                });
+    }
+
+    /**
+     * Handle click events on the add task step button
+     * Ask the user, which kind of a task they want to create
+     *
+     * @param view ignored, not needed by the handler
+     */
     public void onAddTaskStepClicked(View view) {
-        getChoseFormatDialog().show();
+        String stepId = currentEditTask.getId();
+        int index = currentEditTask.getSteps().size() + 1;
+        new ChooseTypeDialog(this).showDialog(stepId, index);
     }
 
     /**
@@ -79,7 +129,7 @@ public class EditTaskActivity extends AppCompatActivity {
             // Save the data into the database
             TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
             // using insert rather than update, so new and updated tasks will be saved
-            taskViewModel.insertTask(currentEditTask);
+            taskViewModel.updateTask(currentEditTask);
             Log.d(TAG, "inserting or updating task finished");
             // Go back to the last screen
             super.onBackPressed();
@@ -91,23 +141,15 @@ public class EditTaskActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Launch the activity to capture the title image
+     *
+     * @param v ignored because not required for the handler
+     */
     public void onTitleImageClicked(View v) {
         Intent intent = new Intent(this, ImageCaptureActivity.class);
-        intent.putExtra("image_path", currentEditTask.getTitleImagePath());
         chooseTitleImage.launch(intent);
     }
-
-    final ActivityResultLauncher<Intent> chooseTitleImage = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        Uri uri = result.getData().getData();
-                        currentEditTask.setTitleImagePath(uri.getPath());
-                        taskImageView.setImageURI(uri);
-                    }
-                }
-            });
 
     /**
      * Handle click events on the back button
@@ -115,19 +157,18 @@ public class EditTaskActivity extends AppCompatActivity {
      * @param view the view that triggered the event
      */
     public void onBackClicked(View view) {
-        onBackPressed();
-    }
-
-    /**
-     * Handle click events on the back button with a dialog
-     */
-    @Override
-    public void onBackPressed() {
         new DialogBuilder()
                 .setDescriptionText(R.string.discard_changes_text)
                 .setContext(this)
                 .setTwoButtonLayout(R.string.cancel_popup, R.string.discard_changes_button)
-                .setAction(super::onBackPressed).build().show();
+                .setAction(this::onBackPressed).build().show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        taskViewModel.deleteTask(currentEditTaskWithSteps);
+
+        super.onBackPressed();
     }
 
     /**
@@ -137,103 +178,43 @@ public class EditTaskActivity extends AppCompatActivity {
      */
     public void onPlanTaskClicked(View view) {
         Intent intent = new Intent(this, ScheduleTaskActivity.class);
-        intent.putExtra(MainActivity.TASK_INTENT_EXTRA, currentEditTask);
+        intent.putExtra(MainActivity.TASK_INTENT_EXTRA, currentEditTaskWithSteps);
         startActivity(intent);
     }
 
     // Set the fragment that displays the step details
     private void setFragment() {
+        EditTaskStepsListFragment taskStepsListFragment = new EditTaskStepsListFragment();
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragmentContainerTaskStepList_editTask, new EditTaskStepsListFragment()).commit();
+                .add(R.id.fragmentContainerTaskStepList_editTask, taskStepsListFragment).commit();
 
-        Log.e(TAG, "FRAGMENT SET");
+        Log.d(TAG, "TaskStepList Fragment set.");
     }
 
     // Set the task title in the UI
     private void fillValuesOnUi() {
-        taskTitle = findViewById(R.id.taskTitle_editTask);
         taskTitle.setText(currentEditTask.getTitle());
     }
 
-    // Get the task from the intent
-    private void fetchCurrentEditTask() {
-        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREF_KEY, Context.MODE_PRIVATE);
-        String taskId = sharedPreferences.getString(SHARED_PREF_TASK_ID, null);
+    private void handleTaskIntent() {
+        currentEditTaskWithSteps = (TaskWithSteps) getIntent().getSerializableExtra(MainActivity.TASK_INTENT_EXTRA);
 
+        currentEditTask = currentEditTaskWithSteps.getTask();
 
-        TaskViewModel taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
-        taskViewModel.getTaskById(taskId).observe(this, fetchedTask -> {
-            //if the task id was a flag to create a new task
-            if (taskId.equals(ManageTasksActivity.CREATE_NEW_TASK)) {
-                currentEditTask = new TaskWithSteps().getTask();
-                sharedPreferences.edit().putString(SHARED_PREF_TASK_ID, currentEditTask.getId()).apply();
-            } else if (fetchedTask != null) {
-                //if a valid task could be fetched
-                currentEditTask = fetchedTask;
-            }
-            //initialize the edit task activity
-            initializeEditTaskActivity();
-        });
-
-    }
-
-    //initializes the edit task activity
-    private void initializeEditTaskActivity() {
-        taskImageView = findViewById(R.id.imageView_taskImage);
-
-        if (currentEditTask.getTitleImagePath().isEmpty()) {
-            taskImageView.setImageResource(R.drawable.image_placeholder);
-        } else {
-            taskImageView.setImageURI(Uri.parse(currentEditTask.getTitleImagePath()));
+        if(currentEditTask.getTitle().isEmpty()){
+            taskViewModel.insertTask(currentEditTask);
         }
-
-        // Set the fragments in the activity
-        fillValuesOnUi();
-        setFragment();
-
-        Log.d(TAG, "finished initialisation");
     }
 
-    // TODO JAN FRAGEN
-    // TODO - position drag
-    private AlertDialog getChoseFormatDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//    // Get the task from the intent
+//    private Task getTask() {
+//        TaskWithSteps taskWithSteps = (TaskWithSteps) getIntent().getExtras().getSerializable(MainActivity.TASK_INTENT_EXTRA);
+//        return taskWithSteps.getTask();
+//    }
 
-        builder.setTitle("Step Types");
 
-        builder.setItems(new CharSequence[]
-                        {"TEXT STEP", "AUDIO STEP", "VIDEO STEP", "CANCEL"},
-                (dialog, which) -> {
-                    switch (which) {
-                        case 0:
-                            TaskStep newTextStep = new TaskStep(currentEditTask.getId(), TaskStepTypes.TEXT, currentEditTask.getSteps().size() + 1, "", "", "", "", "");
-
-                            Intent textIntent = new Intent(getBaseContext(), EditTextStepActivity.class);
-                            textIntent.putExtra(MainActivity.TASK_INTENT_EXTRA, newTextStep);
-                            startActivity(textIntent);
-                            break;
-                        case 1:
-                            TaskStep audioStep = new TaskStep(currentEditTask.getId(), TaskStepTypes.TEXT, currentEditTask.getSteps().size() + 1, "", "", "", "", "");
-
-                            Intent audioIntent = new Intent(getBaseContext(), EditAudioStepActivity.class);
-                            audioIntent.putExtra(MainActivity.TASK_INTENT_EXTRA, audioStep);
-                            startActivity(audioIntent);
-                            break;
-                        case 2:
-                            TaskStep videoStep = new TaskStep(currentEditTask.getId(), TaskStepTypes.TEXT, currentEditTask.getSteps().size() + 1, "", "", "", "", "");
-
-                            Intent videoIntent = new Intent(getBaseContext(), EditVideoStepActivity.class);
-                            videoIntent.putExtra(MainActivity.TASK_INTENT_EXTRA, videoStep);
-                            startActivity(videoIntent);
-                            Log.d(TAG, "VIDEO STEP");
-                            break;
-                        case 3:
-                            Log.d(TAG, "CANCEL");
-                            break;
-                    }
-                });
-
-        return builder.create();
+    private TaskWithSteps getTask() {
+        return (TaskWithSteps) getIntent().getSerializableExtra(MainActivity.TASK_INTENT_EXTRA);
     }
 
     //validates the data of the ui, which was not validated before.

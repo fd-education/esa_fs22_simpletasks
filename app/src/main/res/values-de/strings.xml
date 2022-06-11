@@ -24,6 +24,8 @@
     <string name="task_title_hint">Titel des Tasks</string>
     <string name="type">Typ: %1$s</string>
     <string name="drag_task">Bewege Task</string>
+
+
     <string name="plan_next_execution">Nächste Ausführung planen</string>
     <string name="current_next_execution">Nächste Ausführung: %1$s</string>
     <string name="plan_last_execution">Letzte Ausführung planen</string>
@@ -87,6 +89,12 @@
     <string name="stop">Abbrechen</string>
     <string name="no_video">Keine Aufnahme vorhanden.</string>
     <string name="no_audio">Keine Aufnahme vorhanden.</string>
+    <string name="start_recording">Aufnahme starten</string>
+    <string name="stop_recording">Aufnahme stoppen</string>
+    <string name="redo_image">Neues Foto</string>
+    <string name="recording_in_progress">Aufnahme läuft</string>
+    <string name="playing_in_progress">Aufnahme wird abgespielt</string>
+    <string name="no_image">Kein Titelbild.</string>
     <string name="invalid_pin">Ungültiger PIN</string>
     <string name="pin_not_found">Dieser PIN existiert nicht</string>
     <string name="unknown_error_msg">Etwas hat nicht funktioniert. Bitte später nochmals versuchen.</string>
@@ -108,4 +116,5 @@
     <string name="report_problem_abort">Zurück zum Task</string>
     <string name="no_problem_stated">Bitte zuerst das Problem beschreiben!</string>
     <string name="problem_statement_additional_information">Zusätzliche Informationen:\nTasktitel: %1$s\nSchritttitel: %2$s\nSchrittindex: %3$d</string>
+    <string name="request_type">Welche Art von Task Step möchten Sie erstellen?</string>
 </resources>
