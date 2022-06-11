@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ReportProblemActivity">
+
+    <ImageButton
+        android:id="@+id/backButton"
+        style="@style/Theme.SimpleTasks.BackButton"
+        android:layout_marginStart="@dimen/sidesPadding"
+        android:layout_marginTop="@dimen/sidesPadding"
+        android:contentDescription="@string/back"
+        android:onClick="onBackClicked"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/sidesPadding"
+        android:layout_marginEnd="@dimen/sidesPadding"
+        android:text="@string/title_report_problem"
+        android:textAlignment="center"
+        android:textColor="?colorOnBackground"
+        android:textSize="@dimen/h2"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/backButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/backButton" />
+
+    <TextView
+        android:id="@+id/intro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sidesPadding"
+        android:maxEms="15"
+        android:paddingStart="@dimen/elementPadding"
+        android:paddingEnd="@dimen/elementPadding"
+        android:textAlignment="center"
+        android:textColor="?hintTextColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:labelFor="@id/problemStatementEditText"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        android:text="@string/report_problem_explanation" />
+
+    <EditText
+        android:id="@+id/problemStatementEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="start|top"
+        android:importantForAutofill="no"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/intro" />
+
+    <TextView
+        android:id="@+id/problemStatementError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="13dp"
+        android:textColor="?colorError"
+        android:layout_marginTop="@dimen/elementPadding"
+        android:text="@string/no_problem_stated"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/sendProblemButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/problemStatementEditText" />
+
+    <Button
+        android:id="@+id/sendProblemButton"
+        style="@style/Theme.SimpleTasks.PrimaryButton"
+        android:layout_marginTop="@dimen/sidesPadding"
+        android:onClick="onSendProblemClicked"
+        android:text="@string/report_problem_send_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/problemStatementError" />
+
+    <Button
+        android:id="@+id/caretakerLogoutButton"
+        style="@style/Theme.SimpleTasks.InvertedPrimaryButton"
+        android:layout_marginTop="@dimen/sidesPadding"
+        android:onClick="onBackClicked"
+        android:text="@string/report_problem_abort"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sendProblemButton" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

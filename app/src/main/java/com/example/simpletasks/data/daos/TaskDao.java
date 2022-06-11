@@ -12,6 +12,7 @@ import androidx.room.Update;
 
 import com.example.simpletasks.data.entities.Task;
 import com.example.simpletasks.data.entities.TaskWithSteps;
+import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.Date;
 import java.util.List;
@@ -25,7 +26,7 @@ public interface TaskDao {
     /**
      * Fetch all task entities from the tasks table
      *
-     * @return LiveData<List<Task>> observable with all task entities
+     * @return LiveData<List < Task>> observable with all task entities
      */
     @Query("SELECT * FROM tasks " +
             "ORDER BY next_start_date ASC")
@@ -34,7 +35,7 @@ public interface TaskDao {
     /**
      * Fetch all task entities with their steps from the tasks table
      *
-     * @return LiveData<List<TaskWithSteps>> observable with all task entities and their steps
+     * @return LiveData<List < TaskWithSteps>> observable with all task entities and their steps
      */
     @Transaction
     @Query("SELECT * FROM tasks " +
@@ -45,8 +46,8 @@ public interface TaskDao {
      * Fetch all task entities in a given date span.
      *
      * @param dayStart starting date of the date span (incl.)
-     * @param dayEnd ending date of the date span (excl.)
-     * @return LiveData<List<Task>> observable with all task entities in that date span
+     * @param dayEnd   ending date of the date span (excl.)
+     * @return LiveData<List < Task>> observable with all task entities in that date span
      */
     @Query("SELECT * FROM tasks " +
             "WHERE next_start_date >= :dayStart AND next_start_date < :dayEnd " +
@@ -57,7 +58,7 @@ public interface TaskDao {
      * Fetch all task entities with their task steps in a given date span
      *
      * @param dayStart starting date of the date span (incl.)
-     * @param dayEnd ending date of the date span (excl.)
+     * @param dayEnd   ending date of the date span (excl.)
      * @return @return LiveData<List<TaskWithSteps>> observable with all task entities and their steps
      */
     @Transaction
@@ -99,7 +100,7 @@ public interface TaskDao {
      * @param tasks the tasks to insert
      */
     @Insert(onConflict = REPLACE)
-    void insertTasks(List<Task> tasks);
+    ListenableFuture<List<Long>> insertTasks(List<Task> tasks);
 
     /**
      * Delete a list of tasks from the tasks table.
@@ -113,5 +114,5 @@ public interface TaskDao {
      * Delete all data from the tasks database.
      */
     @Query("DELETE FROM tasks")
-    void deleteAll();
+    ListenableFuture<Integer> deleteAll();
 }

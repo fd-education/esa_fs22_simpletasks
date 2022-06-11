@@ -12,22 +12,39 @@ import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
+import androidx.test.platform.app.InstrumentationRegistry;
+
+import com.example.simpletasks.data.AppDatabase;
+import com.example.simpletasks.data.daos.TaskDao;
+import com.example.simpletasks.data.daos.TaskStepDao;
+import com.example.simpletasks.data.entities.Task;
+import com.example.simpletasks.data.entities.TaskStep;
+import com.example.simpletasks.data.entities.TaskWithSteps;
+import com.example.simpletasks.data.repositories.TaskRepository;
+import com.example.simpletasks.data.types.TaskStepTypes;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.hamcrest.core.IsInstanceOf;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.Collections;
+import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -37,10 +54,34 @@ public class AbortTaskUiTest {
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
 
+    @Before
+    public void setup() throws ExecutionException, InterruptedException {
+        Date today = new Date();
+        // today = new Date(today.getYear(), today.getMonth(), today.getDay(), 0, 0);
+        Task task = new Task("Task", "", today, 1L, 10L, new Date(today.getYear(), today.getMonth(), today.getDate() + 3));
+        TaskStep textTaskStep = new TaskStep(task.getId(), TaskStepTypes.TEXT, 0, "title", "imageUri", "description", "videoUri", "audioUri");
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        Context context = ApplicationProvider.getApplicationContext();
+        final AppDatabase appDb = AppDatabase.getAppDb(context);
+        final TaskDao taskDao = appDb.taskDao();
+        final TaskStepDao taskStepDao = appDb.taskStepDao();
+
+        taskDao.deleteAll().get();
+        taskStepDao.deleteAll().get();
+        taskDao.insertTasks(Collections.singletonList(task)).get();
+        taskStepDao.insertTaskStep(textTaskStep).get();
+    }
+
     @Test
     public void abortTaskUiTest() {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

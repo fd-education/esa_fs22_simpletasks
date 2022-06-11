@@ -16,10 +16,12 @@ import java.util.List;
 public class Seeder {
     private static final String TAG = "Seeder";
 
-    private Seeder(){}
+    private Seeder() {
+    }
 
     /**
      * Creates seed data of tasks with their steps
+     *
      * @param nbrOfTasks number of tasks that must be created
      * @return list of tasks with their steps
      */
@@ -37,7 +39,6 @@ public class Seeder {
         for (int i = 0; i < quantity; i++) {
             String title = "Seed Task Title " + i;
             String titleImagePath = "";
-            String description = "Seed Task Description " + i;
             // date always incremented by the current number of iterations
             Date nextStart = new Date(today.getYear(), today.getMonth(), today.getDate() + i, today.getHours(), today.getMinutes());
             // three days
@@ -47,7 +48,7 @@ public class Seeder {
             // ends after 7 days
             Date endDate = new Date(today.getYear(), today.getMonth(), today.getDate() + i + 7, today.getHours(), today.getMinutes());
 
-            Task task = new Task(title, titleImagePath, description, nextStart, interval, notificationDelta, endDate);
+            Task task = new Task(title, titleImagePath, nextStart, interval, notificationDelta, endDate);
             addSteps(task, i);
             tasks.add(new TaskWithSteps(task, task.getSteps()));
         }

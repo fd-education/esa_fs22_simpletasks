@@ -43,7 +43,7 @@
         android:layout_marginTop="@dimen/elementPadding"
         android:layout_marginEnd="@dimen/sidesPadding"
         android:layout_marginBottom="@dimen/elementPadding"
-        app:layout_constraintBottom_toTopOf="@+id/caretakerLogoutButton"
+        app:layout_constraintBottom_toTopOf="@+id/logoutButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +51,7 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/caretakerLogoutButton"
+        android:id="@+id/logoutButton"
         style="@style/Theme.SimpleTasks.ErrorButton"
         android:onClick="onLogoutClicked"
         android:text="@string/logout"
@@ -75,9 +75,9 @@
         style="@style/Theme.SimpleTasks.IconButtonPrimary"
         android:contentDescription="@string/add_task"
         android:onClick="onAddTaskClicked"
-        app:layout_constraintBottom_toBottomOf="@+id/caretakerLogoutButton"
+        app:layout_constraintBottom_toBottomOf="@+id/logoutButton"
         app:layout_constraintEnd_toEndOf="@+id/fragmentContainerTaskList"
-        app:layout_constraintTop_toTopOf="@+id/caretakerLogoutButton"
+        app:layout_constraintTop_toTopOf="@+id/logoutButton"
         app:srcCompat="@android:drawable/ic_input_add" />
 
 

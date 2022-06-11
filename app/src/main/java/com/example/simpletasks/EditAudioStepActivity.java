@@ -1,10 +1,8 @@
 package com.example.simpletasks;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,32 +10,23 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentContainerView;
 
 import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.viewmodels.TaskStepViewModel;
-import com.example.simpletasks.domain.fileSystem.FileSystemConstants;
-import com.example.simpletasks.domain.fileSystem.FileSystemUtility;
-import com.example.simpletasks.domain.fileSystem.FileSystemUtilityController;
 import com.example.simpletasks.fragments.AudioPlayerFragment;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Activity for editing audio steps.
+ */
 public class EditAudioStepActivity extends AppCompatActivity {
     final String TAG = "EditAudioStepActivity";
-
-    private Context context;
-    private FileSystemUtility fileSystemUtility;
 
     private TaskStepViewModel taskStepViewModel;
 
@@ -52,7 +41,8 @@ public class EditAudioStepActivity extends AppCompatActivity {
     private Button recordAudio;
     private Button saveStep;
 
-    private Uri audioPath;
+    private ActivityResultLauncher<Intent> captureAudio;
+    private ActivityResultLauncher<Intent> chooseTitleImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +56,12 @@ public class EditAudioStepActivity extends AppCompatActivity {
         if(!bundle.isEmpty()){
             handleTaskStepExtras(bundle);
         } else {
-            Log.e(TAG, "Bundle is empty!");
+            Log.d(TAG, "Bundle is empty!");
         }
     }
 
+    // Initialize the fields of the edit audio step activity
     private void initializeFields(){
-        fileSystemUtility = new FileSystemUtilityController();
         taskStepViewModel = new TaskStepViewModel(this.getApplication());
 
         stepTitleInput = findViewById(R.id.et_editaudiostep_title);
@@ -85,9 +75,30 @@ public class EditAudioStepActivity extends AppCompatActivity {
         recordAudio = findViewById(R.id.b_editaudiostep_record_audio);
         saveStep = findViewById(R.id.b_editaudiostep_save);
 
-        context = this;
+        // Listener for the result of the audio capture activity
+        captureAudio = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if(result.getResultCode() == RESULT_OK && result.getData() != null){
+                        Uri uri = (Uri) result.getData().getExtras().get(AudioCaptureActivity.RESULT_KEY);
+                        noAudioWarning.setVisibility(View.GONE);
+                        audioPlayer.setVisibility(View.VISIBLE);
+                        step.setAudioPath(uri.getPath());
+                        setAudioPlayer(uri.getPath());
+                    }
+                });
+
+        // Listener for the result of the capture image activity
+        chooseTitleImage = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        Uri uri = (Uri) result.getData().getExtras().get(ImageCaptureActivity.RESULT_KEY);
+                        step.setImagePath(uri.getPath());
+                        stepImageView.setImageURI(uri);
+                    }
+                });
     }
 
+    // Initialize the state of the edit audio step activity
     private void initializeUi(){
         backButton.setOnClickListener(view -> EditAudioStepActivity.super.onBackPressed());
 
@@ -96,79 +107,46 @@ public class EditAudioStepActivity extends AppCompatActivity {
         recordAudio.setOnClickListener(view -> recordAudio());
 
         saveStep.setOnClickListener(view -> {
-            persistStep();
+            if(!persistStep()){
+                return;
+            }
+
+            setResult();
             finish();
         });
     }
 
+    // Launch the audio capture activity
     private void recordAudio(){
-        Intent captureAudioIntent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
-
-        if(captureAudioIntent.resolveActivity(context.getPackageManager()) != null){
-            File audioFile;
-
-            try{
-                audioFile = fileSystemUtility.createAudioFile(getExternalFilesDir(FileSystemConstants.AUDIO_DIR));
-            } catch (IOException e) {
-                String message = "Unable to record audio.";
-                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-                Log.e(TAG, e.toString());
-                return;
-            }
-
-            if(audioFile != null){
-                Log.d(TAG, "Launching intent to capture audio.");
-                audioPath = FileProvider.getUriForFile(context, FileSystemConstants.FILEPROVIDER_AUTHORITY, audioFile);
-                captureAudioIntent.putExtra(MediaStore.EXTRA_OUTPUT, audioPath);
-                captureAudio.launch(captureAudioIntent);
-            }
-        } else{
-            String message = "Your device does not support audio capture.";
-            recordAudio.setEnabled(false);
-            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-        }
+        Intent captureAudioIntent = new Intent(this, AudioCaptureActivity.class);
+        captureAudio.launch(captureAudioIntent);
     }
 
-    final ActivityResultLauncher<Intent> captureAudio = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if(result.getResultCode() == RESULT_OK){
-                        noAudioWarning.setVisibility(View.GONE);
-                        audioPlayer.setVisibility(View.VISIBLE);
-                        step.setAudioPath(audioPath.toString());
-                        setAudioPlayer(audioPath.toString());
-                    }
-                }
-            });
-
+    // Set the audio player fragment
     private void setAudioPlayer(String audioPath){
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.frag_showaudiostep_audioplayer, AudioPlayerFragment.getNewInstance(audioPath)).commit();
+                .add(R.id.frag_editaudiostep_audioplayer, AudioPlayerFragment.getNewInstance(audioPath)).commit();
     }
 
+    // Set the title image view
     private void setTitleImage(){
         Intent intent = new Intent(this, ImageCaptureActivity.class);
-        intent.putExtra("image_path", step.getImagePath());
         chooseTitleImage.launch(intent);
     }
 
-    final ActivityResultLauncher<Intent> chooseTitleImage = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        Uri uri = result.getData().getData();
-                        step.setImagePath(uri.getPath());
-                        stepImageView.setImageURI(uri);
-                    }
-                }
-            });
+    // Persist the changes to the step
+    private boolean persistStep(){
 
-    private void persistStep(){
+        // No user created steps with empty titles allowed
         if(isEmpty(stepTitleInput)){
             stepTitleInput.setError(getString(R.string.empty_step_title));
-            return;
+            return false;
+        }
+
+        // No user created steps with no recording allowed
+        if(step.getAudioPath() == null || step.getAudioPath().isEmpty()){
+            recordAudio.setError(getString(R.string.no_audio));
+            return false;
         }
 
         step.setTitle(stepTitleInput.getText().toString().trim());
@@ -178,25 +156,34 @@ public class EditAudioStepActivity extends AppCompatActivity {
 
         taskStepViewModel.updateTaskSteps(steps);
 
-        super.onBackPressed();
+        return true;
     }
 
+    // Check if an edit test input is empty
     private boolean isEmpty(EditText editText){
         return editText.getText().toString().trim().length() == 0;
     }
 
+    // Set the activity result
+    private void setResult(){
+        Intent result = new Intent();
+        result.putExtra(EditTaskActivity.NEW_STEP, step);
+        setResult(RESULT_OK, result);
+    }
+
+    // Unpack the taskstep from the extras bundle
     private void handleTaskStepExtras(Bundle bundle){
         if(!bundle.isEmpty() && bundle.containsKey(MainActivity.TASK_INTENT_EXTRA)){
             step = (TaskStep) bundle.get(MainActivity.TASK_INTENT_EXTRA);
 
             stepTitleInput.setText(step.getTitle());
 
-            if(step.getImagePath() != null){
+            if(step.getImagePath() != null && !step.getImagePath().isEmpty()){
                 Uri uri = Uri.parse(step.getImagePath());
                 stepImageView.setImageURI(uri);
             }
 
-            if(!step.getAudioPath().isEmpty()){
+            if(step.getAudioPath() != null &&!step.getAudioPath().isEmpty()){
                 noAudioWarning.setVisibility(View.GONE);
                 audioPlayer.setVisibility(View.VISIBLE);
                 setAudioPlayer(step.getAudioPath());

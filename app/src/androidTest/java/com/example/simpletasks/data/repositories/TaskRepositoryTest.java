@@ -36,7 +36,7 @@ public class TaskRepositoryTest {
 
     @Before
     public void setUp() {
-        task = new Task("Task", "", "test task", new Date(2000, 1, 1), 100L, 10L, new Date(2000, 1, 1));
+        task = new Task("Task", "", new Date(2000, 1, 1), 100L, 10L, new Date(2000, 1, 1));
         textTaskStep = new TaskStep(task.getId(), TaskStepTypes.TEXT, 0, "title", "imageUri", "description", "videoUri", "audioUri");
         taskWithSteps = new TaskWithSteps(task, Collections.singletonList(textTaskStep));
 
@@ -153,23 +153,6 @@ public class TaskRepositoryTest {
         final Task actualTask = allTasks.get(0);
         assertEquals(task, actualTask);
     }
-
-    @Test
-    public void testUpdateTasksWithSteps() {
-        insertTaskWithSteps();
-
-
-        final String expectedDescription = "new description";
-        task.setDescription(expectedDescription);
-        repository.updateTasksWithSteps(Collections.singletonList(taskWithSteps));
-
-        final List<TaskWithSteps> allTasks = getTaskWithSteps();
-        assert allTasks != null;
-        assertEquals(1, allTasks.size());
-        final TaskWithSteps taskWithSteps = allTasks.get(0);
-        assertEquals(expectedDescription, taskWithSteps.getTask().getDescription());
-    }
-
 
     @Nullable
     private List<Task> getTasks() {

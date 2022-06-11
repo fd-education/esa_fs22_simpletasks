@@ -33,19 +33,23 @@
         app:layout_constraintStart_toEndOf="@+id/imageView_taskImage"
         app:layout_constraintTop_toTopOf="@+id/imageView_taskImage"
         app:layout_constraintVertical_bias="0.526"
-        app:srcCompat="@android:drawable/ic_menu_camera"
+        app:srcCompat="@drawable/ic_baseline_photo_camera_24"
         tools:ignore="ImageContrastCheck" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addTaskStep_editTask"
         style="@style/Theme.SimpleTasks.IconButtonPrimary"
         android:layout_marginEnd="@dimen/sidesPadding"
+        android:backgroundTint="?colorPrimary"
+        android:clickable="true"
         android:contentDescription="@string/add_task_step"
+        android:focusable="true"
         android:onClick="onAddTaskStepClicked"
         app:layout_constraintBottom_toBottomOf="@+id/saveTaskButton_editTask"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/saveTaskButton_editTask"
         app:srcCompat="@android:drawable/ic_input_add" />
+
 
     <ImageButton
         android:id="@+id/backButton_EditTasks"

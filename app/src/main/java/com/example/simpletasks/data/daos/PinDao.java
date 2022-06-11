@@ -45,12 +45,12 @@ public interface PinDao {
 
     /**
      * Delete all data from the pins database.
-     *
+     * <p>
      * Currently only used for the seeding process to avoid huge amounts of data
      * through constant seeding at application start-up.
      */
     @Query("DELETE FROM pins")
-    void deleteAll();
+    ListenableFuture<Integer> deleteAll();
 
     /**
      * Returns all pins that match the given hash

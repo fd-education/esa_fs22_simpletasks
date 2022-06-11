@@ -13,7 +13,7 @@ import com.example.simpletasks.domain.login.LoginController;
 import com.example.simpletasks.domain.login.User;
 
 /**
- * LoginActivity handles lifecycle and business calls for the caretaker login screen.
+ * LoginActivity handles lifecycle and business calls for the login screen.
  */
 public class LoginActivity extends AppCompatActivity {
     final String TAG = "LoginActivity";
@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onLoginClicked(View v){
         // Access the required views
         String pin = ((TextView) findViewById(R.id.pinPasswordInput)).getText().toString();
-        TextView errorText = ((TextView) findViewById(R.id.loginError));
+        TextView errorText = findViewById(R.id.loginError);
 
         // Check if the entered pin is valid
         boolean validLogin = login.isValidPin(pin);

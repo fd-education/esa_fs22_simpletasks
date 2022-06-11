@@ -1,4 +1,4 @@
-package com.example.simpletasks;
+package com.example.simpletasks.domain.popups;
 
 import android.app.Dialog;
 import android.content.Context;

@@ -2,7 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.simpletasks">
 
+
+    <!-- PERMISSIONS AND FEATURES FOR CAMERA, VIDEO and AUDIO CAPTURE -->
+    <uses-feature android:name="android.hardware.camera.any" android:required="false"/>
+    <uses-feature android:name="android.hardware.microphone" android:required="false"/>
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -16,19 +24,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SimpleTasks">
         <activity
+            android:name=".ReportProblemActivity"
+            android:exported="false" />
+        <activity
             android:name=".ScheduleTaskActivity"
             android:exported="false" />
         <activity
-            android:name=".RemovePinActivity"
+            android:name=".VideoCaptureActivity"
             android:exported="false" />
         <activity
-            android:name=".ChoseFormatActivity"
+            android:name=".AudioCaptureActivity"
             android:exported="false" />
         <activity
             android:name=".ImageCaptureActivity"
             android:exported="false">
             <intent-filter>
-                <action android:name="android.provider.MediaStore.ACTION_IMAGE_CAPTURE"/>
+                <action android:name="android.provider.MediaStore.ACTION_IMAGE_CAPTURE" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -38,9 +49,9 @@
             android:exported="false" />
         <activity
             android:name=".EditVideoStepActivity"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
-                <action android:name="android.provider.MediaStore.ACTION_VIDEO_CAPTURE"/>
+                <action android:name="android.provider.MediaStore.ACTION_VIDEO_CAPTURE" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -58,6 +69,9 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
+            android:name=".RemovePinActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddPinActivity"
             android:exported="false" />
         <activity
@@ -65,7 +79,7 @@
             android:exported="false" />
         <activity
             android:name=".SettingsActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -88,7 +102,5 @@
 
         <receiver android:name = ".notifications.NotificationPublisher" />
     </application>
-
-
 
 </manifest>

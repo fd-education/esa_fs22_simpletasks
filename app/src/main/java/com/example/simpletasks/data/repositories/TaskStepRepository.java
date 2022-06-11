@@ -21,24 +21,30 @@ public class TaskStepRepository {
      *
      * @param context the context
      */
-    public TaskStepRepository(Context context){
+    public TaskStepRepository(Context context) {
         // TODO Uncomment for final submission and delete seed version
         // AppDatabase db = AppDatabase.getAppDb(application);
         AppDatabase db = AppDatabase.getSeededAppDb(context, true, true);
         taskStepDao = db.taskStepDao();
     }
 
+
     /**
      * Fetch all task step entities of a tasks specified by its id ordered by their index
      *
      * @param taskId the taskId to lookup
-     * @return LiveData<List<TaskStep>> observable with all task step entities of a task
+     * @return LiveData<List < TaskStep>> observable with all task step entities of a task
      */
-    public LiveData<List<TaskStep>> getByTaskId(String taskId){
+    public LiveData<List<TaskStep>> getByTaskId(String taskId) {
         return taskStepDao.getByTaskId(taskId);
     }
 
-    public void insertTaskStep(final TaskStep taskStep){
+    /**
+     * Insert a task step into the task step table
+     *
+     * @param taskStep the taskStep to insert
+     */
+    public void insertTaskStep(final TaskStep taskStep) {
         AppDatabase.databaseWriteExecutor.execute(() -> taskStepDao.insertTaskStep(taskStep));
     }
 
@@ -47,7 +53,7 @@ public class TaskStepRepository {
      *
      * @param taskSteps the taskSteps to insert
      */
-    public void insertTaskSteps(final List<TaskStep> taskSteps){
+    public void insertTaskSteps(final List<TaskStep> taskSteps) {
         AppDatabase.databaseWriteExecutor.execute(() -> taskStepDao.insertTaskSteps(taskSteps));
     }
 
@@ -56,8 +62,12 @@ public class TaskStepRepository {
      *
      * @param taskSteps the taskSteps to update
      */
-    public void updateTaskSteps(final List<TaskStep> taskSteps){
+    public void updateTaskSteps(final List<TaskStep> taskSteps) {
         AppDatabase.databaseWriteExecutor.execute(() -> taskStepDao.updateTaskSteps(taskSteps));
+    }
+
+    public void deleteTaskStep(final TaskStep taskStep) {
+        AppDatabase.databaseWriteExecutor.execute(() -> taskStepDao.deleteTaskStep(taskStep));
     }
 
     /**
@@ -65,7 +75,7 @@ public class TaskStepRepository {
      *
      * @param taskSteps the tasks to delete
      */
-    public void deleteTaskSteps(final List<TaskStep> taskSteps){
+    public void deleteTaskSteps(final List<TaskStep> taskSteps) {
         AppDatabase.databaseWriteExecutor.execute(() -> taskStepDao.deleteTaskSteps(taskSteps));
     }
 }

@@ -28,9 +28,6 @@ public class Task implements Serializable {
     @NonNull
     private String titleImagePath;
 
-    @NonNull
-    private String description;
-
     // The Date of the next occurrence.
     @NonNull
     @ColumnInfo(name = "next_start_date")
@@ -53,11 +50,10 @@ public class Task implements Serializable {
     @Ignore
     private List<TaskStep> steps;
 
-    public Task(@NonNull String title, @NonNull String titleImagePath, @NonNull String description, @NonNull Date nextStartDate, @NonNull Long interval, @NonNull Long notificationDelta, @NonNull Date endDate) {
+    public Task(@NonNull String title, @NonNull String titleImagePath, @NonNull Date nextStartDate, @NonNull Long interval, @NonNull Long notificationDelta, @NonNull Date endDate) {
         this.id = UUID.randomUUID().toString();
         this.title = title;
         this.titleImagePath = titleImagePath;
-        this.description = description;
         this.nextStartDate = nextStartDate;
         this.interval = interval;
         this.notificationDelta = notificationDelta;
@@ -119,25 +115,6 @@ public class Task implements Serializable {
      */
     public void setTitleImagePath(@NonNull String titleImagePath) {
         this.titleImagePath = titleImagePath;
-    }
-
-    /**
-     * Get the description of the task.
-     *
-     * @return the description of the task.
-     */
-    @NonNull
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * Set the description of the task.
-     *
-     * @param description the description to set
-     */
-    public void setDescription(@NonNull String description) {
-        this.description = description;
     }
 
     /**
@@ -250,7 +227,7 @@ public class Task implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return id.equals(task.id) && title.equals(task.title) && description.equals(task.description) && nextStartDate.equals(task.nextStartDate) && Objects.equals(interval, task.interval) && notificationDelta.equals(task.notificationDelta) && endDate.equals(task.endDate) && Objects.equals(steps, task.steps);
+        return id.equals(task.id) && title.equals(task.title) && nextStartDate.equals(task.nextStartDate) && Objects.equals(interval, task.interval) && notificationDelta.equals(task.notificationDelta) && endDate.equals(task.endDate) && Objects.equals(steps, task.steps);
     }
 
     /**
@@ -260,6 +237,6 @@ public class Task implements Serializable {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, nextStartDate, interval, notificationDelta, endDate, steps);
+        return Objects.hash(id, title, nextStartDate, interval, notificationDelta, endDate, steps);
     }
 }

@@ -9,6 +9,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.simpletasks.domain.login.User;
+import com.example.simpletasks.domain.popups.DialogBuilder;
 
 public class ManageTasksActivity extends AppCompatActivity {
     private static final String TAG = "ManageTaskActivity";

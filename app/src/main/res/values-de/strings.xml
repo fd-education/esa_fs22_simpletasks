@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tasks_today">Heutige Tasks</string>
-    <string name="edit_tasks">Bearbeite Tasks</string>
-    <string name="caretaker_login">Login für Betreeunde</string>
+    <string name="edit_tasks">Tasks bearbeiten</string>
+    <string name="login_title">Login</string>
     <string name="logout">Ausloggen</string>
     <string name="total_steps">%1$d Schritte</string>
     <string name="have_problem">Ich habe ein Problem</string>
@@ -18,12 +18,14 @@
     <string name="task_image">Bild von Task</string>
     <string name="task_step_image">Bild von Taskschritt</string>
     <string name="add_task_step">Taskschritt hinzufügen</string>
-    <string name="caretaker_login_hint">Logge dich ein, um Tasks bearbeiten zu können</string>
+    <string name="login_hint">Loggen Sie sich ein, um Tasks bearbeiten zu können</string>
     <string name="open_settings">Einstellungen öffnen</string>
     <string name="save">Speichern</string>
     <string name="task_title_hint">Titel des Tasks</string>
     <string name="type">Typ: %1$s</string>
     <string name="drag_task">Bewege Task</string>
+
+
     <string name="plan_next_execution">Nächste Ausführung planen</string>
     <string name="current_next_execution">Nächste Ausführung: %1$s</string>
     <string name="plan_last_execution">Letzte Ausführung planen</string>
@@ -87,6 +89,12 @@
     <string name="stop">Abbrechen</string>
     <string name="no_video">Keine Aufnahme vorhanden.</string>
     <string name="no_audio">Keine Aufnahme vorhanden.</string>
+    <string name="start_recording">Aufnahme starten</string>
+    <string name="stop_recording">Aufnahme stoppen</string>
+    <string name="redo_image">Neues Foto</string>
+    <string name="recording_in_progress">Aufnahme läuft</string>
+    <string name="playing_in_progress">Aufnahme wird abgespielt</string>
+    <string name="no_image">Kein Titelbild.</string>
     <string name="invalid_pin">Ungültiger PIN</string>
     <string name="pin_not_found">Dieser PIN existiert nicht</string>
     <string name="unknown_error_msg">Etwas hat nicht funktioniert. Bitte später nochmals versuchen.</string>
@@ -101,4 +109,12 @@
     <string name="pin_sent_popup">Ein neuer PIN wurde an %1$s geschickt!</string>
     <string name="confirm_delete_pin_popup">Sind Sie sicher, dass Sie diesen PIN löschen wollen?</string>
     <string name="pin_deletion_confirmation">Der PIN wurde gelöscht!</string>
+    <string name="title_report_problem">Problem beschreiben</string>
+    <string name="report_problem_explanation">Sie haben ein Problem und kommen nicht weiter? Kein Problem! Beschreiben Sie hier, was nicht funktioniert, und senden Sie es dann mit dem Knopf!</string>
+    <string name="report_problem_send_button">Problem senden</string>
+    <string name="report_problem_abort">Zurück zum Task</string>
+    <string name="no_problem_stated">Bitte zuerst das Problem beschreiben!</string>
+    <string name="problem_statement_additional_information">Zusätzliche Informationen:\nTasktitel: %1$s\nSchritttitel: %2$s\nSchrittindex: %3$d</string>
+    <string name="no_pin_set_tip">Möchten Sie das Verwalten der Tasks mit einem PIN schützen?</string>
+    <string name="request_type">Welche Art von Task Step möchten Sie erstellen?</string>
 </resources>

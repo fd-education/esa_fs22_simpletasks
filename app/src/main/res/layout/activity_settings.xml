@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="@id/backButton" />
 
     <TextView
-        android:id="@+id/titleCaretakerSettings"
+        android:id="@+id/titlePinSettings"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/sidesPadding"
@@ -60,7 +60,7 @@
         app:layout_constraintEnd_toStartOf="@id/removePinButton"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleCaretakerSettings" />
+        app:layout_constraintTop_toBottomOf="@id/titlePinSettings" />
 
     <Button
         android:id="@+id/removePinButton"
@@ -74,7 +74,7 @@
         android:textSize="@dimen/p"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/addPinButton"
-        app:layout_constraintTop_toBottomOf="@id/titleCaretakerSettings" />
+        app:layout_constraintTop_toBottomOf="@id/titlePinSettings" />
 
     <TextView
         android:id="@+id/titleInterfaceSettings"

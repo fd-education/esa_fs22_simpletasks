@@ -10,6 +10,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.simpletasks.data.entities.TaskStep;
+import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.List;
 
@@ -18,11 +19,12 @@ import java.util.List;
  */
 @Dao
 public interface TaskStepDao {
+
     /**
      * Fetch all task step entities of a tasks specified by its id ordered by their index
      *
      * @param taskId the taskId to lookup
-     * @return LiveData<List<TaskStep>> observable with all task step entities of a task
+     * @return LiveData<List < TaskStep>> observable with all task step entities of a task
      */
     @Query("SELECT * FROM TaskSteps " +
             "WHERE fk_task_id = :taskId " +
@@ -35,7 +37,7 @@ public interface TaskStepDao {
      * @param taskStep the taskSteps to insert
      */
     @Insert(onConflict = REPLACE)
-    void insertTaskStep(TaskStep taskStep);
+    ListenableFuture<Long> insertTaskStep(TaskStep taskStep);
 
     /**
      * Insert a list of taskSteps into the taskSteps table.
@@ -43,7 +45,7 @@ public interface TaskStepDao {
      * @param taskSteps the taskSteps to insert
      */
     @Insert(onConflict = REPLACE)
-    void insertTaskSteps(List<TaskStep> taskSteps);
+    ListenableFuture<List<Long>> insertTaskSteps(List<TaskStep> taskSteps);
 
     /**
      * Update a list of task steps in the taskSteps table.
@@ -53,6 +55,13 @@ public interface TaskStepDao {
     @Update
     void updateTaskSteps(List<TaskStep> taskSteps);
 
+    /**
+     * Delete one task step from the taskSteps table.
+     *
+     * @param taskStep the task step to delete
+     */
+    @Delete
+    void deleteTaskStep(TaskStep taskStep);
 
     /**
      * Delete a list of task steps from the taskSteps table.
@@ -66,5 +75,5 @@ public interface TaskStepDao {
      * Delete all data from the taskSteps database.
      */
     @Query("DELETE FROM taskSteps")
-    void deleteAll();
+    ListenableFuture<Integer> deleteAll();
 }

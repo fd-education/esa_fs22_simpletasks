@@ -1,7 +1,9 @@
 package com.example.simpletasks.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.simpletasks.DialogBuilder;
+import com.example.simpletasks.domain.popups.DialogBuilder;
 import com.example.simpletasks.MainActivity;
 import com.example.simpletasks.R;
 import com.example.simpletasks.TaskGuideActivity;
@@ -33,8 +35,8 @@ import java.util.List;
 public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskListViewHolder> {
 
     /**
-     * TaskListViewHolder acts as a layer between code and xml layout. Fetches View elements to set
-     * them in the adapter.
+     * TaskListViewHolder acts as a layer between code and xml layout.
+     * Fetches View elements to set them in the adapter.
      */
     static class TaskListViewHolder extends RecyclerView.ViewHolder {
         private final TextView titleTask;
@@ -43,7 +45,8 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
         private final ImageButton skipTaskButton;
 
         /**
-         * Constructor for TaskListAdapter Sets all View elements for the adapter.
+         * Constructor for TaskListAdapter.
+         * Sets all View elements for the adapter.
          *
          * @param itemView the View from which to get the elements
          */
@@ -83,8 +86,8 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
     }
 
     /**
-     * Replace tasks on the screen by recycling views. Update the tasks whilst the user is scrolling
-     * through them.
+     * Replace tasks on the screen by recycling views.
+     * Update the tasks whilst the user is scrolling through them.
      *
      * @param holder   the element the data gets bound on
      * @param position the global position of the view
@@ -97,7 +100,13 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
             List<TaskStep> currentSteps = taskWithSteps.getSteps();
             holder.titleTask.setText(currentTask.getTitle());
             holder.countStepsIndicator.setText(context.getString(R.string.total_steps, currentSteps.size()));
-            holder.taskImage.setImageResource(R.drawable.image_placeholder/*TODO change */);
+
+            if (!currentTask.getTitleImagePath().isEmpty()) {
+                holder.taskImage.setImageURI(Uri.parse(currentTask.getTitleImagePath()));
+            } else {
+                holder.taskImage.setImageResource(R.drawable.image_placeholder);
+            }
+
             holder.itemView.setOnClickListener(v -> {
                 //when clicked on a list item, execute following code
                 Intent intent = new Intent(context, TaskGuideActivity.class);
@@ -135,6 +144,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskLi
      *
      * @param tasks the task steps to set
      */
+    @SuppressLint("NotifyDataSetChanged")
     public void setTasks(final List<TaskWithSteps> tasks) {
         this.tasks = tasks;
         notifyDataSetChanged();
