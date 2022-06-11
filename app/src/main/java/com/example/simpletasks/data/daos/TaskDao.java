@@ -12,6 +12,7 @@ import androidx.room.Update;
 
 import com.example.simpletasks.data.entities.Task;
 import com.example.simpletasks.data.entities.TaskWithSteps;
+import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.Date;
 import java.util.List;
@@ -113,5 +114,5 @@ public interface TaskDao {
      * Delete all data from the tasks database.
      */
     @Query("DELETE FROM tasks")
-    void deleteAll();
+    ListenableFuture<Integer> deleteAll();
 }

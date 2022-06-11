@@ -1,5 +1,6 @@
 package com.example.simpletasks;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -109,7 +110,10 @@ public class TaskGuideActivity extends AppCompatActivity {
      * @param view the view that triggered the event
      */
     public void onProblemClicked(View view) {
-        //TODO to implement a dialog
+        final Intent intent = new Intent(this, ReportProblemActivity.class);
+        intent.putExtra(ReportProblemActivity.TASK_INTENT_EXTRA, taskWithSteps);
+        intent.putExtra(ReportProblemActivity.CURRENT_TASK_STEP_INDEX, currentStep);
+        startActivity(intent);
     }
 
     // Sets the instance variables

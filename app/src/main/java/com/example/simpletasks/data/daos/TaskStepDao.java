@@ -10,6 +10,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.simpletasks.data.entities.TaskStep;
+import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.List;
 
@@ -66,5 +67,5 @@ public interface TaskStepDao {
      * Delete all data from the taskSteps database.
      */
     @Query("DELETE FROM taskSteps")
-    void deleteAll();
+    ListenableFuture<Integer> deleteAll();
 }

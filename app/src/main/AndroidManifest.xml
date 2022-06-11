@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SimpleTasks">
         <activity
+            android:name=".ReportProblemActivity"
+            android:exported="false" />
+        <activity
             android:name=".ScheduleTaskActivity"
             android:exported="false" />
         <activity
