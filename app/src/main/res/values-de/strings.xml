@@ -54,7 +54,7 @@
     <string name="login">Login</string>
     <string name="login_error">Falsche Pin! %1$d Versuche verbleibend.</string>
     <string name="title_activity_settings">Einstellungen</string>
-    <string name="caretaker_settings">Einstellungen für Betreuende</string>
+    <string name="pin_settings">PIN-Einstellungen</string>
     <string name="add_pin">PIN erstellen</string>
     <string name="remove_pin">PIN entfernen</string>
     <string name="display_settings">Anzeige-Einstellungen</string>
@@ -93,8 +93,12 @@
     <string name="change_language_settings">Sprache ändern</string>
     <string name="language_settings">Spracheinstellungen</string>
     <string name="no_pin_set_explanation">Momentan keine PINs gesetzt!</string>
-    <string name="not_logged_in_explanation">Nicht eingelogged!</string>
+    <string name="not_logged_in_explanation">Bitte melden Sie sich für diese Funktionen an!</string>
     <string name="cancel_popup">Abbrechen</string>
     <string name="skip_task_popup">Überspringen</string>
     <string name="accept_info_popup">Okay</string>
+    <string name="show_pin_popup">Möchten Sie %1$s als neuen PIN hinzufügen?</string>
+    <string name="pin_sent_popup">Ein neuer PIN wurde an %1$s geschickt!</string>
+    <string name="confirm_delete_pin_popup">Sind Sie sicher, dass Sie diesen PIN löschen wollen?</string>
+    <string name="pin_deletion_confirmation">Der PIN wurde gelöscht!</string>
 </resources>
