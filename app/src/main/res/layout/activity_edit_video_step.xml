@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     tools:context=".EditVideoStepActivity">
 
     <ImageButton
@@ -71,7 +72,6 @@
         android:id="@+id/b_editvideostep_start_recording"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginTop="426dp"
         android:layout_marginBottom="20dp"
         android:text="@string/new_recording"
         app:layout_constraintBottom_toTopOf="@+id/b_editvideostep_save_step"
@@ -97,8 +97,8 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/frag_editvideostep_videoplayer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/b_editvideostep_start_recording"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

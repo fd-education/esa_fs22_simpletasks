@@ -1,26 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dp"
     android:gravity="center"
     android:orientation="vertical"
-    android:visibility="visible"
     tools:context=".fragments.AudioPlayerFragment">
 
     <SeekBar
         android:id="@+id/sb_audioplayer_progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:thumbTint="?attr/colorPrimary" />
+        android:thumbTint="?attr/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/ll_audioplayer_controls_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/ll_audioplayer_controls_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sb_audioplayer_progress">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_audioplayer_play"
@@ -68,4 +75,4 @@
             app:srcCompat="@drawable/ic_baseline_stop_24" />
     </LinearLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

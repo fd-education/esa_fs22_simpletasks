@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dp"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".fragments.VideoPlayerFragment">
@@ -11,14 +12,21 @@
     <VideoView
         android:id="@+id/vv_videoplayer_video"
         android:layout_width="wrap_content"
-        android:layout_height="400dp" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/ll_videoplayer_controls"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/ll_videoplayer_controls"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_videoplayer_play"
@@ -27,7 +35,6 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"
             android:clickable="true"
             android:contentDescription="@string/play"
             android:focusable="true"
@@ -42,7 +49,6 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"
             android:clickable="true"
             android:contentDescription="@string/pause"
             android:focusable="true"
@@ -58,7 +64,6 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"
             android:clickable="true"
             android:contentDescription="@string/stop"
             android:focusable="true"
@@ -66,4 +71,4 @@
             app:fabCustomSize="48dp"
             app:srcCompat="@drawable/ic_baseline_stop_24" />
     </LinearLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
