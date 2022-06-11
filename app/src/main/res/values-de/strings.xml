@@ -109,7 +109,6 @@
     <string name="pin_sent_popup">Ein neuer PIN wurde an %1$s geschickt!</string>
     <string name="confirm_delete_pin_popup">Sind Sie sicher, dass Sie diesen PIN löschen wollen?</string>
     <string name="pin_deletion_confirmation">Der PIN wurde gelöscht!</string>
-    <string name="not_logged_in_explanation">Nicht eingelogged!</string>
     <string name="title_report_problem">Problem beschreiben</string>
     <string name="report_problem_explanation">Sie haben ein Problem und kommen nicht weiter? Kein Problem! Beschreiben Sie hier, was nicht funktioniert, und senden Sie es dann mit dem Knopf!</string>
     <string name="report_problem_send_button">Problem senden</string>
