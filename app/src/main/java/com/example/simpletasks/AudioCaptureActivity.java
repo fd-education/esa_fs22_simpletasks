@@ -71,11 +71,9 @@ public class AudioCaptureActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audio_capture);
 
+        requestPermissions();
         initializeFields();
         initializeUi();
-        requestPermissions();
-
-        setupMediaRecorder();
     }
 
     // Initialize the fields of the audio capture activity
@@ -153,7 +151,10 @@ public class AudioCaptureActivity extends AppCompatActivity {
 
         // Setup the media recorder if not already done
         if (mediaRecorder == null) {
-            setupMediaRecorder();
+            mediaRecorder = new MediaRecorder();
+            mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
         }
 
         try {
@@ -195,14 +196,6 @@ public class AudioCaptureActivity extends AppCompatActivity {
 
         recording.setVisibility(View.GONE);
         recording.clearAnimation();
-    }
-
-    // Setup media recorder with audio source, output format and encoder
-    private void setupMediaRecorder() {
-        mediaRecorder = new MediaRecorder();
-        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
     }
 
     // Initialize the seekbar
