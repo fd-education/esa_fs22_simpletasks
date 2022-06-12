@@ -77,12 +77,7 @@ public class TaskWithStepsTest {
         }
 
         ViewInteraction appCompatImageButton = onView(
-                allOf(withId(R.id.addTask_manageTasks), withContentDescription("Add task"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                5),
+                allOf(withId(R.id.addTask_manageTasks), withContentDescription(R.string.add_task),
                         isDisplayed()));
         appCompatImageButton.perform(click());
 
@@ -103,7 +98,7 @@ public class TaskWithStepsTest {
         appCompatEditText.perform(replaceText("New Task"), closeSoftKeyboard());
 
         ViewInteraction materialButton4 = onView(
-                allOf(withId(R.id.saveTaskButton_editTask), withText("Save"),
+                allOf(withId(R.id.saveTaskButton_editTask), withText(R.string.save),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -119,7 +114,7 @@ public class TaskWithStepsTest {
         }
 
         ViewInteraction appCompatImageButton2 = onView(
-                allOf(withId(R.id.editTaskButton_editTasks), withContentDescription("Edit Task"),
+                allOf(withId(R.id.editTaskButton_editTasks), withContentDescription(R.string.edit_task),
                         childAtPosition(
                                 allOf(withId(R.id.imageTask),
                                         childAtPosition(
@@ -130,7 +125,7 @@ public class TaskWithStepsTest {
         appCompatImageButton2.perform(click());
 
         ViewInteraction floatingActionButton = onView(
-                allOf(withId(R.id.addTaskStep_editTask), withContentDescription("Add Task Step"),
+                allOf(withId(R.id.addTaskStep_editTask), withContentDescription(R.string.add_task_step),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -140,7 +135,7 @@ public class TaskWithStepsTest {
         floatingActionButton.perform(click());
 
         ViewInteraction materialButton5 = onView(
-                allOf(withId(R.id.b_choosetype_textstep), withText("Text"),
+                allOf(withId(R.id.b_choosetype_textstep), withText(R.string.text),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
@@ -170,7 +165,7 @@ public class TaskWithStepsTest {
         appCompatEditText3.perform(replaceText("New Description"), closeSoftKeyboard());
 
         ViewInteraction materialButton6 = onView(
-                allOf(withId(R.id.b_edittextstep_save), withText("Save"),
+                allOf(withId(R.id.b_edittextstep_save), withText(R.string.save),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -180,7 +175,7 @@ public class TaskWithStepsTest {
         materialButton6.perform(click());
 
         ViewInteraction floatingActionButton2 = onView(
-                allOf(withId(R.id.addTaskStep_editTask), withContentDescription("Add Task Step"),
+                allOf(withId(R.id.addTaskStep_editTask), withContentDescription(R.string.add_task_step),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -190,7 +185,7 @@ public class TaskWithStepsTest {
         floatingActionButton2.perform(click());
 
         ViewInteraction materialButton7 = onView(
-                allOf(withId(R.id.b_choosetype_audiostep), withText("Audio"),
+                allOf(withId(R.id.b_choosetype_audiostep), withText(R.string.audio),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
@@ -210,7 +205,7 @@ public class TaskWithStepsTest {
         appCompatEditText4.perform(replaceText("New Title Audio"), closeSoftKeyboard());
 
         ViewInteraction materialButton8 = onView(
-                allOf(withId(R.id.b_editaudiostep_record_audio), withText("New Recording"),
+                allOf(withId(R.id.b_editaudiostep_record_audio), withText(R.string.new_recording),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -223,7 +218,7 @@ public class TaskWithStepsTest {
         pressBack();
 
         ViewInteraction floatingActionButton7 = onView(
-                allOf(withId(R.id.addTaskStep_editTask), withContentDescription("Add Task Step"),
+                allOf(withId(R.id.addTaskStep_editTask), withContentDescription(R.string.add_task_step),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -233,7 +228,7 @@ public class TaskWithStepsTest {
         floatingActionButton7.perform(click());
 
         ViewInteraction materialButton11 = onView(
-                allOf(withId(R.id.b_choosetype_videostep), withText("Video"),
+                allOf(withId(R.id.b_choosetype_videostep), withText(R.string.video),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
@@ -253,7 +248,7 @@ public class TaskWithStepsTest {
         appCompatEditText5.perform(replaceText("New Title Video"), closeSoftKeyboard());
 
         ViewInteraction materialButton12 = onView(
-                allOf(withId(R.id.b_editvideostep_start_recording), withText("New Recording"),
+                allOf(withId(R.id.b_editvideostep_start_recording), withText(R.string.new_recording),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -263,7 +258,7 @@ public class TaskWithStepsTest {
         materialButton12.perform(click());
 
         ViewInteraction floatingActionButton8 = onView(
-                allOf(withId(R.id.fab_videocapture_start_recording), withContentDescription("Start Recording"),
+                allOf(withId(R.id.fab_videocapture_start_recording), withContentDescription(R.string.start_recording),
                         childAtPosition(
                                 allOf(withId(R.id.ll_videocapture_controls),
                                         childAtPosition(
@@ -274,7 +269,7 @@ public class TaskWithStepsTest {
         floatingActionButton8.perform(click());
 
         ViewInteraction floatingActionButton9 = onView(
-                allOf(withId(R.id.fab_videocapture_stop_recording), withContentDescription("Stop Recording"),
+                allOf(withId(R.id.fab_videocapture_stop_recording), withContentDescription(R.string.stop_recording),
                         childAtPosition(
                                 allOf(withId(R.id.ll_videocapture_controls),
                                         childAtPosition(
@@ -285,7 +280,7 @@ public class TaskWithStepsTest {
         floatingActionButton9.perform(click());
 
         ViewInteraction materialButton13 = onView(
-                allOf(withId(R.id.b_videocapture_save), withText("Save"),
+                allOf(withId(R.id.b_videocapture_save), withText(R.string.save),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -295,7 +290,7 @@ public class TaskWithStepsTest {
         materialButton13.perform(click());
 
         ViewInteraction materialButton14 = onView(
-                allOf(withId(R.id.b_editvideostep_save_step), withText("Save"),
+                allOf(withId(R.id.b_editvideostep_save_step), withText(R.string.save),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -305,7 +300,7 @@ public class TaskWithStepsTest {
         materialButton14.perform(click());
 
         ViewInteraction materialButton15 = onView(
-                allOf(withId(R.id.saveTaskButton_editTask), withText("Save"),
+                allOf(withId(R.id.saveTaskButton_editTask), withText(R.string.save),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -321,7 +316,7 @@ public class TaskWithStepsTest {
         }
 
         ViewInteraction appCompatImageButton3 = onView(
-                allOf(withId(R.id.editTaskButton_editTasks), withContentDescription("Edit Task"),
+                allOf(withId(R.id.editTaskButton_editTasks), withContentDescription(R.string.edit_task),
                         childAtPosition(
                                 allOf(withId(R.id.imageTask),
                                         childAtPosition(
