@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.SimpleTasks.PrimaryButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/buttonHeight</item>
+        <item name="android:background">@drawable/rounded_corner_background</item>
+        <item name="android:textColor">?colorOnPrimary</item>
+        <item name="android:textSize">@dimen/p</item>
+        <item name="android:shadowColor">?colorOnBackground</item>
+        <item name="backgroundTint">?colorPrimary</item>
+    </style>
+    <style name="Theme.SimpleTasks.InvertedPrimaryButton" parent="Theme.SimpleTasks.PrimaryButton">
+        <item name="android:textColor">?colorPrimary</item>
+        <item name="backgroundTint">@null</item>
+        <item name="android:background">@drawable/rounded_corner_border_background</item>
+    </style>
+    <style name="Theme.SimpleTasks.ErrorButton" parent="Theme.SimpleTasks.PrimaryButton">
+        <item name="android:textColor">?colorOnPrimary</item>
+        <item name="backgroundTint">?colorError</item>
+    </style>
+    <style name="Theme.SimpleTasks.NeutralButton" parent="Theme.SimpleTasks.PrimaryButton">
+        <item name="backgroundTint">?buttonBarNeutralButtonStyle</item>
+    </style>
+    <style name="Theme.SimpleTasks.PositiveButton" parent="Theme.SimpleTasks.PrimaryButton">
+        <item name="backgroundTint">?buttonBarPositiveButtonStyle</item>
+    </style>
+    <style name="Theme.SimpleTasks.IconButtonPrimary" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">@dimen/buttonHeight</item>
+        <item name="android:layout_height">@dimen/buttonHeight</item>
+        <item name="android:background">@drawable/rounded_corner_background</item>
+        <item name="android:textSize">@dimen/p</item>
+        <item name="android:tint">?colorOnPrimary</item>
+        <item name="backgroundTint">?colorPrimary</item>
+    </style>
+    <style name="Theme.SimpleTasks.IconButtonSecondary" parent="Theme.SimpleTasks.IconButtonPrimary">
+        <item name="android:tint">?colorOnSecondary</item>
+        <item name="backgroundTint">?colorSecondary</item>
+    </style>
+    <style name="Theme.SimpleTasks.BackButton" parent="Theme.SimpleTasks.IconButtonPrimary">
+        <item name="android:background">@null</item>
+        <item name="android:tint">?colorOnBackground</item>
+        <item name="backgroundTint">?backgroundColor</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:src">@drawable/ic_baseline_arrow_back_48</item>
+    </style>
+    <style name="Theme.SimpleTasks.CustomProgressBarFinished">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/custom_progress_bar_finished</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">?colorOnPrimary</item>
+        <item name="android:textSize">@dimen/h2</item>
+        <item name="android:padding">@dimen/elementPadding</item>
+        <item name="layout_goneMarginLeft">@dimen/elementPadding</item>
+    </style>
+    <style name="Theme.SimpleTasks.CustomProgressBarCurrent" parent="Theme.SimpleTasks.CustomProgressBarFinished">
+        <item name="android:background">@drawable/custom_progress_bar_current</item>
+    </style>
+    <style name="Theme.SimpleTasks.CustomProgressBarUndone" parent="Theme.SimpleTasks.CustomProgressBarFinished">
+        <item name="android:background">@drawable/custom_progress_bar_undone</item>
+    </style>
+</resources>

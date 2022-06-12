@@ -6,13 +6,66 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+    <ImageButton
+        style="@style/Theme.SimpleTasks.IconButtonPrimary"
+        android:id="@+id/imageButton"
+        android:layout_marginBottom="@dimen/sidesPadding"
+        android:onClick="onSettingsClicked"
+        android:contentDescription="@string/open_settings"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/loginButton"
+        app:srcCompat="@drawable/ic_baseline_settings_24" />
+
+    <TextView
+        android:id="@+id/titleHome"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/sidesPadding"
+        android:layout_marginTop="@dimen/sidesPadding"
+        android:layout_marginEnd="@dimen/sidesPadding"
+        android:text="@string/app_name"
+        android:textColor="?colorOnBackground"
+        android:textSize="@dimen/h1"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/editTasksTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/elementPadding"
+        android:text="@string/tasks_today"
+        android:textColor="?colorOnBackground"
+        android:textSize="@dimen/h2"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/titleHome"
+        app:layout_constraintStart_toStartOf="@+id/titleHome"
+        app:layout_constraintTop_toBottomOf="@+id/titleHome" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerTaskList"
+        android:name="com.example.simpletasks.fragments.TasksListFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/elementPadding"
+        android:layout_marginBottom="@dimen/elementPadding"
+        app:layout_constraintBottom_toTopOf="@+id/loginButton"
+        app:layout_constraintEnd_toEndOf="@+id/editTasksTitle"
+        app:layout_constraintStart_toStartOf="@+id/editTasksTitle"
+        app:layout_constraintTop_toBottomOf="@+id/editTasksTitle" />
+
+    <Button
+        android:id="@+id/loginButton"
+        style="@style/Theme.SimpleTasks.PrimaryButton"
+        android:onClick="onLoginClicked"
+        android:text="@string/edit_tasks"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton"
+        app:layout_constraintEnd_toEndOf="@+id/fragmentContainerTaskList"
+        app:layout_constraintStart_toStartOf="@+id/fragmentContainerTaskList"
+        app:layout_constraintTop_toTopOf="@+id/imageButton"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TaskGuideActivity">
+
+    <TextView
+        android:id="@+id/tv_taskstep_tasktitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/sidesPadding"
+        android:layout_marginTop="@dimen/sidesPadding"
+        android:layout_marginEnd="@dimen/sidesPadding"
+        android:text="@string/placeholder"
+        android:textAlignment="center"
+        android:textColor="?colorOnBackground"
+        android:textSize="@dimen/h2"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <HorizontalScrollView
+        android:id="@+id/sv_task_progress_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/sidesPadding"
+        android:layout_marginRight="@dimen/sidesPadding"
+        android:fillViewport="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_taskstep_tasktitle"
+        app:layout_constraintBottom_toTopOf="@+id/fragmentContainerTaskStep_taskGuide">
+
+        <LinearLayout
+            android:id="@+id/ll_task_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal" />
+
+    </HorizontalScrollView>
+
+    <FrameLayout
+        android:id="@+id/fragmentContainerTaskStep_taskGuide"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/sidesPadding"
+        android:layout_marginEnd="@dimen/sidesPadding"
+        android:layout_marginBottom="@dimen/elementPadding"
+        app:layout_constraintBottom_toTopOf="@+id/b_taskstep_problem"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sv_task_progress_container" />
+
+    <Button
+        android:id="@+id/b_taskstep_problem"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/sidesPadding"
+        android:layout_marginEnd="@dimen/sidesPadding"
+        android:layout_marginBottom="@dimen/elementPadding"
+        android:background="@drawable/rounded_corner_background"
+        android:onClick="onProblemClicked"
+        android:text="@string/have_problem"
+        android:textSize="@dimen/p"
+        app:backgroundTint="?buttonBarNegativeButtonStyle"
+        app:layout_constraintBottom_toTopOf="@+id/ll_taskstep_buttongroup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ll_taskstep_buttongroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/sidesPadding"
+        android:fadeScrollbars="false"
+        android:isScrollContainer="false"
+        android:keepScreenOn="false"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/b_taskstep_problem"
+        app:layout_constraintStart_toStartOf="@+id/b_taskstep_problem">
+
+        <Button
+            android:id="@+id/ib_taskstep_backbutton"
+            style="@style/Theme.SimpleTasks.NeutralButton"
+            android:layout_width="0dp"
+            android:layout_marginEnd="@dimen/elementPadding"
+            android:onClick="onBackClicked"
+            android:text="@string/back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ib_taskstep_nextbutton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TextContrastCheck" />
+
+        <Button
+            android:id="@+id/ib_taskstep_nextbutton"
+            style="@style/Theme.SimpleTasks.PositiveButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/elementPadding"
+            android:onClick="onNextClicked"
+            android:text="@string/next"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ib_taskstep_backbutton"
+            app:layout_constraintTop_toTopOf="@+id/ib_taskstep_backbutton" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditTaskActivity">
+
+    <ImageView
+        android:id="@+id/imageView_taskImage"
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:layout_marginTop="116dp"
+        android:contentDescription="@string/step_title_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.395"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/image_placeholder"
+        tools:ignore="ImageContrastCheck" />
+
+    <ImageButton
+        android:id="@+id/imageButton_takeImageTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:background="@drawable/rounded_corner_background"
+        android:contentDescription="@string/change_image"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        android:onClick="onTitleImageClicked"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_taskImage"
+        app:layout_constraintStart_toEndOf="@+id/imageView_taskImage"
+        app:layout_constraintTop_toTopOf="@+id/imageView_taskImage"
+        app:layout_constraintVertical_bias="0.526"
+        app:srcCompat="@drawable/ic_baseline_photo_camera_24"
+        tools:ignore="ImageContrastCheck" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addTaskStep_editTask"
+        style="@style/Theme.SimpleTasks.IconButtonPrimary"
+        android:layout_marginEnd="@dimen/sidesPadding"
+        android:backgroundTint="?colorPrimary"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:clickable="true"
+        android:contentDescription="@string/add_task_step"
+        android:focusable="true"
+        android:gravity="fill_horizontal"
+        android:onClick="onAddTaskStepClicked"
+        app:layout_constraintBottom_toBottomOf="@+id/saveTaskButton_editTask"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/saveTaskButton_editTask"
+        app:srcCompat="@android:drawable/ic_input_add"
+        app:fabCustomSize="48dp"/>
+
+
+    <ImageButton
+        android:id="@+id/backButton_EditTasks"
+        style="@style/Theme.SimpleTasks.BackButton"
+        android:layout_marginStart="@dimen/sidesPadding"
+        android:layout_marginTop="@dimen/sidesPadding"
+        android:contentDescription="@string/back"
+        android:onClick="onBackClicked"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/editTaskTitle_editTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/sidesPadding"
+        android:layout_marginEnd="@dimen/sidesPadding"
+        android:text="@string/edit_task"
+        android:textAlignment="center"
+        android:textColor="?colorOnBackground"
+        android:textSize="@dimen/h2"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/backButton_EditTasks"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/backButton_EditTasks" />
+
+    <Button
+        android:id="@+id/saveTaskButton_editTask"
+        style="@style/Theme.SimpleTasks.PositiveButton"
+        android:layout_marginBottom="@dimen/sidesPadding"
+        android:onClick="onSaveTaskClicked"
+        android:text="@string/save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/taskTitle_editTask"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/sidesPadding"
+        android:layout_marginTop="164dp"
+        android:layout_marginEnd="@dimen/sidesPadding"
+        android:autofillHints="name"
+        android:hint="@string/task_title_hint"
+        android:inputType="text"
+        android:maxEms="11"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.525"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backButton_EditTasks" />
+
+    <Button
+        android:id="@+id/planTaskButton_editTask"
+        style="@style/Theme.SimpleTasks.InvertedPrimaryButton"
+        android:layout_width="0dp"
+        android:layout_marginStart="@dimen/sidesPadding"
+        android:layout_marginTop="@dimen/elementPadding"
+        android:layout_marginEnd="@dimen/sidesPadding"
+        android:text="@string/schedule_task"
+        android:onClick="onPlanTaskClicked"
+        app:icon="@drawable/ic_outline_event_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskTitle_editTask" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerTaskStepList_editTask"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/elementPadding"
+        android:layout_marginBottom="@dimen/elementPadding"
+        app:layout_constraintBottom_toTopOf="@+id/saveTaskButton_editTask"
+        app:layout_constraintEnd_toEndOf="@+id/planTaskButton_editTask"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/planTaskButton_editTask"
+        app:layout_constraintTop_toBottomOf="@+id/planTaskButton_editTask"
+        app:layout_constraintVertical_bias="1.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
