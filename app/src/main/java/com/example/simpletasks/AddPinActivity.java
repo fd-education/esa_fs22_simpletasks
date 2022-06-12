@@ -108,8 +108,8 @@ public class AddPinActivity extends AppCompatActivity {
     // Show the pin on the screen
     private void showPin(Pin pin) {
         new DialogBuilder()
-                .setDescriptionText(R.string.show_pin_popup, pin.getPin())
                 .setContext(this)
+                .setDescriptionText(R.string.show_pin_popup, pin.getPin())
                 .setTwoButtonLayout(R.string.cancel_popup, R.string.accept_info_popup)
                 .setAction(() -> {
                     pinController.addPin(pin);
@@ -179,8 +179,8 @@ public class AddPinActivity extends AppCompatActivity {
     // shows a popup confirming that the pin has been sent to the given phone number
     private void showPinSentPopup(String formattedPhoneNumber) {
         new DialogBuilder()
-                .setDescriptionText(R.string.pin_sent_popup, formattedPhoneNumber)
                 .setContext(this)
+                .setDescriptionText(R.string.pin_sent_popup, formattedPhoneNumber)
                 .setCenterButtonLayout(R.string.accept_info_popup)
                 .setAction(() -> {
                     Log.d(TAG, "user closed popup");

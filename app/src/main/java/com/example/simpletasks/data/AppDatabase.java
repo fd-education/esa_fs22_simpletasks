@@ -3,13 +3,11 @@ package com.example.simpletasks.data;
 import android.content.Context;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.simpletasks.data.converters.DateConverter;
 import com.example.simpletasks.data.daos.PinDao;
@@ -18,11 +16,7 @@ import com.example.simpletasks.data.daos.TaskStepDao;
 import com.example.simpletasks.data.entities.Pin;
 import com.example.simpletasks.data.entities.Task;
 import com.example.simpletasks.data.entities.TaskStep;
-import com.example.simpletasks.data.entities.TaskWithSteps;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -36,8 +30,6 @@ public abstract class AppDatabase extends RoomDatabase {
     private static final String TAG = "AppDatabase";
     // Single instance of the app database
     private static volatile AppDatabase APP_DB;
-
-    private static final int NUMBER_OF_SEEDED_TASKS = 0;
 
     private static final int NUMBER_OF_THREADS = 4;
 
@@ -79,91 +71,4 @@ public abstract class AppDatabase extends RoomDatabase {
         return result;
     }
 
-    /**
-     * Get a singleton instance of the app database with mock data.
-     *
-     * @param context     the app context
-     * @param doSeedTasks true if the tasks and steps must be seeded, false otherwise
-     * @param doSeedPins  true if the pins must be seeded, false otherwise
-     * @return singleton instance of the app database.
-     */
-    @SuppressWarnings("unused")
-    public static AppDatabase getSeededAppDb(final Context context, boolean doSeedTasks, boolean doSeedPins) {
-        AppDatabase result = APP_DB;
-
-        if (result == null) {
-            synchronized (AppDatabase.class) {
-                result = APP_DB;
-                if (result == null) {
-                    Log.d(TAG, "seeded database does not exist yet - creating");
-                    Builder<AppDatabase> bld = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, DB_NAME).fallbackToDestructiveMigration();
-
-                    if (doSeedTasks) bld.addCallback(seedTasks);
-
-                    if (doSeedPins) bld.addCallback(seedPins);
-
-                    APP_DB = result = bld.build();
-                    Log.d(TAG, "seeded database was created");
-                }
-            }
-        }
-
-        return result;
-    }
-
-    // TODO Remove before final submission
-    private static final RoomDatabase.Callback seedTasks = new RoomDatabase.Callback() {
-        @Override
-        public void onOpen(@NonNull SupportSQLiteDatabase db) {
-            super.onOpen(db);
-
-            databaseWriteExecutor.execute(() -> {
-                Log.d(TAG, "start seeding tasks");
-                TaskDao taskDao = APP_DB.taskDao();
-                TaskStepDao taskStepDao = APP_DB.taskStepDao();
-
-                List<TaskWithSteps> tasksWithSteps = Seeder.createSeed(NUMBER_OF_SEEDED_TASKS);
-
-                List<Task> tasks = new ArrayList<>();
-
-                try {
-                    taskDao.deleteAll().get();
-                    taskStepDao.deleteAll().get();
-                    for (TaskWithSteps task : tasksWithSteps) {
-                        tasks.add(task.getTask());
-                    }
-
-                    taskDao.insertTasks(tasks).get();
-                } catch (ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-
-                for (TaskWithSteps task : tasksWithSteps) {
-                    taskStepDao.insertTaskSteps(task.getSteps());
-                }
-                Log.d(TAG, "finished seeding tasks");
-            });
-        }
-    };
-
-    // TODO Remove before final submission
-    private static final RoomDatabase.Callback seedPins = new RoomDatabase.Callback() {
-        @Override
-        public void onOpen(@NonNull SupportSQLiteDatabase db) {
-            super.onOpen(db);
-
-            databaseWriteExecutor.execute(() -> {
-                Log.d(TAG, "start seeding pins");
-                PinDao pinDao = APP_DB.pinDao();
-
-                Pin pin = new Pin("00000".hashCode());
-
-                pinDao.deleteAll();
-
-                pinDao.insertPin(pin);
-                Log.d(TAG, "finished seeding pins");
-            });
-        }
-    };
 }

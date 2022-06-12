@@ -169,8 +169,8 @@ public class EditTaskActivity extends AppCompatActivity {
      */
     public void onBackClicked(@SuppressWarnings("unused") View view) {
         new DialogBuilder()
-                .setDescriptionText(R.string.discard_changes_text)
                 .setContext(this)
+                .setDescriptionText(R.string.discard_changes_text)
                 .setTwoButtonLayout(R.string.cancel_popup, R.string.discard_changes_button)
                 .setAction(this::onBackPressed).build().show();
     }

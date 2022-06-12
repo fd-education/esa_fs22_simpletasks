@@ -84,6 +84,7 @@ public class VideoStepFragment extends Fragment {
         title.setText(stepTitle);
 
         setVideoPlayer();
+        Log.d(TAG, "ui initialized");
     }
 
     // Set the video player fragment

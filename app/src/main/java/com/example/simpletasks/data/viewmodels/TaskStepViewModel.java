@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.simpletasks.data.entities.Task;
 import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.repositories.TaskStepRepository;
 
@@ -29,16 +28,6 @@ public class TaskStepViewModel extends AndroidViewModel {
     }
 
     /**
-     * Fetch all task step entities of a task ordered by their index
-     *
-     * @param task the task to lookup
-     * @return LiveData<List < TaskStep>> observable with all task step entities of a task
-     */
-    public LiveData<List<TaskStep>> getStepsOfTask(final Task task) {
-        return taskStepRepo.getByTaskId(task.getId());
-    }
-
-    /**
      * Fetch all task step entities of a task specified by its id ordered by their index
      *
      * @param taskId the task id to lookup
@@ -58,15 +47,6 @@ public class TaskStepViewModel extends AndroidViewModel {
     }
 
     /**
-     * Delete a list of task steps from the taskSteps table.
-     *
-     * @param taskSteps the tasks to delete
-     */
-    public void updateTaskSteps(final List<TaskStep> taskSteps) {
-        taskStepRepo.updateTaskSteps(taskSteps);
-    }
-
-    /**
      * Delete a taskStep from the taskSteps table.
      *
      * @param taskStep the taskStep to delete
@@ -75,12 +55,4 @@ public class TaskStepViewModel extends AndroidViewModel {
         taskStepRepo.deleteTaskStep(taskStep);
     }
 
-    /**
-     * Delete a list of task steps from the taskSteps table.
-     *
-     * @param taskSteps the tasks to delete
-     */
-    public void deleteTaskSteps(final List<TaskStep> taskSteps) {
-        taskStepRepo.deleteTaskSteps(taskSteps);
-    }
 }
