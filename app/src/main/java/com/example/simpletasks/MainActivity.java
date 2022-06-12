@@ -9,14 +9,6 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
-
-import com.example.simpletasks.data.entities.TaskWithSteps;
-import com.example.simpletasks.data.viewmodels.TaskViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import com.example.simpletasks.domain.popups.DialogBuilder;
 import com.example.simpletasks.domain.settings.PinController;
@@ -37,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String SHOW_ADD_PIN_TIP = "SHOW_ADD_PIN_TIP";
 
     private static final String TAG = "MainActivity";
-    private static List<TaskWithSteps> tasks;
-    private static ViewModelStoreOwner owner;
     private ExecutorService executorService;
 
     /**
@@ -51,10 +41,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         executorService = Executors.newFixedThreadPool(1);
-
-        tasks = new ArrayList<>();
-
-        owner = this;
 
         Log.d(TAG, "finished initialisation");
     }
@@ -134,25 +120,4 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /**
-     * Set the tasks in the task list view
-     *
-     * @param tasks all tasks to be listed in the fragment
-     */
-    public static void setTasks(List<TaskWithSteps> tasks) {
-        MainActivity.tasks = tasks;
-    }
-
-    /**
-     * Updates the tasks in the database
-     *
-     * @param tasks the list with the tasks
-     */
-    @SuppressWarnings("unused")
-    public static void updateTasksInDatabase(List<TaskWithSteps> tasks) {
-        Log.d(TAG, "updating tasks");
-        TaskViewModel taskViewModel = new ViewModelProvider(MainActivity.owner).get(TaskViewModel.class);
-        taskViewModel.updateTasksWithSteps(tasks);
-        Log.d(TAG, "updating tasks finished");
-    }
 }

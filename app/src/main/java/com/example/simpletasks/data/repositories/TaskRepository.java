@@ -87,26 +87,6 @@ public class TaskRepository {
     }
 
     /**
-     * fetch the task object by the id
-     *
-     * @param id the id of the task object
-     * @return observable with the task
-     */
-    public LiveData<Task> getTaskById(final String id) {
-        return taskDao.getById(id);
-    }
-
-    /**
-     * fetch the task with steps object by the id
-     *
-     * @param id the id of the task with steps object
-     * @return observable with the task with steps
-     */
-    public LiveData<TaskWithSteps> getTaskWithStepsById(final String id) {
-        return taskDao.getByIdWithSteps(id);
-    }
-
-    /**
      * Insert a list of tasks into the tasks table.
      *
      * @param tasks the tasks to insert
@@ -137,25 +117,6 @@ public class TaskRepository {
             taskDao.insertTasks(taskList);
             taskStepDao.insertTaskSteps(stepList);
         });
-    }
-
-    /**
-     * Update a list of tasks with their steps in the tasks and the taskSteps tables.
-     *
-     * @param tasksWithSteps the tasks with steps to update
-     */
-    public void updateTasksWithSteps(final List<TaskWithSteps> tasksWithSteps) {
-        List<Task> tasks = new ArrayList<>();
-        for(TaskWithSteps task : tasksWithSteps) {
-            tasks.add(task.getTask());
-            scheduleTaskNotification(task.getTask());
-        }
-
-        AppDatabase.databaseWriteExecutor.execute(() -> taskDao.updateTasks(tasks));
-
-        for(TaskWithSteps task : tasksWithSteps) {
-            AppDatabase.databaseWriteExecutor.execute(() -> taskStepDao.updateTaskSteps(task.getSteps()));
-        }
     }
 
     /**

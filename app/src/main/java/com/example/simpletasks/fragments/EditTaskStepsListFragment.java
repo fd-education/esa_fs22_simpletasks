@@ -32,7 +32,6 @@ import java.util.List;
 public class EditTaskStepsListFragment extends Fragment implements TaskStepsDrag.DragHandleCallback {
     private static final String TAG = "EditTaskListFragment";
     private View view;
-    private TaskStepViewModel taskStepViewModel;
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
@@ -87,11 +86,6 @@ public class EditTaskStepsListFragment extends Fragment implements TaskStepsDrag
         touchHelper.startDrag(viewHolder);
     }
 
-    @Override
-    public void updateTaskSteps(){
-        taskStepViewModel.updateTaskSteps(taskSteps);
-    }
-
     // Set the task steps to the adapter
     private void setAdapterWithTaskSteps() {
         String taskId = sharedPreferences.getString(EditTaskActivity.SHARED_PREF_TASK_ID, null);
@@ -111,7 +105,7 @@ public class EditTaskStepsListFragment extends Fragment implements TaskStepsDrag
         recyclerView.stopScroll();
 
         // Get the view model and observe for changes
-        taskStepViewModel = new ViewModelProvider(this).get(TaskStepViewModel.class);
+        TaskStepViewModel taskStepViewModel = new ViewModelProvider(this).get(TaskStepViewModel.class);
         taskStepViewModel.getStepsOfTaskById(taskId).observe(getViewLifecycleOwner(), taskSteps -> {
             Log.d(TAG, "TaskSteps of Task " + taskId + " fetched.");
 

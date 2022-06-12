@@ -68,25 +68,6 @@ public interface TaskDao {
     LiveData<List<TaskWithSteps>> getByDateWithSteps(Date dayStart, Date dayEnd);
 
     /**
-     * Get task by id from the tasks table.
-     *
-     * @param id the id to lookup
-     * @return the matching task with steps entity
-     */
-    @Query("SELECT * FROM tasks WHERE id = :id")
-    LiveData<Task> getById(String id);
-
-    /**
-     * Get a task with its steps by its id from the tasks table.
-     *
-     * @param id the id to lookup
-     * @return a task entity
-     */
-    @Transaction
-    @Query("SELECT * FROM tasks WHERE id = :id")
-    LiveData<TaskWithSteps> getByIdWithSteps(String id);
-
-    /**
      * Update a list of tasks in the tasks table.
      *
      * @param tasks the tasks to update
