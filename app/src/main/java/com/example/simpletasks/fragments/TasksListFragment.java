@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.simpletasks.R;
-import com.example.simpletasks.adapters.TaskListAdapter;
+import com.example.simpletasks.domain.adapters.TaskListAdapter;
 import com.example.simpletasks.data.viewmodels.TaskViewModel;
 
 /**

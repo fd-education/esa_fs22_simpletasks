@@ -100,7 +100,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <receiver android:name = ".notifications.NotificationPublisher" />
+        <receiver android:name = ".domain.notifications.NotificationPublisher" />
     </application>
 
 </manifest>

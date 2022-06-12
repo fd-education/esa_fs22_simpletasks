@@ -28,7 +28,6 @@ import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.example.simpletasks.data.AppDatabase;
 import com.example.simpletasks.data.daos.PinDao;
-import com.example.simpletasks.data.repositories.PinRepository;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;

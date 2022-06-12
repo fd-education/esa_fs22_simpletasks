@@ -1,4 +1,4 @@
-package com.example.simpletasks.notifications;
+package com.example.simpletasks.domain.notifications;
 
 import android.app.AlarmManager;
 import android.app.Notification;

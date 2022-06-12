@@ -1,4 +1,4 @@
-package com.example.simpletasks.adapters;
+package com.example.simpletasks.domain.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

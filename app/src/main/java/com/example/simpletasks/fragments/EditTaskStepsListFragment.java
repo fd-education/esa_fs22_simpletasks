@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.simpletasks.EditTaskActivity;
 import com.example.simpletasks.R;
-import com.example.simpletasks.adapters.EditTaskStepsListAdapter;
+import com.example.simpletasks.domain.adapters.EditTaskStepsListAdapter;
 import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.viewmodels.TaskStepViewModel;
 import com.example.simpletasks.domain.dragdrop.TaskStepsDrag;
