@@ -2,6 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.simpletasks">
 
+
+    <!-- PERMISSIONS AND FEATURES FOR CAMERA, VIDEO and AUDIO CAPTURE -->
+    <uses-feature android:name="android.hardware.camera.any" android:required="false"/>
+    <uses-feature android:name="android.hardware.microphone" android:required="false"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,6 +23,63 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SimpleTasks">
+        <activity
+            android:name=".ReportProblemActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ScheduleTaskActivity"
+            android:exported="false" />
+        <activity
+            android:name=".VideoCaptureActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AudioCaptureActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ImageCaptureActivity"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.provider.MediaStore.ACTION_IMAGE_CAPTURE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".EditAudioStepActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditVideoStepActivity"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.provider.MediaStore.ACTION_VIDEO_CAPTURE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".EditTextStepActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditTaskActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ManageTasksActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RemovePinActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddPinActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TaskGuideActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -18,6 +89,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <receiver android:name = ".domain.notifications.NotificationPublisher" />
     </application>
 
 </manifest>
