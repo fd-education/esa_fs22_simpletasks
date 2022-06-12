@@ -8,15 +8,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.simpletasks.data.entities.Task;
 import com.example.simpletasks.data.entities.TaskWithSteps;
 import com.example.simpletasks.data.viewmodels.TaskViewModel;
-import com.example.simpletasks.domain.popups.DialogBuilder;
 import com.example.simpletasks.domain.listener.DateTimePickerListener;
+import com.example.simpletasks.domain.popups.DialogBuilder;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -49,7 +48,7 @@ public class ScheduleTaskActivity extends AppCompatActivity {
      *
      * @param view the view that triggered the event
      */
-    public void onPlanNextExecutionClicked(View view) {
+    public void onPlanNextExecutionClicked(@SuppressWarnings("unused") View view) {
         calendar = Calendar.getInstance();
         calendar.setTime(task.getNextStartDate());
         dateTimePickerNextExecution = new DateTimePickerListener(calendar, this::onNextExecutionDateUpdated);
@@ -62,7 +61,7 @@ public class ScheduleTaskActivity extends AppCompatActivity {
      *
      * @param view the view that triggered the event
      */
-    public void onPlanLastExecutionClicked(View view) {
+    public void onPlanLastExecutionClicked(@SuppressWarnings("unused") View view) {
         calendar = Calendar.getInstance();
         calendar.setTime(task.getEndDate());
         dateTimePickerLastExecution = new DateTimePickerListener(calendar, this::onLastExecutionDateUpdated);
@@ -87,7 +86,7 @@ public class ScheduleTaskActivity extends AppCompatActivity {
      *
      * @param view the view that triggered the event
      */
-    public void onSaveTaskClicked(View view) {
+    public void onSaveTaskClicked(@SuppressWarnings("unused") View view) {
         //save the new end date
         if (dateTimePickerLastExecution != null) {
             Date newEndDate = dateTimePickerLastExecution.getUpdatedCalendar().getTime();
@@ -119,7 +118,7 @@ public class ScheduleTaskActivity extends AppCompatActivity {
      *
      * @param view the view that triggered the event
      */
-    public void onBackClicked(View view) {
+    public void onBackClicked(@SuppressWarnings("unused") View view) {
         onBackPressed();
     }
 

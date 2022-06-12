@@ -22,9 +22,8 @@ public class PinRepository {
      * @param context the context
      */
     public PinRepository(Context context) {
-        // TODO Uncomment for final submission and delete seed version
-        // AppDatabase db = AppDatabase.getAppDb(context);
-        AppDatabase db = AppDatabase.getSeededAppDb(context, true, true);
+        AppDatabase db = AppDatabase.getAppDb(context);
+        // AppDatabase db = AppDatabase.getSeededAppDb(context, true, true);
         pinDao = db.pinDao();
     }
 

@@ -3,8 +3,9 @@ package android.util;
 
 // Easy way to mock Log.d which must not be called directly in unit tests.
 // See https://stackoverflow.com/questions/36787449/how-to-mock-method-e-in-log
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "SameReturnValue"})
 public class Log {
+    @SuppressWarnings("SameReturnValue")
     public static int d(String tag, String msg) {
         System.out.println("DEBUG: " + tag + ": " + msg);
         return 0;

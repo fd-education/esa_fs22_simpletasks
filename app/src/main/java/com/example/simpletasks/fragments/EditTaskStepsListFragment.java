@@ -92,26 +92,6 @@ public class EditTaskStepsListFragment extends Fragment implements TaskStepsDrag
         taskStepViewModel.updateTaskSteps(taskSteps);
     }
 
-    /**
-     * gets called each time the fragment is getting back to focus
-     */
-//    @Override
-//    public void onResume() {
-//        SharedPreferences sharedPreferences = getContext().getSharedPreferences(MainActivity.SHARED_PREF_KEY, Context.MODE_PRIVATE);
-//        String taskId = sharedPreferences.getString(EditTaskActivity.SHARED_PREF_TASK_ID, null);
-//
-//        if(taskId.equals(ManageTasksActivity.CREATE_NEW_TASK)) {
-//            setAdapterWithTaskSteps(new TaskWithSteps().getSteps());
-//        } else {
-//            taskStepViewModel = new ViewModelProvider(this).get(TaskStepViewModel.class);
-//            LiveData<List<TaskStep>> taskSteps = taskStepViewModel.getStepsOfTaskById(taskId);
-//            final Observer<List<TaskStep>> taskStepsObserver = this::setAdapterWithTaskSteps;
-//            taskSteps.observe(getActivity(), taskStepsObserver);
-//        }
-//
-//        super.onResume();
-//    }
-
     // Set the task steps to the adapter
     private void setAdapterWithTaskSteps() {
         String taskId = sharedPreferences.getString(EditTaskActivity.SHARED_PREF_TASK_ID, null);

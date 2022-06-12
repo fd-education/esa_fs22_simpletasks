@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import com.example.simpletasks.data.entities.TaskWithSteps;
 import com.example.simpletasks.data.viewmodels.TaskViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.simpletasks.domain.popups.DialogBuilder;
@@ -34,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String TASK_ID_INTENT_EXTRA = "task_id_intent_extra";
     public static final String SHARED_PREF_KEY = "SIMPLE_TASK_SHARED_PREF";
     public static final String SHOW_ADD_PIN_TIP = "SHOW_ADD_PIN_TIP";
-    public static final String CURRENT_TASK_STEP_INTENT_EXTRA = "current_task_step_intent_extra";
 
     private static final String TAG = "MainActivity";
     private static List<TaskWithSteps> tasks;
@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         executorService = Executors.newFixedThreadPool(1);
 
+        tasks = new ArrayList<>();
+
         owner = this;
 
         Log.d(TAG, "finished initialisation");
@@ -68,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param view the view whose click event was triggered
      */
-    public void onLoginClicked(View view) {
+    public void onLoginClicked(@SuppressWarnings("unused") View view) {
         Futures.addCallback(new PinController(this).getPinCount(), new FutureCallback<Integer>() {
             @Override
             public void onSuccess(Integer pinCount) {
@@ -127,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param view the view whose click event was triggered
      */
-    public void onSettingsClicked(View view) {
+    public void onSettingsClicked(@SuppressWarnings("unused") View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
@@ -146,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param tasks the list with the tasks
      */
+    @SuppressWarnings("unused")
     public static void updateTasksInDatabase(List<TaskWithSteps> tasks) {
         Log.d(TAG, "updating tasks");
         TaskViewModel taskViewModel = new ViewModelProvider(MainActivity.owner).get(TaskViewModel.class);

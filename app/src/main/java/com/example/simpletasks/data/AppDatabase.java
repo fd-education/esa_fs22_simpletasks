@@ -37,7 +37,7 @@ public abstract class AppDatabase extends RoomDatabase {
     // Single instance of the app database
     private static volatile AppDatabase APP_DB;
 
-    private static final int NUMBER_OF_SEEDED_TASKS = 10;
+    private static final int NUMBER_OF_SEEDED_TASKS = 0;
 
     private static final int NUMBER_OF_THREADS = 4;
 
@@ -87,6 +87,7 @@ public abstract class AppDatabase extends RoomDatabase {
      * @param doSeedPins  true if the pins must be seeded, false otherwise
      * @return singleton instance of the app database.
      */
+    @SuppressWarnings("unused")
     public static AppDatabase getSeededAppDb(final Context context, boolean doSeedTasks, boolean doSeedPins) {
         AppDatabase result = APP_DB;
 
@@ -156,13 +157,11 @@ public abstract class AppDatabase extends RoomDatabase {
                 Log.d(TAG, "start seeding pins");
                 PinDao pinDao = APP_DB.pinDao();
 
-                Pin pin1 = new Pin("12345".hashCode());
-                Pin pin2 = new Pin("00000".hashCode());
+                Pin pin = new Pin("00000".hashCode());
 
                 pinDao.deleteAll();
 
-                // pinDao.insertPin(pin1);
-                pinDao.insertPin(pin2);
+                pinDao.insertPin(pin);
                 Log.d(TAG, "finished seeding pins");
             });
         }

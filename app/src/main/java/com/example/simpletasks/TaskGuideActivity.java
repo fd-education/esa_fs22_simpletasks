@@ -60,7 +60,7 @@ public class TaskGuideActivity extends AppCompatActivity {
      *
      * @param view the view that triggered the event
      */
-    public void onBackClicked(View view) {
+    public void onBackClicked(@SuppressWarnings("unused") View view) {
         onBackPressed();
     }
 
@@ -90,7 +90,7 @@ public class TaskGuideActivity extends AppCompatActivity {
      *
      * @param view the view that triggered the event
      */
-    public void onNextClicked(View view) {
+    public void onNextClicked(@SuppressWarnings("unused") View view) {
         if (currentStep < taskSteps.size() - 1) {
             currentStep++;
             replaceFragment();
@@ -120,7 +120,7 @@ public class TaskGuideActivity extends AppCompatActivity {
      *
      * @param view the view that triggered the event
      */
-    public void onProblemClicked(View view) {
+    public void onProblemClicked(@SuppressWarnings("unused") View view) {
         final Intent intent = new Intent(this, ReportProblemActivity.class);
         intent.putExtra(ReportProblemActivity.TASK_INTENT_EXTRA, getTask());
         intent.putExtra(ReportProblemActivity.CURRENT_TASK_STEP_INDEX, currentStep);

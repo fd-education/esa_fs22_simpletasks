@@ -42,7 +42,7 @@ public class ReportProblemActivity extends AppCompatActivity {
      *
      * @param view the button that was pressed on
      */
-    public void onSendProblemClicked(View view) {
+    public void onSendProblemClicked(@SuppressWarnings("unused") View view) {
 
         final EditText problemEditText = findViewById(R.id.problemStatementEditText);
         String problemText = problemEditText.getText().toString();
@@ -89,7 +89,7 @@ public class ReportProblemActivity extends AppCompatActivity {
      *
      * @param view the button that was pressed on
      */
-    public void onBackClicked(View view) {
+    public void onBackClicked(@SuppressWarnings("unused") View view) {
         super.onBackPressed();
     }
 }

@@ -42,9 +42,7 @@ public class EditTaskActivity extends AppCompatActivity {
     private TaskWithSteps currentEditTaskWithSteps;
 
     private TaskViewModel taskViewModel;
-    private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-
 
     /**
      * Set and adjust the view and set fragments.
@@ -77,7 +75,7 @@ public class EditTaskActivity extends AppCompatActivity {
             taskImageView.setImageURI(Uri.parse(currentEditTask.getTitleImagePath()));
         }
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         editor = sharedPreferences.edit();
         editor.putString(SHARED_PREF_TASK_ID, currentEditTask.getId()).apply();
 
@@ -121,7 +119,7 @@ public class EditTaskActivity extends AppCompatActivity {
      *
      * @param view ignored, not needed by the handler
      */
-    public void onAddTaskStepClicked(View view) {
+    public void onAddTaskStepClicked(@SuppressWarnings("unused") View view) {
         String stepId = currentEditTaskWithSteps.getTask().getId();
         int index = currentEditTaskWithSteps.getSteps().size() + 1;
         new ChooseTypeDialog(this).showDialog(stepId, index);
@@ -132,7 +130,7 @@ public class EditTaskActivity extends AppCompatActivity {
      *
      * @param view the view that triggered the event
      */
-    public void onSaveTaskClicked(View view) {
+    public void onSaveTaskClicked(@SuppressWarnings("unused") View view) {
         // Fetch data from the ui
         currentEditTask.setTitle(taskTitle.getText().toString());
 
@@ -159,7 +157,7 @@ public class EditTaskActivity extends AppCompatActivity {
      *
      * @param v ignored because not required for the handler
      */
-    public void onTitleImageClicked(View v) {
+    public void onTitleImageClicked(@SuppressWarnings("unused") View v) {
         Intent intent = new Intent(this, ImageCaptureActivity.class);
         chooseTitleImage.launch(intent);
     }
@@ -169,7 +167,7 @@ public class EditTaskActivity extends AppCompatActivity {
      *
      * @param view the view that triggered the event
      */
-    public void onBackClicked(View view) {
+    public void onBackClicked(@SuppressWarnings("unused") View view) {
         new DialogBuilder()
                 .setDescriptionText(R.string.discard_changes_text)
                 .setContext(this)
@@ -179,6 +177,10 @@ public class EditTaskActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        if(currentEditTaskWithSteps.getTask().getTitle().isEmpty()){
+            taskViewModel.deleteTask(currentEditTaskWithSteps);
+        }
+
         super.onBackPressed();
     }
 
@@ -187,7 +189,7 @@ public class EditTaskActivity extends AppCompatActivity {
      *
      * @param view the view that triggered the call
      */
-    public void onPlanTaskClicked(View view) {
+    public void onPlanTaskClicked(@SuppressWarnings("unused") View view) {
         Intent intent = new Intent(this, ScheduleTaskActivity.class);
         intent.putExtra(MainActivity.TASK_INTENT_EXTRA, currentEditTask);
         startActivity(intent);
@@ -217,18 +219,8 @@ public class EditTaskActivity extends AppCompatActivity {
         }
     }
 
-
-    private TaskWithSteps getTask() {
-        return (TaskWithSteps) getIntent().getSerializableExtra(MainActivity.TASK_INTENT_EXTRA);
-    }
-
     //validates the data of the ui, which was not validated before.
     private boolean validateData() {
-        boolean isValid = true;
-        if (taskTitle.getText().length() <= 1) {
-            isValid = false;
-        }
-        //more validating could be inserted here
-        return isValid;
+        return taskTitle.getText().length() > 1;
     }
 }

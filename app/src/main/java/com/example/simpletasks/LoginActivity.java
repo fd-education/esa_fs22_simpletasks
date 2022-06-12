@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
      *
      * @param v the view from which the event was triggered
      */
-    public void onLoginClicked(View v){
+    public void onLoginClicked(@SuppressWarnings("unused") View v){
         // Access the required views
         String pin = ((TextView) findViewById(R.id.pinPasswordInput)).getText().toString();
         TextView errorText = findViewById(R.id.loginError);
@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
      *
      * @param view the view that triggered the event
      */
-    public void onBackClicked(View view) {
+    public void onBackClicked(@SuppressWarnings("unused") View view) {
         super.onBackPressed();
     }
 }

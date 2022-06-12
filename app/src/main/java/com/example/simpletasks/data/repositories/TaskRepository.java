@@ -34,8 +34,8 @@ public class TaskRepository {
      */
     public TaskRepository(Context context) {
         // TODO Uncomment for final submission and delete seed version
-        // AppDatabase db = AppDatabase.getAppDb(application);
-        AppDatabase db = AppDatabase.getSeededAppDb(context, true, true);
+        AppDatabase db = AppDatabase.getAppDb(context);
+        // AppDatabase db = AppDatabase.getSeededAppDb(context, true, true);
         taskDao = db.taskDao();
         taskStepDao = db.taskStepDao();
         this.context = context;

@@ -21,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
-import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -35,7 +34,6 @@ import com.example.simpletasks.data.daos.TaskStepDao;
 import com.example.simpletasks.data.entities.Task;
 import com.example.simpletasks.data.entities.TaskStep;
 import com.example.simpletasks.data.types.TaskStepTypes;
-import com.example.simpletasks.domain.settings.PinController;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -48,7 +46,6 @@ import org.junit.runner.RunWith;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @LargeTest
@@ -58,8 +55,8 @@ public class EditTaskPlanTaskUiTest {
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
-    private Date today;
 
+    @SuppressWarnings("deprecation")
     @Before
     public void setup() throws ExecutionException, InterruptedException {
         final Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
@@ -67,7 +64,7 @@ public class EditTaskPlanTaskUiTest {
         sharedPreferences.edit().putBoolean(SHOW_ADD_PIN_TIP, false).commit();
 
 
-        today = new Date();
+        Date today = new Date();
         Task task = new Task("Task", "", today, 1L, 10L, new Date(today.getYear(), today.getMonth(), today.getDate() + 3));
         Task task2 = new Task("Task2", "", today, 1L, 10L, new Date(today.getYear(), today.getMonth(), today.getDate() + 3));
         TaskStep textTaskStep = new TaskStep(task.getId(), TaskStepTypes.TEXT, 0, "title", "imageUri", "description", "videoUri", "audioUri");

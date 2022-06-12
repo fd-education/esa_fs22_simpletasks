@@ -3,7 +3,6 @@ package com.example.simpletasks;
 import static com.example.simpletasks.MainActivity.TASK_INTENT_EXTRA;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +15,6 @@ import com.example.simpletasks.domain.popups.DialogBuilder;
 
 public class ManageTasksActivity extends AppCompatActivity {
     private static final String TAG = "ManageTaskActivity";
-    public static final String CREATE_NEW_TASK = "create new task";
     private User user;
 
     /**
@@ -40,7 +38,7 @@ public class ManageTasksActivity extends AppCompatActivity {
      *
      * @param view the view whose click event was triggered
      */
-    public void onLogoutClicked(View view) {
+    public void onLogoutClicked(@SuppressWarnings("unused") View view) {
         onBackPressed();
     }
 
@@ -68,7 +66,7 @@ public class ManageTasksActivity extends AppCompatActivity {
      *
      * @param view the view that triggered the event
      */
-    public void onAddTaskClicked(View view) {
+    public void onAddTaskClicked(@SuppressWarnings("unused") View view) {
         Intent intent = new Intent(this, EditTaskActivity.class);
         intent.putExtra(TASK_INTENT_EXTRA, new TaskWithSteps());
         startActivity(intent);
@@ -79,7 +77,7 @@ public class ManageTasksActivity extends AppCompatActivity {
      *
      * @param view the view that triggered the event
      */
-    public void onSettingsClicked(View view) {
+    public void onSettingsClicked(@SuppressWarnings("unused") View view) {
         Log.d(TAG, "on settings button clicked, launching settings activity");
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);

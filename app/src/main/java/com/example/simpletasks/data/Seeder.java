@@ -53,7 +53,9 @@ public class Seeder {
             tasks.add(new TaskWithSteps(task, task.getSteps()));
         }
 
-        Log.d(TAG, "" + tasks.get(0).getSteps().size());
+        if(tasks.size() > 0){
+            Log.d(TAG, "" + tasks.get(0).getSteps().size());
+        }
 
         return tasks;
     }

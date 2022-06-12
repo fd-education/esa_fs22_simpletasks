@@ -65,7 +65,7 @@ public class AddPinActivity extends AppCompatActivity {
      *
      * @param view the view whose click event was triggered
      */
-    public void onGeneratePinClicked(View view) {
+    public void onGeneratePinClicked(@SuppressWarnings("unused") View view) {
         Pin pin = Pin.random();
         Log.d(TAG, "pin generated");
         if (shouldSendPin()) {
@@ -80,7 +80,7 @@ public class AddPinActivity extends AppCompatActivity {
      *
      * @param view the view whose click event was triggered
      */
-    public void onBackClicked(View view) {
+    public void onBackClicked(@SuppressWarnings("unused") View view) {
         super.onBackPressed();
     }
 
@@ -90,7 +90,7 @@ public class AddPinActivity extends AppCompatActivity {
      *
      * @param view the view whose click event was triggered
      */
-    public void onSendChoiceChanged(View view) {
+    public void onSendChoiceChanged(@SuppressWarnings("unused") View view) {
         View phoneNumberGroup = findViewById(R.id.phoneNumberGroup);
         if (shouldSendPin()) {
             phoneNumberGroup.setVisibility(View.VISIBLE);

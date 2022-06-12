@@ -66,7 +66,7 @@ public class RemovePinActivity extends AppCompatActivity {
      *
      * @param view the view that triggered the event
      */
-    public void onBackClicked(View view) {
+    public void onBackClicked(@SuppressWarnings("unused") View view) {
         super.onBackPressed();
     }
 
@@ -75,7 +75,7 @@ public class RemovePinActivity extends AppCompatActivity {
      *
      * @param view the view that triggered the event
      */
-    public void onRemovePinClicked(View view) {
+    public void onRemovePinClicked(@SuppressWarnings("unused") View view) {
         Log.d(TAG, "removePin clicked");
         clearPinError();
         final EditText pinInputView = findViewById(R.id.pin_input);

@@ -151,7 +151,7 @@ public class EditVideoStepActivity extends AppCompatActivity {
 
         ArrayList<TaskStep> steps = new ArrayList<>();
         steps.add(step);
-        taskStepViewModel.updateTaskSteps(steps);
+        taskStepViewModel.insertTaskSteps(steps);
 
         return true;
     }

@@ -22,15 +22,12 @@ import androidx.test.espresso.ViewInteraction;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.example.simpletasks.data.AppDatabase;
 import com.example.simpletasks.data.daos.TaskDao;
 import com.example.simpletasks.data.daos.TaskStepDao;
 import com.example.simpletasks.data.entities.Task;
 import com.example.simpletasks.data.entities.TaskStep;
-import com.example.simpletasks.data.entities.TaskWithSteps;
-import com.example.simpletasks.data.repositories.TaskRepository;
 import com.example.simpletasks.data.types.TaskStepTypes;
 
 import org.hamcrest.Description;
@@ -54,6 +51,7 @@ public class AbortTaskUiTest {
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
 
+    @SuppressWarnings("deprecation")
     @Before
     public void setup() throws ExecutionException, InterruptedException {
         Date today = new Date();

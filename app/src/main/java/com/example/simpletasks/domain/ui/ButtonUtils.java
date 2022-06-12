@@ -1,6 +1,5 @@
 package com.example.simpletasks.domain.ui;
 
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
@@ -36,6 +35,7 @@ public class ButtonUtils {
      * Disable a list of buttons and make the state visible by setting their alpha value to .5
      * @param buttons list of Button objects to be disabled
      */
+    @SuppressWarnings("unused")
     public static void disableButtons(List<Button> buttons){
         for(Button v: buttons){
             disableButton(v);
@@ -55,6 +55,7 @@ public class ButtonUtils {
      * Disable a list of image buttons and make the state visible by setting their alpha value to .5
      * @param buttons list of ImageButton objects to be disabled
      */
+    @SuppressWarnings("unused")
     public static void disableImageButtons(List<ImageButton> buttons){
         for(ImageButton v: buttons){
             disableImageButton(v);
@@ -93,6 +94,7 @@ public class ButtonUtils {
      * Enable a list of buttons and make the state visible by setting their alpha value to 1
      * @param buttons list of Button objects to be disabled
      */
+    @SuppressWarnings("unused")
     public static void enableButtons(List<Button> buttons){
         for(Button v: buttons){
             enableButton(v);
@@ -112,6 +114,7 @@ public class ButtonUtils {
      * Enable a list of image buttons and make the state visible by setting their alpha value to 1
      * @param buttons list of ImageButton objects to be disabled
      */
+    @SuppressWarnings("unused")
     public static void enableImageButtons(List<ImageButton> buttons){
         for(ImageButton v: buttons){
             enableImageButton(v);

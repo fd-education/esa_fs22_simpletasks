@@ -115,7 +115,7 @@ public class SettingsActivity extends AppCompatActivity {
      *
      * @param view the view that triggered the event
      */
-    public void onAddPinClicked(View view) {
+    public void onAddPinClicked(@SuppressWarnings("unused") View view) {
         Intent intent = new Intent(this, AddPinActivity.class);
         startActivity(intent);
     }
@@ -126,7 +126,7 @@ public class SettingsActivity extends AppCompatActivity {
      *
      * @param view the view that triggered the event
      */
-    public void onRemovePinClicked(View view) {
+    public void onRemovePinClicked(@SuppressWarnings("unused") View view) {
         Intent intent = new Intent(this, RemovePinActivity.class);
         startActivity(intent);
     }
@@ -137,7 +137,7 @@ public class SettingsActivity extends AppCompatActivity {
      *
      * @param view the view that triggered the event
      */
-    public void onOpenDisplaySettingsClicked(View view) {
+    public void onOpenDisplaySettingsClicked(@SuppressWarnings("unused") View view) {
         Intent displaySettingsIntent = new Intent(Settings.ACTION_DISPLAY_SETTINGS);
         startActivity(displaySettingsIntent);
     }
@@ -147,7 +147,7 @@ public class SettingsActivity extends AppCompatActivity {
      *
      * @param view the view that triggered the event
      */
-    public void onBackClicked(View view) {
+    public void onBackClicked(@SuppressWarnings("unused") View view) {
         super.onBackPressed();
     }
 
@@ -156,7 +156,7 @@ public class SettingsActivity extends AppCompatActivity {
      *
      * @param view the view that triggered the event
      */
-    public void onLogoutClicked(View view) {
+    public void onLogoutClicked(@SuppressWarnings("unused") View view) {
         user.logOut();
         finish();
     }
@@ -167,7 +167,7 @@ public class SettingsActivity extends AppCompatActivity {
      *
      * @param view the view that triggered the event
      */
-    public void onOpenLanguageSettingsButton(View view) {
+    public void onOpenLanguageSettingsButton(@SuppressWarnings("unused") View view) {
         Intent languageSettingsIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
         startActivity(languageSettingsIntent);
     }
