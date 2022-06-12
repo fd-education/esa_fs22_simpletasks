@@ -21,7 +21,7 @@ public class Pin {
     private String id;
 
     // Store the hashes of the pins
-    private int hash;
+    private final int hash;
 
     // For the pojo the pin is used as a String
     @Ignore
@@ -66,17 +66,6 @@ public class Pin {
      */
     public String getPin() {
         return pin;
-    }
-
-    /**
-     * Set the Pin and the hash.
-     *
-     * @param pin String of the pin to be set.
-     */
-    public void setPin(String pin) {
-        validatePin(pin);
-        this.pin = pin;
-        this.hash = pin.hashCode();
     }
 
     /**

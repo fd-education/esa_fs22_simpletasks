@@ -21,8 +21,6 @@ public class TaskStepsDrag extends ItemTouchHelper.Callback {
      */
     public interface DragHandleCallback {
         void requestDrag(RecyclerView.ViewHolder viewHolder);
-
-        void updateTaskSteps();
     }
 
     private final CallbackContract adapter;

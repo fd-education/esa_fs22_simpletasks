@@ -3,13 +3,10 @@ package com.example.simpletasks.data.entities;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -40,15 +37,12 @@ public class Task implements Serializable {
     // How much before the actual occurrence to notify the user.
     @NonNull
     @ColumnInfo(name = "notification_delta")
-    private Long notificationDelta;
+    private final Long notificationDelta;
 
     // The Date of the last occurrence.
     @NonNull
     @ColumnInfo(name = "end_date")
     private Date endDate;
-
-    @Ignore
-    private List<TaskStep> steps;
 
     public Task(@NonNull String title, @NonNull String titleImagePath, @NonNull Date nextStartDate, @NonNull Long interval, @NonNull Long notificationDelta, @NonNull Date endDate) {
         this.id = UUID.randomUUID().toString();
@@ -166,15 +160,6 @@ public class Task implements Serializable {
     }
 
     /**
-     * Set the interval between the notification and the start of the task.
-     *
-     * @param notificationDelta the interval to set
-     */
-    public void setNotificationDelta(@NonNull Long notificationDelta) {
-        this.notificationDelta = notificationDelta;
-    }
-
-    /**
      * Get the date of the last occurrence of this tasks.
      *
      * @return the date of the last occurrence
@@ -194,29 +179,6 @@ public class Task implements Serializable {
     }
 
     /**
-     * Get the steps of this task.
-     *
-     * @return a list of steps of this task
-     */
-    @Ignore
-    public List<TaskStep> getSteps() {
-        if (steps == null) {
-            return new ArrayList<>();
-        }
-        return steps;
-    }
-
-    /**
-     * Set the steps of this task.
-     *
-     * @param steps the steps to set
-     */
-    @Ignore
-    public void setSteps(List<TaskStep> steps) {
-        this.steps = steps;
-    }
-
-    /**
      * Compare two tasks for equality.
      *
      * @param o the task to compare with this task.
@@ -227,7 +189,7 @@ public class Task implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return id.equals(task.id) && title.equals(task.title) && nextStartDate.equals(task.nextStartDate) && Objects.equals(interval, task.interval) && notificationDelta.equals(task.notificationDelta) && endDate.equals(task.endDate) && Objects.equals(steps, task.steps);
+        return id.equals(task.id) && title.equals(task.title) && nextStartDate.equals(task.nextStartDate) && Objects.equals(interval, task.interval) && notificationDelta.equals(task.notificationDelta) && endDate.equals(task.endDate);
     }
 
     /**
@@ -237,6 +199,6 @@ public class Task implements Serializable {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, nextStartDate, interval, notificationDelta, endDate, steps);
+        return Objects.hash(id, title, nextStartDate, interval, notificationDelta, endDate);
     }
 }

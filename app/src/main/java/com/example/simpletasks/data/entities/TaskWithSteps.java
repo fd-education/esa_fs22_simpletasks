@@ -20,14 +20,14 @@ public class TaskWithSteps implements Serializable {
 
     // Embed the task entity to get its fields
     @Embedded
-    private Task task;
+    private final Task task;
 
     // define the relation between the tasks and their steps
     @Relation(
             parentColumn = "id",
             entityColumn = "fk_task_id"
     )
-    private List<TaskStep> taskSteps;
+    private final List<TaskStep> taskSteps;
 
     /**
      * constructor for a new task with steps object, which has to be filled with data yet
@@ -63,15 +63,6 @@ public class TaskWithSteps implements Serializable {
     }
 
     /**
-     * Set the task to whom the steps belong.
-     *
-     * @param task the task to set
-     */
-    public void setTask(final Task task) {
-        this.task = task;
-    }
-
-    /**
      * Get a list of the steps of this task.
      *
      * @return a list of the task steps
@@ -80,12 +71,4 @@ public class TaskWithSteps implements Serializable {
         return taskSteps;
     }
 
-    /**
-     * Set the list of the steps of this task.
-     *
-     * @param taskSteps the list of the task steps to set
-     */
-    public void setTaskSteps(final List<TaskStep> taskSteps) {
-        this.taskSteps = taskSteps;
-    }
 }

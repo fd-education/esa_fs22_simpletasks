@@ -33,7 +33,7 @@ public class TaskStep implements Serializable {
     private int index;
 
     @NonNull
-    private String type;
+    private final String type;
 
     @NonNull
     private String title;
@@ -50,7 +50,7 @@ public class TaskStep implements Serializable {
     private String audioPath;
 
     @ColumnInfo(name = "fk_task_id")
-    private String taskId;
+    private final String taskId;
 
     public TaskStep(String taskId, @NonNull String type, int index, @NonNull String title, String imagePath, String description, String videoPath, String audioPath) {
         this.id = UUID.randomUUID().toString();
@@ -131,15 +131,6 @@ public class TaskStep implements Serializable {
      */
     public TaskStepTypes getTypeAsTaskStepType() {
         return TaskStepTypes.valueOf(type);
-    }
-
-    /**
-     * Set the type of this step
-     *
-     * @param type the type of this step
-     */
-    public void setType(@NonNull String type) {
-        this.type = type;
     }
 
     /**
@@ -240,15 +231,6 @@ public class TaskStep implements Serializable {
      */
     public String getTaskId() {
         return taskId;
-    }
-
-    /**
-     * Set the id of the task this step belongs to.
-     *
-     * @param taskId the id of the task this step belongs to
-     */
-    public void setTaskId(String taskId) {
-        this.taskId = taskId;
     }
 
 
